@@ -10,7 +10,7 @@
 		}
 	],
 	"require"          : {
-		"windwalker/framework": "dev-master",
+		"windwalker/framework": "dev-staging",
 		"asika/joomla-console" : "dev-master",
 		"asika/php-code-generator" : "dev-master",
 		"joomla/controller"    : "~1.0",
