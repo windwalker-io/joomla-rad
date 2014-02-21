@@ -20,10 +20,9 @@
 	"require-dev": {
 	},
 	"autoload": {
-		"psr-0": {
+		"psr-4": {
 			"": "../../cli/windwalker",
-			"Windwalker": "",
-			"CodeGenerator": "vendor/asika/php-code-generator/src"
+			"Windwalker\\": "Windwalker"
 		}
 	},
 	"scripts": {
