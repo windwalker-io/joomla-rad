@@ -1,7 +1,6 @@
 {
-	"name"             : "windwalker/framework",
+	"name"             : "windwalker/joomla-rad",
 	"description"      : "Rapido de la vento viro.",
-	"homepage"         : "https://github.com/ventoviro/windwalker",
 	"license"          : "GNU Lesser General Public License",
 	"minimum-stability": "beta",
 	"authors"          : [
@@ -11,6 +10,7 @@
 		}
 	],
 	"require"          : {
+		"windwalker/framework": "dev-master",
 		"asika/joomla-console" : "dev-master",
 		"asika/php-code-generator" : "dev-master",
 		"joomla/controller"    : "~1.0",
