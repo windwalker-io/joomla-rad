@@ -13,7 +13,6 @@
 		"windwalker/framework": "dev-staging",
 		"asika/joomla-console": "*",
 		"asika/php-code-generator": "0.1.*",
-		"joomla/controller": "~1.0",
 		"joomla/registry": "~1.0",
 		"filp/whoops": "1.*"
 	},
