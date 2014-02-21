@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b34e78845212c4f3df3183a7e7c6f1ec",
+    "hash": "08da562ed826ab809d55c81a5425b58f",
     "packages": [
         {
             "name": "asika/joomla-console",
@@ -49,23 +49,19 @@
         },
         {
             "name": "asika/php-code-generator",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/asika32764/php-code-generator.git",
-                "reference": "8d659be7653b834640d2a536130536f4bd4ca8a5"
+                "reference": "c2d392fd59a5417d775e86b5e8147a9552f9f86a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asika32764/php-code-generator/zipball/8d659be7653b834640d2a536130536f4bd4ca8a5",
-                "reference": "8d659be7653b834640d2a536130536f4bd4ca8a5",
+                "url": "https://api.github.com/repos/asika32764/php-code-generator/zipball/c2d392fd59a5417d775e86b5e8147a9552f9f86a",
+                "reference": "c2d392fd59a5417d775e86b5e8147a9552f9f86a",
                 "shasum": ""
             },
             "require": {
-                "joomla/filesystem": "~1.0",
-                "joomla/registry": "~1.0"
-            },
-            "require-dev": {
                 "asika/joomla-console": "dev-master",
                 "joomla/database": "~1.0"
             },
@@ -86,30 +82,36 @@
                 }
             ],
             "description": "PHP Code generator",
-            "time": "2014-02-16 15:46:24"
+            "time": "2014-02-04 14:10:33"
         },
         {
             "name": "filp/whoops",
-            "version": "1.0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "91e3fd4b0812017ffbeb24add55330664e1ea32a"
+                "reference": "029bb2be5a8ecfce317810a5d278edef0f9bda5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/91e3fd4b0812017ffbeb24add55330664e1ea32a",
-                "reference": "91e3fd4b0812017ffbeb24add55330664e1ea32a",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/029bb2be5a8ecfce317810a5d278edef0f9bda5c",
+                "reference": "029bb2be5a8ecfce317810a5d278edef0f9bda5c",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "mockery/mockery": "dev-master",
-                "silex/silex": "1.0.*@dev"
+                "mockery/mockery": "0.9.*",
+                "php": ">=5.3.3",
+                "silex/silex": "1.1.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Whoops": "src/"
@@ -137,7 +139,7 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2013-12-04 14:19:30"
+            "time": "2014-02-17 12:23:00"
         },
         {
             "name": "joomla/application",
@@ -269,6 +271,47 @@
                 "joomla"
             ],
             "time": "2014-02-09 01:25:57"
+        },
+        {
+            "name": "joomla/database",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-framework/database.git",
+                "reference": "83dab527294179617bedb37f6b7ee7a4bf99cf96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-framework/database/zipball/83dab527294179617bedb37f6b7ee7a4bf99cf96",
+                "reference": "83dab527294179617bedb37f6b7ee7a4bf99cf96",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "joomla/test": "~1.0"
+            },
+            "type": "joomla-package",
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\Database\\": "src/",
+                    "Joomla\\Database\\Tests\\": "Tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "Joomla Database Package",
+            "homepage": "https://github.com/joomla-framework/database",
+            "keywords": [
+                "database",
+                "framework",
+                "joomla"
+            ],
+            "time": "2014-02-09 01:18:10"
         },
         {
             "name": "joomla/date",
@@ -677,19 +720,24 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/a78d6504ff5d4367497785ab2ade91db3a9fbe11",
+                "reference": "a78d6504ff5d4367497785ab2ade91db3a9fbe11",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Psr\\Log\\": ""
@@ -711,7 +759,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2014-01-18 15:33:09"
         },
         {
             "name": "windwalker/framework",
@@ -754,11 +802,9 @@
     "aliases": [
 
     ],
-    "minimum-stability": "beta",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "windwalker/framework": 20,
-        "asika/joomla-console": 20,
-        "asika/php-code-generator": 20
+        "windwalker/framework": 20
     },
     "platform": [
 

@@ -1,29 +1,29 @@
 {
-	"name"             : "windwalker/joomla-rad",
-	"description"      : "Rapido de la vento viro.",
-	"license"          : "GNU Lesser General Public License",
-	"minimum-stability": "beta",
-	"authors"          : [
+	"name": "windwalker/joomla-rad",
+	"description": "Rapido de la vento viro.",
+	"license": "GNU Lesser General Public License",
+	"minimum-stability": "dev",
+	"authors": [
 		{
-			"name" : "Simon Asika",
+			"name": "Simon Asika",
 			"email": "asika32764@gmail.com"
 		}
 	],
-	"require"          : {
+	"require": {
 		"windwalker/framework": "dev-staging",
-		"asika/joomla-console" : "dev-master",
-		"asika/php-code-generator" : "dev-master",
-		"joomla/controller"    : "~1.0",
-		"joomla/registry"      : "~1.0",
-		"filp/whoops"          : "1.*"
+		"asika/joomla-console": "*",
+		"asika/php-code-generator": "0.1.*",
+		"joomla/controller": "~1.0",
+		"joomla/registry": "~1.0",
+		"filp/whoops": "1.*"
 	},
-	"require-dev"      : {
+	"require-dev": {
 	},
-	"autoload" : {
-		"psr-0" : {
-			"" : "../../cli/windwalker",
-			"Windwalker" : "",
-			"CodeGenerator" : "vendor/asika/php-code-generator/src"
+	"autoload": {
+		"psr-0": {
+			"": "../../cli/windwalker",
+			"Windwalker": "",
+			"CodeGenerator": "vendor/asika/php-code-generator/src"
 		}
 	},
 	"scripts": {

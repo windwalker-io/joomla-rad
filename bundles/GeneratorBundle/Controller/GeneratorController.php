@@ -99,6 +99,8 @@ class GeneratorController extends CodeGeneratorController
 
 		$container = $container ? : Container::getInstance();
 
+		$this->container = $container;
+
 		$container->registerServiceProvider(new GeneratorBundleProvider($command));
 
 		$io = $io ? : $container->get('io');
