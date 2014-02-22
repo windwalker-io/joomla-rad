@@ -12,6 +12,7 @@ use CodeGenerator\IO\IOInterface;
 use GeneratorBundle\Controller\JoomlaExtensionController;
 
 use Joomla\Console\Prompter\TextPrompter;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 
 use Windwalker\DI\Container;
@@ -95,6 +96,13 @@ abstract class ComponentController extends JoomlaExtensionController
 		$config->set('dir.tmpl', GENERATOR_BUNDLE_PATH . '/Template/' . $config['extension'] . '/' . $config['template']);
 
 		$config->set('dir.src', $config->get('dir.tmpl') . '/' . $config['client']);
+
+		// Replace DS
+		$config['dir.dest'] = Path::clean($config['dir.dest']);
+
+		$config['dir.tmpl'] = Path::clean($config['dir.tmpl']);
+
+		$config['dir.src'] = Path::clean($config['dir.src']);
 
 		return $this;
 	}

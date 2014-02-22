@@ -10,6 +10,7 @@ namespace GeneratorBundle\Controller;
 
 use CodeGenerator\Controller\TaskController;
 use CodeGenerator\IO\IOInterface;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Windwalker\Console\Command\Command;
 use Windwalker\DI\Container;
@@ -78,6 +79,13 @@ abstract class JoomlaExtensionController extends TaskController
 		$config->set('dir.tmpl', GENERATOR_BUNDLE_PATH . '/Template/' . $config['extension'] . '/' . $config['template']);
 
 		$config->set('dir.src', $config->get('dir.tmpl') . '/' . $config['client']);
+
+		// Replace DS
+		$config['dir.dest'] = Path::clean($config['dir.dest']);
+
+		$config['dir.tmpl'] = Path::clean($config['dir.tmpl']);
+
+		$config['dir.src'] = Path::clean($config['dir.src']);
 
 		parent::__construct($container, $io, $config);
 	}
