@@ -111,7 +111,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 		// Determine model
 		if (!($this->model instanceof CrudModel))
 		{
-			throw new \UnexpectedValueException(sprintf('% model need extend to CrudModel', $this->name));
+			throw new \UnexpectedValueException(sprintf('%s model need extend to CrudModel', $this->name));
 		}
 
 		// Determine the name of the primary key for the data.

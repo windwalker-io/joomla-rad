@@ -113,13 +113,18 @@ class SaveController extends AbstractItemController
 		}
 
 		// Other error here
-		catch (\Exception $e)
+		catch (\RuntimeException $e)
 		{
 			$this->setMessage($e->getMessage(), 'error');
 
 			$this->redirectToItem($this->recordId, $this->urlVar);
 
 			return false;
+		}
+
+		catch (\Exception $e)
+		{
+			throw $e;
 		}
 
 		return true;

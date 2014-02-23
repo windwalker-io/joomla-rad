@@ -221,6 +221,11 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 
 			// For legacy purposes. Remove for 4.0
 			$paths->insert(JPATH_COMPONENT_ADMINISTRATOR . '/tables', 'normal');
+
+			foreach (clone $paths as $path)
+			{
+				$this->addTablePath($path);
+			}
 		}
 	}
 
