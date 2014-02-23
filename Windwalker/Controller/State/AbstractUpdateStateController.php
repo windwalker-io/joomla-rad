@@ -26,6 +26,13 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	protected $actionText = 'STATE_CHANGED';
 
 	/**
+	 * Property useTransaction.
+	 *
+	 * @var  boolean
+	 */
+	protected $useTransaction = false;
+
+	/**
 	 * prepareExecute
 	 *
 	 * @throws \LogicException
@@ -44,10 +51,15 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	/**
 	 * doExecute
 	 *
+	 * @throws \Exception
 	 * @return mixed
 	 */
 	protected function doExecute()
 	{
+		$db = $this->model->getDb();
+
+		$this->useTransaction ? $db->transactionStart(true) : null;
+
 		try
 		{
 			$this->preUpdateHook();
@@ -62,15 +74,19 @@ abstract class AbstractUpdateStateController extends AbstractListController
 		// Other error here
 		catch (\Exception $e)
 		{
+			$this->useTransaction ? $db->transactionRollback(true) : null;
+
 			if (JDEBUG)
 			{
-				echo $e;
+				throw $e;
 			}
 
 			$this->redirectToList($e->getMessage(), 'error');
 
 			return false;
 		}
+
+		$this->useTransaction ? $db->transactionCommit(true) : null;
 
 		return true;
 	}

@@ -34,6 +34,13 @@ class SaveController extends AbstractItemController
 	protected $allowReturn = true;
 
 	/**
+	 * Property useTransaction.
+	 *
+	 * @var  boolean
+	 */
+	protected $useTransaction = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \JInput          $input
@@ -67,6 +74,10 @@ class SaveController extends AbstractItemController
 	 */
 	protected function doExecute()
 	{
+		$db = $this->model->getDb();
+
+		$this->useTransaction ? $db->transactionStart(true) : null;
+
 		try
 		{
 			$this->preSaveHook();
@@ -82,13 +93,16 @@ class SaveController extends AbstractItemController
 					($this->lang->hasKey(strtoupper($this->option) . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS')
 						? strtoupper($this->option)
 						: 'JLIB_APPLICATION') . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
-				)
+				),
+				'success'
 			);
 		}
 
 		// Valid fail here
 		catch (ValidateFailException $e)
 		{
+			$this->useTransaction ? $db->transactionRollback(true) : null;
+
 			$errors = $e->getErrors();
 
 			foreach ($errors as $error)
@@ -113,19 +127,21 @@ class SaveController extends AbstractItemController
 		}
 
 		// Other error here
-		catch (\RuntimeException $e)
+		catch (\Exception $e)
 		{
-			$this->setMessage($e->getMessage(), 'error');
+			$this->useTransaction ? $db->transactionRollback(true) : null;
 
-			$this->redirectToItem($this->recordId, $this->urlVar);
+			if (JDEBUG)
+			{
+				throw $e;
+			}
+
+			$this->redirectToItem($this->recordId, $this->urlVar, $e->getMessage(), 'error');
 
 			return false;
 		}
 
-		catch (\Exception $e)
-		{
-			throw $e;
-		}
+		$this->useTransaction ? $db->transactionCommit(true) : null;
 
 		return true;
 	}

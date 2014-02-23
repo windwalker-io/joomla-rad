@@ -33,6 +33,13 @@ class DeleteController extends AbstractUpdateStateController
 	protected $allowReturn = true;
 
 	/**
+	 * Property useTransaction.
+	 *
+	 * @var  boolean
+	 */
+	protected $useTransaction = true;
+
+	/**
 	 * doUpdate
 	 *
 	 * @throws \InvalidArgumentException

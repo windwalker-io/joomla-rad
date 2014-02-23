@@ -105,8 +105,8 @@ abstract class AbstractAdminController extends AbstractRedirectController
 		parent::prepareExecute();
 
 		$this->lang  = \JFactory::getLanguage();
-		$this->model = $this->getModel();
-		$this->table = $this->model->getTable();
+		$this->model = $this->getModel($this->viewItem);
+		$this->table = $this->model->getTable($this->viewItem, $this->prefix . 'Table');
 
 		// Determine model
 		if (!($this->model instanceof CrudModel))

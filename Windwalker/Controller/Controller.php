@@ -437,6 +437,8 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 		if (!$this->input->get('quiet', false))
 		{
 			$this->app->enqueueMessage($msg, $type);
+
+			return $this;
 		}
 
 		return $this;

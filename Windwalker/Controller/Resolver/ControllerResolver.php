@@ -9,6 +9,7 @@
 namespace Windwalker\Controller\Resolver;
 
 use JInput;
+use Windwalker\Debugger\Debugger;
 use Windwalker\DI\Container;
 use Windwalker\Controller\Controller;
 
@@ -238,7 +239,7 @@ class ControllerResolver
 			}
 
 			$this->container->alias($key, $class)
-				->share($class, $defaultDelegator);
+				->share($class, $delegator);
 		}
 
 		return $delegator;
