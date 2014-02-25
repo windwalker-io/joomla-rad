@@ -8,6 +8,9 @@
 
 use Windwalker\Data\Data;
 
+// Prepare script
+JHtmlBehavior::multiselect('adminForm');
+
 /**
  * Prepare data for this template.
  *

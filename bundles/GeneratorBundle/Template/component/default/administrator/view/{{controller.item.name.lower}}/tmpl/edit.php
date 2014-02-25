@@ -8,6 +8,7 @@
 
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
+JHtmlBehavior::formvalidation();
 
 /**
  * Prepare data for this template.
@@ -27,6 +28,17 @@ $tabs = array(
 	'tab_rules'
 )
 ?>
+<!-- Validate Script -->
+<script type="text/javascript">
+	Joomla.submitbutton = function(task)
+	{
+		if (task == '{{controller.item.name.lower}}.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
+		{
+			Joomla.submitform(task, document.getElementById('adminForm'));
+		}
+	}
+</script>
+
 <div id="{{extension.name.lower}}" class="windwalker {{controller.item.name.lower}} edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">

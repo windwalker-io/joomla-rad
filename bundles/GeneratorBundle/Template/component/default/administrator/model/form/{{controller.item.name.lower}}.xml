@@ -9,7 +9,7 @@
 			label="JGLOBAL_TITLE"
 			description="JFIELD_TITLE_DESC"
 			required="true"
-			class="input-xxlarge"
+			class="input-xxlarge required"
 			/>
 
 		<field name="alias"

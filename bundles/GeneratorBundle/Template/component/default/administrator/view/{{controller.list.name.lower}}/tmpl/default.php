@@ -8,9 +8,9 @@
 
 use Windwalker\View\Layout\FileLayout;
 
+// Prepare script
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
-JHtmlBehavior::multiselect('adminForm');
 JHtmlDropdown::init();
 
 /**
