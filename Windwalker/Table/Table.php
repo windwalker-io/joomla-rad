@@ -9,7 +9,7 @@
 namespace Windwalker\Table;
 
 /**
- * Class Table
+ * Windwalker Table.
  *
  * @since 1.0
  */
@@ -23,6 +23,8 @@ class Table extends \JTable
 	 * @param   string           $table  Name of the table to model.
 	 * @param   mixed            $key    Name of the primary key field in the table or array of field names that compose the primary key.
 	 * @param   \JDatabaseDriver $db     JDatabaseDriver object.
+	 *
+	 * @since  1.0
 	 */
 	public function __construct($table, $key = 'id', $db = null)
 	{
