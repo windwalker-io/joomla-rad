@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `#__{{extension.name.lower}}_{{controller.list.name.l
   `modified` datetime NOT NULL,
   `modified_by` int(11) NOT NULL,
   `ordering` int(11) NOT NULL,
-  `published` tinyint(1) NOT NULL DEFAULT '1',
+  `state` tinyint(1) NOT NULL DEFAULT '1',
   `publish_up` datetime NOT NULL,
   `publish_down` datetime NOT NULL,
   `checked_out` int(11) NOT NULL,
@@ -32,10 +32,11 @@ CREATE TABLE IF NOT EXISTS `#__{{extension.name.lower}}_{{controller.list.name.l
   KEY `idx_path` (`path`),
   KEY `idx_left_right` (`lft`,`rgt`),
   KEY `idx_alias` (`alias`),
-  KEY `idx_createdby` (`catid`),
+  KEY `idx_catid` (`catid`),
+  KEY `idx_createdby` (`created_by`),
   KEY `idx_language` (`language`),
   KEY `idx_checkout` (`checked_out`),
-  KEY `cat_index` (`published`,`access`,`catid`)
+  KEY `cat_index` (`state`,`access`,`catid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 

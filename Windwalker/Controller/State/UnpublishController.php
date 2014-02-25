@@ -21,7 +21,7 @@ class UnpublishController extends AbstractUpdateStateController
 	 * @var string
 	 */
 	protected $stateData = array(
-		'published' => '0'
+		'state' => '0'
 	);
 
 	/**

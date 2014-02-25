@@ -45,9 +45,9 @@ $grid->registerTableSort();
 		<?php echo JHtml::_('grid.checkAll'); ?>
 	</th>
 
-	<!--STATUS-->
+	<!--STATE-->
 	<th width="5%" class="nowrap center">
-		<?php echo $grid->sortTitle('JSTATUS', '{{controller.item.name.lower}}.published'); ?>
+		<?php echo $grid->sortTitle('JSTATUS', '{{controller.item.name.lower}}.state'); ?>
 	</th>
 
 	<!--TITLE-->
@@ -119,10 +119,10 @@ $grid->registerTableSort();
 			<?php echo JHtml::_('grid.id', $i, $item->{{controller.item.name.lower}}_id); ?>
 		</td>
 
-		<!--PUBLISHED-->
+		<!--STATE-->
 		<td class="center">
 			<div class="btn-group">
-				<?php echo $grid->published() ?>
+				<?php echo $grid->state() ?>
 			</div>
 		</td>
 

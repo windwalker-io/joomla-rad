@@ -8,6 +8,9 @@
 
 namespace Windwalker\Component;
 
+use Windwalker\Helper\PathHelper;
+use Windwalker\Object\Object;
+
 /**
  * Class ComponentHelper
  *
@@ -18,42 +21,43 @@ class ComponentHelper
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
-	 * @param   integer  $categoryId  The category ID.
-	 * @param   integer  $id          The item ID.
-	 * @param   string   $assetName   The asset name
+	 * @param   \JUser  $user       The user object.
+	 * @param   string  $option     The component option.
+	 * @param   string  $assetName  The asset name
+	 * @param   integer $categoryId The category ID.
+	 * @param   integer $id         The item ID.
 	 *
-	 * @return  JObject
-	 *
-	 * @since   3.1
+	 * @return  Object
 	 */
-	public static function getActions($categoryId = 0, $id = 0, $assetName = '')
+	public static function getActions(\JUser $user, $option, $assetName, $categoryId = 0, $id = 0)
 	{
-		$user	= \JFactory::getUser();
-		$result	= new \JObject;
+		$result	= new Object;
 
-		$assetName = explode('.', $assetName);
+		$path = PathHelper::getAdmin($option) . '/etc/access.xml';
 
-		if (isset($assetName[1]))
+		if (!is_file($path))
 		{
-			$option = $assetName[1];
+			$path = PathHelper::getAdmin($option) . '/access.xml';
 		}
 
-		$path = JPATH_ADMINISTRATOR . '/components/' . $option . '/access.xml';
-
-		if (empty($id) && empty($categoryId))
+		if (!$id && !$categoryId)
 		{
 			$section = 'component';
 		}
-		elseif (empty($id))
+		elseif (!$id && $categoryId)
 		{
 			$section = 'category';
 			$assetName .= '.category.' . (int) $categoryId;
 		}
+		elseif ($id && !$categoryId)
+		{
+			$section = $assetName;
+			$assetName .= '.' . $assetName . '.' . $id;
+		}
 		else
 		{
-			// Used only in com_content
-			$section = 'article';
-			$assetName .= '.article.' . (int) $id;
+			$section = $assetName;
+			$assetName .= '.' . $assetName;
 		}
 
 		$actions = \JAccess::getActionsFromFile($path, "/access/section[@name='" . $section . "']/");

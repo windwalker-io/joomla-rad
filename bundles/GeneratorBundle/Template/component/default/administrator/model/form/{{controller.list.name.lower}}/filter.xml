@@ -47,7 +47,7 @@
 			/>
 
 		<field
-			name="{{controller.item.name.lower}}.published"
+			name="{{controller.item.name.lower}}.state"
 			type="list"
 			label="JSTATUS"
 			default=""
@@ -86,8 +86,8 @@
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="{{controller.item.name.lower}}.catid, {{controller.item.name.lower}}.ordering ASC">JGRID_HEADING_ORDERING_ASC</option>
 			<option value="{{controller.item.name.lower}}.catid, {{controller.item.name.lower}}.ordering DESC">JGRID_HEADING_ORDERING_DESC</option>
-			<option value="{{controller.item.name.lower}}.published ASC">JSTATUS_ASC</option>
-			<option value="{{controller.item.name.lower}}.published DESC">JSTATUS_DESC</option>
+			<option value="{{controller.item.name.lower}}.state ASC">JSTATUS_ASC</option>
+			<option value="{{controller.item.name.lower}}.state DESC">JSTATUS_DESC</option>
 			<option value="{{controller.item.name.lower}}.title ASC">JGLOBAL_TITLE_ASC</option>
 			<option value="{{controller.item.name.lower}}.title DESC">JGLOBAL_TITLE_DESC</option>
 			<option value="category.title ASC">JCATEGORY_ASC</option>

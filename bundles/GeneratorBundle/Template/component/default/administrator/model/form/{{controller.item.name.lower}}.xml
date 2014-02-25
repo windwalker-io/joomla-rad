@@ -57,7 +57,7 @@
 		align="right"
 		horz="true">
 
-		<field name="published"
+		<field name="state"
 			type="list"
 			label="JSTATUS"
 			description="JFIELD_PUBLISHED_DESC"

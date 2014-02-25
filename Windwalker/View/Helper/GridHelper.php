@@ -44,7 +44,7 @@ class GridHelper
 		'title'            => 'title',
 		'alias'            => 'alias',
 		'checked_out'      => 'checked_out',
-		'state'            => 'published',
+		'state'            => 'state',
 		'author'           => 'created_by',
 		'author_name'      => 'user_name',
 		'checked_out_time' => 'checked_out_time',
@@ -307,13 +307,13 @@ HTML;
 	}
 
 	/**
-	 * published
+	 * state
 	 *
 	 * @param string $taskPrefix
 	 *
 	 * @return mixed
 	 */
-	public function published($taskPrefix = null)
+	public function state($taskPrefix = null)
 	{
 		$item       = $this->current;
 		$canChange  = $this->state->get('access.canChange', true);

@@ -21,7 +21,7 @@ class PublishController extends AbstractUpdateStateController
 	 * @var string
 	 */
 	protected $stateData = array(
-		'published' => 1
+		'state' => 1
 	);
 
 	/**

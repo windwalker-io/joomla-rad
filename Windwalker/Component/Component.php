@@ -255,44 +255,12 @@ class Component
 	 * @param   integer  $id          The item ID.
 	 *
 	 * @return  Object
-	 *
-	 * @since   3.1
 	 */
 	public function getActions($assetName, $categoryId = 0, $id = 0)
 	{
-		$user	= $this->container->get('user');
-		$result	= new Object;
+		$user = $this->container->get('user');
 
-		$path = JPATH_ADMINISTRATOR . '/components/' . strtolower($this->option) . '/access.xml';
-
-		if (!$id && !$categoryId)
-		{
-			$section = 'component';
-		}
-		elseif (!$id && $categoryId)
-		{
-			$section = 'category';
-			$assetName .= '.category.' . (int) $categoryId;
-		}
-		elseif ($id && !$categoryId)
-		{
-			$section = $assetName;
-			$assetName .= '.' . $assetName . '.' . $id;
-		}
-		else
-		{
-			$section = $assetName;
-			$assetName .= '.' . $assetName;
-		}
-
-		$actions = \JAccess::getActionsFromFile($path, "/access/section[@name='" . $section . "']/");
-
-		foreach ($actions as $action)
-		{
-			$result->set($action->name, $user->authorise($action->name, $assetName));
-		}
-
-		return $result;
+		return ComponentHelper::getActions($user, $this->option, $assetName, $categoryId, $id);
 	}
 
 	/**

@@ -52,7 +52,7 @@ class JFormField{{controller.item.name.cap}}_List extends JFormFieldItemlist
 	 *
 	 * @var string
 	 */
-	protected $published_field = 'published';
+	protected $published_field = 'state';
 
 	/**
 	 * Set the ordering column name in table.

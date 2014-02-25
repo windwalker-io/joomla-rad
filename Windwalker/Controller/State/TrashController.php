@@ -21,7 +21,7 @@ class TrashController extends AbstractUpdateStateController
 	 * @var string
 	 */
 	protected $stateData = array(
-		'published' => '-2'
+		'state' => '-2'
 	);
 
 	/**

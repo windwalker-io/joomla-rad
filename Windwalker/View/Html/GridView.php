@@ -29,7 +29,7 @@ class GridView extends ListHtmlView
 		'title'            => 'title',
 		'alias'            => 'alias',
 		'checked_out'      => 'checked_out',
-		'state'            => 'published',
+		'state'            => 'state',
 		'author'           => 'created_by',
 		'author_name'      => 'user_name',
 		'checked_out_time' => 'checked_out_time',

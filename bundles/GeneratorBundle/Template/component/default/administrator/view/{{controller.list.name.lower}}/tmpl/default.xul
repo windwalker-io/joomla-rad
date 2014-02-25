@@ -22,7 +22,7 @@
 
 							<!--STATUS-->
 							<col width="5%" class="nowrap center">
-								<sort field="{{controller.item.name.lower}}.published">JSTATUS</sort>
+								<sort field="{{controller.item.name.lower}}.state">JSTATUS</sort>
 							</col>
 
 							<!--TITLE-->
@@ -75,7 +75,7 @@
 								<!--STATUS-->
 								<cell class="center">
 									<html:div class="btn-group">
-										<call data="grid" method="published"/>
+										<call data="grid" method="state"/>
 									</html:div>
 								</cell>
 

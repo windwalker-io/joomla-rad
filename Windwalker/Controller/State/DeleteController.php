@@ -15,7 +15,7 @@ class DeleteController extends AbstractUpdateStateController
 	 * @var string
 	 */
 	protected $stateData = array(
-		'published' => '-9'
+		'state' => '-9'
 	);
 
 	/**

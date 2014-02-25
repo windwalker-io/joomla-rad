@@ -63,9 +63,9 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
 		// If no state filter, set published >= 0
-		if (!isset($filters['{{controller.item.name.lower}}.published']) && property_exists($this->getTable(), 'published'))
+		if (!isset($filters['{{controller.item.name.lower}}.state']) && property_exists($this->getTable(), 'state'))
 		{
-			$query->where($query->quoteName('{{controller.item.name.lower}}.published') . ' >= 0');
+			$query->where($query->quoteName('{{controller.item.name.lower}}.state') . ' >= 0');
 		}
 
 		return parent::processFilters($query, $filters);
