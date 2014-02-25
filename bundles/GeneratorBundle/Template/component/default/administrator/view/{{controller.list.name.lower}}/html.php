@@ -59,9 +59,23 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends GridVie
 	public function __construct(Model $model = null, Container $container = null, $config = array(), \SplPriorityQueue $paths = null)
 	{
 		$config['grid'] = array(
-			'orderCol'  => $this->viewItem . '.catid, ' . $this->viewItem . '.ordering'
+			// Some basic setting
+			'option'    => '{{extension.element.lower}}',
+			'view_name' => '{{controller.item.name.lower}}',
+			'view_item' => '{{controller.item.name.lower}}',
+			'view_list' => '{{controller.list.name.lower}}',
+
+			// Column which we allow to drag sort
+			'order_column'   => '{{controller.item.name.lower}}.catid, {{controller.item.name.lower}}.ordering',
+
+			// Table id
+			'order_table_id' => '{{controller.item.name.lower}}List',
+
+			// Ignore user access, allow all.
+			'ignore_access'  => false
 		);
 
+		// Directly use php engine
 		$this->engine = new PhpEngine;
 
 		parent::__construct($model, $container, $config, $paths);
@@ -86,8 +100,10 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends GridVie
 	 */
 	protected function configureToolbar($buttonSet = array(), $canDo = null)
 	{
+		// Get default button set.
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
+		// In debug mode, we remove trash button but use delete button instead.
 		if (JDEBUG)
 		{
 			$buttonSet['trash']['access']  = false;
