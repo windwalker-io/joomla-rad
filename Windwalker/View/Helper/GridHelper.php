@@ -107,7 +107,8 @@ class GridHelper
 	/**
 	 * registerTableSort
 	 *
-	 * @param null $task
+	 * @param string $task
+	 * @param int    $tableId
 	 *
 	 * @return bool
 	 */
@@ -118,14 +119,15 @@ class GridHelper
 			return false;
 		}
 
-		$option    = $this->config->get('option');
-		$task      = $task ? : $this->config->get('view_list') . '.state.reorder';
-		$listDirn  = $this->state->get('list.direction');
-		$tableId   = $tableId ? : $this->config->get('order_table_id', 'TableList');
+		$option   = $this->config->get('option');
+		$task     = $task ? : $this->config->get('view_list') . '.state.reorder';
+		$listDirn = $this->state->get('list.direction');
+		$tableId  = $tableId ? : $this->config->get('order_table_id', 'TableList');
 
 		$saveOrderingUrl = 'index.php?option=' . $option . '&task=' . $task . '&tmpl=component';
+		$formName  = $this->config->get('form_name', 'adminForm');
 
-		\JHtml::_('sortablelist.sortable', $tableId, 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+		\JHtml::_('sortablelist.sortable', $tableId, $formName, strtolower($listDirn), $saveOrderingUrl);
 
 		return true;
 	}
