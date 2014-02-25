@@ -434,14 +434,14 @@ class AssetHelper implements ContainerAwareInterface
 		// (1) Find: templates/[tmpl]/[type]/[name]/[file_name].[type]
 		$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}/{name}', 800);
 
-		// (2) Find: templates/[tmpl]/[file_name].[type]
-		$this->paths->insert($prefix . 'templates/' . $app->getTemplate(), 700);
+		// (2) Find: templates/[tmpl]/[type]/[file_name].[type]
+		$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}', 700);
 
 		// (3) Find: components/[name]/asset/[type]/[file_name].[type]
 		$this->paths->insert($prefix . 'components/{name}/asset/{type}', 600);
 
 		// (4) Find: components/[name]/asset/[file_name].[type]
-		$this->paths->insert($prefix . 'components/{name}', 500);
+		$this->paths->insert($prefix . 'components/{name}/asset', 500);
 
 		// (5) Find: media/[name]/[type]/[file_name].[type]
 		$this->paths->insert('media/{name}/{type}', 400);
