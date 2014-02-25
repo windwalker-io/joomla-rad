@@ -8,6 +8,9 @@
 
 namespace Windwalker\Helper;
 
+use Joomla\String\Inflector;
+use Windwalker\System\ExtensionHelper;
+
 /**
  * Class PathHelper
  *
@@ -16,18 +19,6 @@ namespace Windwalker\Helper;
 class PathHelper
 {
 	/**
-	 * @var    array  The mapper to find extension type.
-	 * @since  3.3
-	 */
-	protected static $extMapper = array(
-		'com_' => 'components',
-		'mod_' => 'modules',
-		'plg_' => 'plugins',
-		'lib_' => 'libraries',
-		'tpl_' => 'templates'
-	);
-
-	/**
 	 * Get the path of extension.
 	 *
 	 * @param   string   $element   The extension element name, example: com_content or plg_group_name
@@ -35,33 +26,32 @@ class PathHelper
 	 * @param   boolean  $absolute  True to return whole path.
 	 *
 	 * @return  string  The found path.
-	 *
-	 * @since  3.3
 	 */
 	public static function get($element, $client = null, $absolute = true)
 	{
 		$element = strtolower($element);
 
-		list($extension, $name, $group) = static::extractElement($element);
+		$extracted = ExtensionHelper::extractElement($element);
 
-		$folder = $name;
+		$extension = $extracted['type'];
+		$name  = $extracted['name'];
+		$group = $extracted['group'];
 
 		// Assign name path.
 		switch ($extension)
 		{
-			case 'components':
-			case 'modules':
+			case 'component':
+			case 'module':
 				$folder = $element;
 				break;
 
-			case 'plugins':
+			case 'plugin':
 				$folder = $group . '/' . $name;
 				$client = 'site';
 				break;
 
-			case 'libraries':
+			case 'library':
 				$client = 'site';
-				break;
 
 			default:
 				$folder = $name;
@@ -69,6 +59,7 @@ class PathHelper
 		}
 
 		// Build path
+		$extension = Inflector::getInstance()->toPlural($extension);
 		$path = $extension . '/' . $folder;
 
 		if (!$absolute)
@@ -103,8 +94,6 @@ class PathHelper
 	 * @param   boolean  $absolute  True to return whole path.
 	 *
 	 * @return  string  The found path.
-	 *
-	 * @since   3.3
 	 */
 	public static function getAdmin($element, $absolute = true)
 	{
@@ -118,73 +107,9 @@ class PathHelper
 	 * @param   boolean  $absolute  True to return whole path.
 	 *
 	 * @return  string  The found path.
-	 *
-	 * @since   3.3
 	 */
 	public static function getSite($element, $absolute = true)
 	{
 		return static::get($element, 'site', $absolute);
-	}
-
-	/**
-	 * Extract element.
-	 *
-	 * @param   string  $element  he extension element name, example: com_content or plg_group_name
-	 *
-	 * @return  array
-	 *
-	 * @throws  \InvalidArgumentException
-	 *
-	 * @since   3.3
-	 */
-	protected static function extractElement($element)
-	{
-		$prefix = substr($element, 0, 4);
-
-		$ext = static::getExtName($prefix);
-
-		if (!$ext)
-		{
-			throw new \InvalidArgumentException(sprintf('Need extension prefix, "%s" given.', $element));
-		}
-
-		$group = '';
-		$name = substr($element, 4);
-
-		// Get group
-		if ($ext == 'plugins')
-		{
-			$name  = explode('_', $name);
-
-			$group = array_shift($name);
-
-			$name  = implode('_', $name);
-
-			if (!$name)
-			{
-				throw new \InvalidArgumentException(sprintf('Plugin name need group, eg: "plg_group_name", "%s" given.', $element));
-			}
-		}
-
-		return array($ext, $name, $group);
-	}
-
-	/**
-	 * Get extension type name.
-	 *
-	 * @param   string  $prefix  The extension prefix.
-	 *
-	 * @return  string|null  Extension type name.
-	 *
-	 * @since   3.3
-	 */
-	protected static function getExtName($prefix)
-	{
-		if (!empty(static::$extMapper[$prefix]))
-		{
-			return static::$extMapper[$prefix];
-		}
-
-		return null;
 	}
 }

@@ -8,8 +8,8 @@
 
 namespace Windwalker\System\Config;
 
-use Joomla\Filesystem\File;
 use Joomla\Registry\Registry;
+use Windwalker\System\ExtensionHelper;
 
 /**
  * Class Config
@@ -18,13 +18,6 @@ use Joomla\Registry\Registry;
  */
 abstract class ConfigHelper
 {
-	/**
-	 * Property config.
-	 *
-	 * @var  Registry[]
-	 */
-	public static $config = array();
-
 	/**
 	 * Property type.
 	 *
@@ -36,15 +29,14 @@ abstract class ConfigHelper
 	 * saveConfig
 	 *
 	 * @param \Joomla\Registry\Registry $config
-	 * @param                           $prefix
-	 * @param string                    $extType
-	 * @param null                      $group
+	 * @param string                    $element
 	 *
 	 * @return  void
 	 */
-	public static function saveConfig(Registry $config, $prefix, $extType = 'component', $group = null)
+	public static function saveConfig(Registry $config, $element)
 	{
-		$class = static::getClass($prefix, $extType, $group);
+		/** @var $class AbstractConfig */
+		$class = static::getClass($element);
 
 		$class::saveConfig($config);
 	}
@@ -53,16 +45,14 @@ abstract class ConfigHelper
 	 * setConfig
 	 *
 	 * @param \Joomla\Registry\Registry $config
-	 * @param string                    $prefix
-	 * @param string                    $extType
-	 * @param null                      $group
+	 * @param string                    $element
 	 *
 	 * @return  void
 	 */
-	public static function setConfig(Registry $config, $prefix, $extType = 'component', $group = null)
+	public static function setConfig(Registry $config, $element)
 	{
 		/** @var $class AbstractConfig */
-		$class = static::getClass($prefix, $extType, $group);
+		$class = static::getClass($element);
 
 		$class::setConfig($config);
 	}
@@ -70,20 +60,19 @@ abstract class ConfigHelper
 	/**
 	 * getPath
 	 *
-	 * @param string $prefix
-	 * @param string $extType
-	 * @param string $group
+	 * @param string $element
 	 *
 	 * @throws  \LogicException
 	 * @return  string
 	 */
-	public static function getConfig($prefix, $extType = 'component', $group = null)
+	public static function getConfig($element)
 	{
-		$class = static::getClass($prefix, $extType, $group);
+		/** @var $class AbstractConfig */
+		$class = static::getClass($element);
 
-		if (!is_subclass_of($class, 'Windwalker\\Syatem\\Config\\AbstractConfig'))
+		if (!is_subclass_of($class, 'Windwalker\\System\\Config\\ConfigInterface'))
 		{
-			throw new \LogicException(sprintf('Please make %s extends Windwalker\\Syatem\\Config\\AbstractConfig'));
+			throw new \LogicException(sprintf('Please make %s implement Windwalker\\Syatem\\Config\\ConfigInterface', $class));
 		}
 
 		return $class::getConfig();
@@ -92,38 +81,41 @@ abstract class ConfigHelper
 	/**
 	 * getClass
 	 *
-	 * @param string $prefix
-	 * @param string $extType
-	 * @param string $group
-	 *
-	 * @return  string
+	 * @param string $element
 	 *
 	 * @throws \LogicException
 	 * @throws \DomainException
+	 * @return  string
 	 */
-	public static function getClass($prefix, $extType = 'component', $group = null)
+	public static function getClass($element)
 	{
-		switch ($extType)
+		$extracted = ExtensionHelper::extractElement($element);
+
+		switch ($extracted['type'])
 		{
 			case 'module':
-				$class = 'Mod' . ucfirst($prefix) . '\\Config\\Config';
+				$class = 'Mod' . ucfirst($extracted['name']) . '\\Config\\Config';
 				break;
 
 			case 'plugin':
-				if (!$group)
+				if (!$extracted['group'])
 				{
 					throw new \LogicException(sprintf('Please give me group name when get plugin config.'));
 				}
 
-				$class = 'Plg' . ucfirst($group) . ucfirst($prefix) . '\\Config\\Config';
+				$class = 'Plg' . ucfirst($extracted['group']) . ucfirst($extracted['name']) . '\\Config\\Config';
 				break;
 
 			case 'component':
-				$class = ucfirst($prefix) . '\\Config\\Config';
+				$class = ucfirst($extracted['name']) . '\\Config\\Config';
+				break;
+
+			case 'template':
+				$class = 'Tpl' . ucfirst($extracted['name']) . '\\Config\\Config';
 				break;
 
 			default:
-				throw new \DomainException(sprintf('Do get config from this extension type: %s', $extType));
+				throw new \DomainException(sprintf('Don\'t get config from this extension: %s', $element));
 		}
 
 		return $class;

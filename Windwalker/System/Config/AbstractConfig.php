@@ -16,7 +16,7 @@ use Joomla\Registry\Registry;
  *
  * @since 1.0
  */
-abstract class AbstractConfig
+abstract class AbstractConfig implements ConfigInterface
 {
 	/**
 	 * Property config.
@@ -91,22 +91,11 @@ abstract class AbstractConfig
 	 *
 	 * @param   \Joomla\Registry\Registry $config
 	 *
-	 * @return  Config  Return self to support chaining.
+	 * @return  AbstractConfig  Return self to support chaining.
 	 */
 	public static function setConfig(Registry $config)
 	{
 		self::$config = $config;
-	}
-
-	/**
-	 * getPath
-	 *
-	 * @throws \LogicException
-	 * @return  string
-	 */
-	public static function getPath()
-	{
-		throw new \LogicException('Please override AbstractConfig::getPath().');
 	}
 }
  
