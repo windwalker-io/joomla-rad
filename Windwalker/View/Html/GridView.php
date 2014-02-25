@@ -197,7 +197,7 @@ class GridView extends ListHtmlView
 				'handler' => 'deleteList',
 				'args'     => array($this->viewList . '.state.delete'),
 				'access'  => (
-					ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'published'))
+					ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'state'))
 					&& $canDo->get('core.delete')
 				),
 				'priority' => 400
@@ -207,7 +207,7 @@ class GridView extends ListHtmlView
 				'handler' => 'trash',
 				'args'     => array($this->viewList . '.state.trash'),
 				'access'  => (
-					!ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'published'))
+					!ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'state'))
 					&& $canDo->get('core.edit.state')
 				),
 				'priority' => 300

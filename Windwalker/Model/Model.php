@@ -285,12 +285,12 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	{
 		if (!empty($record->id))
 		{
-			if ($record->published != -2)
+			if ($record->state != -2)
 			{
 				return false;
 			}
 
-			$user = \JFactory::getUser();
+			$user = $this->container->get('user');
 
 			return $user->authorise('core.delete', $this->option);
 		}

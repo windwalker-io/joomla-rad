@@ -318,7 +318,7 @@ HTML;
 		$item       = $this->current;
 		$canChange  = $this->state->get('access.canChange', true);
 		$taskPrefix = $taskPrefix ? : $this->config->get('view_list') . '.state.';
-		$field      = $this->config->get('field.state', 'published');
+		$field      = $this->config->get('field.state', 'state');
 
 		return \JHtml::_('jgrid.published', $item->$field, $this->row, $taskPrefix, $canChange, 'cb', $item->publish_up, $item->publish_down);
 	}
