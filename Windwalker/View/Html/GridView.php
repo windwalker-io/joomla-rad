@@ -66,6 +66,8 @@ class GridView extends ListHtmlView
 		}
 	}
 
+
+
 	/**
 	 * prepareRender
 	 *
@@ -239,8 +241,9 @@ class GridView extends ListHtmlView
 			'view_name' => $this->getName(),
 			'view_item' => $this->viewItem,
 			'view_list' => $this->viewList,
-			'orderCol'  => $this->viewItem . '.catid, ' . $this->viewItem . '.ordering',
-			'order_table_id' => $this->viewItem . 'List'
+			'order_column'   => $this->viewItem . '.ordering',
+			'order_table_id' => $this->viewItem . 'List',
+			'ignore_access'  => false
 		);
 
 		$config['fields'] = !empty($config['fields']) ? $config['fields'] : $this->configureFields();

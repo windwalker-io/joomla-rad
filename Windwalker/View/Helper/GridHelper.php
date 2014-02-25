@@ -98,10 +98,10 @@ class GridHelper
 
 		// Ordering
 		$listOrder = $state->get('list.ordering');
-		$orderCol  = $state->get('list.orderCol', $config->get('orderCol'));
+		$orderCol  = $state->get('list.orderCol', $config->get('order_column'));
 		$listDirn  = $this->state->get('list.direction');
 
-		$state->set('list.saveorder', ($listOrder == $orderCol) && $listDirn == 'ASC');
+		$state->set('list.saveorder', ($listOrder == $orderCol) && strtoupper($listDirn) == 'ASC');
 	}
 
 	/**
@@ -160,7 +160,7 @@ class GridHelper
 	 */
 	public function orderTitle()
 	{
-		$orderCol = $this->state->get('list.orderCol', $this->config->get('orderCol'));
+		$orderCol = $this->state->get('list.orderCol', $this->config->get('order_column'));
 
 		return $this->sortTitle('', $orderCol, null, 'asc', 'JGRID_HEADING_ORDERING', 'icon-menu-2');
 	}
@@ -225,7 +225,7 @@ class GridHelper
 		$item       = $this->current;
 		$orderField = $this->config->get('field.ordering', 'ordering');
 		$canChange  = $this->state->get('access.canChange', true);
-		$saveOrder  = $this->state->get('list.saveorder', true);
+		$saveOrder  = $this->state->get('list.saveorder', false);
 
 		if (!$canChange)
 		{
