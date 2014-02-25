@@ -37,6 +37,7 @@
 		<filename>router.php</filename>
 		<folder>asset</folder>
 		<folder>controller</folder>
+		<folder>etc</folder>
 		<folder>helper</folder>
 		<folder>images</folder>
 		<folder>model</folder>
