@@ -9,9 +9,10 @@
 namespace Windwalker\View\Html;
 
 use Joomla\DI\Container;
+use Joomla\Registry\Registry;
+use Windwalker\Bootstrap\Dropdown;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
-use Joomla\Registry\Registry;
 use Windwalker\View\Helper\GridHelper;
 
 /**

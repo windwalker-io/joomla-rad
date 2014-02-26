@@ -122,7 +122,11 @@ $grid->registerTableSort();
 		<!--STATE-->
 		<td class="center">
 			<div class="btn-group">
+				<!-- STATE BUTTON -->
 				<?php echo $grid->state() ?>
+
+				<!-- CHANGE STATE DROP DOWN -->
+				<?php echo $this->loadTemplate('dropdown'); ?>
 			</div>
 		</td>
 

@@ -59,6 +59,8 @@ class JFormFieldModal extends JFormField
 	 */
 	protected $component;
 
+
+
 	/**
 	 * Method to get the field input markup.
 	 *
