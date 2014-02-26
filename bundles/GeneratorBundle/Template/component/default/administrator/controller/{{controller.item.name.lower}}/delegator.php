@@ -16,6 +16,15 @@ use Windwalker\Controller\Resolver\ControllerDelegator;
 class {{extension.name.cap}}Controller{{controller.item.name.cap}}Delegator extends ControllerDelegator
 {
 	/**
+	 * registerAliases
+	 *
+	 * @return  void
+	 */
+	protected function registerAliases()
+	{
+	}
+
+	/**
 	 * createController
 	 *
 	 * @param string $class
