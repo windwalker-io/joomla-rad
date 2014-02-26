@@ -38,7 +38,7 @@ class Thumb
 	 *
 	 * @var string
 	 */
-	protected $defaultImage = 'http://placehold.it/{width}x{height}';
+	protected $defaultImage = 'libraries/windwalker/Resource/images/default-image.png';
 
 	/**
 	 * Property extension.
@@ -123,7 +123,16 @@ class Thumb
 			}
 
 			// Crop
-			$img = $img->createThumbs($width . 'x' . $height, $method);
+			if ($method === true)
+			{
+				$method = \JImage::CROP_RESIZE;
+			}
+			elseif ($method === false)
+			{
+				$method = \JImage::SCALE_INSIDE;
+			}
+
+			$img = $img->generateThumbs($width . 'x' . $height, $method);
 
 			// Save
 			switch ($file_type)
@@ -270,7 +279,7 @@ class Thumb
 		$url = $this->defaultImage;
 		$url = strtr($url, $replace);
 
-		return $url;
+		return $this->resize($url, $width, $height, $zc, $q, $file_type);
 	}
 
 	/**
