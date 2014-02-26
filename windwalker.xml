@@ -18,7 +18,6 @@
 		<folder>bundles</folder>
 		<folder>language</folder>
 		<folder>Resource</folder>
-		<folder>Template</folder>
 		<folder>vendor</folder>
 		<folder>Windwalker</folder>
 		<file>.gitignore</file>
