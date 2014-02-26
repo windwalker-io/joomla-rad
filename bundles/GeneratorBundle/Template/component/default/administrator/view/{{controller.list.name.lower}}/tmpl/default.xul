@@ -61,7 +61,7 @@
 							</col>
 						</head>
 						<body>
-							<rowlist data="items" class="{{controller.item.name.lower}}-row" sortable-group-id="{{ grid.current.catid }}">
+							<rowlist data="items" class="{{controller.item.name.lower}}-row" sortable-group-id="">
 								<!--SORT-->
 								<cell class="order nowrap center hidden-phone">
 									<call data="grid" method="dragSort"/>

@@ -15,6 +15,7 @@ $data = $displayData;
 $filters = $data['view']->filterForm->getGroup('filter');
 $searches = $data['view']->filterForm->getFieldset('multisearch');
 ?>
+
 <?php if ($searches) : ?>
 	<?php foreach ($searches as $fieldName => $field) : ?>
 		<div class="js-stools-field-filter">
