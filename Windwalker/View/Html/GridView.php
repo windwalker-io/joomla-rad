@@ -112,9 +112,7 @@ class GridView extends ListHtmlView
 	{
 		if (!$title)
 		{
-			$name = \JText::_($this->textPrefix . '_VIEW_' . strtoupper($this->getName()));
-
-			$title = \JText::sprintf('LIB_WINDWALKER_TITLE_LIST', $name);
+			$title = \JText::_(sprintf('COM_%s_%s_TITLE_LIST', strtoupper($this->prefix), strtoupper($this->viewItem)));
 		}
 
 		parent::setTitle($title, 'stack article');

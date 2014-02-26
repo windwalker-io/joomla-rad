@@ -82,9 +82,7 @@ class EditView extends ItemHtmlView
 	{
 		if (!$title)
 		{
-			$name = \JText::_($this->textPrefix . '_VIEW_' . strtoupper($this->getName()));
-
-			$title = \JText::sprintf('LIB_WINDWALKER_TITLE_ITEM_EDIT', $name);
+			$title = \JText::_(sprintf('COM_%s_%s_TITLE_ITEM_EDIT', strtoupper($this->prefix), strtoupper($this->viewItem)));
 		}
 
 		parent::setTitle($title, 'pencil-2 article');

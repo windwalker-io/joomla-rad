@@ -35,10 +35,8 @@ abstract class {{extension.name.cap}}Helper
 		{
 			if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
 			{
-				$name = \JText::_('{{extension.element.upper}}_VIEW_' . strtoupper($view));
-
 				JHtmlSidebar::addEntry(
-					JText::sprintf('LIB_WINDWALKER_TITLE_LIST', $name),
+					JText::sprintf('{{extension.element.upper}}_{{controller.item.name.upper}}_TITLE_LIST'),
 					'index.php?option={{extension.element.lower}}&view=' . $view,
 					($vName == $view)
 				);
