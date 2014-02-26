@@ -36,7 +36,7 @@ else
 // Trash & Delete
 if (JDEBUG || $data->state->get('filter.{{controller.item.name.lower}}.state') == -2)
 {
-	Dropdown::addCustomItem(\JText::_('JTOOLBAR_TRASH'), 'trash', $grid->row, '{{controller.list.name.lower}}.state');
+	Dropdown::addCustomItem(\JText::_('JTOOLBAR_DELETE'), 'delete', $grid->row, '{{controller.list.name.lower}}.state.delete');
 }
 else
 {
