@@ -8,6 +8,8 @@
 
 namespace Windwalker\System;
 
+use Joomla\Registry\Registry;
+
 /**
  * Class ExtensionHelper
  *
@@ -90,6 +92,35 @@ class ExtensionHelper
 		}
 
 		return null;
+	}
+
+	public static function getParams($element)
+	{
+		$extension = static::extractElement($element);
+
+		switch($extension['type'])
+		{
+			case 'component':
+				$params = \JComponentHelper::getParams($element);
+				break;
+
+			case 'module':
+				$module = \JModuleHelper::getModule($element);
+				$params = new Registry;
+				$params->loadString($module->params);
+				break;
+
+			case 'plugin':
+				$plugin = \JPluginHelper::getPlugin($extension['group'], 'plg_' . $extension['name']);
+				$params = $plugin->params;
+				break;
+
+			default:
+				$params = new Registry;
+				break;
+		}
+
+		return $params;
 	}
 }
  
