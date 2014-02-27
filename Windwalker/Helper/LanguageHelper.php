@@ -131,7 +131,7 @@ class LanguageHelper
 			return false;
 		}
 
-		$lang = Container::getInstance()->get('language');
+		$language = Container::getInstance()->get('language');
 
 		foreach ($files as $file)
 		{
@@ -144,12 +144,12 @@ class LanguageHelper
 
 			array_shift($file);
 
-			if (count($file) == 1 || $file[1] == 'sys')
+			if (count($file) != 1 && $file[1] == 'sys')
 			{
 				continue;
 			}
 
-			$lang->load(implode('.', $file), PathHelper::getAdmin($option));
+			$language->load(implode('.', $file), PathHelper::getAdmin($option));
 		}
 
 		return true;

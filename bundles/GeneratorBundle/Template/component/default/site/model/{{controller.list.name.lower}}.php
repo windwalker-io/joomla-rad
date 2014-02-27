@@ -8,10 +8,8 @@
 
 use Joomla\Registry\Registry;
 use Windwalker\DI\Container;
-use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
-use Windwalker\System\ExtensionHelper;
 
 /**
  * Class {{extension.name.cap}}Model{{controller.list.name.cap}}
@@ -20,20 +18,6 @@ use Windwalker\System\ExtensionHelper;
  */
 class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 {
-	/**
-	 * Property params.
-	 *
-	 * @var  Registry
-	 */
-	protected $params = null;
-
-	/**
-	 * Property category.
-	 *
-	 * @var  Windwalker\Data\Data
-	 */
-	protected $category = null;
-
 	/**
 	 * configureTables
 	 *
@@ -63,32 +47,6 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	protected function populateState($ordering = null, $direction = null)
 	{
 		parent::populateState($ordering, 'ASC');
-	}
-
-	/**
-	 * getParams
-	 *
-	 * @return  Registry
-	 */
-	public function getParams()
-	{
-		if ($this->params)
-		{
-			return $this->params;
-		}
-
-		$app = $this->getContainer()->get('app');
-		$comParams  = ExtensionHelper::getParams('{{extension.element.lower}}');
-		$menuParams = new Registry;
-
-		if ($menu = $app->getMenu()->getActive())
-		{
-			$menuParams->loadString($menu->params);
-		}
-
-		$menuParams->merge($comParams);
-
-		return $this->params = $menuParams;
 	}
 
 	/**
@@ -130,24 +88,5 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 */
 	protected function configureSearches($searchHelper)
 	{
-	}
-
-	/**
-	 * getCategory
-	 *
-	 * @return  \Windwalker\Data\Data
-	 */
-	public function getCategory()
-	{
-		if (!empty($this->category))
-		{
-			return $this->category;
-		}
-
-		$input  = $this->getContainer()->get('input');
-		$pk     = $this->state->get('category.id', $input->get('id'));
-		$mapper = new DataMapper('#__categories');
-
-		return $mapper->findOne(array('id' => $pk));
 	}
 }

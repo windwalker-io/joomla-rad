@@ -8,6 +8,8 @@
  */
 
 // No direct access
+use Windwalker\Data\Data;
+
 defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();
@@ -24,12 +26,6 @@ $container = $this->getContainer();
 $data      = $this->data;
 $state     = $data->state;
 $user      = $container->get('user');
-$userId    = $user->get('id');
-
-$listOrder = $state->get('list.ordering');
-$listDirn  = $state->get('list.direction');
-$canOrder  = $user->authorise('core.edit.state', '{{extension.element.lower}}');
-$saveOrder = $listOrder == 'a.ordering';
 ?>
 <form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm">
 
@@ -53,15 +49,71 @@ $saveOrder = $listOrder == 'a.ordering';
 			<?php endif; ?>
 			<!-- Heading End -->
 
+			<!-- Category Description -->
+			<?php if ($data->params->get('show_description', 1) || $data->params->def('show_description_image', 1)) : ?>
+				<div class="category-desc">
+					<?php
+					if ($data->params->get('show_description_image') && $data->category->params->get('image'))
+					{
+						echo JHtml::image($data->category->params()->get('image'), 'Desc Image');
+					}
+
+					if ($data->params->get('show_description') && $data->category->description)
+					{
+						echo JHtml::_('content.prepare', $data->category->description, '', '{{extension.element.lower}}.category');
+					}
+					?>
+					<div class="clr"></div>
+				</div>
+			<?php endif; ?>
+			<!-- Category Description End -->
+
+			<!-- {{controller.list.name.cap}} List -->
+			<div id="{{controller.list.name.lower}}-wrap">
+
+				<!--Columns-->
+				<?php if (!empty($data->items)) : ?>
+
+					<?php
+					foreach ($data->items as $key => &$item)
+					:
+						$item = new Data($item);
+					?>
+						<div class="item">
+							<?php
+							$this->item = & $item;
+							echo $this->loadTemplate('item', array('item' => $item));
+							?>
+						</div>
+
+						<span class="row-separator"></span>
+						<!-- LINE END -->
+
+					<?php endforeach; ?>
+
+				<?php endif; ?>
+				<!--Columns End-->
+
+			<!--Pagination-->
+			<?php if (($data->params->def('show_pagination', 1) == 1 || ($data->params->get('show_pagination') == 2)) && ($data->pagination->get('pages.total') > 1)) : ?>
+				<div class="pagination">
+					<?php if ($data->params->def('show_pagination_results', 1)) : ?>
+						<p class="counter">
+							<?php echo $data->pagination->getPagesCounter(); ?>
+						</p>
+					<?php endif; ?>
+
+					<?php echo $data->pagination->getPagesLinks(); ?>
+				</div>
+			<?php endif; ?>
+			<!--Pagination End-->
+
 		</div>
 	</div>
 
 	<div>
 		<input type="hidden" name="task" value="" />
-		<input type="hidden" name="boxchecked" value="0" />
-		<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>" />
-		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
-		<input type="hidden" name="return" id="return_url" value="<?php echo base64_encode(JFactory::getURI()->toString()); ?>" />
+		<input type="hidden" name="return" id="return_url" value="<?php echo base64_encode(JUri::getInstance()->toString()); ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
 

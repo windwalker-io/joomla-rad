@@ -10,6 +10,7 @@ namespace Windwalker\Model;
 
 use JArrayHelper;
 use JDatabaseQuery;
+use Joomla\Registry\Registry;
 use JPagination;
 use JPluginHelper;
 
@@ -19,11 +20,13 @@ use JTable;
 use Windwalker\DI\Container;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\Filter\FilterProvider;
 use Windwalker\Model\Filter\SearchHelper;
 use Windwalker\Model\Helper\AdminListHelper;
 use Windwalker\Model\Helper\QueryHelper;
+use Windwalker\System\ExtensionHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -88,6 +91,20 @@ class ListModel extends FormModel
 	 * @var array
 	 */
 	protected $searchFields = array();
+
+	/**
+	 * Property params.
+	 *
+	 * @var  Registry
+	 */
+	protected $params = null;
+
+	/**
+	 * Property category.
+	 *
+	 * @var  \Windwalker\Data\Data
+	 */
+	protected $category = null;
 
 	/**
 	 * Constructor
@@ -884,5 +901,53 @@ class ListModel extends FormModel
 		$queryHelper->removeTable($alias);
 
 		return $this;
+	}
+
+	/**
+	 * getParams
+	 *
+	 * @return  Registry
+	 */
+	public function getParams()
+	{
+		if ($this->params)
+		{
+			return $this->params;
+		}
+
+		$app = $this->getContainer()->get('app');
+		$comParams  = ExtensionHelper::getParams('com_flower');
+		$menuParams = new Registry;
+
+		if ($menu = $app->getMenu()->getActive())
+		{
+			$menuParams->loadString($menu->params);
+		}
+
+		$menuParams->merge($comParams);
+
+		return $this->params = $menuParams;
+	}
+
+	/**
+	 * getCategory
+	 *
+	 * @return  \Windwalker\Data\Data
+	 */
+	public function getCategory()
+	{
+		if (!empty($this->category))
+		{
+			return $this->category;
+		}
+
+		$input  = $this->getContainer()->get('input');
+		$pk     = $this->state->get('category.id', $input->get('id'));
+		$mapper = new DataMapper('#__categories');
+
+		$data = $mapper->findOne(array('id' => $pk));
+		$data->params = new Registry($data);
+
+		return $data;
 	}
 }
