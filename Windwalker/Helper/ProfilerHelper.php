@@ -50,7 +50,7 @@ class ProfilerHelper
 			$namespace = 'Application';
 		}
 
-		if (!(JDEBUG && $namespace == 'Application') && !AKDEBUG)
+		if (!JDEBUG)
 		{
 			return;
 		}

@@ -3,16 +3,15 @@
 namespace Windwalker\Provider;
 
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
 use Joomla\Registry\Registry;
-use Windwalker\Helper\DateHelper;
+use Windwalker\DI\ServiceProvider;
 
 /**
  * Class SystemProvider
  *
  * @since 1.0
  */
-class SystemProvider implements ServiceProviderInterface
+class SystemProvider extends ServiceProvider
 {
 	/**
 	 * Registers the service provider with a DI container.
@@ -32,25 +31,16 @@ class SystemProvider implements ServiceProviderInterface
 		$container->share('windwalker.config', array($this, 'loadConfig'));
 
 		// Database
-		$container->alias('db', 'JDatabaseDriver')
-			->share('JDatabaseDriver', array('JFactory', 'getDbo'));
+		$this->share($container, 'db', 'JDatabaseDriver', array('JFactory', 'getDbo'));
 
 		// Language
-		$container->alias('language', 'JLanguage')
-			->share('JLanguage', array('JFactory', 'getLanguage'));
+		$this->share($container, 'language', 'JLanguage', array('JFactory', 'getLanguage'));
 
 		// Dispatcher
-		$container->alias('event.dispatcher', 'JEventDispatcher')
-			->share('JEventDispatcher', array('JEventDispatcher', 'getInstance'));
+		$this->share($container, 'event.dispatcher', 'JEventDispatcher', array('JEventDispatcher', 'getInstance'));
 
 		// Date
-		$container->alias('date', 'JDate')
-			->set('JDate',
-				function()
-				{
-					return DateHelper::getDate();
-				}
-			);
+		$this->set($container, 'date', 'JDate', array('Windwalker\\Helper\\DateHelper', 'getDate'));
 
 		// Global
 		$container->set('SplPriorityQueue',

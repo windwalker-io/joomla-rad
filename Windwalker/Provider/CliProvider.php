@@ -4,16 +4,16 @@ namespace Windwalker\Provider;
 
 use Joomla\Console\Output\Stdout;
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
 use Joomla\Input\Input;
 use Windwalker\Console\Application\Console;
+use Windwalker\DI\ServiceProvider;
 
 /**
  * Class CliProvider
  *
  * @since 1.0
  */
-class CliProvider implements ServiceProviderInterface
+class CliProvider extends ServiceProvider
 {
 	/**
 	 * Registers the service provider with a DI container.
@@ -27,16 +27,22 @@ class CliProvider implements ServiceProviderInterface
 	public function register(Container $container)
 	{
 		// Application
-		$container->alias('app', 'Windwalker\\Console\\Application\\Console')
-			->share('Windwalker\\Console\\Application\\Console',
-				function($container)
-				{
-					return new Console(null, $container->get('windwalker.config'), new Stdout);
-				}
-			);
+		$this->share($container, 'app', 'Windwalker\\Console\\Application\\Console', array($this, 'createConsole'));
 
 		// Input
 		$container->alias('input', 'Joomla\\Input\\Cli')
 			->buildSharedObject('Joomla\\Input\\Cli');
+	}
+
+	/**
+	 * createConsole
+	 *
+	 * @param Container $container
+	 *
+	 * @return  Console
+	 */
+	public function createConsole(Container $container)
+	{
+		return new Console(null, $container->get('windwalker.config'), new Stdout);
 	}
 }
