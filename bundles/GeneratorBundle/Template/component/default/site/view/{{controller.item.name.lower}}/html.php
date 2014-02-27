@@ -6,11 +6,11 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use {{extension.name.cap}}\Router\Route;
 use Joomla\Registry\Registry;
 use Windwalker\Data\Data;
 use Windwalker\Helper\DateHelper;
 use Windwalker\View\Html\ItemHtmlView;
-use Windwalker\View\Html\ListHtmlView;
 
 /**
  * Class {{extension.name.cap}}View{{controller.item.name.cap}}
@@ -72,10 +72,12 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 		// Link
 		// =====================================================================================
-		$item->link = new JURI("index.php?option={{extension.element.lower}}&view={{controller.item.name.lower}}&id={$item->id}");
-		$item->link->setVar('alias', $item->alias);
-		$item->link->setVar('catid', $item->catid);
-		$item->link = JRoute::_((string) $item->link);
+		$query = array(
+			'id'    => $item->id,
+			'alias' => $item->alias,
+			// 'catid' => $item->catid
+		);
+		$item->link = Route::_('{{extension.element.lower}}.{{controller.item.name.lower}}', $query);
 
 		// Dsplay Data
 		// =====================================================================================
@@ -177,7 +179,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 		// Otherwise, {{controller.item.name.lower}} params override menu item params
 		$active       = $app->getMenu()->getActive();
 		$temp         = clone ($data->params);
-		$item->params = new JRegistry($item->params);
+		$item->params = new Registry($item->params);
 
 		// Check to see which parameters should take priority
 		if ($active)

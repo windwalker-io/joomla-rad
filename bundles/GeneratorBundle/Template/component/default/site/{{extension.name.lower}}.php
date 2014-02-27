@@ -6,10 +6,6 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
-
-JLoader::registerPrefix('{{extension.name.cap}}', JPATH_COMPONENT);
-JLoader::registerNamespace('{{extension.name.cap}}', JPATH_COMPONENT_ADMINISTRATOR . '/src');
-JLoader::register('{{extension.name.cap}}Component', JPATH_COMPONENT . '/component.php');
+include_once JPATH_COMPONENT_ADMINISTRATOR . '/src/init.php';
 
 echo with(new {{extension.name.cap}}Component)->execute();

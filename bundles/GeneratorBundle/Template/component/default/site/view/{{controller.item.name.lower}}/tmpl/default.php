@@ -8,6 +8,7 @@
  */
 
 // No direct access
+use {{extension.name.cap}}\Router\Route;
 use Windwalker\View\Helper\ViewHtmlHelper;
 
 defined('_JEXEC') or die;
@@ -25,7 +26,7 @@ $params = $data->item->params;
 $item = $data->item;
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.item.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
 	<div id="{{extension.name.cap}}" class="windwalker item container-fluid {{controller.item.name.lower}}<?php echo $params->get('pageclass_sfx'); ?>">
 		<div id="{{extension.name.lower}}-wrap-inner">
@@ -57,7 +58,7 @@ $item = $data->item;
 					<!-- ============================================================================= -->
 					<div class="info">
 						<div class="info-inner">
-							<?php echo ViewHtmlHelper::showInfo($item, 'title', 'jcategory', 'folder', JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}&id=' . $item->catid)); ?>
+							<?php echo ViewHtmlHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{extension.element.lower}}.{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
 							<?php echo ViewHtmlHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
 							<?php echo ViewHtmlHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
 							<?php echo ViewHtmlHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>

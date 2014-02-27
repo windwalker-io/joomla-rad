@@ -6,6 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use {{extension.name.cap}}\Router\Route;
 use Joomla\Registry\Registry;
 use Windwalker\Data\Data;
 use Windwalker\Helper\DateHelper;
@@ -74,10 +75,12 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 
 			// Link
 			// =====================================================================================
-			$item->link = new JUri("index.php?option={{extension.element.lower}}&view={{controller.item.name.lower}}&id={$item->id}");
-			$item->link->setVar('alias', $item->alias);
-			$item->link->setVar('catid', $item->catid);
-			$item->link = JRoute::_((string) $item->link);
+			$query = array(
+				// 'id'    => $item->id,
+				'alias' => $item->alias,
+				// 'catid' => $item->catid
+			);
+			$item->link = Route::_('{{extension.element.lower}}.{{controller.item.name.lower}}', $query);
 
 			// Publish Date
 			// =====================================================================================
