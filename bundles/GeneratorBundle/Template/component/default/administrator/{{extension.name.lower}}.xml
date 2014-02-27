@@ -31,18 +31,16 @@
 	</uninstall>
 
 	<files folder="../site">
+		<folder>asset</folder>
+		<folder>controller</folder>
+		<folder>helper</folder>
+		<folder>images</folder>
+		<folder>model</folder>
+		<folder>view</folder>
 		<filename>componenet.php</filename>
 		<filename>{{extension.name.lower}}.php</filename>
 		<filename>index.html</filename>
 		<filename>router.php</filename>
-		<folder>asset</folder>
-		<folder>controller</folder>
-		<folder>etc</folder>
-		<folder>helper</folder>
-		<folder>images</folder>
-		<folder>model</folder>
-		<folder>sql</folder>
-		<folder>view</folder>
 	</files>
 
 	<administration>
@@ -63,14 +61,9 @@
 		-->
 
 		<files folder="admin">
-			<filename>access.xml</filename>
-			<filename>component.php</filename>
-			<filename>config.xml</filename>
-			<filename>{{extension.name.lower}}.php</filename>
-			<filename>index.html</filename>
-			<filename>install.php</filename>
 			<folder>asset</folder>
 			<folder>controller</folder>
+			<folder>etc</folder>
 			<folder>helper</folder>
 			<folder>helpers</folder>
 			<folder>images</folder>
@@ -80,6 +73,12 @@
 			<folder>src</folder>
 			<folder>table</folder>
 			<folder>view</folder>
+			<filename>access.xml</filename>
+			<filename>component.php</filename>
+			<filename>config.xml</filename>
+			<filename>{{extension.name.lower}}.php</filename>
+			<filename>index.html</filename>
+			<filename>install.php</filename>
 		</files>
 	</administration>
 

@@ -5,6 +5,7 @@ namespace Windwalker\Provider;
 use Joomla\DI\Container;
 use Joomla\Registry\Registry;
 use Windwalker\DI\ServiceProvider;
+use Windwalker\Helper\DateHelper;
 
 /**
  * Class SystemProvider
@@ -40,7 +41,15 @@ class SystemProvider extends ServiceProvider
 		$this->share($container, 'event.dispatcher', 'JEventDispatcher', array('JEventDispatcher', 'getInstance'));
 
 		// Date
-		$this->set($container, 'date', 'JDate', array('Windwalker\\Helper\\DateHelper', 'getDate'));
+		$this->set(
+			$container,
+			'date',
+			'JDate',
+			function()
+			{
+				return DateHelper::getDate();
+			}
+		);
 
 		// Global
 		$container->set('SplPriorityQueue',

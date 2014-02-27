@@ -2,6 +2,7 @@
 
 namespace {{extension.name.cap}}\Component;
 
+use {{extension.name.cap}}\Provider\{{extension.name.cap}}Provider;
 use Windwalker\Component\Component;
 use Windwalker\Debugger\Debugger;
 use Windwalker\Helper\LanguageHelper;
@@ -28,13 +29,13 @@ abstract class {{extension.name.cap}}Component extends Component
 	 */
 	protected function prepare()
 	{
-		// Legacy debug
-		define('AKDEBUG', true);
-
 		if (JDEBUG)
 		{
 			Debugger::registerWhoops();
 		}
+
+		// Register provider
+		$this->container->registerServiceProvider(new {{extension.name.cap}}Provider);
 
 		// Load language
 		$lang = $this->container->get('language');
