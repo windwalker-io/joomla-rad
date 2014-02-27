@@ -89,7 +89,6 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	{
 		parent::__construct($input, $app, $config);
 
-		$this->user       = $this->getContainer()->get('user');
 		$this->context    = $this->option . '.' . $this->task;
 		$this->textPrefix = strtoupper($this->option);
 	}
@@ -104,6 +103,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	{
 		parent::prepareExecute();
 
+		$this->user  = $this->container->get('user');
 		$this->lang  = $this->container->get('language');
 		$this->model = $this->getModel($this->viewItem);
 		$this->table = $this->model->getTable($this->viewItem, $this->prefix . 'Table');
