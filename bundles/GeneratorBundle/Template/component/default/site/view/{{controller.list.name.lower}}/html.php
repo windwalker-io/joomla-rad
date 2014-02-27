@@ -76,7 +76,7 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 			// Link
 			// =====================================================================================
 			$query = array(
-				// 'id'    => $item->id,
+				'id'    => $item->id,
 				'alias' => $item->alias,
 				// 'catid' => $item->catid
 			);

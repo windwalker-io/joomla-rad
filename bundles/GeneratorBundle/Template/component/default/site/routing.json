@@ -5,7 +5,7 @@
 	},
 
 	"{{controller.item.name.lower}}": {
-		"pattern": "{{controller.item.name.lower}}/:alias",
+		"pattern": "{{controller.item.name.lower}}/:id/:alias",
 		"view" : "{{controller.item.name.lower}}"
 	}
 }
