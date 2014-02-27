@@ -19,6 +19,41 @@ use Windwalker\View\Html\ListHtmlView;
 class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtmlView
 {
 	/**
+	 * Property prefix.
+	 *
+	 * @var  string
+	 */
+	protected $prefix = '{{extension.name.lower}}';
+
+	/**
+	 * Property option.
+	 *
+	 * @var  string
+	 */
+	protected $option = '{{extension.element.lower}}';
+
+	/**
+	 * Property textPrefix.
+	 *
+	 * @var string
+	 */
+	protected $textPrefix = '{{extension.element.upper}}';
+
+	/**
+	 * Property viewItem.
+	 *
+	 * @var  string
+	 */
+	protected $viewItem = '{{controller.item.name.lower}}';
+
+	/**
+	 * Property viewList.
+	 *
+	 * @var  string
+	 */
+	protected $viewList = '{{controller.list.name.lower}}';
+
+	/**
 	 * prepareData
 	 *
 	 * @return  void
@@ -46,8 +81,8 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 
 			// Publish Date
 			// =====================================================================================
-			$pup  = DateHelper::getDate($item->get('a_publish_up'))->toUnix(true);
-			$pdw  = DateHelper::getDate($item->get('a_publish_down'))->toUnix(true);
+			$pup  = DateHelper::getDate($item->publish_up)->toUnix(true);
+			$pdw  = DateHelper::getDate($item->publish_down)->toUnix(true);
 			$now  = DateHelper::getDate('now')->toUnix(true);
 			$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix(true);
 

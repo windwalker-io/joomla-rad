@@ -16,6 +16,21 @@ namespace Windwalker\Model;
 class ItemModel extends AbstractAdvancedModel
 {
 	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 */
+	protected function populateState()
+	{
+		$table = $this->getTable();
+		$key   = $table->getKeyName();
+
+		// Get the pk of the record from the request.
+		$pk = $this->getContainer()->get('input')->get($key);
+		$this->state->set($this->getName() . '.id', $pk);
+	}
+
+	/**
 	 * Method to get a single record.
 	 *
 	 * @param   integer  $pk  The id of the primary key.
