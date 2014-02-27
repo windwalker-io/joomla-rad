@@ -102,6 +102,7 @@ class ExtensionHelper
 		{
 			case 'component':
 				$params = \JComponentHelper::getParams($element);
+				$params = new Registry($params->toArray());
 				break;
 
 			case 'module':
