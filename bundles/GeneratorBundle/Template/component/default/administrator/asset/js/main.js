@@ -1,3 +1,8 @@
 /**
- * Created by apple on 14/1/3.
+ * @package     Joomla.Site
+ * @subpackage  {{extension.element.lower}}
+ * @copyright   Copyright (C) 2014 Asikart. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
+
+var {{extension.name.cap}} = {};

@@ -145,7 +145,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 		$dispatcher = $this->container->get('event.dispatcher');
 		JPluginHelper::importPlugin('content');
 
-		$item->text = $item->introtext;
+		$item->text = $item->introtext . $item->fulltext;
 		$results = $dispatcher->trigger('onContentPrepare', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
 
 		$results = $dispatcher->trigger('onContentAfterTitle', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
