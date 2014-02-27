@@ -53,11 +53,6 @@ class ProListener extends \JEvent
 	 */
 	public function onAfterAddSubmenu($context, $vName)
 	{
-		\JHtmlSidebar::addEntry(
-			\JText::_('JCATEGORY'),
-			'index.php?option=com_categories&extension={{extension.element.lower}}',
-			($vName == 'categories')
-		);
 	}
 
 	// Content Events

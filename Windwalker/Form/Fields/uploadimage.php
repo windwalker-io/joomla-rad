@@ -8,6 +8,7 @@
 
 // No direct access
 use Windwalker\Helper\DateHelper;
+use Windwalker\Image\ThumbHelper;
 
 defined('_JEXEC') or die;
 
@@ -65,7 +66,7 @@ class JFormFieldUploadimage extends JFormField
 
 			if ($this->value)
 			{
-				$html .= '<div class="image-' . $this->id . '">' . JHtml::image(AKHelper::_('thumb.resize', $this->value, $width, $height, $crop), $this->name, array()) . '</div>';
+				$html .= '<div class="image-' . $this->id . '">' . JHtml::image(ThumbHelper::resize($this->value, $width, $height, \JImage::CROP_RESIZE), $this->name, array()) . '</div>';
 			}
 
 			$html .= '<input type="file" name="' . $this->getName($this->element['name'] . '_upload') . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size

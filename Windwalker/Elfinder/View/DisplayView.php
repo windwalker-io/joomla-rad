@@ -8,6 +8,7 @@
 
 namespace Windwalker\Elfinder\View;
 
+use Joomla\Registry\Registry;
 use JRegistry;
 use JURI;
 use Windwalker\View\Html\AbstractHtmlView;
@@ -56,7 +57,7 @@ class DisplayView extends AbstractHtmlView
 		$lang_code  = str_replace('-', '_', $lang_code);
 
 		$com_option = $this->option ? : $input->get('option');
-		$config     = new JRegistry($this->data->config);
+		$config     = new Registry($this->data->config);
 
 		// Script
 		$this->displayScript($com_option, $config);
