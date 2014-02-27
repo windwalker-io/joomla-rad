@@ -7,6 +7,8 @@
  */
 
 // No direct access
+use Windwalker\Helper\DateHelper;
+
 defined('_JEXEC') or die;
 
 include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
@@ -32,6 +34,7 @@ class JFormFieldUploadimage extends JFormField
 	 * of accepted file extensions.
 	 *
 	 * @return  string  The field input markup.
+	 *
 	 * @note    The field does not include an upload mechanism.
 	 * @see     JFormFieldFile
 	 */
@@ -80,11 +83,11 @@ class JFormFieldUploadimage extends JFormField
 	 * Method to attach a JForm object to the field.
 	 *  Catch upload files when form setup.
 	 *
-	 * @param   object &$element    The JXmlElement object representing the <field /> tag for the form field object.
-	 * @param   mixed  $value       The form field value to validate.
-	 * @param   string $group       The field name group control value. This acts as as an array container for the field.
-	 *                              For example if the field has name="foo" and the group value is set to "bar" then the
-	 *                              full field name would end up being "bar[foo]".
+	 * @param   SimpleXMLElement $element  The JXmlElement object representing the <field /> tag for the form field object.
+	 * @param   mixed            $value    The form field value to validate.
+	 * @param   string           $group    The field name group control value. This acts as as an array container for the field.
+	 *                                     For example if the field has name="foo" and the group value is set to "bar" then the
+	 *                                     full field name would end up being "bar[foo]".
 	 *
 	 * @return  boolean  True on success.
 	 */
@@ -92,7 +95,10 @@ class JFormFieldUploadimage extends JFormField
 	{
 		parent::setup($element, $value, $group);
 
-		if (JRequest::getVar($this->element['name'] . '_delete') == 1)
+		$container = \Windwalker\DI\Container::getInstance();
+		$input = $container->get('input');
+
+		if ($input->get($this->element['name'] . '_delete') == 1)
 		{
 			$this->value = '';
 		}
@@ -102,8 +108,8 @@ class JFormFieldUploadimage extends JFormField
 			// ===============================================
 			if (isset($_FILES['jform']['name']['profile']))
 			{
-				foreach ($_FILES['jform']['name']['profile'] as $key => $var):
-
+				foreach ($_FILES['jform']['name']['profile'] as $key => $var)
+				{
 					if (!$var)
 					{
 						continue;
@@ -116,12 +122,13 @@ class JFormFieldUploadimage extends JFormField
 					// Build File name
 					$src  = $_FILES['jform']['tmp_name']['profile'][$key];
 					$var  = explode('.', $var);
-					$date = JFactory::getDate('now', JFactory::getConfig()->get('offset'));
+					$date = DateHelper::getDate();
 					$name = md5((string) $date . $width . $height . $src) . '.' . array_pop($var);
 					$url  = "images/cck/{$date->year}/{$date->month}/{$date->day}/" . $name;
 
 					// A Event for extend.
-					JFactory::getApplication()->triggerEvent('onCCKEngineUploadImage', array(&$url, &$this, &$this->element));
+					$container->get('event.dispatcher')
+						->trigger('onCCKEngineUploadImage', array(&$url, &$this, &$this->element));
 
 					$dest = JPATH_ROOT . '/' . $url;
 
@@ -151,8 +158,7 @@ class JFormFieldUploadimage extends JFormField
 
 					// Set in Value
 					$this->value = $url;
-				endforeach;
-
+				}
 			}
 		}
 
@@ -161,6 +167,10 @@ class JFormFieldUploadimage extends JFormField
 
 	/**
 	 * Show image for com_users.
+	 *
+	 * @param string $value
+	 *
+	 * @return string
 	 */
 	public static function showImage($value)
 	{

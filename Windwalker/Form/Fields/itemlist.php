@@ -6,12 +6,12 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-// No direct access
 use Windwalker\DI\Container;
 use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
 
+// No direct access
 defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('list');
@@ -94,6 +94,7 @@ class JFormFieldItemlist extends JFormFieldList
 	 * Use the multiple attribute to enable multiselect.
 	 *
 	 * @return  string  The field input markup.
+	 *
 	 * @since   11.1
 	 */
 	protected function getInput()
@@ -125,7 +126,8 @@ class JFormFieldItemlist extends JFormFieldList
 
 		// Set Options
 		// ========================================================================
-		foreach ($items as $item):
+		foreach ($items as $item)
+		{
 			$item  = new JObject($item);
 			$level = !empty($item->level) ? $item->level - 1 : 0;
 
@@ -135,7 +137,7 @@ class JFormFieldItemlist extends JFormFieldList
 			}
 
 			$options[] = JHtml::_('select.option', $item->$key_field, str_repeat('- ', $level) . $item->$value_field);
-		endforeach;
+		}
 
 		// Verify permissions.  If the action attribute is set, then we scan the options.
 		// ========================================================================
@@ -160,6 +162,8 @@ class JFormFieldItemlist extends JFormFieldList
 
 	/**
 	 * Use Query to get Items.
+	 *
+	 * @return \stdClass[]
 	 */
 	public function getItems()
 	{
@@ -171,9 +175,10 @@ class JFormFieldItemlist extends JFormFieldList
 		$table_name  = $this->element['table'] ? (string) $this->element['table'] : '#__' . $this->component . '_' . $this->view_list;
 		$select      = $this->element['select'];
 
-		$db    = JFactory::getDbo();
+		$container = Container::getInstance();
+		$db    = $container->get('db');
 		$q     = $db->getQuery(true);
-		$input = JFactory::getApplication()->input;
+		$input = $container->get('input');
 
 		// Avoid self
 		// ========================================================================
@@ -199,7 +204,7 @@ class JFormFieldItemlist extends JFormFieldList
 		// ========================================================================
 		if ($published)
 		{
-			$q->where('{$this->published_field} >= 1');
+			$q->where("{$this->published_field} >= 1");
 		}
 
 		// Ordering
@@ -229,26 +234,33 @@ class JFormFieldItemlist extends JFormFieldList
 
 	/**
 	 * Check ACL permissions. If not permitted, remove this option.
+	 *
+	 * @param array $options
+	 *
+	 * @return array
 	 */
 	public function permissionCheck($options)
 	{
 		// Get the current user object.
-		$user = JFactory::getUser();
+		$user = Container::getInstance()->get('user');
 
 		// For new items we want a list of categories you are allowed to create in.
 		if (!$this->value)
 		{
 			foreach ($options as $i => $option)
 			{
-				// To take save or create in a category you need to have create rights for that category
-				// unless the item is already in that category.
-				// Unset the option if the user isn't authorised for it. In this field assets are always categories.
+				/*
+				 * To take save or create in a category you need to have create rights for that category
+				 * unless the item is already in that category.
+				 * Unset the option if the user isn't authorised for it. In this field assets are always categories.
+				 */
 				if ($user->authorise('core.create', $this->extension . '.' . $this->view_item . '.' . $option->value) != true)
 				{
 					unset($options[$i]);
 				}
 			}
 		}
+
 		// If you have an existing category id things are more complex.
 		else
 		{
@@ -265,12 +277,11 @@ class JFormFieldItemlist extends JFormFieldList
 						unset($options[$i]);
 					}
 				}
+
 				// However, if you can edit.state you can also move this to another category for which you have
 				// create permission and you should also still be able to save in the current category.
-				elseif
-				(($user->authorise('core.create', $this->extension . '.' . $this->view_item . '.' . $option->value) != true)
-					&& $option->value != $value
-				)
+				elseif (($user->authorise('core.create', $this->extension . '.' . $this->view_item . '.' . $option->value) != true)
+					&& $option->value != $value)
 				{
 					unset($options[$i]);
 				}
@@ -282,6 +293,8 @@ class JFormFieldItemlist extends JFormFieldList
 
 	/**
 	 * Add an quick add button & modal
+	 *
+	 * @return string
 	 */
 	public function quickadd()
 	{
@@ -360,6 +373,8 @@ QA;
 
 	/**
 	 * Set some element attributes to class variable.
+	 *
+	 * @return JFormField
 	 */
 	public function setElement()
 	{
@@ -383,10 +398,17 @@ QA;
 		}
 
 		$this->component = str_replace('com_', '', $this->extension);
+
+		return $this;
 	}
 
 	/**
 	 * Get Element Value.
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
+	 * @return string
 	 */
 	public function getElement($key, $default = null)
 	{

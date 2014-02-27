@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Windwalker\DI\Container;
+
 defined('JPATH_PLATFORM') or die;
 
 include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
@@ -23,7 +25,6 @@ class JFormFieldWinduser extends JFormField
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  1.6.0
 	 */
 	public $type = 'Winduser';
 
@@ -31,7 +32,6 @@ class JFormFieldWinduser extends JFormField
 	 * Method to get the user field input markup.
 	 *
 	 * @return  string  The field input markup.
-	 * @since   1.6.0
 	 */
 	protected function getInput()
 	{
@@ -65,7 +65,8 @@ class JFormFieldWinduser extends JFormField
 		$script[] = '	}';
 
 		// Add the script to the document head.
-		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+		$asset = Container::getInstance()->get('helper.asset');
+		$asset->internalJS(implode("\n", $script));
 
 		// Load the current username if available.
 		$table = JTable::getInstance('user');
@@ -104,7 +105,6 @@ class JFormFieldWinduser extends JFormField
 	 * Method to get the filtering groups (null means no filtering)
 	 *
 	 * @return  mixed  array of filtering groups or null.
-	 * @since   1.6.0
 	 */
 	protected function getGroups()
 	{
@@ -115,7 +115,6 @@ class JFormFieldWinduser extends JFormField
 	 * Method to get the users to exclude from the list of users
 	 *
 	 * @return  mixed  Array of users to exclude or null to to not exclude them
-	 * @since   1.6.0
 	 */
 	protected function getExcluded()
 	{

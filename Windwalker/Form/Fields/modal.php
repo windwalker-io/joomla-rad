@@ -6,12 +6,12 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-// No direct access
 use Windwalker\DI\Container;
 use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
 
+// No direct access
 defined('_JEXEC') or die;
 
 include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
@@ -125,6 +125,8 @@ class JFormFieldModal extends JFormField
 
 	/**
 	 * setScript
+	 *
+	 * @return void
 	 */
 	public function setScript()
 	{
@@ -137,11 +139,14 @@ class JFormFieldModal extends JFormField
 		$script[] = '    }';
 
 		// Add the script to the document head.
-		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+		$asset = Container::getInstance()->get('helper.asset');
+		$asset->internalJS(implode("\n", $script));
 	}
 
 	/**
 	 * Set some element attributes to class variable.
+	 *
+	 * @return void
 	 */
 	public function setElement()
 	{
@@ -169,13 +174,19 @@ class JFormFieldModal extends JFormField
 
 	/**
 	 * Get item title.
+	 *
+	 * @var $db JDatabaseDriver
+	 *
+	 * @return string
 	 */
 	public function getTitle()
 	{
 		$ctrl        = $this->view_list;
 		$title_field = $this->element['title_field'] ? (string) $this->element['title_field'] : 'title';
 
-		$db = JFactory::getDbo();
+		/** @var $db JDatabaseDriver */
+		$container = Container::getInstance();
+		$db = $container->get('db');
 		$q  = $db->getQuery(true);
 
 		$q->select($title_field)
@@ -190,7 +201,9 @@ class JFormFieldModal extends JFormField
 		}
 		catch (RuntimeException $e)
 		{
-			Container::getInstance('app')->enqueueMessage($e->getMessage(), 500);
+			$container->get('app')->enqueueMessage($e->getMessage(), 500);
+
+			return '';
 		}
 
 		return $title;
@@ -198,14 +211,17 @@ class JFormFieldModal extends JFormField
 
 	/**
 	 * Get item link.
+	 *
+	 * @return string
 	 */
 	public function getLink()
 	{
 		// Avoid self
-		$id     = JRequest::getVar('id');
-		$option = JRequest::getVar('option');
-		$view   = JRequest::getVar('view');
-		$layout = JRequest::getVar('layout');
+		$input  = Container::getInstance()->get('input');
+		$id     = $input->get('id');
+		$option = $input->get('option');
+		$view   = $input->get('view');
+		$layout = $input->getString('layout');
 		$params = '';
 
 		if (isset($this->element['show_root']))
@@ -218,11 +234,14 @@ class JFormFieldModal extends JFormField
 			$params .= '&avoid=' . $id;
 		}
 
-		return 'index.php?option=' . $this->extension . '&view=' . $this->view_list . $params . '&layout=modal&tmpl=component&function=jSelect' . ucfirst($this->component) . '_' . $this->id;
+		return 'index.php?option=' . $this->extension . '&view=' . $this->view_list . $params
+			. '&layout=modal&tmpl=component&function=jSelect' . ucfirst($this->component) . '_' . $this->id;
 	}
 
 	/**
 	 * Add an quick add button & modal
+	 *
+	 * @return mixed
 	 */
 	public function quickadd()
 	{
@@ -301,6 +320,11 @@ QA;
 
 	/**
 	 * Get Element Value.
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
+	 * @return string
 	 */
 	public function getElement($key, $default = null)
 	{

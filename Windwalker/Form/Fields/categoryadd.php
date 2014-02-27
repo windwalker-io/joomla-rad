@@ -152,6 +152,11 @@ QA;
 
 	/**
 	 * Get Element Value.
+	 *
+	 * @param string $key
+	 * @param mixed  $default
+	 *
+	 * @return string
 	 */
 	public function getElement($key, $default = null)
 	{

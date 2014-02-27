@@ -7,6 +7,7 @@
  */
 
 // No direct access
+use Windwalker\DI\Container;
 use Windwalker\Helper\XmlHelper;
 
 defined('_JEXEC') or die;
@@ -45,7 +46,7 @@ class JFormFieldFinder extends JFormFieldText
 	public function getInput()
 	{
 		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modal');
+		JHtmlBehavior::modal('a.modal');
 
 		if (!self::$initialised)
 		{
@@ -84,9 +85,10 @@ class JFormFieldFinder extends JFormFieldText
 		endif;
 		$html[] = '</span>';
 
-		// class='required' for client side validation
+		// The  class='required' for client side validation
 		// ================================================================
 		$class = '';
+
 		if ($this->required)
 		{
 			$class = ' class="required modal-value"';
@@ -130,6 +132,8 @@ class JFormFieldFinder extends JFormFieldText
 
 	/**
 	 * Get Preview Image.
+	 *
+	 * @return string
 	 */
 	public function getPreview()
 	{
@@ -158,7 +162,7 @@ class JFormFieldFinder extends JFormFieldText
 					'onShow' => 'AKFinderRefreshPreviewTip(this)',
 				);
 
-				JHtml::_('behavior.tooltip', '.hasTipPreview', $options);
+				JHtmlBehavior::tooltip('.hasTipPreview', $options);
 				break;
 		}
 
@@ -222,6 +226,8 @@ class JFormFieldFinder extends JFormFieldText
 
 	/**
 	 * Set Selecting JS.
+	 *
+	 * @return void
 	 */
 	public function setScript()
 	{
@@ -315,11 +321,14 @@ class JFormFieldFinder extends JFormFieldText
 SCRIPT;
 
 		// Add the script to the document head.
-		JFactory::getDocument()->addScriptDeclaration($script);
+		$asset = Container::getInstance()->get('helper.asset');
+		$asset->internalJS($script);
 	}
 
 	/**
 	 * Get item title.
+	 *
+	 * @return string
 	 */
 	public function getTitle()
 	{
@@ -340,10 +349,12 @@ SCRIPT;
 
 	/**
 	 * Get Finder link.
+	 *
+	 * @return string
 	 */
 	public function getLink()
 	{
-		$input   = \JFactory::getApplication()->input;
+		$input   = Container::getInstance()->get('input');
 		$handler = $this->element['handler'] ? (string) $this->element['handler'] : $input->get('option');
 
 		$root       = XmlHelper::get($this->element, 'root', '/');
