@@ -5,6 +5,8 @@ namespace Windwalker\Model\Helper;
 use JDatabaseDriver;
 use JDatabaseQuery;
 use JFactory;
+use Windwalker\DI\Container;
+use Windwalker\Helper\DateHelper;
 
 /**
  * Class QueryHelper
@@ -215,8 +217,8 @@ class QueryHelper
 	 */
 	public static function publishingPeriod($prefix = '')
 	{
-		$db       = JFactory::getDbo();
-		$nowDate  = $date = JFactory::getDate('now', JFactory::getConfig()->get('offset'))->toSQL();
+		$db       = Container::getInstance()->get('db');
+		$nowDate  = $date = DateHelper::getDate()->toSQL();
 		$nullDate = $db->getNullDate();
 
 		$date_where = " ( {$prefix}publish_up < '{$nowDate}' OR  {$prefix}publish_up = '{$nullDate}') AND " .
@@ -251,7 +253,7 @@ class QueryHelper
 	{
 		if (!$this->db)
 		{
-			$this->db = \JFactory::getDbo();
+			$this->db = Container::getInstance()->get('db');
 		}
 
 		return $this->db;

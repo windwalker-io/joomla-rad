@@ -3,6 +3,7 @@
 namespace Windwalker\View\Layout;
 
 use JFactory;
+use Windwalker\DI\Container;
 
 /**
  * Class FileLayout
@@ -20,6 +21,8 @@ class FileLayout extends \JLayoutFile
 	 */
 	protected function refreshIncludePaths()
 	{
+		$app = Container::getInstance()->get('app');
+
 		// Reset includePaths
 		$this->includePaths = array();
 
@@ -30,7 +33,7 @@ class FileLayout extends \JLayoutFile
 		$this->addIncludePaths(WINDWALKER . '/Resource/layouts');
 
 		// (3) Standard Joomla! layouts overriden
-		$this->addIncludePaths(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts');
+		$this->addIncludePaths(JPATH_THEMES . '/' . $app->getTemplate() . '/html/layouts');
 
 		// Component layouts & overrides if exist
 		$component = $this->options->get('component', null);
@@ -48,7 +51,7 @@ class FileLayout extends \JLayoutFile
 			}
 
 			// (5) Component template overrides path
-			$this->addIncludePath(JPATH_THEMES . '/' . JFactory::getApplication()->getTemplate() . '/html/layouts/' . $component);
+			$this->addIncludePath(JPATH_THEMES . '/' . $app->getTemplate() . '/html/layouts/' . $component);
 		}
 
 		// (6 - highest priority) Received a custom high priority path ?

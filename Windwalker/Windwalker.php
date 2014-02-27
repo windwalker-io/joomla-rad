@@ -77,7 +77,7 @@ class Windwalker
 		}
 
 		// Load language
-		$lang = \JFactory::getLanguage();
+		$lang = $container->get('language');
 		$lang->load('lib_windwalker', JPATH_BASE, null, false, false)
 		|| $lang->load('lib_windwalker', WINDWALKER, null, false, false)
 		|| $lang->load('lib_windwalker', JPATH_BASE, $lang->getDefault(), false, false)

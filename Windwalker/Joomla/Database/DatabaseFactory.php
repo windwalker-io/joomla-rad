@@ -9,6 +9,7 @@
 namespace Windwalker\Joomla\Database;
 
 use JDatabaseDriver as DatabaseDriver;
+use Windwalker\DI\Container;
 
 /**
  * Class DatabaseFactory
@@ -39,7 +40,7 @@ abstract class DatabaseFactory
 	 */
 	public static function getDbo($option = array(), $forceNew = false)
 	{
-		return \JFactory::getDbo();
+		return Container::getInstance()->get('db', $forceNew);
 	}
 
 	/**
@@ -51,7 +52,7 @@ abstract class DatabaseFactory
 	 */
 	public static function setDbo(DatabaseDriver $db)
 	{
-		\JFactory::$database = $db;
+		Container::getInstance()->share('db', $db);
 	}
 
 	/**

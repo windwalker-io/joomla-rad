@@ -5,6 +5,7 @@ namespace Windwalker\Provider;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Registry\Registry;
+use Windwalker\Helper\DateHelper;
 
 /**
  * Class SystemProvider
@@ -47,7 +48,7 @@ class SystemProvider implements ServiceProviderInterface
 			->set('JDate',
 				function()
 				{
-					return \JFactory::getDate('now', \JFactory::getConfig()->get('offset'));
+					return DateHelper::getDate();
 				}
 			);
 

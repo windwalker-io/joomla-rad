@@ -120,7 +120,7 @@ class ToolbarHelper
 		}
 		else
 		{
-			$app = \JFactory::getApplication();
+			$app = Container::getInstance()->get('app');
 			$app->enqueueMessage(sprintf('%s not found', $button));
 		}
 	}
@@ -231,7 +231,7 @@ class ToolbarHelper
 	 */
 	public function preferences($component = null, $alt = 'JToolbar_Options', $path = '')
 	{
-		$component = $component ? : $this->config->get('option', \JFactory::getApplication()->input->get('option'));
+		$component = $component ? : $this->config->get('option', Container::getInstance()->get('input')->get('option'));
 		$component = urlencode($component);
 
 		JToolbarHelper::preferences($component, $alt, $path);

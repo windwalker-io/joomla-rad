@@ -10,6 +10,7 @@ namespace Windwalker\Helper;
 
 use JFactory;
 use JFolder;
+use Windwalker\DI\Container;
 
 /**
  * Class LanguageHelper
@@ -130,7 +131,7 @@ class LanguageHelper
 			return false;
 		}
 
-		$lang  = JFactory::getLanguage();
+		$lang = Container::getInstance()->get('language');
 
 		foreach ($files as $file)
 		{
@@ -164,7 +165,7 @@ class LanguageHelper
 	 */
 	public static function loadLanguage($ext, $client = 'site')
 	{
-		$lang = JFactory::getLanguage();
+		$lang = Container::getInstance()->get('language');
 
 		return $lang->load($ext, JPATH_BASE, null, false, false)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, false, false)

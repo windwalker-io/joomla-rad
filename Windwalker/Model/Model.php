@@ -307,7 +307,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 */
 	protected function canEditState($record)
 	{
-		$user = \JFactory::getUser();
+		$user = Container::getInstance()->get('user');
 
 		return $user->authorise('core.edit.state', $this->option);
 	}
@@ -364,11 +364,12 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{
-		$conf = \JFactory::getConfig();
-		$dispatcher = \JEventDispatcher::getInstance();
+		$conf = $this->container->get('joomla.config');
+		$dispatcher = $this->container->get('event.dispatcher');
+		$input = $this->container->get('input');
 
 		$options = array(
-			'defaultgroup' => ($group)     ? $group : (isset($this->option) ? $this->option : \JFactory::getApplication()->input->get('option')),
+			'defaultgroup' => ($group)     ? $group : (isset($this->option) ? $this->option : $input->get('option')),
 			'cachebase'    => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
 		);
 

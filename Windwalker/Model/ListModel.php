@@ -10,14 +10,12 @@ namespace Windwalker\Model;
 
 use JArrayHelper;
 use JDatabaseQuery;
-use JFactory;
 use JPagination;
 use JPluginHelper;
 
 use Joomla\DI\Container as JoomlaContainer;
 
 use JTable;
-use Windwalker\Debugger\Debugger;
 use Windwalker\DI\Container;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
@@ -545,7 +543,7 @@ class ListModel extends FormModel
 		// If the context is set, assume that stateful lists are used.
 		if ($this->context)
 		{
-			$app = JFactory::getApplication();
+			$app = $this->container->get('app');
 
 			// Receive & set filters
 			if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array'))
@@ -820,7 +818,7 @@ class ListModel extends FormModel
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
-		$app = JFactory::getApplication();
+		$app       = $this->container->get('app');
 		$input     = $app->input;
 		$old_state = $app->getUserState($key);
 		$cur_state = (!is_null($old_state)) ? $old_state : $default;

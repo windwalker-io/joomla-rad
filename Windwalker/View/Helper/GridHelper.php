@@ -13,6 +13,7 @@ use JText;
 use Windwalker\Bootstrap\Dropdown;
 use Windwalker\Data\Data;
 use Joomla\Registry\Registry;
+use Windwalker\DI\Container;
 
 /**
  * Class GridHelper
@@ -187,7 +188,7 @@ class GridHelper
 		$checkoutName = $this->config->get('field.checked_out', 'checked_out');
 		$authorName   = $this->config->get('field.author', 'created_by');
 
-		$user   = \JFactory::getUser();
+		$user   = Container::getInstance()->get('user');
 		$userId = $user->get('id');
 
 		$this->current = $item;

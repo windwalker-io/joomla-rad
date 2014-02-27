@@ -10,6 +10,7 @@ namespace Windwalker\Helper;
 
 use JFactory;
 use JProfiler;
+use Windwalker\DI\Container;
 
 /**
  * Class ProfilerHelper
@@ -42,7 +43,7 @@ class ProfilerHelper
 	 */
 	public static function mark($text, $namespace = 'Windwalker')
 	{
-		$app = JFactory::getApplication();
+		$app = Container::getInstance()->get('app');
 
 		if ($namespace == 'core' || !$namespace)
 		{
@@ -78,7 +79,7 @@ class ProfilerHelper
 	 */
 	public static function render($namespace = 'Windwalker', $asString = false)
 	{
-		$app = JFactory::getApplication();
+		$app = Container::getInstance()->get('app');
 
 		if ($namespace == 'core' || !$namespace)
 		{

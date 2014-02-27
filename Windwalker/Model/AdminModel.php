@@ -8,10 +8,10 @@
 
 namespace Windwalker\Model;
 
-use JFactory;
 use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
 use JTable;
+use Windwalker\Helper\DateHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -257,7 +257,7 @@ abstract class AdminModel extends CrudModel
 	 */
 	protected function prepareTable($table)
 	{
-		$date = JFactory::getDate('now', JFactory::getConfig()->get('offset'));
+		$date = DateHelper::getDate();
 		$user = $this->container->get('user');
 
 		// Alias

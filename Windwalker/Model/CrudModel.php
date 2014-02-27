@@ -2,8 +2,6 @@
 
 namespace Windwalker\Model;
 
-use JFactory;
-use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
 use JTable;
 
@@ -126,7 +124,7 @@ class CrudModel extends FormModel
 		$key   = $table->getKeyName();
 
 		// Get the pk of the record from the request.
-		$pk = \JFactory::getApplication()->input->getInt($key);
+		$pk = $this->getContainer()->get('input')->get($key);
 		$this->state->set($this->getName() . '.id', $pk);
 
 		// Load the parameters.

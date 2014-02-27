@@ -50,7 +50,7 @@ class DisplayController extends Controller
 	protected function doExecute()
 	{
 		// Get some data.
-		$document   = \JFactory::getDocument();
+		$document   = $this->container->get('document');
 		$viewName   = $this->input->get('view', $this->defaultView);
 		$viewFormat = $document->getType();
 		$layoutName = $this->input->getString('layout', 'default');
@@ -70,7 +70,7 @@ class DisplayController extends Controller
 		$view->document = $document;
 
 		// Display the view
-		$conf = \JFactory::getConfig();
+		$conf = $this->container->get('joomla.config');
 
 		if ($this->cachable && $viewFormat != 'feed' && $conf->get('caching') >= 1)
 		{

@@ -8,6 +8,8 @@
 
 namespace Windwalker\Helper;
 
+use Windwalker\DI\Container;
+
 /**
  * Class UriHelper
  *
@@ -107,7 +109,7 @@ class UriHelper
 			}
 
 			// Redirect it.
-			$app = \JFactory::getApplication();
+			$app = Container::getInstance()->get('app');
 			$app->redirect($path);
 		}
 	}

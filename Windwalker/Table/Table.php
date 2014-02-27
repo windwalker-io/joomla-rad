@@ -8,6 +8,8 @@
 
 namespace Windwalker\Table;
 
+use Windwalker\DI\Container;
+
 /**
  * Windwalker Table.
  *
@@ -28,7 +30,7 @@ class Table extends \JTable
 	 */
 	public function __construct($table, $key = 'id', $db = null)
 	{
-		$db = $db ?: \JFactory::getDbo();
+		$db = $db ?: Container::getInstance()->get('db');
 
 		parent::__construct($table, $key, $db);
 	}
