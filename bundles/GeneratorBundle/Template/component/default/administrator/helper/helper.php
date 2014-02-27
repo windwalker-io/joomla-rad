@@ -42,6 +42,9 @@ abstract class {{extension.name.cap}}Helper
 				);
 			}
 		}
+
+		$dispatcher = \Windwalker\DI\Container::getInstance('{{extension.element.lower}}')->get('event.dispatcher');
+		$dispatcher->trigger('onAfterAddSubmenu', array('{{extension.element.lower}}', $vName));
 	}
 
 	/**

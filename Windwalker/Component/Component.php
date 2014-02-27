@@ -10,6 +10,7 @@ namespace Windwalker\Component;
 
 use Windwalker\Controller\Controller;
 use Windwalker\DI\Container;
+use Windwalker\Event\ListenerHelper;
 use Windwalker\Object\Object;
 
 /**
@@ -208,10 +209,26 @@ class Component
 		\JForm::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
 		\JForm::addFormPath(WINDWALKER_SOURCE . '/Form/Forms');
 
+		$this->registerEventListener();
+
 		// Register elFinder controllers
 		// @TODO: Should use event listener
 		$this->registerTask('finder.elfinder.display', '\\Windwalker\\Elfinder\\Controller\\DisplayController');
 		$this->registerTask('finder.elfinder.connect', '\\Windwalker\\Elfinder\\Controller\\ConnectController');
+	}
+
+	/**
+	 * registerEventListerer
+	 *
+	 * @return  void
+	 */
+	protected function registerEventListener()
+	{
+		ListenerHelper::registerListeners(
+			ucfirst($this->name),
+			$this->container->get('event.dispatcher'),
+			$this->path['administrator'] . '/src/' . ucfirst($this->name) . '/Listener'
+		);
 	}
 
 	/**

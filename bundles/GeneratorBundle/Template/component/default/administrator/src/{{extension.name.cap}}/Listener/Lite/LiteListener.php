@@ -1,95 +1,25 @@
 <?php
 /**
- * @package        Asikart.Plugin
- * @subpackage     {{plugin.group.lower}}.plg_{{extension.name.lower}}
- * @copyright      Copyright (C) 2012 Asikart.com, Inc. All rights reserved.
- * @license        GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Joomla.Administrator
+ * @subpackage  {{extension.element.lower}}
+ * @copyright   Copyright (C) 2012 Asikart. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
+
+namespace {{extension.name.cap}}\Listener\Lite;
 
 // No direct access
 defined('_JEXEC') or die;
 
+use JFactory;
+
 /**
- * {{extension.name.cap}} {{plugin.group.cap}} Plugin
+ * Class LiteListener
  *
- * @package        Joomla.Plugin
- * @subpackage     {{plugin.group.cap}}.{{extension.name.lower}}
- * @since          1.0
+ * @since 1.0
  */
-class Plg{{plugin.group.cap}}{{extension.name.cap}} extends JPlugin
+class LiteListener extends \JEvent
 {
-	/**
-	 * Property self.
-	 *
-	 * @var  Plg{{plugin.group.cap}}{{extension.name.cap}}
-	 */
-	public static $self;
-
-	/**
-	 * Constructor
-	 *
-	 * @param  object  $subject The object to observe
-	 * @param  array   $config  An array that holds the plugin configuration
-	 */
-	public function __construct($subject, $config)
-	{
-		parent::__construct($subject, $config);
-
-		$this->loadLanguage();
-		$this->app = JFactory::getApplication();
-
-		self::$self = $this;
-	}
-
-	/**
-	 * Get self object.
-	 *
-	 * @return  mixed
-	 */
-	public static function getInstance()
-	{
-		return self::$self;
-	}
-
-	// {{plugin.group.cap}} Events
-	// ======================================================================================
-
-	/**
-	 * onAfterInitialise
-	 *
-	 * @return  void
-	 */
-	public function onAfterInitialise()
-	{
-	}
-
-	/**
-	 * onAfterRoute
-	 *
-	 * @return  void
-	 */
-	public function onAfterRoute()
-	{
-	}
-
-	/**
-	 * onAfterDispatch
-	 *
-	 * @return  void
-	 */
-	public function onAfterDispatch()
-	{
-	}
-
-	/**
-	 * onAfterRender
-	 *
-	 * @return  void
-	 */
-	public function onAfterRender()
-	{
-	}
-
 	// Content Events
 	// ======================================================================================
 

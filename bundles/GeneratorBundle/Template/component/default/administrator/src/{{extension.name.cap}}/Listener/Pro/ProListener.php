@@ -1,93 +1,63 @@
 <?php
 /**
- * @package        Asikart.Plugin
- * @subpackage     {{plugin.group.lower}}.plg_{{extension.name.lower}}
- * @copyright      Copyright (C) 2012 Asikart.com, Inc. All rights reserved.
- * @license        GNU General Public License version 2 or later; see LICENSE.txt
+ * @package     Joomla.Administrator
+ * @subpackage  {{extension.element.lower}}
+ * @copyright   Copyright (C) 2012 Asikart. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
+
+namespace {{extension.name.cap}}\Listener\Pro;
 
 // No direct access
 defined('_JEXEC') or die;
 
+use JFactory;
+
 /**
- * {{extension.name.cap}} {{plugin.group.cap}} Plugin
- *
- * @package        Joomla.Plugin
- * @subpackage     {{plugin.group.cap}}.{{extension.name.lower}}
- * @since          1.0
+ * Fbimporter Pro plugin
  */
-class Plg{{plugin.group.cap}}{{extension.name.cap}} extends JPlugin
+class ProListener extends \JEvent
 {
-	/**
-	 * Property self.
-	 *
-	 * @var  Plg{{plugin.group.cap}}{{extension.name.cap}}
-	 */
-	public static $self;
-
-	/**
-	 * Constructor
-	 *
-	 * @param  object  $subject The object to observe
-	 * @param  array   $config  An array that holds the plugin configuration
-	 */
-	public function __construct($subject, $config)
-	{
-		parent::__construct($subject, $config);
-
-		$this->loadLanguage();
-		$this->app = JFactory::getApplication();
-
-		self::$self = $this;
-	}
-
-	/**
-	 * Get self object.
-	 *
-	 * @return  mixed
-	 */
-	public static function getInstance()
-	{
-		return self::$self;
-	}
-
-	// {{plugin.group.cap}} Events
+	// Default {{extension.name.cap}} Events
 	// ======================================================================================
 
 	/**
-	 * onAfterInitialise
+	 * onToolbarAppendButton
+	 *
+	 * @param string $context
+	 * @param array  $args
 	 *
 	 * @return  void
 	 */
-	public function onAfterInitialise()
+	public function onToolbarAppendButton($context, $args = array())
 	{
+		/*
+		switch($context){
+			case 'preferences' :
+				$args[] = 550 ;
+				$args[] = 875 ;
+				$args[] = 'JToolbar_Options' ;
+				$args[] = 'administrator/components/{{extension.element.lower}}/includes/plugins/pro' ;
+				break;
+		}
+		*/
 	}
 
 	/**
-	 * onAfterRoute
+	 * onAfterAddSubmenu
+	 *
+	 * @param string $context
+	 * @param string $vName
 	 *
 	 * @return  void
 	 */
-	public function onAfterRoute()
+	public function onAfterAddSubmenu($context, $vName)
 	{
-	}
-
-	/**
-	 * onAfterDispatch
-	 *
-	 * @return  void
-	 */
-	public function onAfterDispatch()
-	{
-	}
-
-	/**
-	 * onAfterRender
-	 *
-	 * @return  void
-	 */
-	public function onAfterRender()
-	{
+		\JHtmlSidebar::addEntry(
+			\JText::_('JCATEGORY'),
+			'index.php?option=com_categories&extension={{extension.element.lower}}',
+			($vName == 'categories')
+		);
 	}
 
 	// Content Events
@@ -277,8 +247,8 @@ class Plg{{plugin.group.cap}}{{extension.name.cap}} extends JPlugin
 	/**
 	 * Pre process form hook.
 	 *
-	 * @param   JForm $form The form to be altered.
-	 * @param   array $data The associated data for the form.
+	 * @param   \JForm $form The form to be altered.
+	 * @param   array  $data The associated data for the form.
 	 *
 	 * @return  boolean
 	 */

@@ -19,6 +19,8 @@ JHtmlDropdown::init();
  * @var Windwalker\DI\Container $container
  */
 $container = $this->getContainer();
+
+$container->get('event.dispatcher')->trigger('onTestGo', array(1,2,3));
 ?>
 
 <div id="{{extension.name.lower}}" class="windwalker {{controller.list.name.lower}} tablelist row-fluid">
