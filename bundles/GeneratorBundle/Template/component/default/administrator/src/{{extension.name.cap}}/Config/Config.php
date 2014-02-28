@@ -1,11 +1,10 @@
 <?php
 /**
- * Part of Windwalker project. 
+ * Part of Component {{extension.name.cap}} files.
  *
- * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2014 Asikart. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-
 namespace {{extension.name.cap}}\Config;
 
 use Windwalker\System\Config\AbstractConfig;

@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  {{extension.element.lower}}
- * @copyright   Copyright (C) 2012 Asikart. All rights reserved.
+ * Part of Component {{extension.name.cap}} files.
+ *
+ * @copyright   Copyright (C) 2014 Asikart. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
