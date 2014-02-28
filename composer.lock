@@ -3,11 +3,11 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "73b0c361d065e4c63fd44721efb93003",
+    "hash": "9ce7d62ef01fccbc68fc73e711570eeb",
     "packages": [
         {
             "name": "asika/joomla-console",
-            "version": "dev-master",
+            "version": "1.1.0",
             "target-dir": "Joomla/Console",
             "source": {
                 "type": "git",
@@ -53,17 +53,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/asika32764/php-code-generator.git",
-                "reference": "3d312e6f4b237f69b9d2b497c8f3d4d7bf40d884"
+                "reference": "1e27294c1253f282ac539ea56bd05c098da169c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asika32764/php-code-generator/zipball/3d312e6f4b237f69b9d2b497c8f3d4d7bf40d884",
-                "reference": "3d312e6f4b237f69b9d2b497c8f3d4d7bf40d884",
+                "url": "https://api.github.com/repos/asika32764/php-code-generator/zipball/1e27294c1253f282ac539ea56bd05c098da169c8",
+                "reference": "1e27294c1253f282ac539ea56bd05c098da169c8",
                 "shasum": ""
             },
-            "require": {
-                "asika/joomla-console": "dev-master",
-                "joomla/database": "~1.0"
+            "require-dev": {
+                "asika/joomla-console": "1.1.*"
+            },
+            "suggest": {
+                "asika/joomla-console": "If you want to use PHP Code Generator self not integrate to other system."
             },
             "type": "library",
             "autoload": {
@@ -82,7 +84,7 @@
                 }
             ],
             "description": "PHP Code generator",
-            "time": "2014-02-21 09:07:08"
+            "time": "2014-02-21 09:30:27"
         },
         {
             "name": "filp/whoops",
@@ -224,47 +226,6 @@
                 "joomla"
             ],
             "time": "2013-05-15 03:30:25"
-        },
-        {
-            "name": "joomla/database",
-            "version": "1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joomla-framework/database.git",
-                "reference": "83dab527294179617bedb37f6b7ee7a4bf99cf96"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/database/zipball/83dab527294179617bedb37f6b7ee7a4bf99cf96",
-                "reference": "83dab527294179617bedb37f6b7ee7a4bf99cf96",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.10",
-                "psr/log": "~1.0"
-            },
-            "require-dev": {
-                "joomla/test": "~1.0"
-            },
-            "type": "joomla-package",
-            "autoload": {
-                "psr-4": {
-                    "Joomla\\Database\\": "src/",
-                    "Joomla\\Database\\Tests\\": "Tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Joomla Database Package",
-            "homepage": "https://github.com/joomla-framework/database",
-            "keywords": [
-                "database",
-                "framework",
-                "joomla"
-            ],
-            "time": "2014-02-09 01:18:10"
         },
         {
             "name": "joomla/date",
