@@ -21,15 +21,11 @@ $router = CmsRouter::getInstance('{{extension.element.lower}}');
 $router = RoutingHelper::registerRouting($router, '{{extension.element.lower}}');
 
 /**
- * 轉換網址
- *
- * ?view=items&category_id=23 => /category/23
- * ?views=item&category_id=39 => /category/39
- * ?view=item&title=abc&id=18 => /item/abc
+ * {{extension.name.cap}}BuildRoute
  *
  * @param array &$query
  *
- * @return array
+ * @return  array
  */
 function {{extension.name.cap}}BuildRoute(&$query)
 {
@@ -50,15 +46,11 @@ function {{extension.name.cap}}BuildRoute(&$query)
 }
 
 /**
- * 轉換網址
- *
- * /category/23 => array("category_id" => 23,  "view"  => "items");
- * /category/39 => array("category_id" => 39,  "view"  => "items");
- * /item/abc    => array("id" => (int) abc_id, "title" => "abc", "view" => "item");
+ * {{extension.name.cap}}ParseRoute
  *
  * @param array $segments
  *
- * @return array
+ * @return  array
  */
 function {{extension.name.cap}}ParseRoute($segments)
 {

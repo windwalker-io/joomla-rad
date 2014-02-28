@@ -6,6 +6,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+// No direct access
+defined('_JEXEC') or die;
+
 include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
 
 JLoader::registerPrefix('{{extension.name.cap}}', JPATH_BASE . '/components/{{extension.element.lower}}');

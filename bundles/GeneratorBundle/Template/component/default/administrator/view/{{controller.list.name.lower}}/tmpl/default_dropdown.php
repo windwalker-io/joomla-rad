@@ -8,6 +8,9 @@
 
 use Windwalker\Bootstrap\Dropdown;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Prepare data for this template.
  *

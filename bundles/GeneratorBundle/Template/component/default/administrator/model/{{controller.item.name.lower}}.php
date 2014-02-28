@@ -2,6 +2,9 @@
 
 use Windwalker\Model\AdminModel;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class {{extension.name.cap}}Model{{controller.item.name.cap}}
  *

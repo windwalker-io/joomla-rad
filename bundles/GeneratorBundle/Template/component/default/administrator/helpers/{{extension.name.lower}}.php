@@ -6,4 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+// No direct access
+defined('_JEXEC') or die;
+
 include_once dirname(__DIR__) . '/helper/helper.php';

@@ -8,6 +8,9 @@
 
 use Windwalker\Table\Table;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * {{controller.item.name.cap}} Table class.
  *

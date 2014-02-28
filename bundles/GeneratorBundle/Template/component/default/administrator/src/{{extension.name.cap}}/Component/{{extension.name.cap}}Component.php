@@ -8,6 +8,9 @@ use Windwalker\Debugger\Debugger;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ProfilerHelper;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class {{extension.name.cap}}Component
  *

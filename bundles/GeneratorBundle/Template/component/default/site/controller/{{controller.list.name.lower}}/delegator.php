@@ -8,6 +8,9 @@
 
 use Windwalker\Controller\Resolver\ControllerDelegator;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class {{extension.name.cap}}Controller{{controller.list.name.cap}}Delegator
  *

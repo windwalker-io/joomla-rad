@@ -8,6 +8,9 @@
 
 use Windwalker\Data\Data;
 
+// No direct access
+defined('_JEXEC') or die;
+
 // Prepare script
 JHtmlBehavior::multiselect('adminForm');
 

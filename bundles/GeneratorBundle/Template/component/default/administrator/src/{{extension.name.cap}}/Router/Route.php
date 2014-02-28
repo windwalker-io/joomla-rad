@@ -10,6 +10,9 @@ namespace {{extension.name.cap}}\Router;
 
 use Windwalker\Router\Route as WindwalkerRoute;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class Route
  *

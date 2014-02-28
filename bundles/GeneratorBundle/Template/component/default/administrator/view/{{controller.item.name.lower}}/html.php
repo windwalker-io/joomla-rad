@@ -6,6 +6,9 @@ use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\EditView;
 use Windwalker\Xul\XulEngine;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class {{controller.list.name.cap}}HtmlView
  *

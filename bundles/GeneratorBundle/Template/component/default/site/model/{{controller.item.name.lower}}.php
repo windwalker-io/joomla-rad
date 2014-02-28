@@ -8,6 +8,9 @@
 
 use Windwalker\Model\ItemModel;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class {{extension.name.cap}}Model{{controller.item.name.cap}}
  *

@@ -6,6 +6,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+// No direct access
+defined('_JEXEC') or die;
+
 $tab       = $data->tab;
 $fieldsets = $data->form->getFieldsets();
 ?>

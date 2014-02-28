@@ -6,6 +6,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+// No direct access
+defined('_JEXEC') or die;
+
 $fieldset = $data->fieldset;
 ?>
 <fieldset id="{{controller.item.name.lower}}-edit-fieldset-<?php echo $fieldset->name ?>" class="<?php echo $data->class ?>">

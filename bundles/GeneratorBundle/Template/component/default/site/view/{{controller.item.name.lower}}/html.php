@@ -12,6 +12,9 @@ use Windwalker\Data\Data;
 use Windwalker\Helper\DateHelper;
 use Windwalker\View\Html\ItemHtmlView;
 
+// No direct access
+defined('_JEXEC') or die;
+
 /**
  * Class {{extension.name.cap}}View{{controller.item.name.cap}}
  *
