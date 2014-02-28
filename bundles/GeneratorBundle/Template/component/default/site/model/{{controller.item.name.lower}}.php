@@ -15,4 +15,38 @@ use Windwalker\Model\ItemModel;
  */
 class {{extension.name.cap}}Model{{controller.item.name.cap}} extends ItemModel
 {
+	/**
+	 * Property prefix.
+	 *
+	 * @var  string
+	 */
+	protected $prefix = '{{extension.name.lower}}';
+
+	/**
+	 * Property option.
+	 *
+	 * @var  string
+	 */
+	protected $option = '{{extension.element.lower}}';
+
+	/**
+	 * Property textPrefix.
+	 *
+	 * @var string
+	 */
+	protected $textPrefix = '{{extension.element.upper}}';
+
+	/**
+	 * Property viewItem.
+	 *
+	 * @var  string
+	 */
+	protected $viewItem = '{{controller.item.name.lower}}';
+
+	/**
+	 * Property viewList.
+	 *
+	 * @var  string
+	 */
+	protected $viewList = '{{controller.list.name.lower}}';
 }

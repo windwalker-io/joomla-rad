@@ -100,9 +100,11 @@ class Windwalker
 		// Load Windwalker framework
 		\JLoader::registerNamespace('Windwalker', dirname(__DIR__));
 
-		// Load some file out of nameing standard
+		// Load some file out of naming style
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.path');
+
+		include_once JPATH_ADMINISTRATOR . '/includes/toolbar.php';
 	}
 }
