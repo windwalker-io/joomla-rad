@@ -97,6 +97,13 @@ CSS;
 
 		echo $css;
 
-		include dirname($path) . '/windwalker/Windwalker/System/installscript.php';
+		$installScript = dirname($path) . '/windwalker/Windwalker/System/installscript.php';
+
+		if (is_file($installScript))
+		{
+			$installScript = JPATH_LIBRARIES	 . '/windwalker/Windwalker/System/installscript.php';
+		}
+
+		include $installScript;
 	}
 }
