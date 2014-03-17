@@ -45,7 +45,7 @@ abstract class {{extension.name.cap}}Helper
 			if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
 			{
 				JHtmlSidebar::addEntry(
-					JText::sprintf('{{extension.element.upper}}_{{controller.item.name.upper}}_TITLE_LIST'),
+					JText::sprintf(sprintf('{{extension.element.upper}}_%s_TITLE_LIST', strtoupper($folder))),
 					'index.php?option={{extension.element.lower}}&view=' . $view,
 					($vName == $view)
 				);
