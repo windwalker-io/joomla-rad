@@ -18,7 +18,7 @@ use Composer\Script\CommandEvent;
 class ComposerInstaller
 {
 	static protected $binFile = <<<BIN
-#!/usr/bin/env sh
+#!/usr/bin/env php
 <?php
 
 include_once dirname(__DIR__) . '/libraries/windwalker/bin/windwalker.php';
