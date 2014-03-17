@@ -1,9 +1,11 @@
 # Development system files #
 .*
+!/.gitignore
 
 # Composer #
-vendor/*
+/vendor
 !vendor/index.html
+composer.lock
 
 # Windwalker #
 /config.json
