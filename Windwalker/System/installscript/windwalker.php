@@ -18,7 +18,8 @@ $install_path = dirname($path) . '/windwalker';
 $windwalker_xml_path = JPATH_LIBRARIES . '/windwalker/windwalker.xml';
 $install_windwalker  = true;
 
-if (is_file($windwalker_xml_path))
+// If inner windwalker exists, compare versions.
+if (is_file($windwalker_xml_path) && is_file($install_path . '/windwalker.xml'))
 {
 	$class = 'SimpleXMLElement';
 
