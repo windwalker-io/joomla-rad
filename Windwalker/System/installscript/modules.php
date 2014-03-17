@@ -20,7 +20,7 @@ if (!empty($modules))
 		// Install per module
 		foreach ($module as $var)
 		{
-			$var = (string) $var;
+			$var          = (string) $var;
 			$install_path = dirname($path) . '/modules/' . $var;
 
 			// Do install

@@ -20,7 +20,7 @@ if (!empty($plugins))
 		// Install per plugin
 		foreach ($plugin as $var)
 		{
-			$var = (string) $var;
+			$var          = (string) $var;
 			$install_path = dirname($path) . '/plugins/' . $var;
 
 			// Get plugin name

@@ -201,7 +201,7 @@ class JFormFieldModal extends JFormField
 		}
 		catch (RuntimeException $e)
 		{
-			$container->get('app')->enqueueMessage($e->getMessage(), 500);
+			$container->get('app')->enqueueMessage(get_class($this) . ': ' . $e->getMessage(), 'error');
 
 			return '';
 		}
