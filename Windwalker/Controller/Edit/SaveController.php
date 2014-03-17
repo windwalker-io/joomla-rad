@@ -94,7 +94,7 @@ class SaveController extends AbstractItemController
 						? strtoupper($this->option)
 						: 'JLIB_APPLICATION') . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
 				),
-				'success'
+				'message'
 			);
 		}
 
