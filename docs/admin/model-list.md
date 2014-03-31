@@ -1,6 +1,6 @@
 # Using ListModel
 
-In Joomla legacy model, we eriting query in `getListQuery()` and `getItems()` will help us fetch list from database.
+In Joomla legacy model, we writing query in `getListQuery()` and `getItems()` will help us fetch list from database.
 
 In windwalker, we don't need to write whole `getListQuery()`, we can write what we actually want to do, and others will auto
 done by model.
@@ -190,7 +190,7 @@ Open `model/form/sakuras/filter.xml`, we can write some filter fields here:
 
 The `name` is same as what we want to filter in SQL column (eg: `sakura.state`), note you will need `onchange="this.form.submit();"` to submit form.
 
-Back to admin, you'll see filter select appear:
+Back to admin, you'll see filter select appeared:
 
 ![img](http://cl.ly/Uk3p/140331-0012.jpg)
 
@@ -236,3 +236,149 @@ protected function configureFilters($filterHelper)
 ```
 
 OK, we can filter time period in our ist.
+
+## Search
+
+### Fulltext Search
+
+Search function is very similar to filter, open `model/form/sakuras/filter.xml`, you will see:
+
+``` xml
+<fields name="search">
+    <field name="field"
+        type="hidden"
+        default="*"
+        label="JSEARCH_FILTER_LABEL"
+        labelclass="pull-left"
+        class="input-small"
+        >
+        <option value="*">JALL</option>
+        <option value="sakura.title">JGLOBAL_TITLE</option>
+        <option value="category.title">JCATEGORY</option>
+    </field>
+
+    <field
+        name="index"
+        type="text"
+        label="JSEARCH_FILTER_LABEL"
+        hint="JSEARCH_FILTER"
+        />
+</fields>
+```
+
+The `name="field"` field is for setting our search fields, every option means one field, let us add a new field:
+
+``` xml
+<field name="field"
+    type="hidden"
+    default="*"
+    label="JSEARCH_FILTER_LABEL"
+    labelclass="pull-left"
+    class="input-small"
+    >
+    <option value="*">JALL</option>
+    <option value="sakura.title">JGLOBAL_TITLE</option>
+    <option value="category.title">JCATEGORY</option>
+
+    <option value="lang.title">Language</option>
+</field>
+```
+
+OK, we search english, the language title can be searched:
+
+![img](http://cl.ly/UjEb/140331-0014.jpg)
+
+## Single Field Search
+
+Change `field` field type to `list`, then you will able to choose field to search single column.
+
+``` xml
+<field name="field"
+    type="list"
+    default="*"
+    label="JSEARCH_FILTER_LABEL"
+    labelclass="pull-left"
+    class="input-small"
+    >
+    <option value="*">JALL</option>
+    <option value="sakura.title">JGLOBAL_TITLE</option>
+    <option value="category.title">JCATEGORY</option>
+
+    <option value="lang.title">Language</option>
+</field>
+```
+
+![140331-0015](https://cloud.githubusercontent.com/assets/1639206/2565781/41281cfe-b8ba-11e3-8b1a-431b8382b253.jpg)
+
+## Multiple Search
+
+Add a fieldset `multisearch`.
+
+``` xml
+<fields name="search">
+    <field name="field"
+        type="list"
+        default="*"
+        label="JSEARCH_FILTER_LABEL"
+        labelclass="pull-left"
+        class="input-small"
+        >
+        <option value="*">JALL</option>
+        <option value="sakura.title">JGLOBAL_TITLE</option>
+        <option value="category.title">JCATEGORY</option>
+
+        <option value="lang.title">Language</option>
+    </field>
+
+    <field
+        name="index"
+        type="text"
+        label="JSEARCH_FILTER_LABEL"
+        hint="JSEARCH_FILTER"
+        />
+
+    <!-- For multiple search -->
+    <fieldset name="multisearch">
+        <field
+            name="sakura.title"
+            type="text"
+            label="Title"
+            hint="JSEARCH_FILTER"
+            />
+
+        <field
+            name="category.title"
+            type="text"
+            label="Category"
+            hint="JSEARCH_FILTER"
+            />
+    </fieldset>
+
+</fields>
+```
+
+![140331-0016](https://cloud.githubusercontent.com/assets/1639206/2565802/ae00fb98-b8ba-11e3-9981-a69c203bcc29.jpg)
+
+## Custom Search Query
+
+We also use `SearchHelper` to set handler, same as `FilterHelper`:
+
+``` php
+/**
+ * configureSearches
+ *
+ * @param \Windwalker\Model\Filter\SearchHelper $searchHelper
+ *
+ * @return  void
+ */
+protected function configureSearches($searchHelper)
+{
+    $searchHelper->setHandler(
+        'sakura.title',
+        function ($query, $filed, $value)
+        {
+            // Custom search query...
+        }
+    );
+}
+```
