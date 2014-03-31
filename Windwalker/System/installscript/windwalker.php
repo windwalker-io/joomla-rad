@@ -39,6 +39,8 @@ if (is_file($windwalker_xml_path) && is_file($install_path . '/windwalker.xml'))
 elseif (!is_dir($install_path))
 {
 	$install_path = JPATH_LIBRARIES . '/windwalker';
+
+	$install_windwalker = false;
 }
 
 // Do install
