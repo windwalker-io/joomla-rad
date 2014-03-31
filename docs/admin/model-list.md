@@ -308,7 +308,7 @@ Change `field` field type to `list`, then you will able to choose field to searc
 </field>
 ```
 
-![140331-0015](https://cloud.githubusercontent.com/assets/1639206/2565781/41281cfe-b8ba-11e3-8b1a-431b8382b253.jpg)
+![joomla323b_-_administration_-_sakura_list](https://cloud.githubusercontent.com/assets/1639206/2565963/c62520b2-b8bc-11e3-96ae-0087bb376abc.png)
 
 ## Multiple Search
 
