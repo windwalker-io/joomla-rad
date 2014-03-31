@@ -34,8 +34,6 @@ abstract class Debugger
 	 */
 	public static function registerWhoops()
 	{
-		\JLoader::registerNamespace('Whoops', WINDWALKER . '/admin/debugger');
-
 		self::$whoops  = new Run;
 		self::$handler = new PrettyPageHandler;
 
