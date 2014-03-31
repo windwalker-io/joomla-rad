@@ -25,6 +25,17 @@ class FlowerControllerSakuraDisplay extends DisplayController
 The `FlowerControllerSakuraDisplay` controller only do one thing, just render this page.
 Note you have to return rendered string for component to echo it.
 
+## Task Routing and Default Controller
+
+Add this task in url to fetch controller what you want:
+
+```
+index.php?option=com_flower&task=sakuras.state.publish
+```
+
+This task will get `FlowerControllerSakurasStatePublish` controller, if this controller not exists, Windwalker will
+use default `Windwalker\Controller\State\PublishController` instead.
+
 ## Executed Hooks
 
 Every Controller have two hooks to let you inject your logic, `prepareExecute()` and `postExecute()`.
