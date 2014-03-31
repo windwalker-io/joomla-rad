@@ -33,8 +33,8 @@ Add this task in url to fetch controller what you want:
 index.php?option=com_flower&task=sakuras.state.publish
 ```
 
-This task will get `FlowerControllerSakurasStatePublish` controller, if this controller not exists, Windwalker will
-use default `Windwalker\Controller\State\PublishController` instead.
+This task will get `FlowerControllerSakurasStatePublish` controller in `controller/sakuras/state/publish.php`,
+if this controller not exists, Windwalker will use default `Windwalker\Controller\State\PublishController` instead.
 
 ## Executed Hooks
 
@@ -98,7 +98,7 @@ to setting some redirect details.
 If you want to set some config to multiple controller, you have to use `Delegator`.
 
 Every controllers group will have a delegator, for example, `sakuras` controllers will have a `delegator.php` in `controller/sakuras`.
-You can set some config to it:
+You can set some config to or alias it:
 
 ``` php
 <?php
@@ -123,11 +123,13 @@ class FlowerControllerSakurasDelegator extends ControllerDelegator
 
 ```
 
+The alias will get other controller if we set it, and the config will push to every controllers of `sakuras`.
+
 ### HMVC
 
 If you want to use other Controller to do something, please using `fetch()` in controller.
 
-This will call save controller and return Boolean, SaveController will not redirect page.
+This will call save controller and return Boolean, SaveController will not redirect page because it is in HMVC mode.
 
 ``` php
 $this->fetch('con_flower', 'sakura.edit.save', array('data' => $data));
@@ -141,7 +143,7 @@ $block = $this->fetch('con_flower', 'rose.display', array('layout' => 'foo'));
 echo $block;
 ```
 
-Do not show messages:
+Do not show messages, add `quiet` params:
 
 ``` php
 $this->fetch('con_flower', 'sakura.edit.save', array('quiet' => true, 'data' => $data));
