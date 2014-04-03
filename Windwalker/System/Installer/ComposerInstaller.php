@@ -56,6 +56,8 @@ BIN;
 			$io->write('Create bundle folder: ' . $bundlesDir);
 
 			mkdir($bundlesDir);
+
+			file_put_contents($bundlesDir . '/index.html', '<!DOCTYPE html><title></title>');
 		}
 
 		// Complete
