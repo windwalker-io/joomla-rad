@@ -96,13 +96,15 @@ class Route
 				{
 					$Itemid = $item->id;
 
+					unset($data['view']);
+
 					break;
 				}
 			}
 		}
 
 		// Find option
-		if (!$Itemid && !empty($data['view']))
+		if (!$Itemid /* && !empty($data['view'])*/)
 		{
 			foreach ($items as $item)
 			{
