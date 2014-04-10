@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-include_once __DIR__ . '/windwalker.php';
+include_once __DIR__ . '/Windwalker.php';
 
 $windwalker = new \Windwalker\Windwalker;
 
