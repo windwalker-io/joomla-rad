@@ -44,6 +44,13 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
+	protected $name = '{{controller.item.name.lower}}';
+
+	/**
 	 * Property viewItem.
 	 *
 	 * @var  string

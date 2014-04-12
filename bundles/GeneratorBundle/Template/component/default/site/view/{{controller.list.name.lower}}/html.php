@@ -44,6 +44,13 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
+	protected $name = '{{controller.list.name.lower}}';
+
+	/**
 	 * Property viewItem.
 	 *
 	 * @var  string

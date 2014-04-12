@@ -26,13 +26,6 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends ItemModel
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property component.
-	 *
-	 * @var  string
-	 */
-	protected $component = '{{extension.name.lower}}';
-
-	/**
 	 * Property option.
 	 *
 	 * @var  string

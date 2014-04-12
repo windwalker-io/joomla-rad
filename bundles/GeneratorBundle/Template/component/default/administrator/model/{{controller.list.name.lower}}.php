@@ -28,13 +28,6 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property component.
-	 *
-	 * @var  string
-	 */
-	protected $component = '{{extension.name.lower}}';
-
-	/**
 	 * Property option.
 	 *
 	 * @var  string

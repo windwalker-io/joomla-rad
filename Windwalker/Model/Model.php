@@ -41,13 +41,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	protected $option = null;
 
 	/**
-	 * Property component.
-	 *
-	 * @var string
-	 */
-	protected $component = null;
-
-	/**
 	 * Context string for the model type.  This is used to handle uniqueness
 	 * when dealing with the getStoreId() method and caching data structures.
 	 *
@@ -84,7 +77,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
 	{
 		// Guess the option from the class name (Option)Model(View).
-		if (empty($this->component))
+		if (empty($this->prefix))
 		{
 			$r = null;
 
@@ -93,10 +86,10 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
 			}
 
-			$this->component = strtolower($r[1]);
+			$this->prefix = strtolower($r[1]);
 		}
 
-		$this->option = 'com_' . $this->component;
+		$this->option = 'com_' . $this->prefix;
 
 		// Guess name
 		if (!$this->name)
@@ -186,7 +179,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 
 		if (empty($prefix))
 		{
-			$prefix = ucfirst($this->component) . 'Table';
+			$prefix = ucfirst($this->prefix) . 'Table';
 		}
 
 		if ($table = $this->createTable(ucfirst($name), $prefix, $options))
@@ -250,7 +243,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	{
 		$this->option = $option;
 
-		$this->component = substr($this->option, 4);
+		$this->prefix = substr($this->option, 4);
 
 		return $this;
 	}

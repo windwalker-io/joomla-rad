@@ -23,6 +23,48 @@ defined('_JEXEC') or die;
 class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends EditView
 {
 	/**
+	 * Property prefix.
+	 *
+	 * @var  string
+	 */
+	protected $prefix = '{{extension.name.lower}}';
+
+	/**
+	 * Property option.
+	 *
+	 * @var  string
+	 */
+	protected $option = '{{extension.element.lower}}';
+
+	/**
+	 * Property textPrefix.
+	 *
+	 * @var string
+	 */
+	protected $textPrefix = '{{extension.element.upper}}';
+
+	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
+	protected $name = '{{controller.item.name.lower}}';
+
+	/**
+	 * Property viewItem.
+	 *
+	 * @var  string
+	 */
+	protected $viewItem = '{{controller.item.name.lower}}';
+
+	/**
+	 * Property viewList.
+	 *
+	 * @var  string
+	 */
+	protected $viewList = '{{controller.list.name.lower}}';
+
+	/**
 	 * Method to instantiate the view.
 	 *
 	 * @param Model            $model     The model object.
