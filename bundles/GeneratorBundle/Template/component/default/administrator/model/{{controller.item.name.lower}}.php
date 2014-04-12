@@ -26,6 +26,13 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
+	 * Property component.
+	 *
+	 * @var  string
+	 */
+	protected $component = '{{extension.name.lower}}';
+
+	/**
 	 * Property option.
 	 *
 	 * @var  string
@@ -38,6 +45,13 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	 * @var string
 	 */
 	protected $textPrefix = '{{extension.element.upper}}';
+
+	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
+	protected $name = '{{controller.item.name.lower}}';
 
 	/**
 	 * Property viewItem.

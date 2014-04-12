@@ -26,6 +26,13 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends ItemModel
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
+	 * Property component.
+	 *
+	 * @var  string
+	 */
+	protected $component = '{{extension.name.lower}}';
+
+	/**
 	 * Property option.
 	 *
 	 * @var  string
@@ -40,16 +47,16 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends ItemModel
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
+	protected $name = '{{controller.item.name.lower}}';
+
+	/**
 	 * Property viewItem.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = '{{controller.item.name.lower}}';
-
-	/**
-	 * Property viewList.
-	 *
-	 * @var  string
-	 */
-	protected $viewList = '{{controller.list.name.lower}}';
 }
