@@ -174,10 +174,7 @@ class ControllerResolver
 	 */
 	public function registerTask($task, $controller)
 	{
-		if (class_exists($controller))
-		{
-			$this->taskMapper[strtolower($task)] = $controller;
-		}
+		$this->taskMapper[strtolower($task)] = $controller;
 
 		return $this;
 	}
