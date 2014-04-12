@@ -79,6 +79,12 @@ class Console extends JoomlaConsole
 
 		$input = $input ? : $this->getContainer()->get('input');
 
+		// Make Windows no ANSI color
+		if (defined('PHP_WINDOWS_VERSION_BUILD'))
+		{
+			$input->set('no-ansi', true);
+		}
+
 		\JFactory::$application = $this;
 
 		parent::__construct($input, $config, $output);
