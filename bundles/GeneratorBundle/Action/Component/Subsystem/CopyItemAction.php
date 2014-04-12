@@ -38,14 +38,14 @@ class CopyItemAction extends AbstractAction
 			'view/%s'
 		);
 
-		if ($this->config['client'] == 'administrator')
-		{
-			$files[] = 'table/%s.php';
-		}
-
 		foreach ($files as $file)
 		{
 			$file = sprintf($file, $item);
+
+			if (!file_exists($src . '/' . $file))
+			{
+				continue;
+			}
 
 			$copyOperator->copy(
 				$src . '/' . $file,

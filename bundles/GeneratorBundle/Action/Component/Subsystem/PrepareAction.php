@@ -30,11 +30,28 @@ class PrepareAction extends AbstractAction
 		$src  = $this->config['dir.src'];
 		$dest = $this->config['dir.dest'];
 
-		$copyOperator->copy(
-			$src . '/model/field',
-			$dest . '/model/field',
-			$this->config['replace']
+		$files = array(
+			'model/field'
 		);
+
+		if ($this->config['client'] == 'administrator')
+		{
+			$files[] = 'table/' . $this->config['item_name'] . '.php';
+		}
+		
+		foreach ($files as $file)
+		{
+			if (!file_exists($src . '/' . $file))
+			{
+				continue;
+			}
+
+			$copyOperator->copy(
+				$src . '/' . $file,
+				$dest . '/' . $file,
+				$this->config['replace']
+			);
+		}
 
 		$this->controller->doAction(new Component\ImportSqlAction);
 

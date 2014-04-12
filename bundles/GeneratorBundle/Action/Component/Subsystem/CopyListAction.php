@@ -42,6 +42,11 @@ class CopyListAction extends AbstractAction
 		{
 			$file = sprintf($file, $list);
 
+			if (!file_exists($src . '/' . $file))
+			{
+				continue;
+			}
+
 			$copyOperator->copy(
 				$src . '/' . $file,
 				$dest . '/' . $file,
