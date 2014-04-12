@@ -54,7 +54,7 @@ class CurlHelper
 		);
 
 		// Merge option
-		$options = array_merge($options, $option);
+		$options = $option + $options;
 
 		$http = \JHttpFactory::getHttp(new \JRegistry($options), 'curl');
 
