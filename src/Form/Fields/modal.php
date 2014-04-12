@@ -14,7 +14,7 @@ use Windwalker\Helper\ModalHelper;
 // No direct access
 defined('_JEXEC') or die;
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 /**
  * Supports a Modal picker for target items.

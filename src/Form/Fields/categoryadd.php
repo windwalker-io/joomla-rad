@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('category');
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 /**
  * Form Field class for Category & quickadd.

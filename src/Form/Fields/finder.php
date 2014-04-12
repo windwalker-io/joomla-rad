@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('text');
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 /**
  * Supports a File finder to pick files.

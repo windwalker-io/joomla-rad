@@ -10,7 +10,7 @@ use Windwalker\DI\Container;
 
 defined('JPATH_PLATFORM') or die;
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 /**
  * Field to select a user id from a modal list.

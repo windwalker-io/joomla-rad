@@ -36,7 +36,7 @@ require_once JPATH_LIBRARIES . '/cms.php';
 restore_exception_handler();
 
 // Windwalker init
-include_once WINDWALKER_CONSOLE . '/../Windwalker/init.php';
+include_once WINDWALKER_CONSOLE . '/../src/init.php';
 
 // Import the configuration.
 require_once JPATH_CONFIGURATION . '/configuration.php';

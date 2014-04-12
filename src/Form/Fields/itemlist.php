@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('list');
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 /**
  * Supports a HTML select list for target items.

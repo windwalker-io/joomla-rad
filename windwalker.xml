@@ -20,7 +20,7 @@
 		<folder>language</folder>
 		<folder>Resource</folder>
 		<folder>vendor</folder>
-		<folder>Windwalker</folder>
+		<folder>src</folder>
 		<file>.gitignore</file>
 		<file>composer.json</file>
 		<file>composer.lock</file>

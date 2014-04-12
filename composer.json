@@ -21,7 +21,7 @@
 	"autoload": {
 		"psr-4": {
 			"": "../../cli/windwalker",
-			"Windwalker\\": "Windwalker"
+			"Windwalker\\": "src"
 		}
 	},
 	"scripts": {
@@ -31,7 +31,7 @@
 		"post-update-cmd": []
 	},
 	"bin": [
-		"Windwalker/init.php"
+		"src/init.php"
 	],
 	"config": {
 		"bin-dir": "../../bin"

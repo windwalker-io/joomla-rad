@@ -96,11 +96,11 @@ CSS;
 
 		echo $css;
 
-		$installScript = dirname($path) . '/windwalker/Windwalker/System/installscript.php';
+		$installScript = dirname($path) . '/windwalker/src/System/installscript.php';
 
 		if (!is_file($installScript))
 		{
-			$installScript = JPATH_LIBRARIES . '/windwalker/Windwalker/System/installscript.php';
+			$installScript = JPATH_LIBRARIES . '/windwalker/src/System/installscript.php';
 		}
 
 		include $installScript;

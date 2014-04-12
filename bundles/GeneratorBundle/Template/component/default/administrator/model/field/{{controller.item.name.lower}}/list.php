@@ -9,7 +9,7 @@
 // No direct access
 defined('_JEXEC') or die;
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 JForm::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
 JFormHelper::loadFieldClass('itemlist');
 

@@ -12,7 +12,7 @@ use Windwalker\Image\ThumbHelper;
 
 defined('_JEXEC') or die;
 
-include_once JPATH_LIBRARIES . '/windwalker/Windwalker/init.php';
+include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 /**
  * Supports an upload image field, and if file exists, will show this image..
