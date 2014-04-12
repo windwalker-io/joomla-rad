@@ -6,17 +6,20 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Windwalker\Model\Filter;
+namespace Windwalker\Model\Provider;
 
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Windwalker\Model\Filter\FilterHelper;
+use Windwalker\Model\Filter\SearchHelper;
+use Windwalker\Model\Helper\QueryHelper;
 
 /**
  * Class FilterProvider
  *
  * @since 1.0
  */
-class FilterProvider implements ServiceProviderInterface
+class GridProvider implements ServiceProviderInterface
 {
 	/**
 	 * Property name.
@@ -45,23 +48,30 @@ class FilterProvider implements ServiceProviderInterface
 	public function register(Container $container)
 	{
 		// QueryHelper
-		$class = '\\Windwalker\\Model\\Helper\\QueryHelper';
-
-		$container->alias('model.' . $this->name . '.helper.query', $class)
-			->buildSharedObject($class);
+		$container->share(
+			'model.' . $this->name . '.helper.query',
+			function($container)
+			{
+				return new QueryHelper;
+			}
+		);
 
 		// Filter
-		$filterClass = '\\Windwalker\\Model\\Filter\\FilterHelper';
-
-		$container->alias('model.' . $this->name . '.filter', $filterClass)
-			->alias('model.' . $this->name . '.helper.filter', $filterClass)
-			->buildSharedObject($filterClass);
+		$container->share(
+			'model.' . $this->name . '.filter',
+			function($container)
+			{
+				return new FilterHelper;
+			}
+		)->alias('model.' . $this->name . '.helper.filter', 'model.' . $this->name . '.filter');
 
 		// Search
-		$searchClass = '\\Windwalker\\Model\\Filter\\SearchHelper';
-
-		$container->alias('model.' . $this->name . '.search', $searchClass)
-			->alias('model.' . $this->name . '.helper.search', $filterClass)
-			->buildSharedObject($searchClass);
+		$container->share(
+			'model.' . $this->name . '.search',
+			function($container)
+			{
+				return new SearchHelper;
+			}
+		)->alias('model.' . $this->name . '.helper.search', 'model.' . $this->name . '.search');
 	}
 }

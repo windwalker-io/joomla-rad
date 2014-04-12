@@ -21,12 +21,12 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
 use Windwalker\Model\Filter\FilterHelper;
-use Windwalker\Model\Filter\FilterProvider;
 use Windwalker\Model\Filter\SearchHelper;
 use Windwalker\Model\Helper\AdminListHelper;
 use Windwalker\Model\Helper\QueryHelper;
+use Windwalker\Model\Provider\GridProvider;
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 /**
  * Model class for handling lists of items.
@@ -121,7 +121,7 @@ class ListModel extends FormModel
 
 		$this->container = $container ? : $this->getContainer();
 
-		$this->container->registerServiceProvider(new FilterProvider($this->name));
+		$this->container->registerServiceProvider(new GridProvider($this->name));
 
 		$this->configureTables();
 
