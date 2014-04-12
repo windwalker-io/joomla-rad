@@ -76,6 +76,7 @@
 			<folder>view</folder>
 			<filename>access.xml</filename>
 			<filename>component.php</filename>
+			<filename>composer.json</filename>
 			<filename>config.xml</filename>
 			<filename>{{extension.name.lower}}.php</filename>
 			<filename>index.html</filename>
