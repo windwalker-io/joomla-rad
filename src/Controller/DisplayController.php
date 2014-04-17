@@ -58,6 +58,11 @@ class DisplayController extends Controller
 		// Get View and register Model to it.
 		$view = $this->getView($viewName, $viewFormat);
 
+		if (!$view)
+		{
+			throw new \LogicException(sprintf('View not found. Name: %s, Format: %s'), $viewName, $viewFormat);
+		}
+
 		$this->assignModel($view);
 
 		// Set template layout to view.
