@@ -129,7 +129,10 @@ class GridView extends ListHtmlView
 	{
 		$helper = ucfirst($this->prefix) . 'Helper';
 
-		$helper::addSubmenu($this->getName());
+		if (is_callable(array($helper, 'addSubmenu')))
+		{
+			$helper::addSubmenu($this->getName());
+		}
 	}
 
 	/**
