@@ -149,5 +149,21 @@ Do not show messages, add `quiet` params:
 $this->fetch('con_flower', 'sakura.edit.save', array('quiet' => true, 'data' => $data));
 ```
 
+### Return to Target URL
+
+We can add a base64 encoded url in url query, the `redirect()` method will quto redirect to this url.
+
+In View:
+
+``` php
+$return = 'http://google.com';
+
+<a href="index.php?option=com_flower&task=xxx&return=<?php echo UriHelper::base64('encode', $return);?>">
+    Link
+</a>
+```
+
+Now, when after controller executed, the `redirect()` method will take us to Google.
+
 
 
