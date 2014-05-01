@@ -47,8 +47,9 @@ abstract class AbstractRedirectController extends Controller
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput           $input  The input object.
-	 * @param   \JApplicationCms  $app    The application object.
+	 * @param   \JInput          $input   The input object.
+	 * @param   \JApplicationCms $app     The application object.
+	 * @param    array           $config  The config object.
 	 *
 	 * @since  12.1
 	 */
@@ -143,7 +144,7 @@ abstract class AbstractRedirectController extends Controller
 	 */
 	protected function getRedirectItemUrl($recordId = null, $urlVar = 'id')
 	{
-		return 'index.php?option=' . $this->option . '&view=' . strtolower($this->getName())
+		return 'index.php?option=' . $this->option . '&view=' . strtolower($this->viewItem)
 			. $this->getRedirectItemAppend($recordId, $urlVar);
 	}
 
