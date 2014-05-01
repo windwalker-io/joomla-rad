@@ -236,4 +236,21 @@ class ToolbarHelper
 
 		JToolbarHelper::preferences($component, $alt, $path);
 	}
+
+	/**
+	 * Set a link button.
+	 *
+	 * @param string $alt
+	 * @param string $href
+	 * @param string $icon
+	 *
+	 * @return  void
+	 */
+	public function link($alt, $href = '#', $icon = 'asterisk')
+	{
+		$bar = JToolbar::getInstance('toolbar');
+
+		// Add a back button.
+		$bar->appendButton('Link', $icon, $alt, $href);
+	}
 }
