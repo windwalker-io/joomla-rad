@@ -29,23 +29,23 @@ class JFormFieldItemlist extends JFormFieldList
 	/**
 	 * The form field type.
 	 *
-	 * @var        string
+	 * @var  string
 	 */
-	public $type = 'Itemlist';
+	protected $type = 'Itemlist';
 
 	/**
 	 * The value of the form field.
 	 *
-	 * @var    mixed
+	 * @var  mixed
 	 */
-	public $value;
+	protected $value;
 
 	/**
 	 * The name of the form field.
 	 *
-	 * @var    string
+	 * @var  string
 	 */
-	public $name;
+	protected $name;
 
 	/**
 	 * List name.
