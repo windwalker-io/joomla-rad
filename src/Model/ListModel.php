@@ -227,6 +227,9 @@ class ListModel extends FormModel
 		$query       = $this->db->getQuery(true);
 		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
 
+		// Prepare
+		$this->prepareGetQuery($query);
+
 		// Build filter query
 		$this->processFilters($query);
 
@@ -264,10 +267,34 @@ class ListModel extends FormModel
 		// Build Selected tables query
 		$queryHelper->registerQueryTables($query);
 
+		$this->postGetQuery($query);
+
 		// Debug
 		ProfilerHelper::mark((string) $query);
 
 		return $query;
+	}
+
+	/**
+	 * prepareGetQuery
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function prepareGetQuery(\JDatabaseQuery $query)
+	{
+	}
+
+	/**
+	 * postGetQuery
+	 *
+	 * @param JDatabaseQuery $query
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
 	}
 
 	/**
