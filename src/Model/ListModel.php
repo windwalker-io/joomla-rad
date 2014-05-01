@@ -446,7 +446,15 @@ class ListModel extends FormModel
 	 */
 	public function getBatchForm($data = array(), $loadData = false)
 	{
-		return $this->loadForm($this->context . '.batch', 'batch', array('control' => '', 'load_data' => $loadData));
+		try
+		{
+			return $this->loadForm($this->context . '.batch', 'batch', array('control' => '', 'load_data' => $loadData));
+		}
+		catch (\RuntimeException $e)
+		{
+			// Return Null Form
+			return new \JForm($this->context . '.batch');
+		}
 	}
 
 	/**
@@ -461,7 +469,15 @@ class ListModel extends FormModel
 	 */
 	public function getFilterForm($data = array(), $loadData = true)
 	{
-		return $this->loadForm($this->context . '.filter', 'filter', array('control' => '', 'load_data' => $loadData));
+		try
+		{
+			return $this->loadForm($this->context . '.filter', 'filter', array('control' => '', 'load_data' => $loadData));
+		}
+		catch (\RuntimeException $e)
+		{
+			// Return Null Form
+			return new \JForm($this->context . '.filter');
+		}
 	}
 
 	/**
@@ -613,8 +629,11 @@ class ListModel extends FormModel
 			}
 
 			// Fill the limits and start
-			$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $config->get('list_limit'), 'uint');
-			$this->state->set('list.limit', $limit);
+			if (!$limit)
+			{
+				$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $config->get('list_limit'), 'uint');
+				$this->state->set('list.limit', $limit);
+			}
 
 			$value = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
 			$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
@@ -778,13 +797,18 @@ class ListModel extends FormModel
 			return $this->searchFields;
 		}
 
-		$file    = PathHelper::get($this->option) . '/model/form/' . $this->name . '/filter.xml';
+		$file = PathHelper::get($this->option) . '/model/form/' . $this->name . '/filter.xml';
+
+		if (!is_file($file))
+		{
+			return array();
+		}
+
 		$xml     = simplexml_load_file($file);
 		$field   = $xml->xpath('//fields[@name="search"]/field[@name="field"]');
 
 		$options = $field[0]->option;
-
-		$fields = array();
+		$fields  = array();
 
 		foreach ($options as $option)
 		{

@@ -29,16 +29,15 @@ class CurlHelper
 	 * @throws \Exception
 	 * @return  mixed  If success, return string, or return false.
 	 */
-	public static function get($url = '', $method = 'get', $query = '', $option = array())
+	public static function get($url, $method = 'get', $query = '', $option = array())
 	{
-		if (!$url)
-		{
-			return false;
-		}
-
 		if ((!function_exists('curl_init') || !is_callable('curl_init')) && ini_get('allow_url_fopen'))
 		{
-			return file_get_contents($url);
+			$return = new Object;
+
+			$return->body = file_get_contents($url);
+
+			return $return;
 		}
 
 		if (is_array($method))
@@ -90,13 +89,8 @@ class CurlHelper
 	 *
 	 * @return  Object Object with success or fail information.
 	 */
-	public static function download($url = null, $path = null, $option = array())
+	public static function download($url, $path = null, $option = array())
 	{
-		if (!$url)
-		{
-			return false;
-		}
-
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.path');

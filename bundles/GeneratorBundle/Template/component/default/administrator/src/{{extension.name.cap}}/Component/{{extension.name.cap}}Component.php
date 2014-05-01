@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Component {{extension.name.cap}} files.
+ *
+ * @copyright   Copyright (C) 2014 Asikart. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 namespace {{extension.name.cap}}\Component;
 
@@ -50,6 +56,9 @@ abstract class {{extension.name.cap}}Component extends Component
 
 		$asset->windwalker();
 
+		// Register Tasks
+		with(new TaskMapper($this))->register();
+
 		parent::prepare();
 	}
 
@@ -63,7 +72,7 @@ abstract class {{extension.name.cap}}Component extends Component
 	protected function postExecute($result)
 	{
 		// Debug profiler
-		if (JDEBUG)
+		if (JDEBUG && \JFactory::getDocument()->getType() == 'html')
 		{
 			$result .= "<hr />" . ProfilerHelper::render('Windwalker', true);
 		}
