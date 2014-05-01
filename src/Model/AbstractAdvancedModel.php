@@ -55,7 +55,7 @@ abstract class AbstractAdvancedModel extends Model
 		}
 
 		$app = $this->getContainer()->get('app');
-		$comParams  = ExtensionHelper::getParams('com_flower');
+		$comParams  = ExtensionHelper::getParams($this->option);
 		$menuParams = new Registry;
 
 		if ($menu = $app->getMenu()->getActive())
@@ -71,9 +71,11 @@ abstract class AbstractAdvancedModel extends Model
 	/**
 	 * getCategory
 	 *
+	 * @param integer $pk
+	 *
 	 * @return  \Windwalker\Data\Data
 	 */
-	public function getCategory()
+	public function getCategory($pk = null)
 	{
 		if (!empty($this->category))
 		{
@@ -81,11 +83,11 @@ abstract class AbstractAdvancedModel extends Model
 		}
 
 		$input  = $this->getContainer()->get('input');
-		$pk     = $this->state->get('category.id', $input->get('id'));
+		$pk     = $pk ? : $this->state->get('category.id', $input->get('id'));
 		$mapper = new DataMapper('#__categories');
 
 		$data = $mapper->findOne(array('id' => $pk));
-		$data->params = new Registry($data);
+		$data->params = new Registry($data->params);
 
 		return $data;
 	}
