@@ -32,8 +32,9 @@ abstract class AbstractItemController extends AbstractAdminController
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput           $input  The input object.
-	 * @param   \JApplicationCms  $app    The application object.
+	 * @param   \JInput          $input  The input object.
+	 * @param   \JApplicationCms $app    The application object.
+	 * @param   array            $config The config object.
 	 *
 	 * @since  12.1
 	 */
@@ -42,12 +43,11 @@ abstract class AbstractItemController extends AbstractAdminController
 		parent::__construct($input, $app, $config);
 
 		// Guess the item view as the context.
-		if (empty($this->viewItem))
-		{
-			$this->viewItem = $this->getName();
-		}
+		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item', $this->getName());
 
 		// Guess the list view as the plural of the item view.
+		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list');
+
 		if (empty($this->viewList))
 		{
 			$inflector = \JStringInflector::getInstance();

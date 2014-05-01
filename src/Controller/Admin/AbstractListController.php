@@ -38,12 +38,11 @@ abstract class AbstractListController extends AbstractAdminController
 		parent::__construct($input, $app, $config);
 
 		// Guess the item view as the context.
-		if (empty($this->viewList))
-		{
-			$this->viewList = $this->getName();
-		}
+		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list', $this->getName());
 
 		// Guess the list view as the plural of the item view.
+		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item');
+
 		if (empty($this->viewItem))
 		{
 			$inflector = \JStringInflector::getInstance();
