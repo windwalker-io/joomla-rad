@@ -369,22 +369,23 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 		// Get model.
 		$container = $this->getContainer();
 
+		$modelKey = 'model.' . strtolower($name);
+
 		try
 		{
-			$model = $container->get('model.' . $name, $forceNew);
+			$model = $container->get($modelKey, $forceNew);
 		}
 		catch (\InvalidArgumentException $e)
 		{
-			$container->alias('model.' . strtolower($name), $modelName)
-				->share(
-					$modelName,
-					function($container) use($modelName, $config)
-					{
-						return new $modelName($config, $container, null, $container->get('db'));
-					}
-				);
+			$container->share(
+				$modelKey,
+				function(Container $container) use($modelName, $config)
+				{
+					return new $modelName($config, $container, null, $container->get('db'));
+				}
+			);
 
-			$model = $container->get($modelName);
+			$model = $container->get($modelKey);
 		}
 
 		return $model;
