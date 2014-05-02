@@ -29,9 +29,7 @@ abstract class Command extends JoomlaCommand
 	 * @param   CliOutput        $output  Cli output object.
 	 * @param   AbstractCommand  $parent  Parent Console.
 	 *
-	 * @throws \LogicException
-	 *
-	 * @since  1.0
+	 * @throws  \LogicException
 	 */
 	public function __construct($name = null, Input\Cli $input = null, CliOutput $output = null, AbstractCommand $parent = null)
 	{
@@ -66,8 +64,6 @@ abstract class Command extends JoomlaCommand
 	 * Configure command.
 	 *
 	 * @return void
-	 *
-	 * @since  1.0
 	 */
 	protected function configure()
 	{
@@ -77,12 +73,12 @@ abstract class Command extends JoomlaCommand
 	}
 
 	/**
-	 * getOrClose
+	 * Get argument or close this appliction.
 	 *
-	 * @param int    $arg
-	 * @param string $msg
+	 * @param integer $arg Argument offset.
+	 * @param string  $msg Close message.
 	 *
-	 * @return  string
+	 * @return  string Return argument value.
 	 */
 	public function getOrClose($arg, $msg = '')
 	{
@@ -95,5 +91,7 @@ abstract class Command extends JoomlaCommand
 			->out()->out('Usage:')->out($this->usage);
 
 		$this->application->close();
+
+		return false;
 	}
 }

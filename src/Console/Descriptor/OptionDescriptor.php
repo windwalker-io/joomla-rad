@@ -13,24 +13,22 @@ use Joomla\Console\Option\Option;
 
 /**
  * Class Option Descriptor
+ *
+ * @since  2.0
  */
 class OptionDescriptor extends TextOptionDescriptor
 {
 	/**
 	 * The max length of command.
 	 *
-	 * @var int
-	 *
-	 * @since  1.0
+	 * @var integer
 	 */
 	protected $maxLength = 0;
 
 	/**
 	 * Offset that between every commands and their descriptions.
 	 *
-	 * @var int
-	 *
-	 * @since  1.0
+	 * @var integer
 	 */
 	protected $offsetAfterCommand = 4;
 
@@ -38,8 +36,6 @@ class OptionDescriptor extends TextOptionDescriptor
 	 * Option description template.
 	 *
 	 * @var string
-	 *
-	 * @since  1.0
 	 */
 	protected $template = <<<EOF
   <info>%-{WIDTH}s</info>%s
@@ -52,8 +48,6 @@ EOF;
 	 *
 	 * @throws  \InvalidArgumentException
 	 * @return  string  Rendered description.
-	 *
-	 * @since   1.0
 	 */
 	protected function renderItem($option)
 	{
@@ -62,7 +56,7 @@ EOF;
 			throw new \InvalidArgumentException('Command descriptor need Command object to describe it.');
 		}
 
-		/** @var Command $command */
+		/** @var Option */
 		$name        = $option->getName();
 		$description = $option->getDescription() ?: 'No description';
 		$aliases     = $option->getAlias();
@@ -101,14 +95,13 @@ EOF;
 	 * Render all items description.
 	 *
 	 * @return  string
-	 *
-	 * @since  1.0
 	 */
 	public function render()
 	{
 		// Count the max command length as column width.
 		foreach ($this->items as $item)
 		{
+			/** @var $item Option */
 			$name        = $item->getName();
 			$aliases     = $item->getAlias();
 

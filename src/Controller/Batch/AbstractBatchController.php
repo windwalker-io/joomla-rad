@@ -11,35 +11,35 @@ namespace Windwalker\Controller\Batch;
 use Windwalker\Controller\Admin\AbstractListController;
 
 /**
- * Class AbstractBatchController
+ * Batch controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractBatchController extends AbstractListController
 {
 	/**
-	 * Property batch.
+	 * Batch fields.
 	 *
 	 * @var array()
 	 */
 	protected $batch = array();
 
 	/**
-	 * Property done.
+	 * Is batch done?.
 	 *
 	 * @var boolean
 	 */
 	protected $done = false;
 
 	/**
-	 * Property categoryKey.
+	 * The name of category foreign key.
 	 *
 	 * @var string
 	 */
 	protected $categoryKey = 'catid';
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -62,9 +62,9 @@ abstract class AbstractBatchController extends AbstractListController
 	}
 
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
-	 * @return bool|mixed
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{
@@ -97,7 +97,7 @@ abstract class AbstractBatchController extends AbstractListController
 	}
 
 	/**
-	 * doBatch
+	 * Method to run batch.
 	 *
 	 * @throws \Exception
 	 * @return array
@@ -136,21 +136,21 @@ abstract class AbstractBatchController extends AbstractListController
 	}
 
 	/**
-	 * save
+	 * Method to save item.
 	 *
-	 * @param int   $pk
-	 * @param array $data
+	 * @param int   $pk   The primary key value.
+	 * @param array $data The item data.
 	 *
 	 * @return mixed
 	 */
 	abstract protected function save($pk, $data);
 
 	/**
-	 * postExecute
+	 * Pose execute hook.
 	 *
-	 * @param  null $result
+	 * @param   mixed  $result  Executed return value.
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 */
 	protected function postExecute($result = null)
 	{
@@ -174,18 +174,18 @@ abstract class AbstractBatchController extends AbstractListController
 	}
 
 	/**
-	 * prepareBatch
+	 * Prepare batch hook.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	protected function preBatchHook()
 	{
 	}
 
 	/**
-	 * postBatch
+	 * Post batch hook.
 	 *
-	 * @param array $result
+	 * @param array $result Batch result.
 	 *
 	 * @return mixed
 	 */

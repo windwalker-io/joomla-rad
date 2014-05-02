@@ -19,9 +19,9 @@ use Windwalker\DI\Container;
 use Windwalker\Console\Descriptor\OptionDescriptor;
 
 /**
- * Class Console
+ * Console Class.
  *
- * @since  3.2
+ * @since  2.0
  */
 class Console extends JoomlaConsole
 {
@@ -29,7 +29,6 @@ class Console extends JoomlaConsole
 	 * The application dispatcher object.
 	 *
 	 * @var    \JEventDispatcher
-	 * @since  3.2
 	 */
 	protected $dispatcher;
 
@@ -37,8 +36,6 @@ class Console extends JoomlaConsole
 	 * The Console title.
 	 *
 	 * @var  string
-	 *
-	 * @since  1.0
 	 */
 	protected $name = 'Windwalker Console';
 
@@ -46,13 +43,11 @@ class Console extends JoomlaConsole
 	 * Version of this application.
 	 *
 	 * @var string
-	 *
-	 * @since  1.0
 	 */
 	protected $version = '2.0';
 
 	/**
-	 * Property container.
+	 * The DI container.
 	 *
 	 * @var Container
 	 */
@@ -70,8 +65,6 @@ class Console extends JoomlaConsole
 	 *                              the application's config object, otherwise a default config object is created.
 	 *
 	 * @param   CliOutput  $output  The output handler.
-	 *
-	 * @since   1.0
 	 */
 	public function __construct(Input\Cli $input = null, Registry $config = null, CliOutput $output = null)
 	{
@@ -107,7 +100,7 @@ HELP
 	}
 
 	/**
-	 * loadFirstlevelCommands
+	 * Auto load the first level commands.
 	 *
 	 * @return void
 	 */
@@ -142,8 +135,6 @@ HELP
 	 * @param   \JEventDispatcher  $dispatcher  An optional dispatcher object. If omitted, the factory dispatcher is created.
 	 *
 	 * @return  Console This method is chainable.
-	 *
-	 * @since   12.1
 	 */
 	public function loadDispatcher(\JEventDispatcher $dispatcher = null)
 	{
@@ -159,8 +150,6 @@ HELP
 	 * @param   array   $args   An array of arguments (optional).
 	 *
 	 * @return  array   An array of results from each function call, or null if no dispatcher is defined.
-	 *
-	 * @since   12.1
 	 */
 	public function triggerEvent($event, array $args = null)
 	{
@@ -173,9 +162,9 @@ HELP
 	}
 
 	/**
-	 * isSite
+	 * Is site interface?
 	 *
-	 * @return  bool
+	 * @return  boolean  True if this application is site.
 	 */
 	public function isSite()
 	{
@@ -183,9 +172,9 @@ HELP
 	}
 
 	/**
-	 * isAdmin
+	 * Is admin interface?
 	 *
-	 * @return  bool
+	 * @return  boolean  True if this application is administrator.
 	 */
 	public function isAdmin()
 	{
@@ -193,12 +182,12 @@ HELP
 	}
 
 	/**
-	 * enqueueMessage
+	 * Enqueue a system message.
 	 *
-	 * @param string $msg
-	 * @param string $type
+	 * @param   string  $msg   The message to enqueue.
+	 * @param   string  $type  The message type. Default is message.
 	 *
-	 * @return  $this
+	 * @return  void
 	 */
 	public function enqueueMessage($msg, $type = 'message')
 	{
@@ -208,9 +197,11 @@ HELP
 	}
 
 	/**
-	 * getContainer
+	 * Get the DI container.
 	 *
-	 * @return Container
+	 * @return  Container
+	 *
+	 * @throws  \UnexpectedValueException May be thrown if the container has not been set.
 	 */
 	public function getContainer()
 	{
@@ -223,11 +214,11 @@ HELP
 	}
 
 	/**
-	 * setContainer
+	 * Set the DI container.
 	 *
-	 * @param Container $container
+	 * @param   Container  $container  The DI container.
 	 *
-	 * @return Console
+	 * @return  Console Return self to support chaining.
 	 */
 	public function setContainer(Container $container)
 	{

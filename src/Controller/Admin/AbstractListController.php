@@ -8,17 +8,15 @@
 
 namespace Windwalker\Controller\Admin;
 
-use Windwalker\Table\Table;
-
 /**
- * Class AbstractAdminController
+ * A controller to handle list page operation.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractListController extends AbstractAdminController
 {
 	/**
-	 * Property cid.
+	 * Items id list.
 	 *
 	 * @var int[]
 	 */
@@ -29,9 +27,7 @@ abstract class AbstractListController extends AbstractAdminController
 	 *
 	 * @param \JInput          $input   The input object.
 	 * @param \JApplicationCms $app     The application object.
-	 * @param array            $config  Config.
-	 *
-	 * @since  12.1
+	 * @param array            $config  Alternative config.
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
@@ -52,7 +48,7 @@ abstract class AbstractListController extends AbstractAdminController
 	}
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -65,14 +61,14 @@ abstract class AbstractListController extends AbstractAdminController
 	}
 
 	/**
-	 * getModel
+	 * Method to get a model object, loading it if required.
 	 *
-	 * @param null  $name
-	 * @param null  $prefix
-	 * @param array $config
-	 * @param bool  $forceNew
+	 * @param   string  $name     The model name. Optional.
+	 * @param   string  $prefix   The class prefix. Optional.
+	 * @param   array   $config   Configuration array for model. Optional.
+	 * @param   boolean $forceNew Force get new model, or we get it from cache.
 	 *
-	 * @return mixed
+	 * @return  object  The model.
 	 */
 	public function getModel($name = null, $prefix = null, $config = array(), $forceNew = false)
 	{

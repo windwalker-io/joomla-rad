@@ -20,9 +20,9 @@ use Windwalker\Helper\LanguageHelper;
 class LegacyQuickaddController extends DisplayController
 {
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
-	 * @return mixed|void
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{

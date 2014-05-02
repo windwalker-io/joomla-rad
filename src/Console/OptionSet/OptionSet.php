@@ -11,19 +11,19 @@ namespace Windwalker\Console\OptionSet;
 /**
  * Class OptionSet
  *
- * @since 1.0
+ * @since 2.0
  */
 class OptionSet extends \ArrayObject
 {
 	/**
-	 * Property instance.
+	 * Instance object.
 	 *
 	 * @var OptionSet
 	 */
 	protected static $instance;
 
 	/**
-	 * getInstance
+	 * Get object Instance.
 	 *
 	 * @return  OptionSet
 	 */

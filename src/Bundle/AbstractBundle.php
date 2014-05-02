@@ -8,28 +8,28 @@
 
 namespace Windwalker\Bundle;
 
-use Windwalker\Console\Application\Console;
-use Windwalker\DI\Container;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
+use Windwalker\Console\Application\Console;
+use Windwalker\DI\Container;
 use Windwalker\Filesystem\Path\PathLocator;
 
 /**
- * Class AbstractBundle
+ * Abstract Bundle class.
  *
- * @since 1.0
+ * @since 2.0
  */
 class AbstractBundle implements ContainerAwareInterface
 {
 	/**
-	 * Property container.
+	 * DI Container.
 	 *
 	 * @var Container
 	 */
 	protected $container = null;
 
 	/**
-	 * Property name.
+	 * Bundle name.
 	 *
 	 * @var  string
 	 */
@@ -71,9 +71,9 @@ class AbstractBundle implements ContainerAwareInterface
 	}
 
 	/**
-	 * getName
+	 * Get bundle name.
 	 *
-	 * @return  string
+	 * @return  string  Bundle ame.
 	 */
 	public function getName()
 	{
@@ -81,7 +81,7 @@ class AbstractBundle implements ContainerAwareInterface
 	}
 
 	/**
-	 * registerProvider
+	 * Register providers.
 	 *
 	 * @param JoomlaContainer $container
 	 *
@@ -92,9 +92,9 @@ class AbstractBundle implements ContainerAwareInterface
 	}
 
 	/**
-	 * registerCommands
+	 * Register commands to console.
 	 *
-	 * @param Console $console
+	 * @param Console $console Windwalker console object.
 	 *
 	 * @return  void
 	 */

@@ -9,21 +9,21 @@
 namespace Windwalker\Controller\Admin;
 
 /**
- * Class FormController
+ * The Controller to handle single item.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractItemController extends AbstractAdminController
 {
 	/**
-	 * Property recordId.
+	 * Record ID.
 	 *
 	 * @var mixed
 	 */
 	protected $recordId = null;
 
 	/**
-	 * Property data.
+	 * An array of input data.
 	 *
 	 * @var array
 	 */
@@ -35,8 +35,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   \JInput          $input  The input object.
 	 * @param   \JApplicationCms $app    The application object.
 	 * @param   array            $config The config object.
-	 *
-	 * @since  12.1
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
@@ -57,7 +55,7 @@ abstract class AbstractItemController extends AbstractAdminController
 	}
 
 	/**
-	 * prepare
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -82,8 +80,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   integer  $id       The ID of the record to add to the edit list.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
 	protected function holdEditId($context, $id)
 	{
@@ -119,8 +115,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   integer  $id       The ID of the record to add to the edit list.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
 	protected function releaseEditId($context, $id)
 	{
@@ -157,8 +151,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	 * @param   integer  $id       The ID of the record to add to the edit list.
 	 *
 	 * @return  boolean  True if the ID is in the edit list.
-	 *
-	 * @since   12.2
 	 */
 	protected function checkEditId($context, $id)
 	{

@@ -113,7 +113,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -122,9 +122,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * execute
+	 * Execute the controller.
 	 *
-	 * @return mixed
+	 * @return  boolean  Executed result or rendered string.
 	 */
 	public function execute()
 	{
@@ -136,18 +136,18 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 */
 	abstract protected function doExecute();
 
 	/**
-	 * postExecute
+	 * Pose execute hook.
 	 *
-	 * @param $data
+	 * @param   mixed  $data  Executed return value.
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 */
 	protected function postExecute($data = null)
 	{
@@ -157,11 +157,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Fetch HMVC result.
 	 *
-	 * @param string       $prefix
-	 * @param string       $name
-	 * @param JInput|array $input
+	 * @param string       $prefix  The controller prefix, it means the component.
+	 * @param string       $name    Controller task name.
+	 * @param JInput|array $input   The input object or an array, it will pass to child controller.
 	 *
-	 * @return mixed
+	 * @return mixed HMVC executed result.
 	 */
 	public function fetch($prefix, $name, $input = array())
 	{
@@ -190,9 +190,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * getComponentPath
+	 * Get Component path.
 	 *
-	 * @return string
+	 * @return string Component path.
 	 */
 	public function getComponentPath()
 	{
@@ -200,11 +200,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * setComponentPath
+	 * Set component path.
 	 *
-	 * @param string $componentPath
+	 * @param   string   $componentPath  The component path.
 	 *
-	 * @return $this
+	 * @return  Controller  Return self to support chaining.
 	 */
 	public function setComponentPath($componentPath)
 	{
@@ -214,9 +214,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * getReflection
+	 * Get reflection and cache it.
 	 *
-	 * @return \ReflectionClass
+	 * @return \ReflectionClass PHP Reflection object.
 	 */
 	public function getReflection()
 	{
@@ -231,9 +231,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * getPrefix
+	 * Get Prefix.
 	 *
-	 * @return string
+	 * @return string Prefix string.
 	 */
 	public function getPrefix()
 	{
@@ -241,11 +241,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * setPrefix
+	 * Set Prefix.
 	 *
-	 * @param string $prefix
+	 * @param  string $prefix Prefix string.
 	 *
-	 * @return $this
+	 * @return Controller  Return self to support chaining.
 	 */
 	public function setPrefix($prefix)
 	{
@@ -255,7 +255,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * @return string
+	 * Get controller name.
+	 *
+	 * @return  string
 	 */
 	public function getName()
 	{
@@ -281,7 +283,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * @param string $name
+	 * Set controller name
+	 *
+	 * @param   string $name The controller name.
+	 *
+	 * @return  Controller  Return self to support chaining.
 	 */
 	public function setName($name)
 	{
@@ -291,7 +297,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * @param string $option
+	 * Set option name.
+	 *
+	 * @param   string $option Option name.
+	 *
+	 * @return  Controller  Return self to support chaining.
 	 */
 	public function setOption($option)
 	{
@@ -301,7 +311,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * @return string
+	 * Get task name.
+	 *
+	 * @return  string
 	 */
 	public function getTask()
 	{
@@ -309,7 +321,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * @param string $task
+	 * Set task name.
+	 *
+	 * @param   string $task The task name.
+	 *
+	 * @return  Controller  Return self to support chaining.
 	 */
 	public function setTask($task)
 	{
@@ -319,7 +335,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * checkToken
+	 * Check session token or die.
 	 *
 	 * @return void
 	 */
@@ -330,13 +346,14 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * getModel
+	 * Method to get a model object, loading it if required.
 	 *
-	 * @param null  $name
-	 * @param null  $prefix
-	 * @param array $config
+	 * @param   string  $name     The model name. Optional.
+	 * @param   string  $prefix   The class prefix. Optional.
+	 * @param   array   $config   Configuration array for model. Optional.
+	 * @param   boolean $forceNew Force get new model, or we get it from cache.
 	 *
-	 * @return Model|null
+	 * @return  object  The model.
 	 */
 	public function getModel($name = null, $prefix = null, $config = array(), $forceNew = false)
 	{
@@ -397,7 +414,6 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	 *
 	 * @return  JoomlaContainer
 	 *
-	 * @since   1.0
 	 * @throws  \UnexpectedValueException May be thrown if the container has not been set.
 	 */
 	public function getContainer()
@@ -415,9 +431,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	 *
 	 * @param   JoomlaContainer $container The DI container.
 	 *
-	 * @return $this
-	 *
-	 * @since   1.0
+	 * @return  Controller  Return self to support chaining.
 	 */
 	public function setContainer(JoomlaContainer $container)
 	{
@@ -427,12 +441,12 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * setMessage
+	 * Set message to queue.
 	 *
-	 * @param string $msg
-	 * @param string $type
+	 * @param   string  $msg   Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string  $type  Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return Controller
+	 * @return  Controller
 	 */
 	public function setMessage($msg, $type = 'message')
 	{

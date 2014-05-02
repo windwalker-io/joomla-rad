@@ -19,16 +19,16 @@ use Windwalker\Model\Exception\ValidateFailException;
 use Joomla\Registry\Registry;
 
 /**
- * Class QuickaddController
+ * Quickadd Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class QuickaddController extends DisplayController
 {
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
-	 * @return mixed|void
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{

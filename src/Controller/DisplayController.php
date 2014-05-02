@@ -92,8 +92,9 @@ class DisplayController extends Controller
 		$this->view = $view;
 	}
 
+
 	/**
-	 * Execute.
+	 * Method to run this controller.
 	 *
 	 * @return  mixed  A rendered view or true
 	 */
@@ -128,7 +129,7 @@ class DisplayController extends Controller
 				$this->app->registeredurlparams = $registeredurlparams;
 			}
 
-			return $cache->get( $this->view, 'render');
+			return $cache->get($this->view, 'render');
 		}
 
 		return  $this->view->render();

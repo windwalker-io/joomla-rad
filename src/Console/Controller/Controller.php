@@ -13,25 +13,23 @@ use Windwalker\Console\Application\Console;
 use Windwalker\Console\Command\Command;
 
 /**
- * Joomla Platform Base Controller Class
+ * Windwalker Console Base Controller Class
  *
- * @package     Joomla.Platform
- * @subpackage  Controller
- * @since       12.1
+ * @since  2.0
  */
 abstract class Controller implements \JController
 {
 	/**
 	 * The application object.
 	 *
-	 * @var    Console
+	 * @var  Console
 	 */
 	protected $app;
 
 	/**
 	 * The input object.
 	 *
-	 * @var    Input\Cli
+	 * @var  Input\Cli
 	 */
 	protected $input;
 
@@ -137,8 +135,6 @@ abstract class Controller implements \JController
 	 * @param   boolean  $nl    True (default) to append a new line at the end of the output string.
 	 *
 	 * @return  Command  Instance of $this to allow chaining.
-	 *
-	 * @since   1.0
 	 */
 	public function out($text = '', $nl = true)
 	{
@@ -154,8 +150,6 @@ abstract class Controller implements \JController
 	 * @param   boolean  $nl    True (default) to append a new line at the end of the output string.
 	 *
 	 * @return  Command  Instance of $this to allow chaining.
-	 *
-	 * @since   1.0
 	 */
 	public function err($text = '', $nl = true)
 	{
@@ -170,8 +164,6 @@ abstract class Controller implements \JController
 	 * @param   string  $question  The question you want to ask user.
 	 *
 	 * @return  string  The input string from standard input.
-	 *
-	 * @since   1.0
 	 */
 	public function in($question = '')
 	{
@@ -179,10 +171,10 @@ abstract class Controller implements \JController
 	}
 
 	/**
-	 * close
+	 * Close this application.
 	 *
-	 * @param string $text
-	 * @param bool   $nl
+	 * @param   string $text
+	 * @param   bool   $nl
 	 *
 	 * @return  void
 	 */
@@ -194,12 +186,12 @@ abstract class Controller implements \JController
 	}
 
 	/**
-	 * getOrClose
+	 * Get argument or close this appliction.
 	 *
-	 * @param int    $arg
-	 * @param string $msg
+	 * @param   integer $arg Argument offset.
+	 * @param   string  $msg Close message.
 	 *
-	 * @return  string
+	 * @return  string Return argument value.
 	 */
 	public function getOrClose($arg, $msg = '')
 	{

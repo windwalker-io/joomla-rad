@@ -12,11 +12,11 @@ use Windwalker\Helper\PathHelper;
 use Windwalker\Object\Object;
 
 /**
- * Class ComponentHelper
+ * Component Helper class.
  *
- * @since 1.0
+ * @since 2.0
  */
-class ComponentHelper
+abstract class ComponentHelper
 {
 	/**
 	 * Gets a list of the actions that can be performed.

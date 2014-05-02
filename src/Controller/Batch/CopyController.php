@@ -1,16 +1,22 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Controller\Batch;
 
 /**
- * Class MoveController
+ * Copy Batch Controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 class CopyController extends AbstractBatchController
 {
 	/**
-	 * Property incrementFields.
+	 * Which fields should increment.
 	 *
 	 * @var array
 	 */
@@ -20,12 +26,12 @@ class CopyController extends AbstractBatchController
 	);
 
 	/**
-	 * save
+	 * Method to save item.
 	 *
-	 * @param int   $pk
-	 * @param array $data
+	 * @param int   $pk   The primary key value.
+	 * @param array $data The item data.
 	 *
-	 * @return bool|mixed
+	 * @return mixed
 	 */
 	protected function save($pk, $data)
 	{

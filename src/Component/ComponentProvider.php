@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Component;
 
@@ -6,21 +12,21 @@ use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 
 /**
- * Class ComponentProvider
+ * Component Provider class.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ComponentProvider implements ServiceProviderInterface
 {
 	/**
-	 * Property name.
+	 * Component name.
 	 *
 	 * @var string
 	 */
 	protected $name = '';
 
 	/**
-	 * Property component.
+	 * Component object.
 	 *
 	 * @var
 	 */
@@ -29,11 +35,10 @@ class ComponentProvider implements ServiceProviderInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param $name
-	 * @param $option
-	 * @param $prefix
+	 * @param string    $name      Component name.
+	 * @param Component $component Component object.
 	 */
-	public function __construct($name, $component)
+	public function __construct($name, Component $component)
 	{
 		$this->name      = $name;
 		$this->component = $component;
@@ -45,8 +50,6 @@ class ComponentProvider implements ServiceProviderInterface
 	 * @param   Container $container The DI container.
 	 *
 	 * @return  Container  Returns itself to support chaining.
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{

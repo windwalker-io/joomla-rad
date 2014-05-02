@@ -11,64 +11,65 @@ namespace Windwalker\Component;
 use Windwalker\Controller\Controller;
 use Windwalker\DI\Container;
 use Windwalker\Event\ListenerHelper;
-use Windwalker\Object\Object;
 
 /**
- * Class Component
+ * Component class.
  *
  * @since 2.0
  */
 class Component
 {
 	/**
-	 * Property application.
+	 * Joomla Application object.
 	 *
 	 * @var \JApplicationCms
 	 */
 	protected $application;
 
 	/**
-	 * Property container.
+	 * DI Container.
 	 *
 	 * @var \Joomla\DI\Container
 	 */
 	protected $container;
 
 	/**
-	 * Property input.
+	 * Input object.
 	 *
 	 * @var \JInput
 	 */
 	protected $input;
 
 	/**
-	 * Property name.
+	 * Component name without `com_`.
 	 *
 	 * @var string
 	 */
 	protected $name;
 
 	/**
-	 * @var  string  Property option.
+	 * Component option name. Example `com_flower`.
+	 *
+	 * @var  string
 	 */
 	protected $option;
 
 	/**
-	 * Property reflection.
+	 * Reflection of this class.
 	 *
 	 * @var \ReflectionClass
 	 */
 	protected $reflection;
 
 	/**
-	 * Property defaultController.
+	 * Default task name.
 	 *
 	 * @var string
 	 */
 	protected $defaultController;
 
 	/**
-	 * Property path.
+	 * The paths of this component.
 	 *
 	 * @var array
 	 */
@@ -81,10 +82,10 @@ class Component
 	/**
 	 * Constructor.
 	 *
-	 * @param string           $name
-	 * @param \JInput          $input
-	 * @param \JApplicationCms $application
-	 * @param Container        $container
+	 * @param string           $name        The Component name.
+	 * @param \JInput          $input       The Input object.
+	 * @param \JApplicationCms $application The Application object.
+	 * @param Container        $container   The DI container.
 	 *
 	 * @throws \Exception
 	 */
@@ -117,9 +118,9 @@ class Component
 	}
 
 	/**
-	 * execute
+	 * Execute this component.
 	 *
-	 * @return mixed
+	 * @return mixed The return value of this component.
 	 */
 	public function execute()
 	{
@@ -133,9 +134,9 @@ class Component
 	}
 
 	/**
-	 * doExecute
+	 * Do execute.
 	 *
-	 * @return mixed
+	 * @return mixed The return value of this component.
 	 */
 	protected function doExecute()
 	{
@@ -152,11 +153,11 @@ class Component
 	}
 
 	/**
-	 * postExecute
+	 * Post execute hook.
 	 *
-	 * @param mixed $result
+	 * @param mixed $result The return value of this component.
 	 *
-	 * @return  mixed
+	 * @return  mixed  The return value of this component.
 	 */
 	protected function postExecute($result)
 	{
@@ -164,7 +165,9 @@ class Component
 	}
 
 	/**
-	 * init
+	 * Prepare hook of this component.
+	 *
+	 * Do some customize initialise through extending this method.
 	 *
 	 * @return void
 	 */
@@ -173,7 +176,7 @@ class Component
 	}
 
 	/**
-	 * prepare
+	 * Init this component.
 	 *
 	 * @return void
 	 */
@@ -218,7 +221,7 @@ class Component
 	}
 
 	/**
-	 * registerEventListerer
+	 * Register EventListeners.
 	 *
 	 * @return  void
 	 */
@@ -238,8 +241,6 @@ class Component
 	 * @param   string  $controller  The name of the method in the derived class to perform for this task.
 	 *
 	 * @return  Component  A JControllerLegacy object to support chaining.
-	 *
-	 * @since   12.2
 	 */
 	public function registerTask($task, $controller)
 	{
@@ -254,8 +255,6 @@ class Component
 	 * @param   string  $task  The task.
 	 *
 	 * @return  Component  This object to support chaining.
-	 *
-	 * @since   12.2
 	 */
 	public function unregisterTask($task)
 	{
@@ -271,7 +270,7 @@ class Component
 	 * @param   integer  $categoryId  The category ID.
 	 * @param   integer  $id          The item ID.
 	 *
-	 * @return  Object
+	 * @return  \Windwalker\Object\Object
 	 */
 	public function getActions($assetName, $categoryId = 0, $id = 0)
 	{
@@ -281,7 +280,7 @@ class Component
 	}
 
 	/**
-	 * getContainer
+	 * Get the DI container.
 	 *
 	 * @return Container
 	 */
@@ -291,11 +290,11 @@ class Component
 	}
 
 	/**
-	 * setContainer
+	 * Set the Container.
 	 *
-	 * @param Container $container
+	 * @param Container $container The DI Container.
 	 *
-	 * @return Component
+	 * @return Component Return self to support chaining.
 	 */
 	public function setContainer(Container $container)
 	{
@@ -305,9 +304,9 @@ class Component
 	}
 
 	/**
-	 * getApplication
+	 * Get Application object.
 	 *
-	 * @return \JApplicationCms
+	 * @return \JApplicationCms The Application object.
 	 */
 	public function getApplication()
 	{
@@ -315,11 +314,11 @@ class Component
 	}
 
 	/**
-	 * setApplication
+	 * Set Application object.
 	 *
-	 * @param \JApplicationBase $application
+	 * @param \JApplicationBase $application The Application object.
 	 *
-	 * @return $this
+	 * @return Component Return self to support chaining.
 	 */
 	public function setApplication(\JApplicationBase $application)
 	{
@@ -329,9 +328,9 @@ class Component
 	}
 
 	/**
-	 * getInput
+	 * Get the Input object.
 	 *
-	 * @return \JInput
+	 * @return \JInput The input object.
 	 */
 	public function getInput()
 	{
@@ -339,11 +338,11 @@ class Component
 	}
 
 	/**
-	 * setInput
+	 * Set Input object
 	 *
-	 * @param \JInput $input
+	 * @param \JInput $input The Input object.
 	 *
-	 * @return $this
+	 * @return Component Return self to support chaining.
 	 */
 	public function setInput(\JInput $input)
 	{
@@ -353,7 +352,7 @@ class Component
 	}
 
 	/**
-	 * loadConfiguration
+	 * Load configuration file. (Not used now.)
 	 *
 	 * @return void
 	 */
@@ -362,9 +361,9 @@ class Component
 	}
 
 	/**
-	 * getReflection
+	 * Get reflection and cache it.
 	 *
-	 * @return \ReflectionClass
+	 * @return \ReflectionClass PHP Reflection object.
 	 */
 	public function getReflection()
 	{
@@ -379,9 +378,9 @@ class Component
 	}
 
 	/**
-	 * getDefaultController
+	 * Get Default controller.
 	 *
-	 * @return string
+	 * @return string Default controller.
 	 */
 	public function getDefaultController()
 	{
@@ -389,11 +388,11 @@ class Component
 	}
 
 	/**
-	 * setDefaultController
+	 * Set Default controller.
 	 *
-	 * @param string $defaultController
+	 * @param string $defaultController Default controller.
 	 *
-	 * @return $this
+	 * @return Component Return self to support chaining.
 	 */
 	public function setDefaultController($defaultController)
 	{
@@ -403,11 +402,11 @@ class Component
 	}
 
 	/**
-	 * getPath
+	 * Get component path.
 	 *
-	 * @param string $client
+	 * @param string $client Site or administrator.
 	 *
-	 * @return string
+	 * @return string Path of this client.
 	 */
 	public function getPath($client = 'self')
 	{
@@ -417,9 +416,9 @@ class Component
 	}
 
 	/**
-	 * getSitePath
+	 * Get site path. Alias of getPath().
 	 *
-	 * @return string
+	 * @return string Site path.
 	 */
 	public function getSitePath()
 	{
@@ -427,9 +426,9 @@ class Component
 	}
 
 	/**
-	 * getAdminPath
+	 * Get admin path. Alias of getPath().
 	 *
-	 * @return string
+	 * @return string Admin path.
 	 */
 	public function getAdminPath()
 	{

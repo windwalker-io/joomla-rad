@@ -9,11 +9,12 @@
 namespace Windwalker\Console\Descriptor;
 
 use Joomla\Console\Command\AbstractCommand;
-use Joomla\Console\Command\Command;
 use Joomla\Console\Descriptor\Text\TextCommandDescriptor;
 
 /**
  * Class Option Descriptor
+ *
+ * @since  2.0
  */
 class CommandDescriptor extends TextCommandDescriptor
 {
@@ -21,8 +22,6 @@ class CommandDescriptor extends TextCommandDescriptor
 	 * Render all items description.
 	 *
 	 * @return  string
-	 *
-	 * @since   1.0
 	 */
 	public function render()
 	{

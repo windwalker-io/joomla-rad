@@ -9,9 +9,9 @@
 namespace Windwalker\Bootstrap;
 
 /**
- * Class Dropdown
+ * Bootstrap Dropdown class helper.
  *
- * @since 1.0
+ * @since 2.0
  */
 class Dropdown extends \JHtmlActionsdropdown
 {
@@ -31,15 +31,13 @@ class Dropdown extends \JHtmlActionsdropdown
 	}
 
 	/**
-	 * clean
+	 * Clean dropdown list.
 	 *
 	 * @return  Dropdown
 	 */
-	public function clean()
+	public static function clean()
 	{
 		static::$dropDownList = null;
-
-		return $this;
 	}
 
 	/**
