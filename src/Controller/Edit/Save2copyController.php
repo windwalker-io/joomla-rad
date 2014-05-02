@@ -8,20 +8,16 @@
 
 namespace Windwalker\Controller\Edit;
 
-use Windwalker\Controller\Admin\AbstractItemController;
-use Windwalker\Model\Exception\ValidateFailException;
-
 /**
- * Class SaveController
+ * Save2Copy Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class Save2copyController extends ApplyController
 {
 	/**
-	 * preSaveHook
+	 * Method to do something before save.
 	 *
-	 * @throws \Exception
 	 * @return void
 	 */
 	protected function preSaveHook()
@@ -36,7 +32,7 @@ class Save2copyController extends ApplyController
 	}
 
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
 	 * @return  mixed
 	 */

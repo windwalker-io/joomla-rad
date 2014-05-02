@@ -13,14 +13,14 @@ use Windwalker\Controller\Admin\AbstractItemController;
 defined('_JEXEC') or die;
 
 /**
- * Class CancelController
+ * Cancel Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class CancelController extends AbstractItemController
 {
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */
@@ -30,8 +30,6 @@ class CancelController extends AbstractItemController
 	 * Generic method to cancel
 	 *
 	 * @return  boolean  True on success.
-	 *
-	 * @since   3.2
 	 */
 	protected function doExecute()
 	{

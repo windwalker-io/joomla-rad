@@ -83,9 +83,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   JInput          $input  The input object.
-	 * @param   JApplicationCms $app    The application object.
-	 * @param   array           $config Config.
+	 * @param   \JInput          $input  The input object.
+	 * @param   \JApplicationCms $app    The application object.
+	 * @param   array            $config The config object.
 	 */
 	public function __construct(JInput $input = null, JApplicationCms $app = null, $config = array())
 	{

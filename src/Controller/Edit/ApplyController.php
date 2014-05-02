@@ -11,14 +11,14 @@ namespace Windwalker\Controller\Edit;
 use Windwalker\Controller\Admin\AbstractItemController;
 
 /**
- * Class SaveController
+ * Apply Controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ApplyController extends AbstractItemController
 {
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
 	 * @return  mixed
 	 */
@@ -28,11 +28,11 @@ class ApplyController extends AbstractItemController
 	}
 
 	/**
-	 * postExecute
+	 * Pose execute hook.
 	 *
-	 * @param null $return
+	 * @param   mixed  $return  Executed return value.
 	 *
-	 * @return null
+	 * @return  mixed
 	 */
 	protected function postExecute($return = null)
 	{

@@ -11,16 +11,16 @@ namespace Windwalker\Controller\Edit;
 use Windwalker\Controller\Admin\AbstractItemController;
 
 /**
- * Class AddController
+ * Edit Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class EditController extends AbstractItemController
 {
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
-	 * @return mixed
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{

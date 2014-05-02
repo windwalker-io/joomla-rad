@@ -11,18 +11,17 @@ namespace Windwalker\Controller\Check;
 use Windwalker\Controller\Admin\AbstractListController;
 
 /**
- * Class CheckinController
+ * Checkin Controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 class CheckinController extends AbstractListController
 {
 	/**
-	 * doExecute
-	 *
-	 * @return bool|mixed
+	 * Method to run this controller.
 	 *
 	 * @throws \InvalidArgumentException
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{
@@ -69,12 +68,12 @@ class CheckinController extends AbstractListController
 	}
 
 	/**
-	 * allowEdit
+	 * Method to check if you can add a new record.
 	 *
-	 * @param array  $data
-	 * @param string $key
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
 	 *
-	 * @return bool
+	 * @return  boolean
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{

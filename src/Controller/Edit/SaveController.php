@@ -13,39 +13,39 @@ use Windwalker\Controller\Admin\AbstractItemController;
 use Windwalker\Model\Exception\ValidateFailException;
 
 /**
- * Class SaveController
+ * Save Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class SaveController extends AbstractItemController
 {
 	/**
-	 * Property lang.
+	 * Language object.
 	 *
 	 * @var \JLanguage
 	 */
-	protected $lang;
+	protected $lang = null;
 
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */
 	protected $allowReturn = true;
 
 	/**
-	 * Property useTransaction.
+	 * Use DB transaction or not.
 	 *
 	 * @var  boolean
 	 */
 	protected $useTransaction = false;
 
 	/**
-	 * Constructor.
+	 * Instantiate the controller.
 	 *
-	 * @param \JInput          $input
-	 * @param \JApplicationCms $app
-	 * @param array            $config
+	 * @param   \JInput          $input  The input object.
+	 * @param   \JApplicationCms $app    The application object.
+	 * @param   array            $config The config object.
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{
@@ -56,7 +56,7 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * prepare
+	 * Prepare execute hook.
 	 *
 	 * @return void
 	 */
@@ -68,9 +68,10 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * execute
+	 * Method to run this controller.
 	 *
-	 * @return mixed
+	 * @throws \Exception
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{
@@ -147,10 +148,10 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * doSave
+	 * Do the save action.
 	 *
 	 * @throws \Exception
-	 * @return array
+	 * @return array Validated data.
 	 */
 	protected function doSave()
 	{
@@ -192,11 +193,11 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * postExecute
+	 * Pose execute hook.
 	 *
-	 * @param null $return
+	 * @param   mixed  $return  Executed return value.
 	 *
-	 * @return mixed|null
+	 * @return  mixed
 	 */
 	protected function postExecute($return = null)
 	{
@@ -212,7 +213,7 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * getKey
+	 * Get key.
 	 *
 	 * @return  mixed
 	 */
@@ -222,9 +223,9 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * setKey
+	 * Set key
 	 *
-	 * @param string $key
+	 * @param string $key Key name.
 	 *
 	 * @return  $this
 	 */
@@ -236,7 +237,7 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * getUrlVar
+	 * Get UrlVar.
 	 *
 	 * @return  mixed
 	 */
@@ -246,9 +247,9 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * setUrlVar
+	 * Set UrlVar.
 	 *
-	 * @param string $urlVar
+	 * @param string $urlVar UrlVar.
 	 *
 	 * @return  $this
 	 */
@@ -260,19 +261,20 @@ class SaveController extends AbstractItemController
 	}
 
 	/**
-	 * postSaveHook
+	 * Method that allows child controller access to model data
+	 * after the data has been saved.
 	 *
-	 * @param \Windwalker\Model\CrudModel $model
-	 * @param array                       $validData
+	 * @param   \Windwalker\Model\CrudModel  $model      The data model object.
+	 * @param   array                        $validData  The validated data.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	protected function postSaveHook($model, $validData)
 	{
 	}
 
 	/**
-	 * preSaveHook
+	 * Method to do something before save.
 	 *
 	 * @return void
 	 */

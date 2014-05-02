@@ -5,9 +5,9 @@ namespace Windwalker\Controller\State;
 use Windwalker\Controller\Admin\AbstractListController;
 
 /**
- * Class AbstractUpdateStateController
+ * Abstract UpdateState Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractUpdateStateController extends AbstractListController
 {

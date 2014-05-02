@@ -5,23 +5,23 @@
  * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
+
 namespace Windwalker\Controller\Check;
 
 use Windwalker\Controller\Admin\AbstractListController;
 
 /**
- * Class CheckinController
+ * Checkout Controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 class CheckoutController extends AbstractListController
 {
 	/**
-	 * doExecute
-	 *
-	 * @return bool|mixed
+	 * Method to run this controller.
 	 *
 	 * @throws \InvalidArgumentException
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{
@@ -66,12 +66,12 @@ class CheckoutController extends AbstractListController
 	}
 
 	/**
-	 * allowEdit
+	 * Method to check if you can add a new record.
 	 *
-	 * @param array  $data
-	 * @param string $key
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
 	 *
-	 * @return bool
+	 * @return  boolean
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{

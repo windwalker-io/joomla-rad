@@ -12,14 +12,14 @@ use Windwalker\Controller\Admin\AbstractItemController;
 use Windwalker\Model\Exception\ValidateFailException;
 
 /**
- * Class SaveController
+ * Save2new Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class Save2newController extends SaveController
 {
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
 	 * @return  mixed
 	 */
@@ -29,11 +29,11 @@ class Save2newController extends SaveController
 	}
 
 	/**
-	 * postExecute
+	 * Pose execute hook.
 	 *
-	 * @param null $return
+	 * @param   mixed  $return  Executed return value.
 	 *
-	 * @return null
+	 * @return  mixed
 	 */
 	protected function postExecute($return = null)
 	{

@@ -13,7 +13,7 @@ use Windwalker\Helper\UriHelper;
 abstract class AbstractRedirectController extends Controller
 {
 	/**
-	 * Property allowUrlParams.
+	 * Allowed params in url.
 	 *
 	 * @var array
 	 */
@@ -24,23 +24,23 @@ abstract class AbstractRedirectController extends Controller
 	);
 
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */
 	protected $allowReturn = false;
 
 	/**
-	 * Property viewItem.
+	 * View item name.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $viewItem = null;
 
 	/**
-	 * Property viewList.
+	 * View list name.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $viewList = null;
 
