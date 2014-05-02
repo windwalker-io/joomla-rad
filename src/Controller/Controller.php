@@ -180,6 +180,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 
 		$input->set('hmvc', true);
 
+		/** @var $resolver \Windwalker\Controller\Resolver\ControllerResolver */
 		$resolver   = $this->container->get('controller.resolver');
 		$controller = $resolver->getController($prefix, $name, $input)
 			->setComponentPath($this->componentPath)

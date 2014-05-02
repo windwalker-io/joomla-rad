@@ -35,14 +35,14 @@ abstract class AbstractRedirectController extends Controller
 	 *
 	 * @var
 	 */
-	protected $viewItem;
+	protected $viewItem = null;
 
 	/**
 	 * Property viewList.
 	 *
 	 * @var
 	 */
-	protected $viewList;
+	protected $viewList = null;
 
 	/**
 	 * Instantiate the controller.
@@ -81,10 +81,10 @@ abstract class AbstractRedirectController extends Controller
 	/**
 	 * redirectToItem
 	 *
-	 * @param null   $recordId
-	 * @param string $urlVar
-	 * @param null   $msg
-	 * @param null   $type
+	 * @param null        $recordId
+	 * @param string      $urlVar
+	 * @param null        $msg
+	 * @param null|string $type
 	 *
 	 * @return void
 	 */

@@ -24,7 +24,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 * @var    string
 	 * @since  12.2
 	 */
-	protected $context;
+	protected $context = null;
 
 	/**
 	 * Property user.
@@ -45,35 +45,35 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 *
 	 * @var string
 	 */
-	protected $key;
+	protected $key = null;
 
 	/**
 	 * Property urlVar.
 	 *
 	 * @var string
 	 */
-	protected $urlVar;
+	protected $urlVar = null;
 
 	/**
 	 * Property table.
 	 *
 	 * @var Table
 	 */
-	protected $table;
+	protected $table = null;
 
 	/**
 	 * Property model.
 	 *
 	 * @var CrudModel
 	 */
-	protected $model;
+	protected $model = null;
 
 	/**
 	 * Property lang.
 	 *
 	 * @var \JLanguage
 	 */
-	protected $lang;
+	protected $lang = null;
 
 	/**
 	 * Instantiate the controller.
@@ -115,13 +115,13 @@ abstract class AbstractAdminController extends AbstractRedirectController
 		}
 
 		// Determine the name of the primary key for the data.
-		if (empty($key))
+		if (empty($this->key))
 		{
 			$this->key = $this->table->getKeyName();
 		}
 
 		// To avoid data collisions the urlVar may be different from the primary key.
-		if (empty($urlVar))
+		if (empty($this->urlVar))
 		{
 			$this->urlVar = $this->key;
 		}

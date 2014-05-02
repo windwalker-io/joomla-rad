@@ -51,5 +51,7 @@ class EditController extends AbstractItemController
 		$this->input->set('layout', 'edit');
 
 		$this->redirectToItem($recordId, $this->urlVar);
+
+		return true;
 	}
 }

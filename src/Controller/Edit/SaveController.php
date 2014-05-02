@@ -51,8 +51,8 @@ class SaveController extends AbstractItemController
 	{
 		parent::__construct($input, $app, $config);
 
-		$this->key    = JArrayHelper::getValue($config, 'key');
-		$this->urlVar = JArrayHelper::getValue($config, 'urlVar');
+		$this->key    = $this->key ? : JArrayHelper::getValue($config, 'key');
+		$this->urlVar = $this->urlVar ? : JArrayHelper::getValue($config, 'urlVar');
 	}
 
 	/**
