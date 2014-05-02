@@ -12,56 +12,56 @@ use Joomla\Utilities\ArrayHelper;
 use Windwalker\String\StringNormalise;
 
 /**
- * Class ControllerDelegator
+ * The Controller Delegator.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ControllerDelegator
 {
 	/**
-	 * Property class.
+	 * Controller class.
 	 *
 	 * @var  string
 	 */
-	public $class;
+	public $class = null;
 
 	/**
-	 * Property input.
+	 * Input object.
 	 *
 	 * @var  \JInput
 	 */
-	public $input;
+	public $input = null;
 
 	/**
-	 * Property app.
+	 * Application object.
 	 *
 	 * @var  \JApplicationBase
 	 */
-	public $app;
+	public $app = null;
 
 	/**
-	 * Property config.
+	 * The controller config.
 	 *
 	 * @var  array
 	 */
-	public $config;
+	public $config = null;
 
 	/**
-	 * Property aliases.
+	 * Alias to get controller.
 	 *
 	 * @var  array
 	 */
 	protected $aliases = array();
 
 	/**
-	 * getController
+	 * Method to get controller.
 	 *
-	 * @param string            $class
-	 * @param \JInput           $input
-	 * @param \JApplicationBase $app
-	 * @param array             $config
+	 * @param string            $class  Controller class.
+	 * @param \JInput           $input  The input object.
+	 * @param \JApplicationBase $app    The application object.
+	 * @param array             $config The controller config.
 	 *
-	 * @return \Windwalker\Controller\Controller
+	 * @return \Windwalker\Controller\Controller Controller instance.
 	 */
 	public function getController($class, \JInput $input, \JApplicationBase $app, $config = array())
 	{
@@ -76,7 +76,7 @@ class ControllerDelegator
 	}
 
 	/**
-	 * registerAliases
+	 * Register aliases.
 	 *
 	 * @return  void
 	 */
@@ -85,10 +85,10 @@ class ControllerDelegator
 	}
 
 	/**
-	 * addAlias
+	 * Add alias.
 	 *
-	 * @param string $class
-	 * @param string $alias
+	 * @param string $class  Class name.
+	 * @param string $alias  Alias for this controller.
 	 *
 	 * @return  $this
 	 */
@@ -103,11 +103,11 @@ class ControllerDelegator
 	}
 
 	/**
-	 * removeAlias
+	 * Remove alias.
 	 *
-	 * @param string $class
+	 * @param   string $class The class to remove.
 	 *
-	 * @return  $this
+	 * @return  ControllerDelegator Return self to support chaining.
 	 */
 	public function removeAlias($class)
 	{
@@ -122,11 +122,11 @@ class ControllerDelegator
 	}
 
 	/**
-	 * resolveAlias
+	 * Resolve alias.
 	 *
-	 * @param string $class
+	 * @param   string $class Controller class.
 	 *
-	 * @return  mixed
+	 * @return  string Alias name.
 	 */
 	public function resolveAlias($class)
 	{
@@ -134,11 +134,11 @@ class ControllerDelegator
 	}
 
 	/**
-	 * createController
+	 * Create Controller.
 	 *
-	 * @param   string $class
+	 * @param   string $class Controller class name.
 	 *
-	 * @return  \Windwalker\Controller\Controller
+	 * @return  \Windwalker\Controller\Controller Controller instance.
 	 */
 	protected function createController($class)
 	{

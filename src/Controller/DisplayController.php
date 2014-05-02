@@ -15,52 +15,50 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Base Display Controller
  *
- * @package     Joomla.Libraries
- * @subpackage  controller
- * @since       3.2
+ * @since 2.0
  */
 class DisplayController extends Controller
 {
 	/**
-	 * Property defaultView.
+	 * Default View name.
 	 *
 	 * @var string
 	 */
 	protected $defaultView;
 
 	/**
-	 * Property cachable.
+	 * If true, the view output will be cached.
 	 *
 	 * @var boolean
 	 */
 	protected $cachable = false;
 
 	/**
-	 * Property urlParams.
+	 * An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
 	 *
 	 * @var array
 	 */
 	protected $urlParams = array();
 
 	/**
-	 * Property view.
+	 * The view cache.
 	 *
 	 * @var  \Windwalker\View\AbstractView
 	 */
 	protected $view = null;
 
 	/**
-	 * Property format.
+	 * The page type format.
 	 *
 	 * @var  string
 	 */
 	protected $format = 'html';
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @throws \LogicException
-	 * @return  void
+	 * @return void
 	 */
 	protected function prepareExecute()
 	{
@@ -136,7 +134,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getCachable
+	 * Cachable getter.
 	 *
 	 * @return boolean
 	 */
@@ -146,9 +144,9 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * setCachable
+	 * Cachable setter.
 	 *
-	 * @param boolean $cachable
+	 * @param boolean $cachable Is Cachable.
 	 *
 	 * @return $this
 	 */
@@ -160,7 +158,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getUrlParams
+	 * UrlParams getter.
 	 *
 	 * @return array
 	 */
@@ -170,9 +168,9 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * setUrlParams
+	 * UrlParams setter.
 	 *
-	 * @param array $urlParams
+	 * @param array $urlParams The urlParams property.
 	 *
 	 * @return $this
 	 */
@@ -184,13 +182,14 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getView
+	 * Method to get a reference to the current view and load it if necessary.
 	 *
-	 * @param null $name
-	 * @param null $type
-	 * @param bool $forceNew
+	 * @param   string   $name     The view name. Optional, defaults to the controller name.
+	 * @param   string   $type     The view type. Optional.
+	 * @param   array    $config   Configuration array for view. Optional.
+	 * @param   boolean  $forceNew Force new instance.
 	 *
-	 * @return mixed
+	 * @return  \Windwalker\View\AbstractView  Reference to the view or an error.
 	 */
 	public function getView($name = null, $type = null, $config = array(), $forceNew = false)
 	{
@@ -252,11 +251,11 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getTemplatePath
+	 * Get teplate path.
 	 *
-	 * @param \JView $view
+	 * @param \JView $view The view object.
 	 *
-	 * @return \SplPriorityQueue
+	 * @return \SplPriorityQueue The queue object.
 	 */
 	public function getTemplatePath($view)
 	{
@@ -276,9 +275,9 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * assignModels
+	 * Assign Models Hook.
 	 *
-	 * @param \JView $view
+	 * @param \JView $view The view object.
 	 *
 	 * @return void
 	 */
@@ -287,7 +286,7 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * getDefaultView
+	 * Get default view name.
 	 *
 	 * @return string
 	 */

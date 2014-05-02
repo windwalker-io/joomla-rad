@@ -12,28 +12,28 @@ use Windwalker\Controller\Admin\AbstractListController;
 abstract class AbstractUpdateStateController extends AbstractListController
 {
 	/**
-	 * Property stateData.
+	 * The data fields to update.
 	 *
 	 * @var string
 	 */
 	protected $stateData = array();
 
 	/**
-	 * Property actionText.
+	 * Action text for translate.
 	 *
 	 * @var string
 	 */
 	protected $actionText = 'STATE_CHANGED';
 
 	/**
-	 * Property useTransaction.
+	 * Use DB transaction or not.
 	 *
 	 * @var  boolean
 	 */
 	protected $useTransaction = false;
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
 	 * @throws \LogicException
 	 * @return void
@@ -49,10 +49,10 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	}
 
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
 	 * @throws \Exception
-	 * @return mixed
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{
@@ -92,10 +92,10 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	}
 
 	/**
-	 * doUpdate
+	 * Method to do update action.
 	 *
 	 * @throws \InvalidArgumentException
-	 * @return boolean
+	 * @return boolean Update success or not.
 	 */
 	public function doUpdate()
 	{
@@ -140,14 +140,16 @@ abstract class AbstractUpdateStateController extends AbstractListController
 		{
 			$this->setMessage(implode('<br />', $errors));
 		}
+
+		return true;
 	}
 
 	/**
-	 * postExecute
+	 * Pose execute hook.
 	 *
-	 * @param null $return
+	 * @param   mixed  $return  Executed return value.
 	 *
-	 * @return mixed|null
+	 * @return  mixed
 	 */
 	protected function postExecute($return = null)
 	{
@@ -160,7 +162,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	}
 
 	/**
-	 * preUpdateHook
+	 * Prepare update hook.
 	 *
 	 * @return void
 	 */
@@ -169,9 +171,9 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	}
 
 	/**
-	 * postUpdateHook
+	 * Pose update hook.
 	 *
-	 * @param $model
+	 * @param \Windwalker\Model\Model $model
 	 *
 	 * @return void
 	 */

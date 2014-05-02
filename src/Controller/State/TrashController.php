@@ -9,14 +9,14 @@
 namespace Windwalker\Controller\State;
 
 /**
- * Class TrashController
+ * Trash Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class TrashController extends AbstractUpdateStateController
 {
 	/**
-	 * Property stateData.
+	 * The data fields to update.
 	 *
 	 * @var string
 	 */
@@ -25,14 +25,14 @@ class TrashController extends AbstractUpdateStateController
 	);
 
 	/**
-	 * Property actionText.
+	 * Action text for translate.
 	 *
 	 * @var string
 	 */
 	protected $actionText = 'TRASHED';
 
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */

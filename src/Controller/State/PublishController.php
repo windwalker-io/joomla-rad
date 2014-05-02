@@ -16,7 +16,7 @@ namespace Windwalker\Controller\State;
 class PublishController extends AbstractUpdateStateController
 {
 	/**
-	 * Property stateData.
+	 * The data fields to update.
 	 *
 	 * @var string
 	 */
@@ -25,14 +25,14 @@ class PublishController extends AbstractUpdateStateController
 	);
 
 	/**
-	 * Property actionText.
+	 * Action text for translate.
 	 *
 	 * @var string
 	 */
 	protected $actionText = 'PUBLISHED';
 
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */

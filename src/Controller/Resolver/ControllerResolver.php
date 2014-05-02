@@ -9,35 +9,34 @@
 namespace Windwalker\Controller\Resolver;
 
 use JInput;
-use Windwalker\Debugger\Debugger;
 use Windwalker\DI\Container;
 use Windwalker\Controller\Controller;
 
 defined('_JEXEC') or die('Restricted access');
 
 /**
- * Helper class for controllers.
+ * Resolve the task name to get controller.
  *
- * @since 3.2
+ * @since 2.0
  */
 class ControllerResolver
 {
 	/**
-	 * Property taskMapper.
+	 * Task mapper.
 	 *
 	 * @var  array
 	 */
 	protected $taskMapper = array();
 
 	/**
-	 * Property application.
+	 * Application object.
 	 *
 	 * @var  \JApplicationCms
 	 */
 	protected $application;
 
 	/**
-	 * Property container.
+	 * The DI Container.
 	 *
 	 * @var  \Joomla\DI\Container
 	 */
@@ -46,8 +45,8 @@ class ControllerResolver
 	/**
 	 * Constructor.
 	 *
-	 * @param \JApplicationCms $application
-	 * @param Container        $container
+	 * @param \JApplicationCms $application  The application object.
+	 * @param Container        $container    Th DI Container.
 	 */
 	public function __construct(\JApplicationCms $application, Container $container)
 	{
@@ -120,13 +119,13 @@ class ControllerResolver
 	}
 
 	/**
-	 * resolveController
+	 * Resolve the controller name.
 	 *
-	 * @param string $prefix
-	 * @param string $name
-	 * @param string $task
+	 * @param string $prefix Component name prefix.
+	 * @param string $name   Controller name.
+	 * @param string $task   The task.
 	 *
-	 * @return  string
+	 * @return  string Controller class.
 	 *
 	 * @throws \RuntimeException
 	 * @throws \Exception
@@ -166,11 +165,9 @@ class ControllerResolver
 	 * Register (map) a task to a method in the class.
 	 *
 	 * @param   string  $task        The task.
-	 * @param   string  $controller  The name of the method in the derived class to perform for this task.
+	 * @param   string  $controller  The name of the controller in the derived class to perform for this task.
 	 *
 	 * @return  ControllerResolver  A JControllerLegacy object to support chaining.
-	 *
-	 * @since   12.2
 	 */
 	public function registerTask($task, $controller)
 	{
@@ -185,8 +182,6 @@ class ControllerResolver
 	 * @param   string  $task  The task.
 	 *
 	 * @return  ControllerResolver  This object to support chaining.
-	 *
-	 * @since   12.2
 	 */
 	public function unregisterTask($task)
 	{
@@ -196,11 +191,13 @@ class ControllerResolver
 	}
 
 	/**
-	 * getDelegator
+	 * Get delegator object to dispatch controller task.
 	 *
-	 * @param array $config
+	 * You can override it in component controller folders, otherwise Windwalker will use the default delegator.
 	 *
-	 * @return  mixed
+	 * @param array $config  Controller config.
+	 *
+	 * @return  ControllerDelegator  Delegator object.
 	 *
 	 * @throws \LogicException
 	 */

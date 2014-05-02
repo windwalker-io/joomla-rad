@@ -9,14 +9,14 @@
 namespace Windwalker\Controller\State;
 
 /**
- * Class ReorderController
+ * Reorder Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class ReorderController extends AbstractUpdateStateController
 {
 	/**
-	 * Property stateData.
+	 * The data fields to update.
 	 *
 	 * @var string
 	 */
@@ -25,30 +25,29 @@ class ReorderController extends AbstractUpdateStateController
 	);
 
 	/**
-	 * Property actionText.
+	 * Action text for translate.
 	 *
 	 * @var string
 	 */
 	protected $actionText = 'UNPUBLISHED';
 
 	/**
-	 * Property ordering.
+	 * Ordering value list.
 	 *
 	 * @var int[]
 	 */
 	protected $ordering = array();
 
 	/**
-	 * Property reorderCondition.
+	 * Reorder conditions.
 	 *
 	 * @var array
 	 */
 	protected $reorderConditions = array();
 
 	/**
-	 * prepareExecute
+	 * Prepare execute hook.
 	 *
-	 * @throws \LogicException
 	 * @return void
 	 */
 	protected function prepareExecute()
@@ -59,10 +58,10 @@ class ReorderController extends AbstractUpdateStateController
 	}
 
 	/**
-	 * doUpdate
+	 * Method to do update action.
 	 *
 	 * @throws \InvalidArgumentException
-	 * @return boolean
+	 * @return boolean Update success or not.
 	 */
 	public function doUpdate()
 	{
@@ -117,14 +116,16 @@ class ReorderController extends AbstractUpdateStateController
 		{
 			$this->setMessage(implode('<br />', $errors));
 		}
+
+		return true;
 	}
 
 	/**
-	 * redirect
+	 * Set a URL for browser redirection.
 	 *
-	 * @param string $url
-	 * @param null   $msg
-	 * @param string $type
+	 * @param   string $url  URL to redirect to.
+	 * @param   string $msg  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string $type Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
 	 * @return  void
 	 */

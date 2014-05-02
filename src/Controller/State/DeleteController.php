@@ -3,9 +3,9 @@
 namespace Windwalker\Controller\State;
 
 /**
- * Class TrashController
+ * Delete Controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 class DeleteController extends AbstractUpdateStateController
 {
@@ -19,31 +19,31 @@ class DeleteController extends AbstractUpdateStateController
 	);
 
 	/**
-	 * Property actionText.
+	 * Action text for translate.
 	 *
 	 * @var string
 	 */
 	protected $actionText = 'DELETED';
 
 	/**
-	 * Property allowReturn.
+	 * Are we allow return?
 	 *
 	 * @var  boolean
 	 */
 	protected $allowReturn = true;
 
 	/**
-	 * Property useTransaction.
+	 * Use DB transaction or not.
 	 *
 	 * @var  boolean
 	 */
 	protected $useTransaction = true;
 
 	/**
-	 * doUpdate
+	 * Method to do update action.
 	 *
 	 * @throws \InvalidArgumentException
-	 * @return boolean
+	 * @return boolean Update success or not.
 	 */
 	public function doUpdate()
 	{
@@ -88,5 +88,7 @@ class DeleteController extends AbstractUpdateStateController
 		{
 			$this->setMessage(implode('<br />', $errors));
 		}
+
+		return true;
 	}
 }
