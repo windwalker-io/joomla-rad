@@ -19,29 +19,35 @@ include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 /**
  * Supports a File finder to pick files.
  *
- * @package     Windwalker.Framework
- * @subpackage  Form
+ * @since 2.0
  */
 class JFormFieldFinder extends JFormFieldText
 {
 	/**
-	 * Property showAsTooltip.
+	 * The form field type.
 	 *
-	 * @var bool
+	 * @var  string
+	 */
+	protected $type = 'Finder';
+
+	/**
+	 * Show as tooltip.
+	 *
+	 * @var boolean
 	 */
 	protected $showAsTooltip = false;
 
 	/**
 	 * The initialised state of the document object.
 	 *
-	 * @var    boolean
+	 * @var boolean
 	 */
 	protected static $initialised = false;
 
 	/**
 	 * Method to get the field input markup.
 	 *
-	 * @return    string    The field input markup.
+	 * @return  string  The field input markup.
 	 */
 	public function getInput()
 	{
@@ -133,7 +139,7 @@ class JFormFieldFinder extends JFormFieldText
 	/**
 	 * Get Preview Image.
 	 *
-	 * @return string
+	 * @return  string Preview image html.
 	 */
 	public function getPreview()
 	{
@@ -328,7 +334,7 @@ SCRIPT;
 	/**
 	 * Get item title.
 	 *
-	 * @return string
+	 * @return string The title text.
 	 */
 	public function getTitle()
 	{
@@ -350,7 +356,7 @@ SCRIPT;
 	/**
 	 * Get Finder link.
 	 *
-	 * @return string
+	 * @return string The link string.
 	 */
 	public function getLink()
 	{

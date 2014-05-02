@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Debugger;
 
@@ -6,10 +12,9 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 /**
- * Class Debugger
-
+ * The Debugger helper.
  *
-*@since 1.0
+ * @since 2.0
  */
 abstract class Debugger
 {
@@ -18,14 +23,14 @@ abstract class Debugger
 	 *
 	 * @var Run
 	 */
-	static protected $whoops;
+	static protected $whoops = null;
 
 	/**
 	 * Property handler.
 	 *
 	 * @var PrettyPageHandler
 	 */
-	static protected $handler;
+	static protected $handler = null;
 
 	/**
 	 * registerWhoops
@@ -42,10 +47,10 @@ abstract class Debugger
 	}
 
 	/**
-	 * add
+	 * Add a data table to whoops.
 	 *
-	 * @param $label
-	 * @param $data
+	 * @param string $label The data table name.
+	 * @param mixed  $data  The data to show.
 	 *
 	 * @return void
 	 */

@@ -12,18 +12,17 @@ use Windwalker\Controller\Controller;
 use Windwalker\Elfinder\View\ConnectView;
 
 /**
- * Class ConnnectController
+ * ElFinder Connnect Controller
  *
- * @since 1.0
+ * @since 2.0
  */
 class ConnectController extends Controller
 {
 	/**
-	 * doExecute
-	 *
-	 * @return mixed|string
+	 * Method to run this controller.
 	 *
 	 * @throws \UnexpectedValueException
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{

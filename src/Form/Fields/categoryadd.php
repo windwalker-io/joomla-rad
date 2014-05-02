@@ -21,17 +21,16 @@ include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 /**
  * Form Field class for Category & quickadd.
  *
- * @package     Windwalker.Framework
- * @subpackage  Form
+ * @since 2.0
  */
 class JFormFieldCategoryadd extends JFormFieldCategory
 {
 	/**
 	 * The form field type.
 	 *
-	 * @var        string
+	 * @var  string
 	 */
-	public $type = 'Categoryadd';
+	protected $type = 'Categoryadd';
 
 	/**
 	 * List name.
@@ -59,8 +58,6 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 	 * Use the multiple attribute to enable multiselect.
 	 *
 	 * @return  string  The field input markup.
-	 *
-	 * @since   11.1
 	 */
 	protected function getInput()
 	{
@@ -70,7 +67,7 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 	/**
 	 * Add an quick add button & modal
 	 *
-	 * @return string
+	 * @return string The quickadd button.
 	 */
 	public function quickadd()
 	{
@@ -153,10 +150,10 @@ QA;
 	/**
 	 * Get Element Value.
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key     Element attribute key.
+	 * @param mixed  $default The default value if not exists.
 	 *
-	 * @return string
+	 * @return string The attribute value.
 	 */
 	public function getElement($key, $default = null)
 	{

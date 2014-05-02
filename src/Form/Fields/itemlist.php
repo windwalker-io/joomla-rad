@@ -21,8 +21,7 @@ include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 /**
  * Supports a HTML select list for target items.
  *
- * @package     Windwalker.Framework
- * @subpackage  Form
+ * @since 2.0
  */
 class JFormFieldItemlist extends JFormFieldList
 {
@@ -38,42 +37,42 @@ class JFormFieldItemlist extends JFormFieldList
 	 *
 	 * @var  mixed
 	 */
-	protected $value;
+	protected $value = null;
 
 	/**
 	 * The name of the form field.
 	 *
 	 * @var  string
 	 */
-	protected $name;
+	protected $name = null;
 
 	/**
 	 * List name.
 	 *
 	 * @var string
 	 */
-	protected $view_list;
+	protected $view_list = null;
 
 	/**
 	 * Item name.
 	 *
 	 * @var string
 	 */
-	protected $view_item;
+	protected $view_item = null;
 
 	/**
 	 * Extension name, eg: com_content.
 	 *
 	 * @var string
 	 */
-	protected $extension;
+	protected $extension = null;
 
 	/**
 	 * Component name without ext type, eg: content.
 	 *
 	 * @var string
 	 */
-	protected $component;
+	protected $component = null;
 
 	/**
 	 * Set the published column name in table.
@@ -405,10 +404,10 @@ QA;
 	/**
 	 * Get Element Value.
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key     Element attribute key.
+	 * @param mixed  $default The default value if not exists.
 	 *
-	 * @return string
+	 * @return string The attribute value.
 	 */
 	public function getElement($key, $default = null)
 	{

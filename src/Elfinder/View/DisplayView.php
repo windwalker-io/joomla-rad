@@ -14,34 +14,36 @@ use JURI;
 use Windwalker\View\Html\AbstractHtmlView;
 
 /**
- * Class ElfinderView
+ * Elfinder Display View
  *
- * @since 1.0
+ * @since 2.0
  */
 class DisplayView extends AbstractHtmlView
 {
 	/**
-	 * @var  array  Property defaultToolbar.
+	 * The elFinder default toolbar buttons.
+	 *
+	 * @var  array
 	 */
 	protected $defaultToolbar = array(
 		array('back', 'forward'),
 		array('reload'),
-		//array('home', 'up'),
+		// array('home', 'up'),
 		array('mkdir', 'mkfile', 'upload'),
-		//array('open', 'download', 'getfile'),
+		// array('open', 'download', 'getfile'),
 		array('info'),
 		array('quicklook'),
 		array('copy', 'cut', 'paste'),
 		array('rm'),
 		array('duplicate', 'rename', 'edit', 'resize'),
-		//array('extract', 'archive'),
+		// array('extract', 'archive'),
 		array('search'),
 		array('view'),
 		array('help')
 	);
 
 	/**
-	 * render
+	 * Render this view.
 	 *
 	 * @return string
 	 */
@@ -141,10 +143,10 @@ SCRIPT;
 	}
 
 	/**
-	 * displayScript
+	 * Display elFinder script.
 	 *
-	 * @param $com_option
-	 * @param $config
+	 * @param string $com_option Component option name.
+	 * @param array  $config     Config array.
 	 *
 	 * @return void
 	 */

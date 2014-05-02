@@ -15,16 +15,14 @@ include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 /**
  * Field to select a user id from a modal list.
  *
- * @package     Joomla.Libraries
- * @subpackage  Form
- * @since       1.6.0
+ * @since 2.0
  */
 class JFormFieldWinduser extends JFormField
 {
 	/**
 	 * The form field type.
 	 *
-	 * @var    string
+	 * @var  string
 	 */
 	public $type = 'Winduser';
 

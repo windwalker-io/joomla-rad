@@ -11,32 +11,39 @@ namespace Windwalker\DI;
 use Joomla\DI\Container as JoomlaContainer;
 
 /**
- * Class Container
+ * Windwalker DI Container.
+ *
+ * Based on Joomla DI Container.
  *
  * @since 2.0
  */
 class Container extends JoomlaContainer
 {
+	/**
+	 * Force new instance.
+	 *
+	 * @const boolean
+	 */
 	const FORCE_NEW = true;
 
 	/**
-	 * Property instance.
+	 * The main container instance storage.
 	 *
 	 * @var Container
 	 */
-	static protected $instance;
+	static protected $instance = null;
 
 	/**
-	 * Property children.
+	 * The children containers storage.
 	 *
 	 * @var array
 	 */
 	static protected $children = array();
 
 	/**
-	 * getInstance
+	 * Get the container instance by name.
 	 *
-	 * @param null $name
+	 * @param string $name Container name, if is null, get the main container.
 	 *
 	 * @return Container
 	 */
@@ -73,8 +80,6 @@ class Container extends JoomlaContainer
 	 * @return  Container  This object for chaining.
 	 *
 	 * @throws  \OutOfBoundsException  Thrown if the provided key is already set and is protected.
-	 *
-	 * @since   1.0
 	 */
 	public function set($key, $value, $shared = false, $protected = false)
 	{
@@ -106,10 +111,8 @@ class Container extends JoomlaContainer
 	 * @param   string   $key       Name of the dataStore key to get.
 	 * @param   boolean  $forceNew  True to force creation and return of a new instance.
 	 *
-	 * @return  mixed   Results of running the $callback for the specified $key.
-	 *
-	 * @since   1.0
 	 * @throws  \InvalidArgumentException
+	 * @return  mixed   Results of running the $callback for the specified $key.
 	 */
 	public function get($key, $forceNew = false)
 	{
@@ -136,9 +139,9 @@ class Container extends JoomlaContainer
 	}
 
 	/**
-	 * dump
+	 * Dump all dataStores for debugging.
 	 *
-	 * @return  array
+	 * @return  array Data stores and aliases.
 	 */
 	public function dump()
 	{

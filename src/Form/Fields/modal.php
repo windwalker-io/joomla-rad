@@ -19,15 +19,14 @@ include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 /**
  * Supports a Modal picker for target items.
  *
- * @package     Windwalker.Framework
- * @subpackage  Form
+ * @since 2.0
  */
 class JFormFieldModal extends JFormField
 {
 	/**
 	 * The form field type.
 	 *
-	 * @var        string
+	 * @var  string
 	 */
 	protected $type = 'Modal';
 
@@ -36,35 +35,33 @@ class JFormFieldModal extends JFormField
 	 *
 	 * @var string
 	 */
-	protected $view_list;
+	protected $view_list = null;
 
 	/**
 	 * Item name.
 	 *
 	 * @var string
 	 */
-	protected $view_item;
+	protected $view_item = null;
 
 	/**
 	 * Extension name, eg: com_content.
 	 *
 	 * @var string
 	 */
-	protected $extension;
+	protected $extension = null;
 
 	/**
 	 * Component name without ext type, eg: content.
 	 *
 	 * @var string
 	 */
-	protected $component;
-
-
+	protected $component = null;
 
 	/**
 	 * Method to get the field input markup.
 	 *
-	 * @return    string    The field input markup.
+	 * @return  string  The field input markup.
 	 */
 	public function getInput()
 	{
@@ -124,7 +121,7 @@ class JFormFieldModal extends JFormField
 	}
 
 	/**
-	 * setScript
+	 * Set Script.
 	 *
 	 * @return void
 	 */
@@ -175,8 +172,6 @@ class JFormFieldModal extends JFormField
 	/**
 	 * Get item title.
 	 *
-	 * @var $db JDatabaseDriver
-	 *
 	 * @return string
 	 */
 	public function getTitle()
@@ -212,7 +207,7 @@ class JFormFieldModal extends JFormField
 	/**
 	 * Get item link.
 	 *
-	 * @return string
+	 * @return string The link string.
 	 */
 	public function getLink()
 	{
@@ -321,10 +316,10 @@ QA;
 	/**
 	 * Get Element Value.
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key     Element attribute key.
+	 * @param mixed  $default The default value if not exists.
 	 *
-	 * @return string
+	 * @return string The attribute value.
 	 */
 	public function getElement($key, $default = null)
 	{

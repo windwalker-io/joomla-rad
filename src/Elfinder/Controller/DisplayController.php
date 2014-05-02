@@ -12,17 +12,17 @@ use Windwalker\Controller\Controller;
 use Windwalker\Elfinder\View\DisplayView;
 
 /**
- * Class DisplayerController
+ * ElFinder Display Controller.
  *
- * @since 1.0
+ * @since 2.0
  */
 class DisplayController extends Controller
 {
 	/**
-	 * doExecute
+	 * Method to run this controller.
 	 *
 	 * @throws \UnexpectedValueException
-	 * @return mixed
+	 * @return  mixed
 	 */
 	protected function doExecute()
 	{

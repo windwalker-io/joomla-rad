@@ -16,21 +16,21 @@ use Joomla\Registry\Registry;
 use Windwalker\View\Json\AbstractJsonView;
 
 /**
- * Class ConnectView
+ * ElFinder Connect View.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ConnectView extends AbstractJsonView
 {
 	/**
-	 * Property config.
+	 * Config of elFinder.
 	 *
 	 * @var array
 	 */
 	protected $config = array();
-	
+
 	/**
-	 * render
+	 * Render view.
 	 *
 	 * @return string|void
 	 */
@@ -118,7 +118,7 @@ class ConnectView extends AbstractJsonView
 	}
 
 	/**
-	 * getConfig
+	 * Config getter.
 	 *
 	 * @return  array
 	 */
@@ -128,11 +128,11 @@ class ConnectView extends AbstractJsonView
 	}
 
 	/**
-	 * setConfig
+	 * Config setter.
 	 *
-	 * @param   array  $config
+	 * @param   array  $config The elFinder config.
 	 *
-	 * @return  $this
+	 * @return  ConnectView Return self to support chaining.
 	 */
 	public function setConfig($config)
 	{

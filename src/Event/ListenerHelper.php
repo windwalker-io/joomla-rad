@@ -11,25 +11,25 @@ namespace Windwalker\Event;
 use Windwalker\DI\Container;
 
 /**
- * Class ListenerHelper
+ * The helper to handle event listeners registration.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ListenerHelper
 {
 	/**
-	 * Property linstener.
+	 * listeners storage.
 	 *
 	 * @var  array
 	 */
 	protected static $listener = array();
 
 	/**
-	 * registerListeners
+	 * Auto register listeners.
 	 *
-	 * @param string            $prefix
-	 * @param \JEventDispatcher $dispatcher
-	 * @param string            $path
+	 * @param string            $prefix     Component prefix name.
+	 * @param \JEventDispatcher $dispatcher The event dispatcher object.
+	 * @param string            $path       The path of listeners' folders.
 	 *
 	 * @return  void
 	 */
@@ -51,12 +51,12 @@ class ListenerHelper
 	}
 
 	/**
-	 * attach
+	 * Attach a listener.
 	 *
-	 * @param \JEvent|string|array $listener
-	 * @param \JEventDispatcher    $dispatcher
+	 * @param \JEvent|string|array $listener   The listener to attach to dispatcher.
+	 * @param \JEventDispatcher    $dispatcher The EventDispatcher.
 	 *
-	 * @return  mixed
+	 * @return  mixed  True if the observer object was attached.
 	 */
 	protected static function attach($listener, $dispatcher = null)
 	{
@@ -69,13 +69,14 @@ class ListenerHelper
 
 		return $dispatcher->attach($listener);
 	}
+
 	/**
-	 * detach
+	 * Detach a listener.
 	 *
-	 * @param \JEvent|string|array $listener
-	 * @param \JEventDispatcher    $dispatcher
+	 * @param \JEvent|string|array $listener   The listener name to detach.
+	 * @param \JEventDispatcher    $dispatcher The EventDispatcher.
 	 *
-	 * @return  mixed
+	 * @return  boolean True if the observer object was detached.
 	 */
 	protected static function detach($listener, $dispatcher = null)
 	{
@@ -97,12 +98,12 @@ class ListenerHelper
 	}
 
 	/**
-	 * getListener
+	 * Get listener by name.
 	 *
-	 * @param string $prefix
-	 * @param string $name
+	 * @param string $prefix Component prefix name.
+	 * @param string $name   Listener name.
 	 *
-	 * @return  mixed
+	 * @return  \JPlugin Found listener.
 	 */
 	protected static function getListener($prefix, $name)
 	{

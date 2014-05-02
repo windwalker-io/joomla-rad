@@ -17,8 +17,7 @@ include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 /**
  * Supports an upload image field, and if file exists, will show this image..
  *
- * @package     Windwalker.Framework
- * @subpackage  Form
+ * @since 2.0
  */
 class JFormFieldUploadimage extends JFormField
 {
@@ -169,9 +168,9 @@ class JFormFieldUploadimage extends JFormField
 	/**
 	 * Show image for com_users.
 	 *
-	 * @param string $value
+	 * @param string $value The formfield value.
 	 *
-	 * @return string
+	 * @return string Image html string.
 	 */
 	public static function showImage($value)
 	{
