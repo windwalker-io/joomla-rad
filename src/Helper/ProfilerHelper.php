@@ -13,21 +13,21 @@ use JProfiler;
 use Windwalker\DI\Container;
 
 /**
- * Class ProfilerHelper
+ * Profiler Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class ProfilerHelper
 {
 	/**
-	 * Property profiler.
+	 * The profiler instances storage.
 	 *
 	 * @var  JProfiler[]
 	 */
 	protected static $profiler = array();
 
 	/**
-	 * Property state_buffer.
+	 * State buffer.
 	 *
 	 * @var mixed
 	 */
@@ -123,5 +123,7 @@ class ProfilerHelper
 		}
 
 		echo $buffer;
+
+		return '';
 	}
 }

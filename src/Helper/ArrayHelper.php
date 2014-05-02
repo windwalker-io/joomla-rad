@@ -8,26 +8,27 @@
 
 namespace Windwalker\Helper;
 
-// No direct access
 use JArrayHelper;
 
+// No direct access
 defined('_JEXEC') or die;
 
 /**
  * Enhance JArrayHelper, and add some useful functions.
  *
- * @package     Windwalker.Framework
- * @subpackage  Helpers
+ * @since 2.0
  */
 class ArrayHelper
 {
 	/**
-	 * getArgumentFromData
+	 * Get data from array or object by path.
 	 *
-	 * @param mixed $data
-	 * @param mixed $arguments
+	 * Example: `ArrayHelper::getByPath($array, 'foo.bar.yoo')` equals to $array['foo']['bar']['yoo'].
 	 *
-	 * @return  null
+	 * @param mixed $data      An array or object to get value.
+	 * @param mixed $arguments The arguments path.
+	 *
+	 * @return  mixed Found value, null if not exists.
 	 */
 	public static function getByPath($data, $arguments)
 	{
@@ -64,7 +65,7 @@ class ArrayHelper
 	 *
 	 * @param  array $array An array with two level.
 	 *
-	 * @return array    An pivoted array.
+	 * @return array An pivoted array.
 	 */
 	public static function pivot($array)
 	{
@@ -108,9 +109,9 @@ class ArrayHelper
 	 *                 [text] => bbb
 	 *             )
 	 *
-	 * @param array $array An array with two level.
+	 * @param   array $array An array with two level.
 	 *
-	 * @return array An pivoted array.
+	 * @return  array An pivoted array.
 	 */
 	public static function pivotByKey($array)
 	{
@@ -154,9 +155,9 @@ class ArrayHelper
 	 *                 [1] => bbb
 	 *             )
 	 *
-	 * @param array $array An array with two level.
+	 * @param   array $array An array with two level.
 	 *
-	 * @return array An pivoted array.
+	 * @return  array An pivoted array.
 	 */
 	public static function pivotBySort($array)
 	{
@@ -184,7 +185,7 @@ class ArrayHelper
 	 * @param   array  $origin Origin array to pivot.
 	 * @param   array  $target A target array to store pivoted value.
 	 *
-	 * @return  array    Pivoted array.
+	 * @return  array  Pivoted array.
 	 */
 	public static function pivotFromPrefix($prefix, $origin, $target = null)
 	{
@@ -209,7 +210,7 @@ class ArrayHelper
 	 * @param   array  $origin Origin array to pivot.
 	 * @param   array  $target A target array to store pivoted value.
 	 *
-	 * @return  array    Pivoted array.
+	 * @return  array  Pivoted array.
 	 */
 	public static function pivotToPrefix($prefix, $origin, $target = null)
 	{

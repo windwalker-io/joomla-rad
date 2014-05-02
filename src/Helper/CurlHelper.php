@@ -12,9 +12,9 @@ use Windwalker\Object\NullObject;
 use Windwalker\Object\Object;
 
 /**
- * Class CurlHelper
+ * THe Curl Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class CurlHelper
 {

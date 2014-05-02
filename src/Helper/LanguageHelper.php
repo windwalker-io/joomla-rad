@@ -13,9 +13,9 @@ use JFolder;
 use Windwalker\DI\Container;
 
 /**
- * Class LanguageHelper
+ * Language Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class LanguageHelper
 {

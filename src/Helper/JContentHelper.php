@@ -9,9 +9,9 @@
 namespace Windwalker\Helper;
 
 /**
- * Class JContentHelper
+ * Joomla Content Helper.
  *
- * @since 1.0
+ * @since 2.0
  */
 class JContentHelper
 {
@@ -20,7 +20,7 @@ class JContentHelper
 	 *
 	 * @param  string  $slug     The id slug, eg: "43:artile-alias"
 	 * @param  string  $catslug  The category slug, eg: "12:category-alias", can only include number.
-	 * @param  bool    $absolute Ture to return whole absolute url.
+	 * @param  boolean $absolute Ture to return whole absolute url.
 	 *
 	 * @return string Article link url.
 	 */

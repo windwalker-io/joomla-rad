@@ -13,73 +13,73 @@ use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 
 /**
- * Class AssetHelper
+ * The Asset Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class AssetHelper implements ContainerAwareInterface
 {
 	/**
-	 * Property paths.
+	 * Paths to scan.
 	 *
 	 * @var \SplPriorityQueue
 	 */
 	protected $paths = null;
 
 	/**
-	 * Property cache.
+	 * Asset cache.
 	 *
 	 * @var  array
 	 */
 	protected $cache = array();
 
 	/**
-	 * Property name.
+	 * Instance name.
 	 *
 	 * @var string
 	 */
-	protected $name;
+	protected $name = null;
 
 	/**
-	 * Property container.
+	 * The DI container.
 	 *
 	 * @var Container
 	 */
-	protected $container;
+	protected $container = null;
 
 	/**
-	 * Property doc.
+	 * The JDocument instance.
 	 *
 	 * @var \JDocument
 	 */
-	protected $doc;
+	protected $doc = null;
 
 	/**
-	 * Property sumName.
+	 * The md5sum file name.
 	 *
-	 * @var
+	 * @var string
 	 */
 	protected $sumName = 'md5sum';
 
 	/**
-	 * Property mootools.
+	 * Mootools loaded.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $mootools = false;
 
 	/**
-	 * Property jquery.
+	 * jQuery loaded.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $jquery = false;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param string             $name
-	 * @param \SplPriorityQueue  $paths
+	 * @param string             $name  The instance name.
+	 * @param \SplPriorityQueue  $paths Paths to scan assets.
 	 */
 	public function __construct($name = 'windwalker', $paths = null)
 	{
@@ -92,13 +92,14 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * addCss
+	 * Add CSS to document.
 	 *
-	 * @param string $file
-	 * @param string $name
-	 * @param array  $attribs
+	 * @param string $file    The css file name(with subfolder) to add.
+	 * @param string $name    The instance name, also means component subfolder name,
+	 *                        default is the name of this instance.
+	 * @param array  $attribs The link attributes in html element.
 	 *
-	 * @return $this
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function addCSS($file, $name = null, $attribs = array())
 	{
@@ -130,14 +131,15 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * addCss
+	 * Add JS file to document.
 	 *
-	 * @param string $file
-	 * @param string $name
-	 * @param string $version
-	 * @param array  $attribs
+	 * @param string $file    The css file name(with subfolder) to add.
+	 * @param string $name    The instance name, also means component subfolder name,
+	 *                        default is the name of this instance.
+	 * @param string $version The version of this asset(not used now).
+	 * @param array  $attribs The link attributes in html element.
 	 *
-	 * @return $this
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function addJS($file, $name = null, $version = null, $attribs = array())
 	{
@@ -180,12 +182,12 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * addCssDeclaration
+	 * Add internal CSS code.
 	 *
-	 * @param string $content
-	 * @param string $type
+	 * @param string $content The css code.
+	 * @param string $type    Style element type.
 	 *
-	 * @return $this
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function internalCSS($content, $type = 'text/css')
 	{
@@ -195,12 +197,12 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * addScriptDeclaration
+	 * Add internal script.
 	 *
-	 * @param string $content
-	 * @param string $type
+	 * @param string $content The js code.
+	 * @param string $type    Script element type.
 	 *
-	 * @return $this
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function internalJS($content, $type = 'text/javascript')
 	{
@@ -210,7 +212,7 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * windwalker
+	 * Add Windwalker core css & js.
 	 *
 	 * @return void
 	 */
@@ -225,74 +227,82 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * jquery
+	 * Method to load the jQuery JavaScript framework into the document head
 	 *
-	 * @param boolean $debug
-	 * @param boolean $migrate
+	 * If debugging mode is on an uncompressed version of jQuery is included for easier debugging.
 	 *
-	 * @return $this
+	 * @param   mixed    $debug       Is debugging mode on? [optional]
+	 * @param   boolean  $migrate     True to enable the jQuery Migrate plugin
+	 *
+	 * @return  AssetHelper Return self to support chaining.
 	 */
 	public function jquery($debug = null, $migrate = true)
 	{
-		\JHtml::_('jquery.framework', true, $debug, $migrate);
+		\JHtmlJquery::framework(true, $debug, $migrate);
 
 		return $this;
 	}
 
 	/**
-	 * jqueryUI
+	 * Method to load the jQuery UI JavaScript framework into the document head
 	 *
-	 * @param boolean $debug
+	 * If debugging mode is on an uncompressed version of jQuery UI is included for easier debugging.
 	 *
-	 * @return $this
+	 * @param   mixed  $debug  Is debugging mode on? [optional]
+	 *
+	 * @return  AssetHelper Return self to support chaining.
 	 */
 	public function jqueryUI($debug = null)
 	{
-		\JHtml::_('jquery.ui', array('core'), $debug);
+		\JHtmlJquery::ui(array('core'), $debug);
 
 		return $this;
 	}
 
 	/**
-	 * mootools
+	 * Method to load the MooTools & More framework into the document head
 	 *
-	 * @param boolean $debug
+	 * If debugging mode is on an uncompressed version of MooTools is included for easier debugging.
 	 *
-	 * @return $this
+	 * @param   mixed  $debug  Is debugging mode on? [optional]
+	 *
+	 * @return  AssetHelper Return self to support chaining.
 	 */
 	public function mootools($debug = null)
 	{
-		\JHtml::_('behavior.framework', true, $debug);
+		\JHtmlBehavior::framework(true, $debug);
 
 		return $this;
 	}
 
 	/**
-	 * bootstrap
+	 * Method to load the Bootstrap JavaScript & CSS framework into the document head
 	 *
-	 * @param bool    $css
-	 * @param boolean $debug
+	 * If debugging mode is on an uncompressed version of Bootstrap is included for easier debugging.
 	 *
-	 * @return $this
+	 * @param bool    $css   Include CSS.
+	 * @param boolean $debug Is debugging mode on? [optional]
+	 *
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function bootstrap($css = false, $debug = null)
 	{
-		\JHtml::_('bootstrap.framework', $debug);
+		\JHtmlBootstrap::framework($debug);
 
 		if ($css)
 		{
-			\JHtml::_('bootstrap.loadCss');
+			\JHtmlBootstrap::loadCss();
 		}
 
 		return $this;
 	}
 
 	/**
-	 * isis
+	 * Method to load the Admin isis template CSS.
 	 *
-	 * @param bool $debug
+	 * @param boolean $debug Is debugging mode on? [optional]
 	 *
-	 * @return $this
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function isis($debug = false)
 	{
@@ -311,8 +321,8 @@ class AssetHelper implements ContainerAwareInterface
 
 		$min = $debug ? '.min' : '';
 
-		$doc->addStylesheet($prefix . 'templates/isis/css/template' . $min . '.css');
-		$doc->addScript($prefix . 'templates/isis/js/template' . $min . '.js');
+		$doc->addStylesheet($prefix . 'templates/isis/css/template.css');
+		$doc->addScript($prefix . 'templates/isis/js/template.js');
 
 		$loaded = true;
 
@@ -320,13 +330,13 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * findFile
+	 * Find the file we want in oaths.
 	 *
-	 * @param string $file
-	 * @param string $type
-	 * @param null   $name
+	 * @param string $file  File name to find.
+	 * @param string $type  File type, css or js.
+	 * @param string $name  The instance name.
 	 *
-	 * @return array|bool
+	 * @return array|boolean Found file & sum information.
 	 */
 	protected function findFile($file, $type, $name = null)
 	{
@@ -403,9 +413,9 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * getMinName
+	 * Extract file name and add min after name.
 	 *
-	 * @param $file
+	 * @param string $file The file name.
 	 *
 	 * @return string
 	 */
@@ -421,7 +431,7 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * registerPaths
+	 * Register default paths.
 	 *
 	 * @return void
 	 */
@@ -471,8 +481,6 @@ class AssetHelper implements ContainerAwareInterface
 	 * @param   string $name
 	 *
 	 * @return  Container
-	 *
-	 * @since   1.0
 	 */
 	public function getContainer($name = null)
 	{
@@ -491,9 +499,7 @@ class AssetHelper implements ContainerAwareInterface
 	 *
 	 * @param  JoomlaContainer $container The DI container.
 	 *
-	 * @return $this
-	 *
-	 * @since   1.0
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function setContainer(JoomlaContainer $container)
 	{
@@ -503,7 +509,9 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @return string
+	 * Get instance name.
+	 *
+	 * @return  string
 	 */
 	public function getName()
 	{
@@ -511,7 +519,11 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @param string $name
+	 * Set instance name.
+	 *
+	 * @param string $name Instance name.
+	 *
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	public function setName($name)
 	{
@@ -521,7 +533,9 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @return string
+	 * Get scan paths.
+	 *
+	 * @return  \SplPriorityQueue
 	 */
 	public function getPaths()
 	{
@@ -529,9 +543,13 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @param string $paths
+	 * Set scan paths.
+	 *
+	 * @param \SplPriorityQueue $paths The paths.
+	 *
+	 * @return  AssetHelper Return self to support chaining.
 	 */
-	public function setPaths($paths)
+	public function setPaths(\SplPriorityQueue $paths)
 	{
 		$this->paths = $paths;
 
@@ -539,7 +557,9 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @return \JDocument
+	 * Get JDocument.
+	 *
+	 * @return  \JDocument The JDocument object.
 	 */
 	public function getDoc()
 	{
@@ -552,7 +572,11 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @param \JDocument $doc
+	 * Set JDocument
+	 *
+	 * @param \JDocument $doc The JDocument object.
+	 *
+	 * @return  AssetHelper Return self to support chaining.
 	 */
 	public function setDoc(\JDocument $doc)
 	{
@@ -562,12 +586,12 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * alert
+	 * Alert if error occurred.
 	 *
-	 * @param string $msg
-	 * @param string $type
+	 * @param string $msg  Message content.
+	 * @param string $type Message type.
 	 *
-	 * @return $this
+	 * @return AssetHelper Return self to support chaining.
 	 */
 	protected function alert($msg, $type = 'warning')
 	{
@@ -580,7 +604,11 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * @param mixed $sumName
+	 * Set sum name.
+	 *
+	 * @param string $sumName The sum name.
+	 *
+	 * @return  AssetHelper Return self to support chaining.
 	 */
 	public function setSumName($sumName)
 	{
@@ -590,9 +618,9 @@ class AssetHelper implements ContainerAwareInterface
 	}
 
 	/**
-	 * __clone
+	 * Clone this object.
 	 *
-	 * @return  AssetHelper
+	 * @return  AssetHelper Return cloned object.
 	 */
 	public function __clone()
 	{

@@ -11,9 +11,9 @@ namespace Windwalker\Helper;
 use Windwalker\DI\Container;
 
 /**
- * Class UriHelper
+ * The Uri Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class UriHelper
 {

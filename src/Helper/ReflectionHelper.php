@@ -12,25 +12,25 @@ use Joomla\String\Normalise;
 use Windwalker\String\StringNormalise;
 
 /**
- * Class ReflectionHelper
+ * Reflection Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class ReflectionHelper
 {
 	/**
-	 * Property refs.
+	 * The reflections cache.
 	 *
 	 * @var  array
 	 */
 	protected static $refs = array();
 
 	/**
-	 * get
+	 * Get a new ReflectionClass.
 	 *
-	 * @param string|object $class
+	 * @param string|object $class The class name.
 	 *
-	 * @return  mixed
+	 * @return  \ReflectionClass Reflection instance.
 	 */
 	public static function get($class)
 	{
@@ -40,9 +40,9 @@ class ReflectionHelper
 	/**
 	 * getReflection
 	 *
-	 * @param string|object $class
+	 * @param string|object $class The class or object to get reflection.
 	 *
-	 * @return  mixed
+	 * @return  \ReflectionClass Reflection instance.
 	 *
 	 * @throws \InvalidArgumentException
 	 */
@@ -69,11 +69,11 @@ class ReflectionHelper
 	}
 
 	/**
-	 * getPath
+	 * Get path from reflection.
 	 *
-	 * @param string|object $class
+	 * @param string|object $class The class or object to get reflection.
 	 *
-	 * @return  string
+	 * @return  string The class file path.
 	 */
 	public static function getPath($class)
 	{
@@ -83,12 +83,12 @@ class ReflectionHelper
 	}
 
 	/**
-	 * __callStatic
+	 * Call static magic method.
 	 *
-	 * @param string $name
-	 * @param array  $args
+	 * @param string $name  The method name.
+	 * @param array  $args  The arguments of this methods.
 	 *
-	 * @return  mixed
+	 * @return  mixed  Return value from reflection class.
 	 */
 	public static function __callStatic($name, $args)
 	{

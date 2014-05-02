@@ -7,6 +7,7 @@
  */
 
 use Windwalker\DI\Container;
+use Windwalker\Helper\XmlHelper;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -84,7 +85,7 @@ class JFormFieldWinduser extends JFormField
 			. ' readonly' . $attr . ' />';
 
 		// Create the user select button.
-		if ($this->element['readonly'] != 'true')
+		if (!XmlHelper::getBool($this->element, 'readonly', false))
 		{
 			$html[] = '		<a class="btn btn-primary modal_' . $this->id . '" title="' . JText::_('JLIB_FORM_CHANGE_USER') . '" href="' . $link . '"'
 				. ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';

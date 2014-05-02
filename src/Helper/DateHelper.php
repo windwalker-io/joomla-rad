@@ -12,11 +12,11 @@ use Windwalker\Debugger\Debugger;
 use Windwalker\DI\Container;
 
 /**
- * Class DateHelper
+ * The Date Helper
  *
- * @since 1.0
+ * @since 2.0
  */
-class DateHelper
+abstract class DateHelper
 {
 	/**
 	 * Return the {@link JDate} object
@@ -25,8 +25,6 @@ class DateHelper
 	 * @param   mixed  $tzOffset  The timezone offset.
 	 *
 	 * @return  \JDate object
-	 *
-	 * @see     JDate
 	 */
 	public static function getDate($time = 'now', $tzOffset = null)
 	{

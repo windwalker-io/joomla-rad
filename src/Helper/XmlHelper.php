@@ -9,12 +9,17 @@
 namespace Windwalker\Helper;
 
 /**
- * Class XmlHelper
+ * The Xml Helper.
  *
- * @since 1.0
+ * @since 2.0
  */
 class XmlHelper
 {
+	/**
+	 * The value of false.
+	 *
+	 * @var  array
+	 */
 	static protected $falseValue = array(
 		'disbaled',
 		'false',
@@ -24,6 +29,11 @@ class XmlHelper
 		'none'
 	);
 
+	/**
+	 * The value of true.
+	 *
+	 * @var  array
+	 */
 	static protected $trueValue = array(
 		'true',
 		'yes',
@@ -31,13 +41,13 @@ class XmlHelper
 	);
 
 	/**
-	 * getAttribute
+	 * Get attribute from SimpleXMLElement.
 	 *
-	 * @param \SimpleXMLElement $xml
-	 * @param string            $attr
-	 * @param null              $default
+	 * @param \SimpleXMLElement $xml     A SimpleXMLElement object.
+	 * @param string            $attr    The attribute name.
+	 * @param mixed             $default The default value.
 	 *
-	 * @return mixed
+	 * @return mixed The return value of this attribute.
 	 */
 	public static function getAttribute(\SimpleXMLElement $xml, $attr, $default = null)
 	{
@@ -52,13 +62,13 @@ class XmlHelper
 	}
 
 	/**
-	 * geetAttr
+	 * Get attribute from SimpleXMLElement. Alias of `getAttribute()`.
 	 *
-	 * @param \SimpleXMLElement $xml
-	 * @param string            $attr
-	 * @param null              $default
+	 * @param \SimpleXMLElement $xml     A SimpleXMLElement object.
+	 * @param string            $attr    The attribute name.
+	 * @param mixed             $default The default value.
 	 *
-	 * @return bool
+	 * @return mixed The return value of this attribute.
 	 */
 	public static function get(\SimpleXMLElement $xml, $attr, $default = null)
 	{
@@ -66,13 +76,14 @@ class XmlHelper
 	}
 
 	/**
-	 * getBool
+	 * Method to convert some string like `true`, `1`, `yes` to boolean TRUE,
+	 * and `no`, `false`, `disabled`, `null`, `none`, `0` string to boolean FALSE.
 	 *
-	 * @param \SimpleXMLElement $xml
-	 * @param string            $attr
-	 * @param null              $default
+	 * @param \SimpleXMLElement $xml     A SimpleXMLElement object.
+	 * @param string            $attr    The attribute name.
+	 * @param mixed             $default The default value.
 	 *
-	 * @return boolean
+	 * @return mixed The return value of this attribute.
 	 */
 	public static function getBool(\SimpleXMLElement $xml, $attr, $default = null)
 	{
@@ -87,13 +98,13 @@ class XmlHelper
 	}
 
 	/**
-	 * getFalse
+	 * Just an alias of `getBool()` but FALSE will return TRUE.
 	 *
-	 * @param \SimpleXMLElement $xml
-	 * @param string            $attr
-	 * @param null              $default
+	 * @param \SimpleXMLElement $xml     A SimpleXMLElement object.
+	 * @param string            $attr    The attribute name.
+	 * @param mixed             $default The default value.
 	 *
-	 * @return bool
+	 * @return mixed The return value of this attribute.
 	 */
 	public static function getFalse(\SimpleXMLElement $xml, $attr, $default = null)
 	{
@@ -101,11 +112,11 @@ class XmlHelper
 	}
 
 	/**
-	 * getAttributes
+	 * Get all attributes.
 	 *
-	 * @param \SimpleXMLElement $xml
+	 * @param \SimpleXMLElement $xml A SimpleXMLElement object.
 	 *
-	 * @return  array
+	 * @return  array The return values of all attributes.
 	 */
 	public static function getAttributes(\SimpleXMLElement $xml)
 	{
@@ -120,11 +131,11 @@ class XmlHelper
 	}
 
 	/**
-	 * set
+	 * If this attribute not exists, use this value as default, or we use original value from xml.
 	 *
-	 * @param \SimpleXMLElement $xml
-	 * @param string            $attr
-	 * @param string            $value
+	 * @param \SimpleXMLElement $xml     A SimpleXMLElement object.
+	 * @param string            $attr    The attribute name.
+	 * @param string            $value   The value to set as default.
 	 *
 	 * @return  void
 	 */

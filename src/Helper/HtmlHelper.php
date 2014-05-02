@@ -14,8 +14,7 @@ defined('_JEXEC') or die;
 /**
  * HTML Helper to handle some text.
  *
- * @package     Windwalker.Framework
- * @subpackage  Helpers
+ * @since 2.0
  */
 class HtmlHelper
 {
@@ -86,8 +85,6 @@ class HtmlHelper
 	 * @param   array  $array  The array to convert to JavaScript object notation
 	 *
 	 * @return  string  JavaScript object notation representation of the array
-	 *
-	 * @since   3.0
 	 */
 	public static function getJSObject(array $array = array())
 	{

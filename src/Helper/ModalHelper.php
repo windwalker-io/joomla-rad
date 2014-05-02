@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 /**
  * A UI helper to generate modal etc.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ModalHelper
 {
@@ -29,7 +29,7 @@ class ModalHelper
 	 * @param   string $selector Modal ID to select element.
 	 * @param   array  $option   Modal options.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	public static function modal($selector, $option = array())
 	{
@@ -68,8 +68,6 @@ class ModalHelper
 	 * @param   array  $option   Optional markup for the modal, footer or title.
 	 *
 	 * @return  string  HTML markup for a modal
-	 *
-	 * @since   3.0
 	 */
 	public static function renderModal($selector = 'modal', $content = '', $option = array())
 	{
@@ -116,7 +114,13 @@ MODAL;
 	}
 
 	/**
-	 * getQuickaddForm
+	 * Get Quickadd Form.
+	 *
+	 * @param integer $id        Form id.
+	 * @param string  $path      The form path.
+	 * @param string  $extension The extension(handler).
+	 *
+	 * @return  bool|string
 	 */
 	static public function getQuickaddForm($id, $path, $extension = null)
 	{

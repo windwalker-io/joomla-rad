@@ -12,9 +12,9 @@ use Joomla\String\Inflector;
 use Windwalker\System\ExtensionHelper;
 
 /**
- * Class PathHelper
+ * Path Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class PathHelper
 {
