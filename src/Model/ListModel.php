@@ -786,7 +786,14 @@ class ListModel extends FormModel
 	 */
 	protected function processOrdering(JDatabaseQuery $query, $ordering = null, $direction = null)
 	{
-		$ordering  = $ordering  ? : $this->state->get('list.ordering',  'ordering' /*$this->Viewitem . '.ordering'*/);
+		$ordering  = $ordering  ? : $this->state->get('list.ordering'/* , $this->Viewitem . '.ordering'*/);
+
+		// If no ordering set, ignore this function.
+		if (!$ordering)
+		{
+			return;
+		}
+
 		$direction = $direction ? : $this->state->get('list.direction', 'ASC');
 		$ordering  = explode(',', $ordering);
 
