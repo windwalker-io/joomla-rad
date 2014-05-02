@@ -9,33 +9,39 @@
 namespace Windwalker\Html;
 
 /**
- * Class HtmlElement
+ * The Html element object.
  *
- * @since 1.0
+ * @since 2.0
  */
 class HtmlElement implements \ArrayAccess
 {
 	/**
-	 * @var  string  Property name.
+	 * Element tag name.
+	 *
+	 * @var  string
 	 */
 	protected $name;
 
 	/**
-	 * @var  array  Property attribs.
+	 * Element attributes.
+	 *
+	 * @var  array
 	 */
 	protected $attribs;
 
 	/**
-	 * @var  mixed  Property content.
+	 * Element content.
+	 *
+	 * @var  mixed
 	 */
 	protected $content;
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $name
-	 * @param null   $content
-	 * @param array  $attribs
+	 * @param string $name    Element tag name.
+	 * @param mixed  $content Element content.
+	 * @param array  $attribs Element attributes.
 	 */
 	public function __construct($name, $content = null, $attribs = array())
 	{
@@ -45,7 +51,7 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * __toString
+	 * Convert this object to string.
 	 *
 	 * @return  string
 	 */
@@ -55,7 +61,7 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * getContent
+	 * Get content.
 	 *
 	 * @return  mixed
 	 */
@@ -65,9 +71,9 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * setContent
+	 * Set content.
 	 *
-	 * @param   mixed $content
+	 * @param   mixed $content Element content.
 	 *
 	 * @return  HtmlElement  Return self to support chaining.
 	 */
@@ -79,12 +85,12 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * getAttribs
+	 * Get attributes.
 	 *
-	 * @param string $name
-	 * @param mixed  $default
+	 * @param string $name    Attribute name.
+	 * @param mixed  $default Default value.
 	 *
-	 * @return  array
+	 * @return  string The attribute value.
 	 */
 	public function getAttribute($name, $default = null)
 	{
@@ -97,10 +103,10 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * setAttribs
+	 * Set attribute value.
 	 *
-	 * @param string $name
-	 * @param string $value
+	 * @param string $name  Attribute name.
+	 * @param string $value The value to set into attribute.
 	 *
 	 * @return  HtmlElement  Return self to support chaining.
 	 */
@@ -112,9 +118,9 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * getAttribs
+	 * Get all attributes.
 	 *
-	 * @return  array
+	 * @return  array All attributes.
 	 */
 	public function getAttributes()
 	{
@@ -122,9 +128,9 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * setAttribs
+	 * Set all attributes.
 	 *
-	 * @param   array $attribs
+	 * @param   array $attribs All attributes.
 	 *
 	 * @return  HtmlElement  Return self to support chaining.
 	 */
@@ -136,7 +142,7 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * getName
+	 * Get element tag name.
 	 *
 	 * @return  string
 	 */
@@ -146,9 +152,9 @@ class HtmlElement implements \ArrayAccess
 	}
 
 	/**
-	 * setName
+	 * Set element tag name.
 	 *
-	 * @param   string $name
+	 * @param   string $name Set element tag name.
 	 *
 	 * @return  HtmlElement  Return self to support chaining.
 	 */

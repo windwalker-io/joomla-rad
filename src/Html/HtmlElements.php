@@ -9,14 +9,14 @@
 namespace Windwalker\Html;
 
 /**
- * Class HtmlElements
+ * Html Elements collection.
  *
- * @since 1.0
+ * @since 2.0
  */
 class HtmlElements extends \ArrayObject
 {
 	/**
-	 * __toString
+	 * Convert all elements to string.
 	 *
 	 * @return  string
 	 */

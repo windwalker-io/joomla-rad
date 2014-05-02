@@ -14,14 +14,14 @@ use Windwalker\Helper\CurlHelper;
 use Windwalker\System\ExtensionHelper;
 
 /**
- * Class Thumb
+ * Thumb Object.
  *
- * @since 1.0
+ * @since 2.0
  */
 class Thumb
 {
 	/**
-	 * Property config.
+	 * Config object.
 	 *
 	 * @var  Registry
 	 */
@@ -41,14 +41,14 @@ class Thumb
 	protected $defaultImage = 'libraries/windwalker/Resource/images/default-image.png';
 
 	/**
-	 * Property extension.
+	 * Extension name.
 	 *
 	 * @var  string
 	 */
 	protected $extension;
 
 	/**
-	 * Property hashHandler.
+	 * Hash handler.
 	 *
 	 * @var  callable
 	 */
@@ -57,8 +57,8 @@ class Thumb
 	/**
 	 * Constructor.
 	 *
-	 * @param \Joomla\Registry\Registry $config
-	 * @param null                      $extension
+	 * @param Registry $config    The config object.
+	 * @param string   $extension The extension name.
 	 */
 	public function __construct(Registry $config = null, $extension = null)
 	{
@@ -209,10 +209,10 @@ class Thumb
 	/**
 	 * Crop image, will count image with height percentage, and crop from middle.
 	 *
-	 * @param   \JImage $img  A JImage object.
-	 * @param   int     $width Target width.
+	 * @param   \JImage $img    A JImage object.
+	 * @param   int     $width  Target width.
 	 * @param   int     $height Target height.
-	 * @param   object  $data Image information.
+	 * @param   object  $data   Image information.
 	 *
 	 * @return  \JImage Croped image object.
 	 */
@@ -251,6 +251,8 @@ class Thumb
 	 * Set a new default image placeholder.
 	 *
 	 * @param   string $url Default image placeholder.
+	 *
+	 * @return  void
 	 */
 	public function setDefaultImage($url)
 	{
@@ -286,6 +288,8 @@ class Thumb
 	 * Set cache path, and all image will cache in here.
 	 *
 	 * @param   string $path Cache path.
+	 *
+	 * @return  void
 	 */
 	public function setCachePath($path)
 	{
@@ -296,6 +300,8 @@ class Thumb
 	 * Set cache URL, and all image will cll from here.
 	 *
 	 * @param   string $url Cache URL.
+	 *
+	 * @return  void
 	 */
 	public function setCacheUrl($url)
 	{
@@ -306,6 +312,8 @@ class Thumb
 	 * Set temp path, and all remote image will store in here.
 	 *
 	 * @param   string  $path Temp path.
+	 *
+	 * @return  void
 	 */
 	public function setTempPath($path)
 	{
@@ -318,6 +326,10 @@ class Thumb
 	 * - Cache path:    ROOT/cache/thumb/cache
 	 * - Temp path:     ROOT/cache/thumb/temp
 	 * - Cache URL:     http://your-site.com/cache/thumb/cache/
+	 *
+	 * @param string $path The cache path.
+	 *
+	 * @return void
 	 */
 	public function setCachePosition($path)
 	{
@@ -328,6 +340,8 @@ class Thumb
 
 	/**
 	 * Reset cache position.
+	 *
+	 * @return void
 	 */
 	public function resetCachePosition()
 	{
@@ -352,6 +366,8 @@ class Thumb
 	 * Delete all cache and temp images.
 	 *
 	 * @param   boolean $temp Is delete temp dir too?
+	 *
+	 * @return  void
 	 */
 	public function clearCache($temp = false)
 	{
@@ -367,9 +383,9 @@ class Thumb
 	}
 
 	/**
-	 * setHashHandler
+	 * Set hash handler
 	 *
-	 * @param   callable $hashHandler
+	 * @param   callable $hashHandler The hash handler.
 	 *
 	 * @return  Thumb  Return self to support chaining.
 	 */
@@ -380,4 +396,3 @@ class Thumb
 		return $this;
 	}
 }
- 

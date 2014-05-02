@@ -18,14 +18,14 @@ use Joomla\Registry\Registry;
 class ThumbHelper
 {
 	/**
-	 * Property instance.
+	 * The thumb instances.
 	 *
 	 * @var  Thumb[]
 	 */
 	protected static $instance = array();
 
 	/**
-	 * getInstance
+	 * Get an instance.
 	 *
 	 * @param string $extension
 	 * @param array  $config
@@ -59,4 +59,3 @@ class ThumbHelper
 		return static::getInstance()->resize($url, $width, $height, $zc, $q, $file_type);
 	}
 }
- 

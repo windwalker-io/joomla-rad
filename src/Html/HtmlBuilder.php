@@ -16,26 +16,27 @@ defined('_JEXEC') or die;
 /**
  * HTML Builder helper.
  *
- * @package     Windwalker.Framework
- * @subpackage  Helpers
+ * @since 2.0
  */
 class HtmlBuilder
 {
 	/**
-	 * @var  array  Property unpairedElements.
+	 * Unpaired elements.
+	 *
+	 * @var  array
 	 */
 	protected static $unpairedElements = array(
 		'img', 'br', 'hr', 'area', 'param', 'wbr', 'base', 'link', 'meta', 'input', 'option'
 	);
 
 	/**
-	 * create
+	 * Create a html element.
 	 *
-	 * @param string $name
-	 * @param mixed  $content
-	 * @param array  $attribs
+	 * @param string $name    Element tag name.
+	 * @param mixed  $content Element content.
+	 * @param array  $attribs Element attributes.
 	 *
-	 * @return  string
+	 * @return  string Created element string.
 	 */
 	public static function create($name, $content = '', $attribs = array())
 	{
