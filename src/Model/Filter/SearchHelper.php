@@ -11,19 +11,19 @@ namespace Windwalker\Model\Filter;
 use JDatabaseQueryElement;
 
 /**
- * Class FilterHelper
+ * Search Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class SearchHelper extends AbstractFilterHelper
 {
 	/**
-	 * execute
+	 * Execute the filter and add in query object.
 	 *
-	 * @param \JDatabaseQuery $query
-	 * @param array           $searches
+	 * @param \JDatabaseQuery $query    Db query object.
+	 * @param array           $searches The data from request.
 	 *
-	 * @return  \JDatabaseQuery
+	 * @return  \JDatabaseQuery Return the query object.
 	 */
 	public function execute(\JDatabaseQuery $query, $searches = array())
 	{
@@ -64,18 +64,18 @@ class SearchHelper extends AbstractFilterHelper
 	}
 
 	/**
-	 * getDefaultHandler
+	 * Register the default handler.
 	 *
-	 * @return  callable
+	 * @return  callable The handler callback.
 	 */
 	protected function registerDefaultHandler()
 	{
 		/**
 		 * Default handler closure.
 		 *
-		 * @param \JDatabaseQuery $query
-		 * @param string          $field
-		 * @param string          $value
+		 * @param \JDatabaseQuery $query The query object.
+		 * @param string          $field The field name.
+		 * @param string          $value The filter value.
 		 *
 		 * @return  \JDatabaseQuery
 		 */

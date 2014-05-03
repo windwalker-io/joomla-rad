@@ -9,29 +9,37 @@
 namespace Windwalker\Model\Filter;
 
 /**
- * Class QueryHelperInterface
+ * The filter helper interface.
  *
- * @since 1.0
+ * @since 2.0
  */
 interface FilterHelperInterface
 {
 	/**
-	 * setHandler
+	 * Set filter handler. Can be a callback or closure.
 	 *
-	 * @param string   $name
-	 * @param callback $handler
+	 * Example:
+	 * ``` php
+	 * function(\JDatabaseQuery $query, $field, $value)
+	 * {
+	 *     return $query->where($field . ' <= ' . $value);
+	 * }
+	 * ```
 	 *
-	 * @return  FilterHelperInterface
+	 * @param string   $name    The handler name.
+	 * @param callback $handler Handler callback.
+	 *
+	 * @return  FilterHelperInterface Return self to support chaining.
 	 */
 	public function setHandler($name, $handler);
 
 	/**
-	 * execute
+	 * Execute the filter and add in query object.
 	 *
-	 * @param \JDatabaseQuery $query
-	 * @param array           $data
+	 * @param \JDatabaseQuery $query Db query object.
+	 * @param array           $data  The data from request.
 	 *
-	 * @return  \JDatabaseQuery
+	 * @return  \JDatabaseQuery Return the query object.
 	 */
 	public function execute(\JDatabaseQuery $query, $data = array());
 }

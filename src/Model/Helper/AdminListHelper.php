@@ -1,16 +1,27 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Model\Helper;
 
+/**
+ * AdminList Helper
+ *
+ * @since 2.0
+ */
 abstract class AdminListHelper
 {
 	/**
-	 * handleFilters
+	 * Filter state handler.
 	 *
-	 * @param array  $filters
-	 * @param array  $filterFields
+	 * @param array  $filters      The filter request values.
+	 * @param array  $filterFields The filter fields.
 	 *
-	 * @return array
+	 * @return array Filtered filter values.
 	 */
 	public static function handleFilters($filters, array $filterFields = array())
 	{
@@ -28,13 +39,13 @@ abstract class AdminListHelper
 	}
 
 	/**
-	 * handleFilters
+	 * Search state handler.
 	 *
-	 * @param array $searches
-	 * @param array $filterFields
-	 * @param array $searchFields
+	 * @param array $searches     The search request values.
+	 * @param array $filterFields The filter fields.
+	 * @param array $searchFields The fields we want to search.
 	 *
-	 * @return array
+	 * @return array Filtered search values.
 	 */
 	public static function handleSearches($searches, array $filterFields = array(), $searchFields = array())
 	{
@@ -76,13 +87,13 @@ abstract class AdminListHelper
 	}
 
 	/**
-	 * handleFilters
+	 * THe ordering handler.
 	 *
-	 * @param array $value
-	 * @param array $orderConfig
-	 * @param array $filterFields
+	 * @param array $value        The ordering value.
+	 * @param array $orderConfig  Ordering and direction array.
+	 * @param array $filterFields The filter fields.
 	 *
-	 * @return array
+	 * @return array The handled ordering and direction array.
 	 */
 	public static function handleFullordering($value, $orderConfig, array $filterFields = array())
 	{

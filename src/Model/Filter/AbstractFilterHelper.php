@@ -9,23 +9,28 @@
 namespace Windwalker\Model\Filter;
 
 /**
- * Class AbstractQueryHelper
+ * Abstract Filter Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractFilterHelper implements FilterHelperInterface
 {
+	/**
+	 * Skip this filter.
+	 *
+	 * @const boolean
+	 */
 	const SKIP = false;
 
 	/**
-	 * Property handler.
+	 * Handler callbacks.
 	 *
 	 * @var  array
 	 */
 	protected $handler = array();
 
 	/**
-	 * Property defaultHandler.
+	 * The default handler.
 	 *
 	 * @var  \Closure
 	 */
@@ -40,13 +45,20 @@ abstract class AbstractFilterHelper implements FilterHelperInterface
 	}
 
 	/**
-	 * setHandler
+	 * Set filter handler. Can be a callback or closure.
 	 *
-	 * @param string           $name
-	 * @param callable|boolean $handler
+	 * Example:
+	 * ``` php
+	 * function(\JDatabaseQuery $query, $field, $value)
+	 * {
+	 *     return $query->where($field . ' <= ' . $value);
+	 * }
+	 * ```
 	 *
-	 * @throws \InvalidArgumentException
-	 * @return  AbstractFilterHelper
+	 * @param string   $name    The handler name.
+	 * @param callback $handler Handler callback.
+	 *
+	 * @return  AbstractFilterHelper Return self to support chaining.
 	 */
 	public function setHandler($name, $handler)
 	{
@@ -56,16 +68,16 @@ abstract class AbstractFilterHelper implements FilterHelperInterface
 	}
 
 	/**
-	 * registerDefaultHandler
+	 * Register the default handler.
 	 *
-	 * @return  callable
+	 * @return  callable The handler callback.
 	 */
 	abstract protected function registerDefaultHandler();
 
 	/**
-	 * setDefaultHandler
+	 * Set default handler.
 	 *
-	 * @param   callable $defaultHandler
+	 * @param   callable $defaultHandler The default handler.
 	 *
 	 * @return  AbstractFilterHelper  Return self to support chaining.
 	 */

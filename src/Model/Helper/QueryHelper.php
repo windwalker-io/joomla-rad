@@ -1,22 +1,41 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Model\Helper;
 
 use JDatabaseDriver;
 use JDatabaseQuery;
-use JFactory;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 
 /**
- * Class QueryHelper
+ * The Query Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class QueryHelper
 {
+	/**
+	 * THe first table only select columns' name.
+	 *
+	 * For example: `item.title AS title`
+	 *
+	 * @const integer
+	 */
 	const COLS_WITH_FIRST = 1;
 
+	/**
+	 * The first table select column with prefix as alias.
+	 *
+	 * For example: `item.title AS item_title`
+	 *
+	 * @const integer
+	 */
 	const COLS_PREFIX_WITH_FIRST = 2;
 
 	/**
@@ -27,14 +46,14 @@ class QueryHelper
 	protected $columnCache;
 
 	/**
-	 * Property db.
+	 * THe db adapter.
 	 *
 	 * @var  JDatabaseDriver
 	 */
 	protected $db = null;
 
 	/**
-	 * Property tables.
+	 * Tables storage.
 	 *
 	 * @var  array
 	 */
@@ -43,7 +62,7 @@ class QueryHelper
 	/**
 	 * Constructor.
 	 *
-	 * @param JDatabaseDriver $db
+	 * @param JDatabaseDriver $db The db adapter.
 	 */
 	public function __construct(JDatabaseDriver $db = null)
 	{
@@ -51,14 +70,16 @@ class QueryHelper
 	}
 
 	/**
-	 * addTable
+	 * Add a table into storage.
 	 *
-	 * @param string $alias
-	 * @param string $table
-	 * @param mixed  $condition
-	 * @param string $joinType
+	 * Example: `addTable('item', '#__items', 'item.catid = cat.id')`
 	 *
-	 * @return  QueryHelper
+	 * @param string $alias     Table select alias.
+	 * @param string $table     Table name.
+	 * @param mixed  $condition Join conditions, use string or array.
+	 * @param string $joinType  The Join type.
+	 *
+	 * @return  QueryHelper  Return self to support chaining.
 	 */
 	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT')
 	{
@@ -87,11 +108,11 @@ class QueryHelper
 	}
 
 	/**
-	 * removeTable
+	 * Remove a table from storage.
 	 *
-	 * @param string $alias
+	 * @param string $alias Table alias.
 	 *
-	 * @return  $this
+	 * @return  QueryHelper Return self to support chaining.
 	 */
 	public function removeTable($alias)
 	{
@@ -104,11 +125,11 @@ class QueryHelper
 	}
 
 	/**
-	 * getFilterFields
+	 * Get select fields.
 	 *
-	 * @param int $prefixFirst
+	 * @param int $prefixFirst Prefix first.
 	 *
-	 * @return  array
+	 * @return  array Select fields.
 	 */
 	public function getSelectFields($prefixFirst = self::COLS_WITH_FIRST)
 	{
@@ -152,9 +173,9 @@ class QueryHelper
 	}
 
 	/**
-	 * getFilterFields
+	 * Filter fields.
 	 *
-	 * @return  array
+	 * @return  array Filter fields.
 	 */
 	public function getFilterFields()
 	{
@@ -179,11 +200,11 @@ class QueryHelper
 	}
 
 	/**
-	 * registerQueryTables
+	 * Register query table.
 	 *
-	 * @param JDatabaseQuery $query
+	 * @param JDatabaseQuery $query The db query.
 	 *
-	 * @return  JDatabaseQuery
+	 * @return  JDatabaseQuery The db query object.
 	 */
 	public function registerQueryTables(JDatabaseQuery $query)
 	{
@@ -208,8 +229,8 @@ class QueryHelper
 	/**
 	 * Get a query string to filter the publishing items now.
 	 *
-	 * Will return: "( publish_up < 'xxxx-xx-xx' OR publish_up = '0000-00-00' )
-	 *                     AND ( publish_down > 'xxxx-xx-xx' OR publish_down = '0000-00-00' )"
+	 * Will return: '( publish_up < 'xxxx-xx-xx' OR publish_up = '0000-00-00' )
+	 *   AND ( publish_down > 'xxxx-xx-xx' OR publish_down = '0000-00-00' )'
 	 *
 	 * @param   string $prefix Prefix to columns name, eg: 'a.' will use `a`.`publish_up`.
 	 *
@@ -230,14 +251,14 @@ class QueryHelper
 	/**
 	 * Get a query string to filter the publishing items now, and the published > 0.
 	 *
-	 * Will return: "( publish_up < 'xxxx-xx-xx' OR publish_up = '0000-00-00' )
-	 *                     AND ( publish_down > 'xxxx-xx-xx' OR publish_down = '0000-00-00' )
-	 *                     AND published >= '1' "
+	 * Will return: `( publish_up < 'xxxx-xx-xx' OR publish_up = '0000-00-00' )
+	 *    AND ( publish_down > 'xxxx-xx-xx' OR publish_down = '0000-00-00' )
+	 *    AND published >= '1' `
 	 *
 	 * @param   string $prefix        Prefix to columns name, eg: 'a.' will use `a.publish_up`.
 	 * @param   string $published_col The published column name. Usually 'published' or 'state' for com_content.
 	 *
-	 * @return  string    Query string.
+	 * @return  string  Query string.
 	 */
 	public static function publishingItems($prefix = '', $published_col = 'published')
 	{
@@ -245,9 +266,9 @@ class QueryHelper
 	}
 
 	/**
-	 * getDb
+	 * Get db adapter.
 	 *
-	 * @return  \JDatabaseDriver
+	 * @return  \JDatabaseDriver Db adapter.
 	 */
 	public function getDb()
 	{
@@ -260,9 +281,9 @@ class QueryHelper
 	}
 
 	/**
-	 * setDb
+	 * Set db adapter.
 	 *
-	 * @param   \JDatabaseDriver $db
+	 * @param   \JDatabaseDriver $db The db adapter.
 	 *
 	 * @return  QueryHelper  Return self to support chaining.
 	 */
@@ -271,5 +292,5 @@ class QueryHelper
 		$this->db = $db;
 
 		return $this;
-}
+	}
 }

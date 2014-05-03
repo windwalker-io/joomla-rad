@@ -1,16 +1,22 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Model\Exception;
 
 /**
- * Class ValidateFailExcption
+ * THe Validate Fail Exception.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ValidateFailException extends \Exception
 {
 	/**
-	 * Property errors.
+	 * Errors bag.
 	 *
 	 * @var array
 	 */
@@ -19,7 +25,7 @@ class ValidateFailException extends \Exception
 	/**
 	 * Constructor.
 	 *
-	 * @param array $errors
+	 * @param array $errors The validate errors.
 	 */
 	public function __construct($errors)
 	{
@@ -29,9 +35,9 @@ class ValidateFailException extends \Exception
 	}
 
 	/**
-	 * getErrors
+	 * Get errors.
 	 *
-	 * @return array
+	 * @return array Error messages.
 	 */
 	public function getErrors()
 	{
@@ -39,11 +45,11 @@ class ValidateFailException extends \Exception
 	}
 
 	/**
-	 * setErrors
+	 * Set errors.
 	 *
 	 * @param $errors
 	 *
-	 * @return $this
+	 * @return ValidateFailException Return self to support chaining.
 	 */
 	public function setErrors($errors)
 	{
