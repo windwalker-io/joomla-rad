@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Model;
 
@@ -7,43 +13,42 @@ use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\System\ExtensionHelper;
 
 /**
- * Class AbstractAdvancedModel
+ * Advanced Model.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractAdvancedModel extends Model
 {
 	/**
-	 * Property viewItem.
+	 * Item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = null;
 
 	/**
-	 * Property viewList.
+	 * List name.
 	 *
 	 * @var  string
 	 */
 	protected $viewList = null;
 
 	/**
-	 * Property params.
+	 * Params of component.
 	 *
 	 * @var  Registry
 	 */
 	protected $params = null;
 
 	/**
-	 * Property category.
+	 * Category object of item or items.
 	 *
 	 * @var  \Windwalker\Data\Data
 	 */
 	protected $category = null;
 
-
 	/**
-	 * getParams
+	 * Get component params.
 	 *
 	 * @return  Registry
 	 */
@@ -69,9 +74,9 @@ abstract class AbstractAdvancedModel extends Model
 	}
 
 	/**
-	 * getCategory
+	 * Get category object.
 	 *
-	 * @param integer $pk
+	 * @param integer $pk Category id.
 	 *
 	 * @return  \Windwalker\Data\Data
 	 */

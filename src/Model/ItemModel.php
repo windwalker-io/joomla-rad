@@ -9,16 +9,18 @@
 namespace Windwalker\Model;
 
 /**
- * Class ItemModel
+ * The model for single item.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ItemModel extends AbstractAdvancedModel
 {
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * Note. Calling getState in this method will result in recursion.
+	 * This method will only called in constructor. Using `ignore_request` to ignore this method.
+	 *
+	 * @return  void
 	 */
 	protected function populateState()
 	{
@@ -36,8 +38,6 @@ class ItemModel extends AbstractAdvancedModel
 	 * @param   integer  $pk  The id of the primary key.
 	 *
 	 * @return  mixed    Object on success, false on failure.
-	 *
-	 * @since   12.2
 	 */
 	public function getItem($pk = null)
 	{

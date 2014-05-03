@@ -13,19 +13,15 @@ use Joomla\DI\Container as JoomlaContainer;
 use JTable;
 use Windwalker\Helper\DateHelper;
 
-defined('JPATH_PLATFORM') or die;
-
 /**
- * Prototype item model.
+ * Prototype admin model.
  *
- * @package     Joomla.Legacy
- * @subpackage  Model
- * @since       12.2
+ * @since 2.0
  */
 abstract class AdminModel extends CrudModel
 {
 	/**
-	 * Property reorderConditions.
+	 * The reorder conditions.
 	 *
 	 * @var array
 	 */
@@ -37,7 +33,7 @@ abstract class AdminModel extends CrudModel
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
 	 * @param   JoomlaContainer    $container Service container.
 	 * @param   \JRegistry         $state     The model state.
-	 * @param   \JDatabaseDriver   $db        The database adpater.
+	 * @param   \JDatabaseDriver   $db        The database adapter.
 	 */
 	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
 	{
@@ -64,19 +60,19 @@ abstract class AdminModel extends CrudModel
 	}
 
 	/**
-	 * save
+	 * Method to save the form data.
 	 *
-	 * @param array $data
+	 * @param   array  $data  The form data.
 	 *
-	 * @return  bool
+	 * @return  boolean  True on success, False on error.
 	 */
 	public function save($data)
 	{
 		$result = parent::save($data);
 
+		// Reorder
 		if ($result && $this->state->get('order.position') == 'first')
 		{
-			// Do reorder
 			$pk = $this->state->get($this->getName() . '.id');
 
 			$this->reorder(array($pk), array(0));
@@ -94,8 +90,6 @@ abstract class AdminModel extends CrudModel
 	 *
 	 * @throws \Exception
 	 * @return  boolean  False on failure or error, true otherwise.
-	 *
-	 * @since   3.2
 	 */
 	public function checkin($pk = null)
 	{
@@ -125,6 +119,8 @@ abstract class AdminModel extends CrudModel
 		{
 			throw new \Exception($table->getError());
 		}
+
+		return true;
 	}
 
 	/**
@@ -134,8 +130,6 @@ abstract class AdminModel extends CrudModel
 	 *
 	 * @throws  \Exception
 	 * @return  boolean  False on failure or error, true otherwise.
-	 *
-	 * @since   3.2
 	 */
 	public function checkout($pk = null)
 	{
@@ -165,19 +159,19 @@ abstract class AdminModel extends CrudModel
 		{
 			throw new \Exception($table->getError());
 		}
+
+		return true;
 	}
 
 	/**
 	 * Saves the manually set order of records.
 	 *
 	 * @param   array    $pks    An array of primary key ids.
-	 * @param   integer  $order  +1 or -1
+	 * @param   array    $order  THe new ordering list.
 	 *
 	 * @return  mixed
-	 *
-	 * @since   12.2
 	 */
-	public function reorder($pks = null, $order = null)
+	public function reorder($pks = null, $order = array())
 	{
 		$table          = $this->getTable();
 		$tableClassName = get_class($table);
@@ -252,10 +246,8 @@ abstract class AdminModel extends CrudModel
 	 * @param   JTable  $table  A reference to a JTable object.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable(\JTable $table)
 	{
 		$date = DateHelper::getDate();
 		$user = $this->container->get('user');
@@ -322,17 +314,24 @@ abstract class AdminModel extends CrudModel
 	 * Method to set new item ordering as first or last.
 	 *
 	 * @param   JTable $table    Item table to save.
-	 * @param   string $position 'first' or other are last.
+	 * @param   string $position `first` or other are `last`.
 	 *
 	 * @return  void
 	 */
 	public function setOrderPosition($table, $position = null)
 	{
+		$orderCol = $this->state->get('reorder.column', 'ordering');
+
+		if (!property_exists($table, $orderCol))
+		{
+			return;
+		}
+
 		if ($position == 'first')
 		{
-			if (!$table->ordering)
+			if (empty($table->$orderCol))
 			{
-				$table->ordering = 1;
+				$table->$orderCol = 1;
 
 				$this->state->set('order.position', 'first');
 			}
@@ -340,10 +339,10 @@ abstract class AdminModel extends CrudModel
 		else
 		{
 			// Set ordering to the last item if not set
-			if (empty($table->ordering))
+			if (empty($table->$orderCol))
 			{
 				$query = $this->db->getQuery(true)
-					->select('MAX(ordering)')
+					->select(sprintf('MAX(%s)', $orderCol))
 					->from($table->getTableName());
 
 				$condition = $this->getReorderConditions($table);
@@ -356,7 +355,7 @@ abstract class AdminModel extends CrudModel
 
 				$max = $this->db->setQuery($query)->loadResult();
 
-				$table->ordering = $max + 1;
+				$table->$orderCol = $max + 1;
 			}
 		}
 	}
@@ -367,8 +366,6 @@ abstract class AdminModel extends CrudModel
 	 * @param   JTable  $table  A JTable object.
 	 *
 	 * @return  array  An array of conditions to add to ordering queries.
-	 *
-	 * @since   12.2
 	 */
 	protected function getReorderConditions($table)
 	{
@@ -397,8 +394,6 @@ abstract class AdminModel extends CrudModel
 	 * @param   \JTable              $table         The JTable object
 	 *
 	 * @return  void
-	 *
-	 * @since   3.2
 	 */
 	public function createTagsHelper($tagsObserver, $type, $pk, $typeAlias, $table)
 	{
@@ -413,20 +408,18 @@ abstract class AdminModel extends CrudModel
 	/**
 	 * Method to change the title & alias.
 	 *
-	 * @param   integer  $category_id  The id of the category.
-	 * @param   string   $alias        The alias.
-	 * @param   string   $title        The title.
+	 * @param   integer  $categoryId  The id of the category.
+	 * @param   string   $alias       The alias.
+	 * @param   string   $title       The title.
 	 *
 	 * @return	array  Contains the modified title and alias.
-	 *
-	 * @since	12.2
 	 */
-	protected function generateNewTitle($category_id, $alias, $title)
+	protected function generateNewTitle($categoryId, $alias, $title)
 	{
 		// Alter the title & alias
 		$table = $this->getTable();
 
-		while ($table->load(array('alias' => $alias, 'catid' => $category_id)))
+		while ($table->load(array('alias' => $alias, 'catid' => $categoryId)))
 		{
 			$title = \JString::increment($title);
 			$alias = \JString::increment($alias, 'dash');

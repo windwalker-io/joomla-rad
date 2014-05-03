@@ -10,57 +10,49 @@ namespace Windwalker\Model;
 
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
-
 use Windwalker\DI\Container;
 
-defined('JPATH_PLATFORM') or die;
-
 /**
- * Prototype admin model.
+ * Windwalker basic model class.
  *
- * @package     Joomla.Libraries
- * @subpackage  Model
- * @since       3.2
+ * @since 2.0
  */
 class Model extends \JModelDatabase implements ContainerAwareInterface
 {
 	/**
 	 * The model (base) name
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $name = null;
 
 	/**
 	 * The URL option for the component.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $option = null;
 
 	/**
-	 * Context string for the model type.  This is used to handle uniqueness
-	 * when dealing with the getStoreId() method and caching data structures.
+	 * Context string for the model type.
 	 *
-	 * @var    string
-	 * @since  12.2
+	 * This is used to handle uniqueness when dealing with the getStoreId() method and caching data structures.
+	 *
+	 * @var  string
 	 */
 	protected $context = '';
 
 	/**
 	 * The event to trigger when cleaning cache.
 	 *
-	 * @var      string
-	 * @since    12.2
+	 * @var string
 	 */
 	protected $eventCleanCache = null;
 
 	/**
-	 * Property container.
+	 * The DI Container.
 	 *
-	 * @var
+	 * @var Container
 	 */
 	protected $container;
 
@@ -70,7 +62,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
 	 * @param   JoomlaContainer    $container Service container.
 	 * @param   \JRegistry         $state     The model state.
-	 * @param   \JDatabaseDriver   $db        The database adpater.
+	 * @param   \JDatabaseDriver   $db        The database adapter.
 	 *
 	 * @throws \Exception
 	 */
@@ -92,23 +84,13 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 		$this->option = 'com_' . $this->prefix;
 
 		// Guess name
-		if (!$this->name)
-		{
-			$this->name = \JArrayHelper::getValue($config, 'name', $this->getName());
-		}
+		$this->name = $this->name ? : \JArrayHelper::getValue($config, 'name', $this->getName());
 
 		// Register the paths for the form
 		$this->registerTablePaths($config);
 
 		// Set the clean cache event
-		if (isset($config['event_clean_cache']))
-		{
-			$this->eventCleanCache = $config['event_clean_cache'];
-		}
-		elseif (empty($this->eventCleanCache))
-		{
-			$this->eventCleanCache = 'onContentCleanCache';
-		}
+		$this->eventCleanCache = $this->eventCleanCache ? : \JArrayHelper::getValue($config, 'event_clean_cache', 'onContentCleanCache');
 
 		$this->container = $container ? : $this->getContainer();
 
@@ -117,10 +99,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 		parent::__construct($state, $db);
 
 		// Guess the context as Option.ModelName.
-		if (empty($this->context))
-		{
-			$this->context = strtolower($this->option . '.' . $this->getName());
-		}
+		$this->context = $this->context ? : strtolower($this->option . '.' . $this->getName());
 
 		// Set the internal state marker - used to ignore setting state from the request
 		if (empty($config['ignore_request']))
@@ -136,10 +115,8 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * The model name. By default parsed using the classname or it can be set
 	 * by passing a $config['name'] in the class constructor
 	 *
-	 * @return  string  The name of the model
-	 *
-	 * @since   3.2
 	 * @throws  \Exception
+	 * @return  string  The name of the model
 	 */
 	public function getName()
 	{
@@ -165,10 +142,8 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param   string  $prefix   The class prefix. Optional.
 	 * @param   array   $options  Configuration array for model. Optional.
 	 *
-	 * @return  \JTable  A JTable object
-	 *
-	 * @since   3.2
 	 * @throws  \Exception
+	 * @return  \JTable  A JTable object
 	 */
 	public function getTable($name = '', $prefix = '', $options = array())
 	{
@@ -196,8 +171,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param array $config
 	 *
 	 * @return  object  The property where specified, the state object where omitted
-	 *
-	 * @since   3.2
 	 */
 	public function registerTablePaths($config = array())
 	{
@@ -223,11 +196,11 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	}
 
 	/**
-	 * setName
+	 * Set basic name.
 	 *
-	 * @param $name
+	 * @param string $name THe model name.
 	 *
-	 * @return $this
+	 * @return Model Return self to support chaining.
 	 */
 	public function setName($name)
 	{
@@ -237,7 +210,11 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	}
 
 	/**
-	 * @param string $option
+	 * Set component option name.
+	 *
+	 * @param string $option The component option name.
+	 *
+	 * @return  Model Return self to support chaining.
 	 */
 	public function setOption($option)
 	{
@@ -251,14 +228,9 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * This method should only be called once per instantiation and is designed
-	 * to be called on the first call to the getState() method unless the model
-	 * configuration flag to ignore the request is set.
+	 * This method will only called in constructor. Using `ignore_request` to ignore this method.
 	 *
 	 * @return  void
-	 *
-	 * @note    Calling getState in this method will result in recursion.
-	 * @since   3.2
 	 */
 	protected function populateState()
 	{
@@ -271,8 +243,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param   object  $record  A record object.
 	 *
 	 * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
-	 *
-	 * @since   3.2
 	 */
 	protected function canDelete($record)
 	{
@@ -287,6 +257,8 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 
 			return $user->authorise('core.delete', $this->option);
 		}
+
+		return false;
 	}
 
 	/**
@@ -295,8 +267,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param   object  $record  A record object.
 	 *
 	 * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
-	 *
-	 * @since   3.2
 	 */
 	protected function canEditState($record)
 	{
@@ -337,8 +307,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param   mixed  $path  The directory as a string or directories as an array to add.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
 	public static function addTablePath($path)
 	{
@@ -352,8 +320,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @param   integer  $client_id  The ID of the client
 	 *
 	 * @return  void
-	 *
-	 * @since   3.2
 	 */
 	protected function cleanCache($group = null, $client_id = 0)
 	{
@@ -378,7 +344,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 *
 	 * @return  Container
 	 *
-	 * @since   1.0
 	 * @throws  \UnexpectedValueException May be thrown if the container has not been set.
 	 */
 	public function getContainer()
@@ -396,9 +361,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 *
 	 * @param   JoomlaContainer $container The DI container.
 	 *
-	 * @return  $this
-	 *
-	 * @since   1.0
+	 * @return  Model Return self to support chaining.
 	 */
 	public function setContainer(JoomlaContainer $container)
 	{

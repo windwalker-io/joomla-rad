@@ -40,51 +40,47 @@ class ListModel extends FormModel
 	/**
 	 * Internal memory based cache array of data.
 	 *
-	 * @var    array
-	 * @since  12.2
+	 * @var array
 	 */
 	protected $cache = array();
 
 	/**
 	 * Valid filter fields or ordering.
 	 *
-	 * @var    array
-	 * @since  12.2
+	 * @var array
 	 */
 	protected $filterFields = array();
 
 	/**
 	 * An internal cache for the last query used.
 	 *
-	 * @var    JDatabaseQuery
-	 * @since  12.2
+	 * @var JDatabaseQuery
 	 */
 	protected $query = array();
 
 	/**
 	 * Name of the filter form to load
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var string
 	 */
 	protected $formPath = null;
 
 	/**
-	 * Property forms.
+	 * Cache of forms.
 	 *
-	 * @var
+	 * @var \JForm[]
 	 */
 	protected $forms;
 
 	/**
-	 * Property orderCol.
+	 * Ordering field.
 	 *
 	 * @var string
 	 */
 	protected $orderCol = null;
 
 	/**
-	 * Property searchFields.
+	 * Search fields.
 	 *
 	 * @var array
 	 */
@@ -101,10 +97,7 @@ class ListModel extends FormModel
 	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
 	{
 		// These need before parent constructor.
-		if (!$this->orderCol)
-		{
-			$this->orderCol = JArrayHelper::getValue($config, 'order_column', null);
-		}
+		$this->orderCol = $this->orderCol ? : JArrayHelper::getValue($config, 'order_column', null);
 
 		if (!$this->filterFields)
 		{
@@ -114,10 +107,7 @@ class ListModel extends FormModel
 		}
 
 		// Guess name for container
-		if (!$this->name)
-		{
-			$this->name = JArrayHelper::getValue($config, 'name', $this->getName());
-		}
+		$this->name = $this->name ? : JArrayHelper::getValue($config, 'name', $this->getName());
 
 		$this->container = $container ? : $this->getContainer();
 
@@ -128,12 +118,11 @@ class ListModel extends FormModel
 		parent::__construct($config, $container, $state, $db);
 
 		// Guess the item view as the context.
-		if (empty($this->viewList))
-		{
-			$this->viewList = $this->getName();
-		}
+		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list', $this->getName());
 
 		// Guess the list view as the plural of the item view.
+		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item');
+
 		if (empty($this->viewItem))
 		{
 			$inflector = \JStringInflector::getInstance();
@@ -151,7 +140,6 @@ class ListModel extends FormModel
 	 *
 	 * @return  \JTable  A JTable object
 	 *
-	 * @since   3.2
 	 * @throws  \Exception
 	 */
 	public function getTable($name = '', $prefix = '', $options = array())
@@ -167,8 +155,6 @@ class ListModel extends FormModel
 	 * This method ensures that the query is constructed only once for a given state of the model.
 	 *
 	 * @return  JDatabaseQuery  A JDatabaseQuery object
-	 *
-	 * @since   12.2
 	 */
 	protected function _getListQuery()
 	{
@@ -192,8 +178,6 @@ class ListModel extends FormModel
 	 * Method to get an array of data items.
 	 *
 	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since   12.2
 	 */
 	public function getItems()
 	{
@@ -276,9 +260,9 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * prepareGetQuery
+	 * The prepare getQuery hook
 	 *
-	 * @param JDatabaseQuery $query
+	 * @param JDatabaseQuery $query The db query object.
 	 *
 	 * @return  void
 	 */
@@ -287,9 +271,9 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * postGetQuery
+	 * The post getQuery object.
 	 *
-	 * @param JDatabaseQuery $query
+	 * @param JDatabaseQuery $query The db query object.
 	 *
 	 * @return  void
 	 */
@@ -301,8 +285,6 @@ class ListModel extends FormModel
 	 * Method to get a JPagination object for the data set.
 	 *
 	 * @return  JPagination  A JPagination object for the data set.
-	 *
-	 * @since   12.2
 	 */
 	public function getPagination()
 	{
@@ -335,8 +317,6 @@ class ListModel extends FormModel
 	 * @param   string  $id  An identifier string to generate the store id.
 	 *
 	 * @return  string  A store id.
-	 *
-	 * @since   12.2
 	 */
 	protected function getStoreId($id = '')
 	{
@@ -356,7 +336,6 @@ class ListModel extends FormModel
 	 *
 	 * @return  array  An array of results.
 	 *
-	 * @since   12.2
 	 * @throws  \RuntimeException
 	 */
 	public function getList($query, $limitstart = 0, $limit = 0)
@@ -374,8 +353,6 @@ class ListModel extends FormModel
 	 * @param   \JDatabaseQuery|string  $query  The query.
 	 *
 	 * @return  integer  Number of rows for query.
-	 *
-	 * @since   12.2
 	 */
 	public function getListCount($query)
 	{
@@ -404,8 +381,6 @@ class ListModel extends FormModel
 	 * Method to get the total number of items for the data set.
 	 *
 	 * @return  integer  The total number of items available in the data set.
-	 *
-	 * @since   12.2
 	 */
 	public function getTotal()
 	{
@@ -433,8 +408,6 @@ class ListModel extends FormModel
 	 * Method to get the starting number of items for the data set.
 	 *
 	 * @return  integer  The starting number of items available in the data set.
-	 *
-	 * @since   12.2
 	 */
 	public function getStart()
 	{
@@ -468,8 +441,6 @@ class ListModel extends FormModel
 	 * @param   boolean  $loadData  load current data
 	 *
 	 * @return  \JForm|false  the JForm object or false
-	 *
-	 * @since   3.2
 	 */
 	public function getBatchForm($data = array(), $loadData = false)
 	{
@@ -491,8 +462,6 @@ class ListModel extends FormModel
 	 * @param   boolean  $loadData  load current data
 	 *
 	 * @return  \JForm|false  the JForm object or false
-	 *
-	 * @since   3.2
 	 */
 	public function getFilterForm($data = array(), $loadData = true)
 	{
@@ -508,9 +477,9 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * getQuery
+	 * Get cached query.
 	 *
-	 * @return  JDatabaseQuery
+	 * @return  JDatabaseQuery The db query object.
 	 */
 	public function getQuery()
 	{
@@ -518,9 +487,9 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * setQuery
+	 * Set a query to cache.
 	 *
-	 * @param   JDatabaseQuery $query
+	 * @param   JDatabaseQuery $query The db query object.
 	 *
 	 * @return  ListModel  Return self to support chaining.
 	 */
@@ -535,8 +504,6 @@ class ListModel extends FormModel
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
-	 *
-	 * @since	3.2
 	 */
 	protected function loadFormData()
 	{
@@ -563,18 +530,12 @@ class ListModel extends FormModel
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * This method should only be called once per instantiation and is designed
-	 * to be called on the first call to the getState() method unless the model
-	 * configuration flag to ignore the request is set.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
+	 * This method will only called in constructor. Using `ignore_request` to ignore this method.
 	 *
 	 * @param   string  $ordering   An optional ordering field.
 	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -682,7 +643,6 @@ class ListModel extends FormModel
 	 *
 	 * @return  void
 	 *
-	 * @since   3.2
 	 * @throws  \Exception if there is an error in the form event.
 	 */
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
@@ -710,12 +670,12 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * processFilters
+	 * Process the query filters.
 	 *
-	 * @param JDatabaseQuery $query
-	 * @param array          $filters
+	 * @param JDatabaseQuery $query   The query object.
+	 * @param array          $filters The filters values.
 	 *
-	 * @return  JDatabaseQuery
+	 * @return  JDatabaseQuery The db query object.
 	 */
 	protected function processFilters(JDatabaseQuery $query, $filters = array())
 	{
@@ -731,9 +691,20 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * configureFilters
+	 * Configure the filter handlers.
 	 *
-	 * @param FilterHelper $filterHelper
+	 * Example:
+	 * ``` php
+	 * $filterHelper->setHandler(
+	 *     'sakura.date',
+	 *     function($query, $field, $value)
+	 *     {
+	 *         $query->where($field . ' >= ' . $value);
+	 *     }
+	 * );
+	 * ```
+	 *
+	 * @param FilterHelper $filterHelper The filter helper object.
 	 *
 	 * @return  void
 	 */
@@ -743,12 +714,12 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * processSearches
+	 * Process the search query.
 	 *
-	 * @param JDatabaseQuery $query
-	 * @param array          $searches
+	 * @param JDatabaseQuery $query    The query object.
+	 * @param array          $searches The search values.
 	 *
-	 * @return  JDatabaseQuery
+	 * @return  JDatabaseQuery The db query object.
 	 */
 	protected function processSearches(JDatabaseQuery $query, $searches = array())
 	{
@@ -764,9 +735,20 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * configureSearches
+	 * Configure the search handlers.
 	 *
-	 * @param SearchHelper $searchHelper
+	 * Example:
+	 * ``` php
+	 * $searchHelper->setHandler(
+	 *     'sakura.title',
+	 *     function($query, $field, $value)
+	 *     {
+	 *         return $query->quoteName($field) . ' LIKE ' . $query->quote('%' . $value . '%');
+	 *     }
+	 * );
+	 * ```
+	 *
+	 * @param SearchHelper $searchHelper The search helper object.
 	 *
 	 * @return  void
 	 */
@@ -776,11 +758,11 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * processOrdering
+	 * Process ordering query.
 	 *
-	 * @param JDatabaseQuery $query
-	 * @param null           $ordering
-	 * @param null           $direction
+	 * @param JDatabaseQuery $query     The query object.
+	 * @param string         $ordering  The ordering string.
+	 * @param string         $direction ASC or DESC.
 	 *
 	 * @return  void
 	 */
@@ -820,9 +802,9 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * getFullSearchFields
+	 * Get search fields from form xml.
 	 *
-	 * @return  array
+	 * @return  array Search fields.
 	 */
 	public function getSearchFields()
 	{
@@ -872,8 +854,6 @@ class ListModel extends FormModel
 	 * @param   boolean  $resetPage  If true, the limitstart in request is set to zero
 	 *
 	 * @return  array The request user state.
-	 *
-	 * @since   12.2
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
@@ -902,7 +882,7 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * configureTables
+	 * Configure tables through QueryHelper.
 	 *
 	 * @return  void
 	 */
@@ -911,14 +891,14 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * addTable
+	 * Add a table into QueryHelper.
 	 *
-	 * @param string $alias
-	 * @param string $table
-	 * @param mixed  $condition
-	 * @param string $joinType
+	 * @param string $alias     Table select alias.
+	 * @param string $table     Table name.
+	 * @param mixed  $condition Join conditions, use string or array.
+	 * @param string $joinType  The Join type.
 	 *
-	 * @return  ListModel
+	 * @return  ListModel Return self to support chaining.
 	 */
 	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT')
 	{
@@ -930,11 +910,11 @@ class ListModel extends FormModel
 	}
 
 	/**
-	 * removeTable
+	 * Remove a table from storage.
 	 *
-	 * @param string $alias
+	 * @param string $alias Table alias.
 	 *
-	 * @return  $this
+	 * @return  ListModel Return self to support chaining.
 	 */
 	public function removeTable($alias)
 	{

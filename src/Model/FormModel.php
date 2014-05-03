@@ -10,37 +10,30 @@ namespace Windwalker\Model;
 
 use Windwalker\Model\Exception\ValidateFailException;
 
-defined('JPATH_PLATFORM') or die;
-
 /**
  * Prototype form model.
  *
- * @package     Joomla.Libraries
- * @subpackage  Model
- * @see         JForm
- * @see         JFormField
- * @see         JFormRule
- * @since       3.2
+ * @see   JForm
+ * @see   JFormField
+ * @see   JFormRule
+ * @since 2.0
  */
 abstract class FormModel extends AbstractAdvancedModel
 {
 	/**
 	 * Array of form objects.
 	 *
-	 * @var    array
-	 * @since  3.2
+	 * @var  array
 	 */
 	protected $forms = array();
 
 	/**
-	 * Abstract method for getting the form from the model.
+	 * Method for getting the form from the model.
 	 *
 	 * @param   array    $data      Data for the form.
 	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
 	 *
 	 * @return  mixed  A JForm object on success, false on failure
-	 *
-	 * @since   3.2
 	 */
 	public function getForm($data = array(), $loadData = true)
 	{
@@ -65,7 +58,6 @@ abstract class FormModel extends AbstractAdvancedModel
 	 * @return  mixed  JForm object on success, False on error.
 	 *
 	 * @see     JForm
-	 * @since   3.2
 	 */
 	protected function loadForm($name, $source = null, $options = array(), $clear = false, $xpath = null)
 	{
@@ -147,43 +139,9 @@ abstract class FormModel extends AbstractAdvancedModel
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
-	 * @return  array    The default data is an empty array.
-	 *
-	 * @since   3.2
+	 * @return  array  The default data is an empty array.
 	 */
-	protected function loadFormData()
-	{
-		$container = $this->getContainer();
-		$app   = $container->get('app');
-		$input = $container->get('input');
-
-		// Check the session for previously entered form data.
-		$data = $app->getUserState("{$this->option}.edit.{$this->getName()}.data", array());
-
-		if (empty($data))
-		{
-			$data = $this->getItem();
-		}
-		else
-		{
-			$data = $data;
-
-			// If Error occured and resend, just return data.
-			return $data;
-		}
-
-		// If page reload, retain data
-		// ==========================================================================================
-		$retain = $input->get('retain', 0);
-
-		// Set Change Field Type Retain Data
-		if ($retain)
-		{
-			$data = $input->getVar('jform');
-		}
-
-		return $data;
-	}
+	abstract protected function loadFormData();
 
 	/**
 	 * Method to allow derived classes to preprocess the data.
@@ -192,8 +150,6 @@ abstract class FormModel extends AbstractAdvancedModel
 	 * @param   mixed   &$data    The data to be processed. It gets altered directly.
 	 *
 	 * @return  void
-	 *
-	 * @since   3.2
 	 */
 	protected function preprocessData($context, &$data)
 	{
@@ -208,7 +164,7 @@ abstract class FormModel extends AbstractAdvancedModel
 		// Check for errors encountered while preparing the data.
 		if (count($results) > 0 && in_array(false, $results, true))
 		{
-			$this->setError($dispatcher->getError());
+			$this->state->set('errors', array($dispatcher->getError()));
 		}
 	}
 
@@ -223,7 +179,6 @@ abstract class FormModel extends AbstractAdvancedModel
 	 * @return  void
 	 *
 	 * @see     JFormField
-	 * @since   3.2
 	 */
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
@@ -256,13 +211,12 @@ abstract class FormModel extends AbstractAdvancedModel
 	 * @param   array   $data  The data to validate.
 	 * @param   string  $group The name of the field group to validate.
 	 *
-	 * @throws  VaildateFailExcption
+	 * @throws  ValidateFailException
 	 * @throws  \Exception
 	 * @return  mixed  Array of filtered data if valid, false otherwise.
 	 *
 	 * @see     JFormRule
 	 * @see     JFilterInput
-	 * @since   3.2
 	 */
 	public function validate($form, $data, $group = null)
 	{

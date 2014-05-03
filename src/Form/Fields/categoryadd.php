@@ -30,7 +30,7 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 	 *
 	 * @var  string
 	 */
-	protected $type = 'Categoryadd';
+	public $type = 'Categoryadd';
 
 	/**
 	 * List name.

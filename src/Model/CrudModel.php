@@ -6,64 +6,58 @@ use Joomla\DI\Container as JoomlaContainer;
 use JTable;
 
 /**
- * Class CrudModel
+ * The basic Crud Model
  *
- * @since 1.0
+ * @since 2.0
  */
 class CrudModel extends FormModel
 {
 	/**
-	 * An item.
+	 * Item cache.
 	 *
-	 * @var    array
+	 * @var  array
 	 */
 	protected $item = null;
 
 	/**
 	 * The prefix to use with controller messages.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $textPrefix = null;
 
 	/**
 	 * The event to trigger after deleting the data.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $eventAfterDelete = null;
 
 	/**
 	 * The event to trigger after saving the data.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $eventAfterSave = null;
 
 	/**
 	 * The event to trigger before deleting the data.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $eventBeforeDelete = null;
 
 	/**
 	 * The event to trigger before saving the data.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $eventBeforeSave = null;
 
 	/**
 	 * The event to trigger after changing the published state of the data.
 	 *
-	 * @var    string
-	 * @since  3.2
+	 * @var  string
 	 */
 	protected $eventChangeState = null;
 
@@ -73,50 +67,28 @@ class CrudModel extends FormModel
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
 	 * @param   JoomlaContainer    $container Service container.
 	 * @param   \JRegistry         $state     The model state.
-	 * @param   \JDatabaseDriver   $db        The database adpater.
+	 * @param   \JDatabaseDriver   $db        The database adapter.
 	 */
 	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
 	{
 		parent::__construct($config, $container, $state, $db);
 
-		if (!$this->eventAfterDelete)
-		{
-			$this->eventAfterDelete = \JArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
-		}
-
-		if (!$this->eventBeforeDelete)
-		{
-			$this->eventBeforeDelete = \JArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
-		}
-
-		if (!$this->eventAfterSave)
-		{
-			$this->eventAfterSave = \JArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
-		}
-
-		if (!$this->eventBeforeSave)
-		{
-			$this->eventBeforeSave = \JArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
-		}
-
-		if (!$this->eventChangeState)
-		{
-			$this->eventChangeState = \JArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
-		}
+		$this->eventAfterDelete  = $this->eventAfterDelete  ? : \JArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
+		$this->eventBeforeDelete = $this->eventBeforeDelete ? : \JArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
+		$this->eventAfterSave    = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
+		$this->eventBeforeSave   = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
+		$this->eventChangeState  = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
 
 		// @TODO: Check is needed or not.
-		if (!$this->textPrefix)
-		{
-			$this->textPrefix = strtoupper(\JArrayHelper::getValue($config, 'text_prefix', $this->option));
-		}
+		$this->textPrefix = $this->textPrefix ? : strtoupper(\JArrayHelper::getValue($config, 'text_prefix', $this->option));
 	}
 
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * Note. Calling getState in this method will result in recursion.
+	 * This method will only called in constructor. Using `ignore_request` to ignore this method.
 	 *
-	 * @since   1.6
+	 * @return  void
 	 */
 	protected function populateState()
 	{
@@ -138,8 +110,6 @@ class CrudModel extends FormModel
 	 * @param   integer  $pk  The id of the primary key.
 	 *
 	 * @return  mixed    Object on success, false on failure.
-	 *
-	 * @since   12.2
 	 */
 	public function getItem($pk = null)
 	{
@@ -171,13 +141,10 @@ class CrudModel extends FormModel
 	/**
 	 * Method to save the form data.
 	 *
-	 * @param   array $data The form data.
+	 * @param   array  $data  The form data.
 	 *
-	 * @throws \Exception
-	 *
+	 * @throws  \Exception
 	 * @return  boolean  True on success, False on error.
-	 *
-	 * @since   12.2
 	 */
 	public function save($data)
 	{
@@ -246,7 +213,20 @@ class CrudModel extends FormModel
 
 		$this->state->set($this->getName() . '.new', $isNew);
 
+		$this->postSaveHook($table);
+
 		return true;
+	}
+
+	/**
+	 * Post save hook.
+	 *
+	 * @param JTable $table The table object.
+	 *
+	 * @return  void
+	 */
+	public function postSaveHook(\JTable $table)
+	{
 	}
 
 	/**
@@ -255,21 +235,56 @@ class CrudModel extends FormModel
 	 * @param   JTable  $table  A reference to a JTable object.
 	 *
 	 * @return  void
-	 *
-	 * @since   12.2
 	 */
-	protected function prepareTable($table)
+	protected function prepareTable(\JTable $table)
 	{
 		// Please override this method.
 	}
 
 	/**
-	 * updateState
+	 * Method to get the data that should be injected in the form.
 	 *
-	 * @param $field
-	 * @param $value
+	 * @return  array  The default data is an empty array.
+	 */
+	protected function loadFormData()
+	{
+		$container = $this->getContainer();
+		$app   = $container->get('app');
+		$input = $container->get('input');
+
+		// Check the session for previously entered form data.
+		$data = $app->getUserState("{$this->option}.edit.{$this->getName()}.data", array());
+
+		if (empty($data))
+		{
+			$data = $this->getItem();
+		}
+		else
+		{
+			// If Error occured and resend, just return data.
+			return $data;
+		}
+
+		// If page reload, retain data
+		// ==========================================================================================
+		$retain = $input->get('retain', 0);
+
+		// Set Change Field Type Retain Data
+		if ($retain)
+		{
+			$data = $input->getVar('jform');
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Method to update a field of items.
 	 *
-	 * @return boolean
+	 * @param string $pks  The ids we want to update.
+	 * @param mixed  $data The data to update.
+	 *
+	 * @return boolean True if update success.
 	 */
 	public function updateState($pks, $data = array())
 	{
@@ -331,8 +346,6 @@ class CrudModel extends FormModel
 	 * @param   array  &$pks  An array of record primary keys.
 	 *
 	 * @return  boolean  True if successful, false if an error occurs.
-	 *
-	 * @since   12.2
 	 */
 	public function delete(&$pks)
 	{
