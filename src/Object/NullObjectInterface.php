@@ -9,12 +9,12 @@
 namespace Windwalker\Object;
 
 /**
- * Interface NullObjectInterface
+ * The Null Object Interface
  */
 interface NullObjectInterface
 {
 	/**
-	 * isNull
+	 * Is this object not contain any values.
 	 *
 	 * @return boolean
 	 */

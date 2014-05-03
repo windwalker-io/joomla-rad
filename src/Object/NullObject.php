@@ -1,16 +1,22 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Object;
 
 /**
- * Class NullObject
+ * Null Object
  *
- * @since 1.0
+ * @since 2.0
  */
 class NullObject extends \JObject implements NullObjectInterface
 {
 	/**
-	 * isNull
+	 * Is this object not contain any values.
 	 *
 	 * @return boolean
 	 */
@@ -22,10 +28,7 @@ class NullObject extends \JObject implements NullObjectInterface
 	/**
 	 * Magic method to convert the object to a string gracefully.
 	 *
-	 * @return  string  The classname.
-	 *
-	 * @since   11.1
-	 * @deprecated 12.3  Classes should provide their own __toString() implementation.
+	 * @return  string  Empty string.
 	 */
 	public function __toString()
 	{
@@ -39,8 +42,6 @@ class NullObject extends \JObject implements NullObjectInterface
 	 * @param   mixed   $default   The default value.
 	 *
 	 * @return  mixed
-	 *
-	 * @since   11.1
 	 */
 	public function def($property, $default = null)
 	{
@@ -52,11 +53,7 @@ class NullObject extends \JObject implements NullObjectInterface
 	 * @param   string  $property  The name of the property.
 	 * @param   mixed   $default   The default value.
 	 *
-	 * @return  mixed    The value of the property.
-	 *
-	 * @since   11.1
-	 *
-	 * @see     JObject::getProperties()
+	 * @return  mixed  The value of the property.
 	 */
 	public function get($property, $default = null)
 	{
@@ -69,10 +66,6 @@ class NullObject extends \JObject implements NullObjectInterface
 	 * @param   boolean  $public  If true, returns only the public properties.
 	 *
 	 * @return  array
-	 *
-	 * @since   11.1
-	 *
-	 * @see     JObject::get()
 	 */
 	public function getProperties($public = true)
 	{
@@ -85,9 +78,7 @@ class NullObject extends \JObject implements NullObjectInterface
 	 * @param   string  $property  The name of the property.
 	 * @param   mixed   $value     The value of the property to set.
 	 *
-	 * @return  mixed  Previous value of the property.
-	 *
-	 * @since   11.1
+	 * @return  void
 	 */
 	public function set($property, $value = null)
 	{
@@ -99,10 +90,6 @@ class NullObject extends \JObject implements NullObjectInterface
 	 * @param   mixed  $properties  Either an associative array or another object.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   11.1
-	 *
-	 * @see     JObject::set()
 	 */
 	public function setProperties($properties)
 	{
@@ -110,7 +97,7 @@ class NullObject extends \JObject implements NullObjectInterface
 	}
 
 	/**
-	 * __call
+	 * Call magic.
 	 *
 	 * @return  void
 	 */
@@ -120,7 +107,7 @@ class NullObject extends \JObject implements NullObjectInterface
 	}
 
 	/**
-	 * __get
+	 * Get magic.
 	 *
 	 * @return  null
 	 */

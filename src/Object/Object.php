@@ -1,21 +1,27 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Object;
 
 /**
- * Class Object
+ * The basic Object class with isNull() method.
  *
- * @since 1.0
+ * @since 2.0
  */
 class Object extends \JObject implements NullObjectInterface
 {
 	/**
-	 * isNull
+	 * Is this object not contain any values.
 	 *
 	 * @return boolean
 	 */
 	public function isNull()
 	{
-		return false;
+		return (boolean) $this->getProperties();
 	}
 }
