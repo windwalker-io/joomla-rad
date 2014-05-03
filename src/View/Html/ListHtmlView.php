@@ -8,14 +8,13 @@
 
 namespace Windwalker\View\Html;
 
-use Windwalker\Data\Data;
 use Windwalker\Model\Model;
 use Windwalker\DI\Container;
 
 /**
- * Class ListHtmlView
+ * The list view.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ListHtmlView extends HtmlView
 {
@@ -47,7 +46,7 @@ class ListHtmlView extends HtmlView
 	}
 
 	/**
-	 * prepareRender
+	 * Prepare render hook.
 	 *
 	 * @return  void
 	 */

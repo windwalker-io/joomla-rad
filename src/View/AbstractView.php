@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\View;
 
@@ -9,61 +15,67 @@ use Windwalker\DI\Container;
 use Windwalker\Model\Model;
 
 /**
- * Class View
+ * The basic abstract view.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractView implements \JView, ContainerAwareInterface
 {
 	/**
 	 * The model object.
 	 *
-	 * @var    array
+	 * @var array
 	 */
 	protected $model = array();
 
 	/**
-	 * Property defaultModel.
+	 * The default model.
 	 *
 	 * @var string
 	 */
-	protected $defaultModel;
+	protected $defaultModel = null;
 
 	/**
-	 * Property data.
+	 * The data object.
 	 *
-	 * @var \JData
+	 * @var \Windwalker\Data\Data
 	 */
-	protected $data;
+	protected $data = null;
 
 	/**
-	 * Property container.
+	 * The DI container.
 	 *
 	 * @var Container
 	 */
-	protected $container;
+	protected $container = null;
 
 	/**
-	 * @var  string  Property prefix.
+	 * The component prefix.
+	 *
+	 * @var  string
 	 */
-	protected $prefix;
+	protected $prefix = null;
 
 	/**
-	 * @var  string  Property textPrefix.
+	 * The text prefix for translate.
+	 *
+	 * @var  string
 	 */
-	protected $textPrefix;
+	protected $textPrefix = null;
 
 	/**
-	 * Property option.
+	 * The component option name.
 	 *
 	 * @var string
 	 */
-	protected $option;
+	protected $option = null;
 
 	/**
-	 * @var  string  Property name.
+	 * The view name.
+	 *
+	 * @var  string
 	 */
-	protected $name;
+	protected $name = null;
 
 	/**
 	 * Method to instantiate the view.
@@ -85,34 +97,19 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 		}
 
 		// Prepare data
-		if (!$this->data)
-		{
-			$this->data = \JArrayHelper::getValue($config, 'data', new Data);
-		}
+		$this->data = $this->data ? : \JArrayHelper::getValue($config, 'data', new Data);
 
 		// Prepare prefix
-		if (!$this->prefix)
-		{
-			$this->prefix = \JArrayHelper::getValue($config, 'prefix', $this->getPrefix());
-		}
+		$this->prefix = $this->prefix ? : \JArrayHelper::getValue($config, 'prefix', $this->getPrefix());
 
 		// Prepare option
-		if (!$this->option)
-		{
-			$this->option = \JArrayHelper::getValue($config, 'option', 'com_' . $this->prefix);
-		}
+		$this->option = $this->option ? : \JArrayHelper::getValue($config, 'option', 'com_' . $this->prefix);
 
 		// Prepare name
-		if (!$this->name)
-		{
-			$this->name = \JArrayHelper::getValue($config, 'name', $this->getName());
-		}
+		$this->name = $this->name ? : \JArrayHelper::getValue($config, 'name', $this->getName());
 
 		// Prepare textPrefix
-		if (!$this->textPrefix)
-		{
-			$this->textPrefix = \JArrayHelper::getValue($config, 'text_prefix', $this->option);
-		}
+		$this->textPrefix = $this->textPrefix ? : \JArrayHelper::getValue($config, 'text_prefix', $this->option);
 
 		$this->textPrefix = strtoupper($this->textPrefix);
 
@@ -125,9 +122,6 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 * @param   string  $output  The output to escape.
 	 *
 	 * @return  string  The escaped output.
-	 *
-	 * @see     JView::escape()
-	 * @since   12.1
 	 */
 	public function escape($output)
 	{
@@ -138,8 +132,6 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 * Magic toString method that is a proxy for the render method.
 	 *
 	 * @return  string
-	 *
-	 * @since   12.1
 	 */
 	public function __toString()
 	{
@@ -151,7 +143,6 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 *
 	 * @return  string  The rendered view.
 	 *
-	 * @since   12.1
 	 * @throws  \RuntimeException
 	 */
 	public function render()
@@ -166,16 +157,16 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * doRedner
+	 * Do render action.
 	 *
-	 * @return  string
+	 * @return  string Rendered string.
 	 *
 	 * @throws \RuntimeException
 	 */
 	abstract protected function doRender();
 
 	/**
-	 * prepareRender
+	 * Prepare render hook.
 	 *
 	 * @return  void
 	 */
@@ -184,7 +175,7 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * prepareData
+	 * Prepare data hook.
 	 *
 	 * @return  void
 	 */
@@ -193,11 +184,11 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * postRender
+	 * Post render hook.
 	 *
-	 * @param string $output
+	 * @param string $output The output string.
 	 *
-	 * @return  mixed
+	 * @return  string The output string.
 	 */
 	protected function postRender($output)
 	{
@@ -209,9 +200,7 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 *
 	 * @param   string  $name  The name of the model (optional)
 	 *
-	 * @return  mixed  JModelLegacy object
-	 *
-	 * @since   12.2
+	 * @return  \JModel|null  Windwalker model object
 	 */
 	public function getModel($name = null)
 	{
@@ -232,17 +221,14 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 
 	/**
 	 * Method to add a model to the view.  We support a multiple model single
-	 * view system by which models are referenced by classname.  A caveat to the
-	 * classname referencing is that any classname prepended by JModel will be
-	 * referenced by the name without JModel, eg. JModelCategory is just
-	 * Category.
+	 * view system by which models are referenced by classname.
 	 *
-	 * @param   \JModel $model    The model to add to the view.
+	 * @param   Model   $model    The model to add to the view.
 	 * @param   boolean $default  Is this the default model?
 	 *
-	 * @return  object   The added model.
+	 * @return  object  The added model.
 	 */
-	public function setModel($model, $default = false)
+	public function setModel(Model $model, $default = false)
 	{
 		$name = strtolower($model->getName());
 		$this->model[$name] = $model;
@@ -293,26 +279,26 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * getData
+	 * Get data object from cache.
 	 *
-	 * @return \JData
+	 * @return Data The data object.
 	 */
 	public function getData()
 	{
 		if (!$this->data)
 		{
-			$this->data = new \JData;
+			$this->data = new Data;
 		}
 
 		return $this->data;
 	}
 
 	/**
-	 * setData
+	 * Set data object.
 	 *
-	 * @param $data
+	 * @param Data $data The data object.
 	 *
-	 * @return $this
+	 * @return AbstractView Return self to support chaining.
 	 */
 	public function setData($data)
 	{
@@ -326,7 +312,6 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 *
 	 * @return  Container
 	 *
-	 * @since   1.0
 	 * @throws  \UnexpectedValueException May be thrown if the container has not been set.
 	 */
 	public function getContainer()
@@ -344,9 +329,7 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 *
 	 * @param   JoomlaContainer $container The DI container.
 	 *
-	 * @return  $this
-	 *
-	 * @since   1.0
+	 * @return  AbstractView Return self to support chaining.
 	 */
 	public function setContainer(JoomlaContainer $container)
 	{
@@ -356,7 +339,9 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * @return string
+	 * Get component option name.
+	 *
+	 * @return  string The component option name.
 	 */
 	public function getOption()
 	{
@@ -364,7 +349,11 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * @param string $option
+	 * Set option name.
+	 *
+	 * @param string $option The component option name.
+	 *
+	 * @return  AbstractView Return self to support chaining.
 	 */
 	public function setOption($option)
 	{
@@ -374,7 +363,11 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * @return  string
+	 * Get prefix.
+	 *
+	 * @return  string The component prefix.
+	 *
+	 * @throws \Exception
 	 */
 	public function getPrefix()
 	{
@@ -394,7 +387,9 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * @param   string $prefix
+	 * Ser prefix.
+	 *
+	 * @param   string $prefix The component prefix.
 	 *
 	 * @return  AbstractView  Return self to support chaining.
 	 */
@@ -413,7 +408,6 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	 *
 	 * @return  string  The name of the model
 	 *
-	 * @since   3.2
 	 * @throws  \Exception
 	 */
 	public function getName()
@@ -445,9 +439,9 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 	}
 
 	/**
-	 * getName
+	 * set view name.
 	 *
-	 * @param   string $name
+	 * @param   string $name The view name.
 	 *
 	 * @return  AbstractView  Return self to support chaining.
 	 */

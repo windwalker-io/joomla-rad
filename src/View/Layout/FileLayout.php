@@ -2,13 +2,12 @@
 
 namespace Windwalker\View\Layout;
 
-use JFactory;
 use Windwalker\DI\Container;
 
 /**
- * Class FileLayout
+ * The file layout for windwalker.
  *
- * @since 1.0
+ * @since 2.0
  */
 class FileLayout extends \JLayoutFile
 {
@@ -16,8 +15,6 @@ class FileLayout extends \JLayoutFile
 	 * Refresh the list of include paths
 	 *
 	 * @return  void
-	 *
-	 * @since   3.2
 	 */
 	protected function refreshIncludePaths()
 	{

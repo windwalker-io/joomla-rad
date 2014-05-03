@@ -10,20 +10,21 @@ namespace Windwalker\View\Html;
 
 use Joomla\DI\Container;
 use Joomla\Registry\Registry;
-use Windwalker\Bootstrap\Dropdown;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
 use Windwalker\View\Helper\GridHelper;
 
 /**
- * Class GridHtmlView
+ * The grid view.
  *
- * @since 1.0
+ * @since 2.0
  */
 class GridView extends ListHtmlView
 {
 	/**
-	 * @var  array  Property fields.
+	 * The fields mapper.
+	 *
+	 * @var  array
 	 */
 	protected $fields = array(
 		'pk'               => 'id',
@@ -40,7 +41,9 @@ class GridView extends ListHtmlView
 	);
 
 	/**
-	 * @var  array  Property gridConfig.
+	 * The grid config.
+	 *
+	 * @var  array
 	 */
 	protected $gridConfig = array();
 
@@ -67,10 +70,8 @@ class GridView extends ListHtmlView
 		}
 	}
 
-
-
 	/**
-	 * prepareRender
+	 * Prepare render hook.
 	 *
 	 * @return  void
 	 */
@@ -101,10 +102,10 @@ class GridView extends ListHtmlView
 	}
 
 	/**
-	 * setTitle
+	 * Set title of this page.
 	 *
-	 * @param null   $title
-	 * @param string $icons
+	 * @param string $title Page title.
+	 * @param string $icons Title icon.
 	 *
 	 * @return  void
 	 */
@@ -122,8 +123,6 @@ class GridView extends ListHtmlView
 	 * Add the submenu.
 	 *
 	 * @return  void
-	 *
-	 * @since	3.2
 	 */
 	protected function addSubmenu()
 	{
@@ -136,10 +135,10 @@ class GridView extends ListHtmlView
 	}
 
 	/**
-	 * configureToolbar
+	 * Configure the toolbar button set.
 	 *
-	 * @param array  $buttonSet
-	 * @param Object $canDo
+	 * @param   array   $buttonSet Customize button set.
+	 * @param   object  $canDo     Access object.
 	 *
 	 * @return  array
 	 */

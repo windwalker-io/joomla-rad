@@ -14,24 +14,24 @@ use Windwalker\Model\Model;
 use Joomla\Registry\Registry;
 use Windwalker\View\Helper\ToolbarHelper;
 
-defined('JPATH_PLATFORM') or die;
-
 /**
- * Prototype admin view.
+ * Prototype html view.
  *
- * @package     Joomla.Libraries
- * @subpackage  Model
- * @since       3.2
+ * @since 2.0
  */
 class HtmlView extends AbstractHtmlView
 {
 	/**
-	 * @var  array  Property buttons.
+	 * The buttons cache.
+	 *
+	 * @var  array
 	 */
 	protected $buttons = array();
 
 	/**
-	 * @var  array  Property toolbarConfig.
+	 * The toolbar config.
+	 *
+	 * @var  array
 	 */
 	protected $toolbarConfig = array();
 
@@ -47,22 +47,16 @@ class HtmlView extends AbstractHtmlView
 	{
 		parent::__construct($model, $container, $config, $paths);
 
-		if (!$this->buttons)
-		{
-			$this->buttons = \JArrayHelper::getValue($config, 'buttons', null);
-		}
+		$this->buttons = $this->buttons ? : \JArrayHelper::getValue($config, 'buttons', null);
 
-		if (!$this->toolbarConfig)
-		{
-			$this->toolbarConfig = \JArrayHelper::getValue($config, 'toolbar', array());
-		}
+		$this->toolbarConfig = $this->toolbarConfig ? : \JArrayHelper::getValue($config, 'toolbar', array());
 	}
 
 	/**
-	 * setTitle
+	 * Set title of this page.
 	 *
-	 * @param string $title
-	 * @param string $icons
+	 * @param string $title Page title.
+	 * @param string $icons Title icon.
 	 *
 	 * @return  void
 	 */
@@ -75,7 +69,7 @@ class HtmlView extends AbstractHtmlView
 	}
 
 	/**
-	 * prepareRender
+	 * Prepare render hook.
 	 *
 	 * @return  void
 	 */
@@ -105,7 +99,7 @@ class HtmlView extends AbstractHtmlView
 	}
 
 	/**
-	 * addToolbar
+	 * Method to add toolbar.
 	 *
 	 * @return  void
 	 */
@@ -117,10 +111,12 @@ class HtmlView extends AbstractHtmlView
 	}
 
 	/**
-	 * getToolbarHelper
+	 * Method to get toolbar helper.
 	 *
-	 * @param array $config
-	 * @param array $buttonSet
+	 * We can send a basic config into it, there will have a default config and merge them.
+	 *
+	 * @param array $config    The customize config.
+	 * @param array $buttonSet The customize button set.
 	 *
 	 * @return  ToolbarHelper
 	 */
@@ -145,10 +141,10 @@ class HtmlView extends AbstractHtmlView
 	}
 
 	/**
-	 * configureToolbar
+	 * Configure the toolbar button set.
 	 *
-	 * @param array $buttonSet
-	 * @param null  $canDo
+	 * @param   array   $buttonSet Customize button set.
+	 * @param   object  $canDo     Access object.
 	 *
 	 * @return  array
 	 */

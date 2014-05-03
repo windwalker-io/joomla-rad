@@ -8,13 +8,13 @@
 
 namespace Windwalker\View\Html;
 
-use Joomla\DI\Container;
+use Windwalker\DI\Container;
 use Windwalker\Model\Model;
 
 /**
- * Class GridHtmlView
+ * The edit view.
  *
- * @since 1.0
+ * @since 2.0
  */
 class EditView extends ItemHtmlView
 {
@@ -45,7 +45,7 @@ class EditView extends ItemHtmlView
 	}
 
 	/**
-	 * prepareRender
+	 * Prepare render hook.
 	 *
 	 * @return  void
 	 */
@@ -71,10 +71,10 @@ class EditView extends ItemHtmlView
 	}
 
 	/**
-	 * setTitle
+	 * Set title of this page.
 	 *
-	 * @param null   $title
-	 * @param string $icons
+	 * @param string $title Page title.
+	 * @param string $icons Title icon.
 	 *
 	 * @return  void
 	 */
@@ -89,10 +89,10 @@ class EditView extends ItemHtmlView
 	}
 
 	/**
-	 * configureToolbar
+	 * Configure the toolbar button set.
 	 *
-	 * @param array  $buttonSet
-	 * @param Object $canDo
+	 * @param   array   $buttonSet Customize button set.
+	 * @param   object  $canDo     Access object.
 	 *
 	 * @return  array
 	 */

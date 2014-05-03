@@ -14,45 +14,45 @@ use Windwalker\View\AbstractView;
 use Windwalker\View\Engine\EngineInterface;
 use Windwalker\View\Engine\PhpEngine;
 
-defined('JPATH_PLATFORM') or die;
-
-jimport('joomla.filesystem.path');
-
 /**
- * Class AbstractHtmlView
+ * Abstract Html view.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractHtmlView extends AbstractView
 {
 	/**
 	 * The view layout.
 	 *
-	 * @var    string
-	 * @since  12.1
+	 * @var  string
 	 */
 	protected $layout = 'default';
 
 	/**
 	 * The paths queue.
 	 *
-	 * @var    \SplPriorityQueue
-	 * @since  12.1
+	 * @var  \SplPriorityQueue
 	 */
 	protected $paths = null;
 
 	/**
-	 * @var  string  Property viewList.
+	 * The list name.
+	 *
+	 * @var  string
 	 */
 	protected $viewList = null;
 
 	/**
-	 * @var  string  Property viewItem.
+	 * The item name.
+	 *
+	 * @var  string
 	 */
 	protected $viewItem = null;
 
 	/**
-	 * @var  EngineInterface  Property engine.
+	 * The engine object.
+	 *
+	 * @var  EngineInterface
 	 */
 	protected $engine = null;
 
@@ -83,9 +83,6 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @param   string  $output  The output to escape.
 	 *
 	 * @return  string  The escaped output.
-	 *
-	 * @see     JView::escape()
-	 * @since   12.1
 	 */
 	public function escape($output)
 	{
@@ -94,12 +91,12 @@ abstract class AbstractHtmlView extends AbstractView
 	}
 
 	/**
-	 * flash
+	 * Set the flash message.
 	 *
-	 * @param string $msgs
-	 * @param string $type
+	 * @param string $msgs The message list.
+	 * @param string $type The message type.
 	 *
-	 * @return $this
+	 * @return AbstractHtmlView Return self to support chaining.
 	 */
 	public function flash($msgs, $type = 'message')
 	{
@@ -118,8 +115,6 @@ abstract class AbstractHtmlView extends AbstractView
 	 * Method to get the view paths.
 	 *
 	 * @return  \SplPriorityQueue  The paths queue.
-	 *
-	 * @since   12.1
 	 */
 	public function getPaths()
 	{
@@ -127,9 +122,9 @@ abstract class AbstractHtmlView extends AbstractView
 	}
 
 	/**
-	 * doRedner
+	 * Method to render the view.
 	 *
-	 * @return  string
+	 * @return  string The output of rendered.
 	 *
 	 * @throws \RuntimeException
 	 */
@@ -149,8 +144,6 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @param   string  $layout  The layout name.
 	 *
 	 * @return  HtmlView  Method supports chaining.
-	 *
-	 * @since   12.1
 	 */
 	public function setLayout($layout)
 	{
@@ -160,9 +153,9 @@ abstract class AbstractHtmlView extends AbstractView
 	}
 
 	/**
-	 * getLayout
+	 * Get layout.
 	 *
-	 * @return  string
+	 * @return  string Layout name.
 	 */
 	public function getLayout()
 	{
@@ -175,8 +168,6 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @param   \SplPriorityQueue  $paths  The paths queue.
 	 *
 	 * @return  HtmlView  Method supports chaining.
-	 *
-	 * @since   12.1
 	 */
 	public function setPaths(\SplPriorityQueue $paths)
 	{
@@ -189,8 +180,6 @@ abstract class AbstractHtmlView extends AbstractView
 	 * Method to load the paths queue.
 	 *
 	 * @return  \SplPriorityQueue  The paths queue.
-	 *
-	 * @since   12.1
 	 */
 	protected function loadPaths()
 	{
@@ -198,9 +187,9 @@ abstract class AbstractHtmlView extends AbstractView
 	}
 
 	/**
-	 * getEngine
+	 * Get engine object.
 	 *
-	 * @return  EngineInterface
+	 * @return  EngineInterface The engine object
 	 */
 	public function getEngine()
 	{
@@ -213,9 +202,9 @@ abstract class AbstractHtmlView extends AbstractView
 	}
 
 	/**
-	 * setEngine
+	 * Set engine.
 	 *
-	 * @param   EngineInterface $engine
+	 * @param   EngineInterface $engine The engine object.
 	 *
 	 * @return  AbstractHtmlView  Return self to support chaining.
 	 */

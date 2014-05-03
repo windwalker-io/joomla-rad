@@ -12,9 +12,9 @@ use Windwalker\Model\Model;
 use Windwalker\DI\Container;
 
 /**
- * Class ListHtmlView
+ * The item view.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ItemHtmlView extends HtmlView
 {
@@ -46,7 +46,7 @@ class ItemHtmlView extends HtmlView
 	}
 
 	/**
-	 * prepareRender
+	 * Prepare render hook.
 	 *
 	 * @return  void
 	 */

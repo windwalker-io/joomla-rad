@@ -13,17 +13,15 @@ use Windwalker\Model\Model;
 use Joomla\Registry\Registry;
 use Windwalker\View\AbstractView;
 
-defined('JPATH_PLATFORM') or die;
-
 /**
- * Class AbstractHtmlView
+ * Abstract JSON view.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractJsonView extends AbstractView
 {
 	/**
-	 * Property data.
+	 * The data object.
 	 *
 	 * @var Registry
 	 */
@@ -32,9 +30,9 @@ abstract class AbstractJsonView extends AbstractView
 	/**
 	 * Method to instantiate the view.
 	 *
-	 * @param   \JModel $model  The model object.
-	 *
-	 * @since   12.1
+	 * @param Model      $model     The model object.
+	 * @param Container  $container DI Container.
+	 * @param array      $config    View config.
 	 */
 	public function __construct(Model $model = null, Container $container = null, $config = array())
 	{
@@ -49,9 +47,6 @@ abstract class AbstractJsonView extends AbstractView
 	 * @param   string  $output  The output to escape.
 	 *
 	 * @return  string  The escaped output.
-	 *
-	 * @see     JView::escape()
-	 * @since   12.1
 	 */
 	public function escape($output)
 	{
@@ -64,12 +59,11 @@ abstract class AbstractJsonView extends AbstractView
 	 *
 	 * @return  string  The rendered view.
 	 *
-	 * @since   12.1
 	 * @throws  \RuntimeException
 	 */
 	public function doRender()
 	{
-		return $this->data->toString('json');
+		return JsonResponse::response($this->data->toArray());
 	}
 
 	/**

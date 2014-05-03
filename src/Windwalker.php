@@ -11,14 +11,14 @@ namespace Windwalker;
 use Windwalker\DI\Container;
 
 /**
- * Class Windwalker
+ * Windwalker main application.
  *
- * @since 1.0
+ * @since 2.0
  */
 class Windwalker
 {
 	/**
-	 * init
+	 * Init windalkwer.
 	 *
 	 * @throws \Exception
 	 * @return  void
@@ -85,7 +85,7 @@ class Windwalker
 	}
 
 	/**
-	 * autoload
+	 * Set autoload.
 	 *
 	 * @return  void
 	 */
