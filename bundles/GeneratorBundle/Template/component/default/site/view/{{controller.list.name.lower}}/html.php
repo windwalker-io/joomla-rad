@@ -16,56 +16,50 @@ use Windwalker\View\Html\ListHtmlView;
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}View{{controller.list.name.cap}}
+ * {{extension.name.cap}} {{controller.list.name.cap}} View
  *
  * @since 1.0
  */
 class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtmlView
 {
 	/**
-	 * Property prefix.
+	 * The component prefix.
 	 *
 	 * @var  string
 	 */
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property option.
+	 * The component option name.
 	 *
-	 * @var  string
+	 * @var string
 	 */
 	protected $option = '{{extension.element.lower}}';
 
 	/**
-	 * Property textPrefix.
+	 * The text prefix for translate.
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
-	 * Property name.
+	 * The item name.
 	 *
 	 * @var  string
 	 */
 	protected $name = '{{controller.list.name.lower}}';
 
 	/**
-	 * Property viewItem.
+	 * The item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = '{{controller.item.name.lower}}';
 
-	/**
-	 * Property viewList.
-	 *
-	 * @var  string
-	 */
-	protected $viewList = '{{controller.list.name.lower}}';
 
 	/**
-	 * prepareData
+	 * Prepare data hook.
 	 *
 	 * @return  void
 	 */

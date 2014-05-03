@@ -101,7 +101,7 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = null)
+	protected function populateState($ordering = null, $direction = 'ASC')
 	{
 		// Build ordering prefix
 		if (!$ordering)
@@ -113,7 +113,7 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 			$ordering = property_exists($table, 'catid') ? '{{controller.item.name.lower}}.catid, ' . $ordering : $ordering;
 		}
 
-		parent::populateState($ordering, 'ASC');
+		parent::populateState($ordering, $direction);
 	}
 
 	/**

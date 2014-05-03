@@ -61,6 +61,18 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	protected $viewList = '{{controller.list.name.lower}}';
 
 	/**
+	 * Method to get a single record.
+	 *
+	 * @param   integer  $pk  The id of the primary key.
+	 *
+	 * @return  mixed    Object on success, false on failure.
+	 */
+	public function getItem($pk = null)
+	{
+		return parent::getItem($pk);
+	}
+
+	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
 	 * @param   JTable  $table  A reference to a JTable object.
@@ -70,6 +82,18 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	protected function prepareTable(\JTable $table)
 	{
 		parent::prepareTable($table);
+	}
+
+	/**
+	 * Post save hook.
+	 *
+	 * @param JTable $table The table object.
+	 *
+	 * @return  void
+	 */
+	public function postSaveHook(\JTable $table)
+	{
+		parent::postSaveHook($table);
 	}
 
 	/**

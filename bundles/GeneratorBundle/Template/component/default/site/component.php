@@ -10,21 +10,23 @@
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}Component
+ * {{extension.name.cap}} Component
  *
  * @since 1.0
  */
 final class {{extension.name.cap}}Component extends \{{extension.name.cap}}\Component\{{extension.name.cap}}Component
 {
 	/**
-	 * Property defaultController.
+	 * Default task name.
 	 *
 	 * @var string
 	 */
 	protected $defaultController = '{{controller.list.name.lower}}.display';
 
 	/**
-	 * init
+	 * Prepare hook of this component.
+	 *
+	 * Do some customize initialise through extending this method.
 	 *
 	 * @return void
 	 */

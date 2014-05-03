@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}Helper
+ * {{extension.name.cap}} helper.
  *
  * @since 1.0
  */

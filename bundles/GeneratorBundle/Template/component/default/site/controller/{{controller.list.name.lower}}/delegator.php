@@ -12,14 +12,14 @@ use Windwalker\Controller\Resolver\ControllerDelegator;
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}Controller{{controller.list.name.cap}}Delegator
+ * {{extension.name.cap}} {{controller.list.name.cap}} delegator.
  *
  * @since 1.0
  */
 class {{extension.name.cap}}Controller{{controller.list.name.cap}}Delegator extends ControllerDelegator
 {
 	/**
-	 * registerAliases
+	 * Register aliases.
 	 *
 	 * @return  void
 	 */
@@ -28,11 +28,11 @@ class {{extension.name.cap}}Controller{{controller.list.name.cap}}Delegator exte
 	}
 
 	/**
-	 * createController
+	 * Create Controller.
 	 *
-	 * @param string $class
+	 * @param   string $class Controller class name.
 	 *
-	 * @return  \Windwalker\Controller\Controller
+	 * @return  \Windwalker\Controller\Controller Controller instance.
 	 */
 	protected function createController($class)
 	{

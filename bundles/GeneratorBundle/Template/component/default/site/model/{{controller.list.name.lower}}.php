@@ -16,56 +16,56 @@ use Windwalker\Model\ListModel;
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}Model{{controller.list.name.cap}}
+ * {{extension.name.cap}} {{controller.list.name.cap}} model
  *
  * @since 1.0
  */
 class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 {
 	/**
-	 * Property prefix.
+	 * Component prefix.
 	 *
 	 * @var  string
 	 */
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property option.
+	 * The URL option for the component.
 	 *
 	 * @var  string
 	 */
 	protected $option = '{{extension.element.lower}}';
 
 	/**
-	 * Property textPrefix.
+	 * The prefix to use with messages.
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
-	 * Property name.
+	 * The model (base) name
 	 *
 	 * @var  string
 	 */
 	protected $name = '{{controller.list.name.lower}}';
 
 	/**
-	 * Property viewItem.
+	 * Item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = '{{controller.item.name.lower}}';
 
 	/**
-	 * Property viewList.
+	 * List name.
 	 *
 	 * @var  string
 	 */
 	protected $viewList = '{{controller.list.name.lower}}';
 
 	/**
-	 * configureTables
+	 * Configure tables through QueryHelper.
 	 *
 	 * @return  void
 	 */
@@ -83,10 +83,23 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	}
 
 	/**
-	 * populateState
+	 * The post getQuery object.
 	 *
-	 * @param null $ordering
-	 * @param null $direction
+	 * @param JDatabaseQuery $query The db query object.
+	 *
+	 * @return  void
+	 */
+	protected function postGetQuery(\JDatabaseQuery $query)
+	{
+	}
+
+	/**
+	 * Method to auto-populate the model state.
+	 *
+	 * This method will only called in constructor. Using `ignore_request` to ignore this method.
+	 *
+	 * @param   string  $ordering   An optional ordering field.
+	 * @param   string  $direction  An optional direction (asc|desc).
 	 *
 	 * @return  void
 	 */
@@ -147,12 +160,12 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	}
 
 	/**
-	 * processFilters
+	 * Process the query filters.
 	 *
-	 * @param JDatabaseQuery $query
-	 * @param array          $filters
+	 * @param JDatabaseQuery $query   The query object.
+	 * @param array          $filters The filters values.
 	 *
-	 * @return  JDatabaseQuery
+	 * @return  JDatabaseQuery The db query object.
 	 */
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
@@ -223,9 +236,20 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	}
 
 	/**
-	 * configureFilters
+	 * Configure the filter handlers.
 	 *
-	 * @param FilterHelper $filterHelper
+	 * Example:
+	 * ``` php
+	 * $filterHelper->setHandler(
+	 *     '{{controller.item.name.lower}}.date',
+	 *     function($query, $field, $value)
+	 *     {
+	 *         $query->where($field . ' >= ' . $value);
+	 *     }
+	 * );
+	 * ```
+	 *
+	 * @param FilterHelper $filterHelper The filter helper object.
 	 *
 	 * @return  void
 	 */
@@ -234,9 +258,20 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	}
 
 	/**
-	 * configureSearches
+	 * Configure the search handlers.
 	 *
-	 * @param \Windwalker\Model\Filter\SearchHelper $searchHelper
+	 * Example:
+	 * ``` php
+	 * $searchHelper->setHandler(
+	 *     '{{controller.item.name.lower}}.title',
+	 *     function($query, $field, $value)
+	 *     {
+	 *         return $query->quoteName($field) . ' LIKE ' . $query->quote('%' . $value . '%');
+	 *     }
+	 * );
+	 * ```
+	 *
+	 * @param SearchHelper $searchHelper The search helper object.
 	 *
 	 * @return  void
 	 */

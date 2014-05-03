@@ -16,56 +16,56 @@ use Windwalker\View\Html\ItemHtmlView;
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}View{{controller.item.name.cap}}
+ * {{extension.name.cap}} {{controller.list.name.cap}} view
  *
  * @since 1.0
  */
 class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtmlView
 {
 	/**
-	 * Property prefix.
+	 * The component prefix.
 	 *
 	 * @var  string
 	 */
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property option.
+	 * The component option name.
 	 *
-	 * @var  string
+	 * @var string
 	 */
 	protected $option = '{{extension.element.lower}}';
 
 	/**
-	 * Property textPrefix.
+	 * The text prefix for translate.
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
-	 * Property name.
+	 * The item name.
 	 *
 	 * @var  string
 	 */
 	protected $name = '{{controller.item.name.lower}}';
 
 	/**
-	 * Property viewItem.
+	 * The item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = '{{controller.item.name.lower}}';
 
 	/**
-	 * Property viewList.
+	 * The list name.
 	 *
 	 * @var  string
 	 */
 	protected $viewList = '{{controller.list.name.lower}}';
 
 	/**
-	 * prepareData
+	 * Prepare data hook.
 	 *
 	 * @return  void
 	 */
@@ -140,9 +140,9 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 	}
 
 	/**
-	 * prepareEvents
+	 * Prepare the content events.
 	 *
-	 * @param $item
+	 * @param Data $item The item object.
 	 *
 	 * @return  void
 	 */
@@ -171,9 +171,9 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 	}
 
 	/**
-	 * configureParams
+	 * Configure the config data.
 	 *
-	 * @param $item
+	 * @param Data $item The item object
 	 *
 	 * @return  void
 	 */
