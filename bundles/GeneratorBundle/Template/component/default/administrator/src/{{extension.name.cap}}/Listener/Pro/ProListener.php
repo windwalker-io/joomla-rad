@@ -14,7 +14,9 @@ defined('_JEXEC') or die;
 use JFactory;
 
 /**
- * Fbimporter Pro plugin
+ * Pro listener
+ *
+ * @since 1.0
  */
 class ProListener extends \JEvent
 {

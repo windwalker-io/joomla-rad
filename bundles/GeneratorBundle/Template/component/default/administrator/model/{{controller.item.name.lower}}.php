@@ -12,53 +12,65 @@ use Windwalker\Model\AdminModel;
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}Model{{controller.item.name.cap}}
+ * {{extension.name.cap}} {{controller.item.name.cap}} model
  *
  * @since 1.0
  */
 class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 {
 	/**
-	 * Property prefix.
+	 * Component prefix.
 	 *
 	 * @var  string
 	 */
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property option.
+	 * The URL option for the component.
 	 *
 	 * @var  string
 	 */
 	protected $option = '{{extension.element.lower}}';
 
 	/**
-	 * Property textPrefix.
+	 * The prefix to use with messages.
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
-	 * Property name.
+	 * The model (base) name
 	 *
 	 * @var  string
 	 */
 	protected $name = '{{controller.item.name.lower}}';
 
 	/**
-	 * Property viewItem.
+	 * Item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = '{{controller.item.name.lower}}';
 
 	/**
-	 * Property viewList.
+	 * List name.
 	 *
 	 * @var  string
 	 */
 	protected $viewList = '{{controller.list.name.lower}}';
+
+	/**
+	 * Prepare and sanitise the table data prior to saving.
+	 *
+	 * @param   JTable  $table  A reference to a JTable object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareTable(\JTable $table)
+	{
+		parent::prepareTable($table);
+	}
 
 	/**
 	 * Method to set new item ordering as first or last.

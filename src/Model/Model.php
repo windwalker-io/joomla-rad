@@ -27,6 +27,13 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	protected $name = null;
 
 	/**
+	 * Component prefix.
+	 *
+	 * @var  string
+	 */
+	protected $prefix = null;
+
+	/**
 	 * The URL option for the component.
 	 *
 	 * @var  string

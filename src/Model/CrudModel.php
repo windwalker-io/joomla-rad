@@ -20,7 +20,7 @@ class CrudModel extends FormModel
 	protected $item = null;
 
 	/**
-	 * The prefix to use with controller messages.
+	 * The prefix to use with messages.
 	 *
 	 * @var  string
 	 */

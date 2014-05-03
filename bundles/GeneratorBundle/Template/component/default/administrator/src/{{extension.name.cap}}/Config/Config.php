@@ -13,21 +13,21 @@ use Windwalker\System\Config\AbstractConfig;
 defined('_JEXEC') or die;
 
 /**
- * Class Config
+ * {{extension.name.cap}} config.
  *
  * @since 1.0
  */
 abstract class Config extends AbstractConfig
 {
 	/**
-	 * Property type.
+	 * Config file type.
 	 *
 	 * @var  string
 	 */
 	protected static $type = 'json';
 
 	/**
-	 * getPath
+	 * Get config file path.
 	 *
 	 * @return  string
 	 */

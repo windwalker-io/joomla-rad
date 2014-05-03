@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
 use JFactory;
 
 /**
- * Class LiteListener
+ * Lite listener
  *
  * @since 1.0
  */

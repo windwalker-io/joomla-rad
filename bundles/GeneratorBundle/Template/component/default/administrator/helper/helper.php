@@ -10,20 +10,18 @@
 defined('_JEXEC') or die;
 
 /**
- * Class {{extension.name.cap}}Helper
+ * {{extension.name.cap}} helper.
  *
  * @since 1.0
  */
 abstract class {{extension.name.cap}}Helper
 {
 	/**
-	 * Configure the Linkbar.
+	 * Configure the Link bar.
 	 *
 	 * @param   string  $vName  The name of the active view.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.6
 	 */
 	public static function addSubmenu($vName)
 	{
@@ -62,8 +60,6 @@ abstract class {{extension.name.cap}}Helper
 	 * @param   string  $option  Action option.
 	 *
 	 * @return  JObject
-	 *
-	 * @since   1.0
 	 */
 	public static function getActions($option = '{{extension.element.lower}}')
 	{

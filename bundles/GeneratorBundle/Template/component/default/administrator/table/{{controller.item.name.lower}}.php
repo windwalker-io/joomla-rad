@@ -85,9 +85,6 @@ class {{extension.name.cap}}Table{{controller.item.name.cap}} extends Table
 	 * @param   boolean  $updateNulls  True to update fields even if they are null.
 	 *
 	 * @return  boolean  True on success.
-	 *
-	 * @link    http://docs.joomla.org/JTable/store
-	 * @since   11.1
 	 */
 	public function store($updateNulls = false)
 	{

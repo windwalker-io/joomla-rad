@@ -16,49 +16,49 @@ use Windwalker\Xul\XulEngine;
 defined('_JEXEC') or die;
 
 /**
- * Class {{controller.list.name.cap}}HtmlView
+ * {{extension.name.cap}} {{controller.list.name.cap}} View
  *
  * @since 1.0
  */
 class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends GridView
 {
 	/**
-	 * Property prefix.
+	 * The component prefix.
 	 *
 	 * @var  string
 	 */
 	protected $prefix = '{{extension.name.lower}}';
 
 	/**
-	 * Property option.
+	 * The component option name.
 	 *
-	 * @var  string
+	 * @var string
 	 */
 	protected $option = '{{extension.element.lower}}';
 
 	/**
-	 * Property textPrefix.
+	 * The text prefix for translate.
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $textPrefix = '{{extension.element.upper}}';
 
 	/**
-	 * Property name.
+	 * The item name.
 	 *
 	 * @var  string
 	 */
 	protected $name = '{{controller.list.name.lower}}';
 
 	/**
-	 * Property viewItem.
+	 * The item name.
 	 *
 	 * @var  string
 	 */
 	protected $viewItem = '{{controller.item.name.lower}}';
 
 	/**
-	 * Property viewList.
+	 * The list name.
 	 *
 	 * @var  string
 	 */
@@ -98,19 +98,19 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends GridVie
 	}
 
 	/**
-	 * render
+	 * Prepare data hook.
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	protected function prepareData()
 	{
 	}
 
 	/**
-	 * configToolbar
+	 * Configure the toolbar button set.
 	 *
-	 * @param array $buttonSet
-	 * @param null  $canDo
+	 * @param   array   $buttonSet Customize button set.
+	 * @param   object  $canDo     Access object.
 	 *
 	 * @return  array
 	 */

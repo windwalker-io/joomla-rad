@@ -9,17 +9,17 @@
 namespace {{extension.name.cap}}\Provider;
 
 use Joomla\DI\Container;
-use Joomla\DI\ServiceProviderInterface;
+use Windwalker\DI\ServiceProvider;
 
 // No direct access
 defined('_JEXEC') or die;
 
 /**
- * Class ServiceProvider
+ * {{extension.name.cap}} provider.
  *
  * @since 1.0
  */
-class {{extension.name.cap}}Provider implements ServiceProviderInterface
+class {{extension.name.cap}}Provider extends ServiceProvider
 {
 	/**
 	 * Registers the service provider with a DI container.
