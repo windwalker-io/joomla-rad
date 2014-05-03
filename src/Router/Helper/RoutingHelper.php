@@ -12,21 +12,21 @@ use Windwalker\Helper\PathHelper;
 use Windwalker\Router\Router;
 
 /**
- * Class RoutingHelper
+ * Routing helper.
  *
- * @since 1.0
+ * @since 2.0
  */
 class RoutingHelper
 {
 	/**
-	 * Property routing.
+	 * Routing rules storage.
 	 *
 	 * @var  mixed
 	 */
 	protected static $routing = null;
 
 	/**
-	 * Property registered.
+	 * The registered flag.
 	 *
 	 * @var  boolean
 	 */
@@ -35,7 +35,7 @@ class RoutingHelper
 	/**
 	 * Get routing config.
 	 *
-	 * @param string $option
+	 * @param string $option The component option name.
 	 *
 	 * @return  mixed
 	 */
@@ -52,13 +52,13 @@ class RoutingHelper
 	}
 
 	/**
-	 * registerRouting
+	 * Register routing.
 	 *
-	 * @param Router $router
-	 * @param string $option
+	 * @param Router $router Router object.
+	 * @param string $option The component option name.
 	 *
 	 * @throws \LogicException
-	 * @return  Router
+	 * @return  Router Registered router.
 	 */
 	public static function registerRouting(Router $router, $option)
 	{
@@ -88,7 +88,7 @@ class RoutingHelper
 	}
 
 	/**
-	 * Execute if type method exists.
+	 * Execute if type handler exists.
 	 *
 	 * @param string  $type  Type name.
 	 * @param string  $view  View name.
@@ -106,4 +106,3 @@ class RoutingHelper
 		}
 	}
 }
- 

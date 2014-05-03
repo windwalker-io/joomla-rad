@@ -26,31 +26,41 @@ class Uuid
 {
 	/**
 	 * When this namespace is specified, the name string is a fully-qualified domain name.
-	 * @link http://tools.ietf.org/html/rfc4122#appendix-C
+	 *
+	 * @link   http://tools.ietf.org/html/rfc4122#appendix-C
+	 * @const  string
 	 */
 	const NAMESPACE_DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
 
 	/**
 	 * When this namespace is specified, the name string is a URL.
-	 * @link http://tools.ietf.org/html/rfc4122#appendix-C
+	 *
+	 * @link   http://tools.ietf.org/html/rfc4122#appendix-C.
+	 * @const  string
 	 */
 	const NAMESPACE_URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
 
 	/**
 	 * When this namespace is specified, the name string is an ISO OID.
-	 * @link http://tools.ietf.org/html/rfc4122#appendix-C
+	 *
+	 * @link   http://tools.ietf.org/html/rfc4122#appendix-C
+	 * @const  string
 	 */
 	const NAMESPACE_OID = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
 
 	/**
 	 * When this namespace is specified, the name string is an X.500 DN in DER or a text output format.
-	 * @link http://tools.ietf.org/html/rfc4122#appendix-C
+	 *
+	 * @link   http://tools.ietf.org/html/rfc4122#appendix-C
+	 * @const  string
 	 */
 	const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
 
 	/**
 	 * The nil UUID is special form of UUID that is specified to have all 128 bits set to zero.
-	 * @link http://tools.ietf.org/html/rfc4122#section-4.1.7
+	 *
+	 * @link   http://tools.ietf.org/html/rfc4122#section-4.1.7
+	 * @const  string
 	 */
 	const NIL = '00000000-0000-0000-0000-000000000000';
 
@@ -60,10 +70,10 @@ class Uuid
 	 * valid UUID) and a value (the name). Given the same namespace and
 	 * name, the output is always the same.
 	 *
-	 * @param  uuid   $namespace
-	 * @param  string $name
+	 * @param  uuid   $namespace The namespace from other UUID.
+	 * @param  string $name      The value to generate UUID.
 	 *
-	 * @return uuid
+	 * @return string UUID v3.
 	 */
 	public static function v3($namespace, $name)
 	{
@@ -110,10 +120,11 @@ class Uuid
 	}
 
 	/**
-	 * Generate v4 UUID
+	 * Generate v4 UUID.
+	 *
 	 * Version 4 UUIDs are pseudo-random.
 	 *
-	 * @return uuid
+	 * @return string UUID v4.
 	 */
 	public static function v4()
 	{
@@ -145,10 +156,10 @@ class Uuid
 	 * valid UUID) and a value (the name). Given the same namespace and
 	 * name, the output is always the same.
 	 *
-	 * @param  uuid   $namespace
-	 * @param  string $name
+	 * @param  uuid   $namespace The namespace from other UUID.
+	 * @param  string $name      The value to generate UUID.
 	 *
-	 * @return uuid
+	 * @return string UUID v5.
 	 */
 	public static function v5($namespace, $name)
 	{
@@ -195,11 +206,11 @@ class Uuid
 	}
 
 	/**
-	 * is_valid
+	 * Validate UUID.
 	 *
-	 * @param uuid $uuid
+	 * @param string $uuid The UUID string.
 	 *
-	 * @return  boolean
+	 * @return  boolean Valid or fail.
 	 */
 	public static function isValid($uuid)
 	{

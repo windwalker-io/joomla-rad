@@ -12,7 +12,7 @@ use JTable;
 use Windwalker\DI\Container;
 
 /**
- * Windwalker Table.
+ * Windwalker active record Table.
  *
  * @since 2.0
  */

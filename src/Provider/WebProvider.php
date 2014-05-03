@@ -6,12 +6,11 @@ use Joomla\Console\Output\Stdout;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Joomla\Input\Input;
-use Windwalker\Console\Application\Console;
 
 /**
- * Class WebProvider
+ * The web application provider.
  *
- * @since 1.0
+ * @since 2.0
  */
 class WebProvider implements ServiceProviderInterface
 {
@@ -21,8 +20,6 @@ class WebProvider implements ServiceProviderInterface
 	 * @param   Container $container The DI container.
 	 *
 	 * @return  Container  Returns itself to support chaining.
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{

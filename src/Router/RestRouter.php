@@ -13,7 +13,7 @@ namespace Windwalker\Router;
  *
  * Based on Joomla Router.
  *
- * @since  1.0
+ * @since  2.0
  */
 class RestRouter extends Router
 {

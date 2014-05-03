@@ -9,19 +9,21 @@
 namespace Windwalker\Router;
 
 /**
- * Class Route
+ * Route class to handle single route pattern.
  *
- * @since 1.0
+ * @since 2.0
  */
 class Route
 {
 	/**
 	 * Build by resource.
 	 *
-	 * @param string  $resource
-	 * @param array   $data
-	 * @param boolean $xhtml
-	 * @param boolean $ssl
+	 * @param   string   $resource The resource key to find our route.
+	 * @param   array    $data     The url query data.
+	 * @param   boolean  $xhtml    Replace & by &amp; for XML compilance.
+	 * @param   integer  $ssl      Secure state for the resolved URI.
+	 *                             1: Make URI secure using global secure site URI.
+	 *                             2: Make URI unsecure using the global unsecure site URI.
 	 *
 	 * @return  string Route url.
 	 */
@@ -52,7 +54,7 @@ class Route
 	/**
 	 * Build route.
 	 *
-	 * @param array   &$data
+	 * @param   array  &$data The query data to build route.
 	 *
 	 * @return  string Route url.
 	 */

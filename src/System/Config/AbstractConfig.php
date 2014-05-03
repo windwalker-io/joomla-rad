@@ -12,33 +12,33 @@ use Joomla\Filesystem\File;
 use Joomla\Registry\Registry;
 
 /**
- * Class Config
+ * The config class.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractConfig implements ConfigInterface
 {
 	/**
-	 * Property config.
+	 * Config data cache.
 	 *
 	 * @var  Registry
 	 */
 	public static $config = null;
 
 	/**
-	 * Property type.
+	 * Config file type.
 	 *
 	 * @var  string
 	 */
 	protected static $type = 'json';
 
 	/**
-	 * get
+	 * Get config.
 	 *
-	 * @param $name
-	 * @param $default
+	 * @param string $name    The config key name.
+	 * @param mixed  $default The default value if not exists.
 	 *
-	 * @return  mixed
+	 * @return  mixed Config value of this key.
 	 */
 	public static function get($name, $default = null)
 	{
@@ -46,12 +46,12 @@ abstract class AbstractConfig implements ConfigInterface
 	}
 
 	/**
-	 * set
+	 * Set config.
 	 *
-	 * @param $name
-	 * @param $value
+	 * @param string $name  The config key name.
+	 * @param mixed  $value The value of this key.
 	 *
-	 * @return  mixed
+	 * @return  mixed Return from config object set() method.
 	 */
 	public static function set($name, $value)
 	{
@@ -59,7 +59,7 @@ abstract class AbstractConfig implements ConfigInterface
 	}
 
 	/**
-	 * saveConfig
+	 * Save config to file.
 	 *
 	 * @return  void
 	 */
@@ -69,9 +69,9 @@ abstract class AbstractConfig implements ConfigInterface
 	}
 
 	/**
-	 * getConfig
+	 * Get config from file. Will get from cache if has loaded.
 	 *
-	 * @return  Registry
+	 * @return  Registry Config object.
 	 */
 	public static function getConfig()
 	{
@@ -87,15 +87,14 @@ abstract class AbstractConfig implements ConfigInterface
 	}
 
 	/**
-	 * setConfig
+	 * Set config object into this class.
 	 *
-	 * @param   \Joomla\Registry\Registry $config
+	 * @param   \Joomla\Registry\Registry $config The config object.
 	 *
-	 * @return  AbstractConfig  Return self to support chaining.
+	 * @return  void
 	 */
 	public static function setConfig(Registry $config)
 	{
 		self::$config = $config;
 	}
 }
- 

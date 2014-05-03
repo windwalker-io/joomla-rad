@@ -11,12 +11,17 @@ namespace Windwalker\System\Installer;
 use Composer\Script\CommandEvent;
 
 /**
- * Class ComposerInstaller
+ * The composer installer.
  *
  * @since 1.0
  */
 class ComposerInstaller
 {
+	/**
+	 * The bin file content.
+	 *
+	 * @var  string
+	 */
 	static protected $binFile = <<<BIN
 #!/usr/bin/env php
 <?php
@@ -26,9 +31,9 @@ include_once dirname(__DIR__) . '/libraries/windwalker/bin/windwalker.php';
 BIN;
 
 	/**
-	 * install
+	 * Do install.
 	 *
-	 * @param CommandEvent $event
+	 * @param CommandEvent $event The command event.
 	 *
 	 * @return  void
 	 */

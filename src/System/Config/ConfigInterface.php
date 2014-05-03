@@ -9,22 +9,23 @@
 namespace Windwalker\System\Config;
 
 /**
- * Interface ConfigInterface
+ * Config Interface
+ *
+ * @since 2.0
  */
 interface ConfigInterface
 {
 	/**
-	 * getConfig
+	 * Get config from file. Will get from cache if has loaded.
 	 *
 	 * @return  mixed
 	 */
 	public static function getConfig();
 
 	/**
-	 * getPath
+	 * Get config file path.
 	 *
 	 * @return  string
 	 */
 	public static function getPath();
 }
- 

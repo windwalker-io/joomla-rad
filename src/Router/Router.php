@@ -15,7 +15,7 @@ use JInput as Input;
  *
  * Based on Joomla Router.
  *
- * @since 1.0
+ * @since 2.0
  */
 class Router
 {
@@ -87,15 +87,15 @@ class Router
 	}
 
 	/**
-	 * register
+	 * Register a route map.
 	 *
-	 * @param string   $name
-	 * @param string   $pattern
-	 * @param string   $controller
-	 * @param callable $buildHandler
-	 * @param callable $parserHandler
+	 * @param   string    $name           Route resource name.
+	 * @param   string    $pattern        Route pattern.
+	 * @param   string    $controller     Matched controller name.
+	 * @param   callable  $buildHandler   The build callback.
+	 * @param   callable  $parserHandler  The parse callback.
 	 *
-	 * @return  Router
+	 * @return  Router Return self to support chaining.
 	 */
 	public function register($name, $pattern, $controller, $buildHandler = null, $parserHandler = null)
 	{

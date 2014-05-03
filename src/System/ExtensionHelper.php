@@ -11,16 +11,16 @@ namespace Windwalker\System;
 use Joomla\Registry\Registry;
 
 /**
- * Class ExtensionHelper
+ * The extension helper.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ExtensionHelper
 {
 	/**
 	 * The mapper to find extension type.
 	 *
-	 * @var    array
+	 * @var  array
 	 */
 	protected static $extMapper = array(
 		'com_' => 'component',
@@ -35,7 +35,7 @@ class ExtensionHelper
 	 *
 	 * @param   string  $element  he extension element name, example: com_content or plg_group_name
 	 *
-	 * @return  array
+	 * @return  array  Extracted information.
 	 *
 	 * @throws  \InvalidArgumentException
 	 */
@@ -81,8 +81,6 @@ class ExtensionHelper
 	 * @param   string  $prefix  The extension prefix.
 	 *
 	 * @return  string|null  Extension type name.
-	 *
-	 * @since   3.3
 	 */
 	protected static function getExtName($prefix)
 	{
@@ -94,11 +92,18 @@ class ExtensionHelper
 		return null;
 	}
 
+	/**
+	 * Get extension params.
+	 *
+	 * @param string $element The extension name.
+	 *
+	 * @return  Registry|\JRegistry Extension params object.
+	 */
 	public static function getParams($element)
 	{
 		$extension = static::extractElement($element);
 
-		switch($extension['type'])
+		switch ($extension['type'])
 		{
 			case 'component':
 				$params = \JComponentHelper::getParams($element);
@@ -114,6 +119,7 @@ class ExtensionHelper
 			case 'plugin':
 				$plugin = \JPluginHelper::getPlugin($extension['group'], 'plg_' . $extension['name']);
 				$params = $plugin->params;
+				$params = new Registry($params);
 				break;
 
 			default:
@@ -124,4 +130,3 @@ class ExtensionHelper
 		return $params;
 	}
 }
- 

@@ -12,24 +12,24 @@ use Joomla\Registry\Registry;
 use Windwalker\System\ExtensionHelper;
 
 /**
- * Class Config
+ * The config helper to get config from other extension build by windwalker.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class ConfigHelper
 {
 	/**
-	 * Property type.
+	 * The config file type.
 	 *
 	 * @var  string
 	 */
 	protected static $type = 'yaml';
 
 	/**
-	 * saveConfig
+	 * Save the config.
 	 *
-	 * @param \Joomla\Registry\Registry $config
-	 * @param string                    $element
+	 * @param Registry $config  The config object.
+	 * @param string   $element The extension name.
 	 *
 	 * @return  void
 	 */
@@ -42,10 +42,10 @@ abstract class ConfigHelper
 	}
 
 	/**
-	 * setConfig
+	 * Set config.
 	 *
-	 * @param \Joomla\Registry\Registry $config
-	 * @param string                    $element
+	 * @param Registry $config  The config object.
+	 * @param string   $element The extension name.
 	 *
 	 * @return  void
 	 */
@@ -58,12 +58,12 @@ abstract class ConfigHelper
 	}
 
 	/**
-	 * getPath
+	 * Get config object.
 	 *
-	 * @param string $element
+	 * @param string $element The extension name.
 	 *
 	 * @throws  \LogicException
-	 * @return  string
+	 * @return  Registry The config object.
 	 */
 	public static function getConfig($element)
 	{
@@ -72,20 +72,31 @@ abstract class ConfigHelper
 
 		if (!is_subclass_of($class, 'Windwalker\\System\\Config\\ConfigInterface'))
 		{
-			throw new \LogicException(sprintf('Please make %s implement Windwalker\\Syatem\\Config\\ConfigInterface', $class));
+			throw new \LogicException(
+				sprintf(
+					'Please make %s implement Windwalker\\Syatem\\Config\\ConfigInterface or Windwalker\\Syatem\\Config\\AbstractConfig',
+					$class
+				)
+			);
 		}
 
 		return $class::getConfig();
 	}
 
 	/**
-	 * getClass
+	 * Get config class name by extension name.
 	 *
-	 * @param string $element
+	 * Example:
+	 * - Component - Flower\Config\Config
+	 * - Module    - ModFlower\Config\Config
+	 * - Plugin    - PlgSystemFlower\Config\Config
+	 * - Template  - TplFlower\Config\Config
+	 *
+	 * @param string $element  The extension name.
 	 *
 	 * @throws \LogicException
 	 * @throws \DomainException
-	 * @return  string
+	 * @return  string The config class name.
 	 */
 	public static function getClass($element)
 	{

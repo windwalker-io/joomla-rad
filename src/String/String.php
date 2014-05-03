@@ -12,19 +12,19 @@ use JString;
 use Windwalker\Helper\ArrayHelper;
 
 /**
- * Class String
+ * Windwalker String. Based on Joomla String.
  *
- * @since 1.0
+ * @since 2.0
  */
 class String extends JString
 {
 	/**
-	 * quote
+	 * Quote a string.
 	 *
-	 * @param string $string
-	 * @param string $quote
+	 * @param   string $string The string to quote.
+	 * @param   string $quote  The quote symbol.
 	 *
-	 * @return  string
+	 * @return  string Quoted string.
 	 */
 	public static function quote($string, $quote = "''")
 	{
@@ -37,11 +37,11 @@ class String extends JString
 	}
 
 	/**
-	 * backquote
+	 * Back quote a string.
 	 *
-	 * @param string $string
+	 * @param   string $string The string to quote.
 	 *
-	 * @return  string
+	 * @return  string Quoted string.
 	 */
 	public static function backquote($string)
 	{
@@ -49,13 +49,15 @@ class String extends JString
 	}
 
 	/**
-	 * parseVariable
+	 * Parse variable and replace it. This method is a simple template engine.
 	 *
-	 * @param string $string
-	 * @param array  $data
-	 * @param array  $tags
+	 * Example: The {{ foo.bar.yoo }} will be replace to value of `$data['foo']['bar']['yoo']`
 	 *
-	 * @return  string
+	 * @param   string $string The template to replace.
+	 * @param   array  $data   The data to find.
+	 * @param   array  $tags   The variable tags.
+	 *
+	 * @return  string Replaced template.
 	 */
 	public static function parseVariable($string, $data = array(), $tags = array('{{', '}}'))
 	{

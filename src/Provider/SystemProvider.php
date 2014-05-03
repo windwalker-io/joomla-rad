@@ -8,9 +8,9 @@ use Windwalker\DI\ServiceProvider;
 use Windwalker\Helper\DateHelper;
 
 /**
- * Class SystemProvider
+ * Windwalker system provider.
  *
- * @since 1.0
+ * @since 2.0
  */
 class SystemProvider extends ServiceProvider
 {
@@ -20,8 +20,6 @@ class SystemProvider extends ServiceProvider
 	 * @param   Container $container The DI container.
 	 *
 	 * @return  Container  Returns itself to support chaining.
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -71,9 +69,9 @@ class SystemProvider extends ServiceProvider
 	}
 
 	/**
-	 * loadConfig
+	 * Load config.
 	 *
-	 * @return  Registry
+	 * @return  Registry Config registry object.
 	 */
 	public function loadConfig()
 	{

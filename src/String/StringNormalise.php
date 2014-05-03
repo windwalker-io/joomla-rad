@@ -11,18 +11,18 @@ namespace Windwalker\String;
 use Joomla\String\Normalise;
 
 /**
- * Class StringNormalise
+ * The normalise class based on Joomla Normalise.
  *
- * @since 1.0
+ * @since 2.0
  */
 class StringNormalise extends Normalise
 {
 	/**
-	 * toClassNamespace
+	 * Convert to standard PSR-0 class name.
 	 *
-	 * @param string $class
+	 * @param   string $class The class name string.
 	 *
-	 * @return  mixed
+	 * @return  string Normalised class name.
 	 */
 	public static function toClassNamespace($class)
 	{

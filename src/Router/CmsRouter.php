@@ -9,14 +9,14 @@
 namespace Windwalker\Router;
 
 /**
- * Class CmsRouter
+ * The router for CMS.
  *
- * @since 1.0
+ * @since 2.0
  */
 class CmsRouter extends Router
 {
 	/**
-	 * Property instance.
+	 * Singleton instance.
 	 *
 	 * @var  CmsRouter
 	 */
@@ -25,9 +25,9 @@ class CmsRouter extends Router
 	/**
 	 * Singleton.
 	 *
-	 * @param $option
+	 * @param string $option The component option name.
 	 *
-	 * @return  CmsRouter
+	 * @return  CmsRouter Router instance.
 	 */
 	public static function getInstance($option)
 	{

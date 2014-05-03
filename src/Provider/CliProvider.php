@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
 
 namespace Windwalker\Provider;
 
@@ -9,9 +15,9 @@ use Windwalker\Console\Application\Console;
 use Windwalker\DI\ServiceProvider;
 
 /**
- * Class CliProvider
+ * Provider for Console application.
  *
- * @since 1.0
+ * @since 2.0
  */
 class CliProvider extends ServiceProvider
 {
@@ -21,8 +27,6 @@ class CliProvider extends ServiceProvider
 	 * @param   Container $container The DI container.
 	 *
 	 * @return  Container  Returns itself to support chaining.
-	 *
-	 * @since   1.0
 	 */
 	public function register(Container $container)
 	{
@@ -35,7 +39,7 @@ class CliProvider extends ServiceProvider
 	}
 
 	/**
-	 * createConsole
+	 * Create console application.
 	 *
 	 * @param Container $container
 	 *
