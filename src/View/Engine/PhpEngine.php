@@ -13,21 +13,23 @@ use SplPriorityQueue;
 use Windwalker\DI\Container;
 
 /**
- * Class PhpEngine
+ * The php engine.
  *
- * @since 1.0
+ * @since 2.0
  */
 class PhpEngine extends AbstractEngine
 {
 	/**
-	 * execute
+	 * Execute a template and return to loadTemplate() method.
 	 *
-	 * @param $templateFile
+	 * @param string $templateFile The template file name.
+	 * @param array  $data         The data to push into layout.
 	 *
-	 * @return  string
+	 * @return  mixed
 	 */
 	protected function execute($templateFile, $data = null)
 	{
+		// Keep data and the template can get this variable as global variable.
 		$data = $this->data->bind((array) $data);
 
 		// Start capturing output into a buffer

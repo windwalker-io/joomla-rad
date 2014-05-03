@@ -17,37 +17,46 @@ use Windwalker\Object\Object;
 use Joomla\Registry\Registry;
 
 /**
- * Class ToolbarHelper
+ * The toolbar helper.
  *
- * @since 1.0
+ * @since 2.0
  */
 class ToolbarHelper
 {
 	/**
-	 * @var  Data  Property data.
+	 * The view data.
+	 *
+	 * @var  Data
 	 */
 	protected $data;
 
 	/**
-	 * @var  Registry  Property config.
+	 * Config object.
+	 *
+	 * @var  Registry
 	 */
 	protected $config;
 
 	/**
-	 * @var  Object  Property access.
+	 * The access object.
+	 *
+	 * @var  Object
 	 */
 	protected $access;
 
 	/**
-	 * @var  array  Property buttonSet.
+	 * The button set.
+	 *
+	 * @var  array
 	 */
 	protected $buttonSet = array();
 
 	/**
 	 * Constructor.
 	 *
-	 * @param object $view
-	 * @param array  $config
+	 * @param Data  $data      The view data.
+	 * @param array $buttonSet The button set.
+	 * @param array $config    The config object.
 	 */
 	public function __construct($data, array $buttonSet = array(), $config = array())
 	{
@@ -64,10 +73,10 @@ class ToolbarHelper
 	}
 
 	/**
-	 * __call
+	 * Register a button.
 	 *
-	 * @param $name
-	 * @param $args
+	 * @param string   $button Button name.
+	 * @param callable $value  The callback to raise this button.
 	 *
 	 * @return  void
 	 */
@@ -87,31 +96,38 @@ class ToolbarHelper
 
 		$callback = '';
 
+		// (1) If is string, set callback as this string.
 		if (is_string($value) || is_callable($value))
 		{
 			$value = array('handler' => $value);
 		}
 
+		// If value is array
 		if (is_array($value) && !empty($value['handler']))
 		{
+			// (2) Set callback as handler in value array
 			$callback = array($this, $value['handler']);
 
 			if (!is_callable($callback))
 			{
+				// (3) If this object do not has this method, set callback direct to JToolbarHelper
 				$callback = array('JToolbarHelper', $value['handler']);
 			}
 
+			// Prepare the arguments
 			if (!empty($value['args']))
 			{
 				$args = (array) $value['args'];
 			}
 		}
 
+		// (4) If value handler is a closure, we use this closure priority, give up other callback.
 		if (is_callable($value['handler']))
 		{
 			$callback = $value['handler'];
 		}
 
+		// Now execute this callback or flash error message.
 		if (is_callable($callback))
 		{
 			$dispatcher->trigger('onToolbarAppendButton', array($button, &$args));
@@ -126,28 +142,36 @@ class ToolbarHelper
 	}
 
 	/**
-	 * checkAccess
+	 * Check button access.
 	 *
-	 * @param $name
-	 * @param $button
+	 * @param string $name   The button name.
+	 * @param array  $button The button config array.
 	 *
-	 * @return  bool|mixed
+	 * @return  boolean Allow this button or not.
 	 */
 	protected function checkAccess($name, $button)
 	{
+		// No access set, means yes.
 		if (!isset($button['access']))
 		{
 			return true;
 		}
 
+		// Then using access object to check access.
 		elseif (is_string($button['access']))
 		{
 			return $this->access->get($button['access']);
 		}
 
+		// If we get FALSE, just return it.
 		return $button['access'];
 	}
 
+	/**
+	 * Register all buttons.
+	 *
+	 * @return  void
+	 */
 	public function registerButtons()
 	{
 		$buttons = $this->buttonSet;
@@ -192,10 +216,10 @@ class ToolbarHelper
 	}
 
 	/**
-	 * duplicate
+	 * Duplicate button.
 	 *
-	 * @param string $task
-	 * @param string $alt
+	 * @param   string  $task  An override for the task.
+	 * @param   string  $alt   An override for the alt text.
 	 *
 	 * @return  void
 	 */
@@ -212,8 +236,6 @@ class ToolbarHelper
 	 * @param   string  $alt            Title for the modal button
 	 *
 	 * @return  void
-	 *
-	 * @since   3.2
 	 */
 	public function modal($targetModalId = 'batchModal', $icon = 'icon-checkbox-partial', $alt = 'JTOOLBAR_BATCH')
 	{
@@ -240,9 +262,9 @@ class ToolbarHelper
 	/**
 	 * Set a link button.
 	 *
-	 * @param string $alt
-	 * @param string $href
-	 * @param string $icon
+	 * @param   string  $alt   An override for the alt text.
+	 * @param   string  $href  The link url.
+	 * @param   string  $icon  Icon class to show on modal button
 	 *
 	 * @return  void
 	 */

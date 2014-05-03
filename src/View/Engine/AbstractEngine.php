@@ -15,57 +15,74 @@ use Windwalker\DI\Container;
 use Joomla\Registry\Registry;
 
 /**
- * Class AbstractEngine
+ * The view engine.
  *
- * @since 1.0
+ * @since 2.0
  */
 abstract class AbstractEngine implements EngineInterface, ContainerAwareInterface
 {
 	/**
-	 * @var  SplPriorityQueue  Property paths.
+	 * The paths of layouts.
+	 *
+	 * @var  SplPriorityQueue
 	 */
-	protected $paths;
+	protected $paths = null;
 
 	/**
-	 * @var  Registry  Property config.
+	 * The config object.
+	 *
+	 * @var  Registry
 	 */
-	protected $config;
+	protected $config = null;
 
 	/**
-	 * @var  string  Layout extension
+	 * Layout extension.
+	 *
+	 * @var  string
 	 */
 	protected $layoutExt = 'php';
 
 	/**
-	 * @var  string  Property layout.
+	 * Layout name.
+	 *
+	 * @var  string
 	 */
 	protected $layout = '';
 
 	/**
-	 * @var  string  Property layoutTemplate.
+	 * Layout template.
+	 *
+	 * @var  string
 	 */
-	protected $layoutTemplate;
+	protected $layoutTemplate = null;
 
 	/**
-	 * @var  string  Property templatePrepared.
+	 * Template prepared.
+	 *
+	 * @var  string
 	 */
 	protected $templatePrepared = array();
 
 	/**
-	 * @var  Container  Property container.
+	 * The DI container.
+	 *
+	 * @var  Container
 	 */
-	protected $container;
+	protected $container = null;
 
 	/**
-	 * @var  mixed  Property data.
+	 * The data to push into template.
+	 *
+	 * @var  mixed
 	 */
-	protected $data;
+	protected $data = null;
 
 	/**
 	 * Constructor
 	 *
-	 * @param array            $config
-	 * @param SplPriorityQueue $paths
+	 * @param array                $config    The config array.
+	 * @param \Joomla\DI\Container $container The DI container.
+	 * @param SplPriorityQueue     $paths     The layout paths.
 	 */
 	public function __construct($config = array(), JoomlaContainer $container = null, SplPriorityQueue $paths = null)
 	{
@@ -77,12 +94,12 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * render
+	 * Render this template.
 	 *
-	 * @param string $layout
-	 * @param array  $data
+	 * @param string $layout The layout name.
+	 * @param array  $data   The data to push into layout.
 	 *
-	 * @return  mixed
+	 * @return  string Rendered layout.
 	 */
 	public function render($layout, $data = array())
 	{
@@ -96,12 +113,11 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	/**
 	 * Load a template file -- first look in the templates folder for an override
 	 *
-	 * @param   string  $tpl  The name of the template source file; automatically searches the template paths and compiles as needed.
+	 * @param   string $tpl  The name of the template source file; automatically searches the template paths and compiles as needed.
+	 * @param   array  $data The data to push into layout.
 	 *
+	 * @throws \Exception
 	 * @return  string  The output of the the template script.
-	 *
-	 * @since   3.2
-	 * @throws  \Exception
 	 */
 	public function loadTemplate($tpl = null, $data = null)
 	{
@@ -158,10 +174,10 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * execute
+	 * Execute a template and return to loadTemplate() method.
 	 *
-	 * @param string $templateFile
-	 * @param null   $data
+	 * @param string $templateFile The template file name.
+	 * @param array  $data         The data to push into layout.
 	 *
 	 * @return  mixed
 	 */
@@ -181,9 +197,9 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * prepareTemplate
+	 * Prepare the template.
 	 *
-	 * @param $template
+	 * @param string $template Template name.
 	 *
 	 * @return  void
 	 */
@@ -205,7 +221,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * getLayoutTemplate
+	 * Get layout template.
 	 *
 	 * @return  string
 	 */
@@ -215,11 +231,11 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * getPath
+	 * Get layout paths.
 	 *
 	 * @param string $layout
 	 *
-	 * @return  mixed
+	 * @return  string Found path.
 	 */
 	public function getPath($layout)
 	{
@@ -257,9 +273,9 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * getLayout
+	 * Method to get layout name.
 	 *
-	 * @return  string
+	 * @return  string The layout name.
 	 */
 	public function getLayout()
 	{
@@ -267,9 +283,9 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	}
 
 	/**
-	 * setLayout
+	 * Method to set layout name.
 	 *
-	 * @param   string $layout
+	 * @param   string $layout The layout name.
 	 *
 	 * @return  AbstractEngine  Return self to support chaining.
 	 */
@@ -297,7 +313,6 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	 *
 	 * @return  Container
 	 *
-	 * @since   1.0
 	 * @throws  \UnexpectedValueException May be thrown if the container has not been set.
 	 */
 	public function getContainer()
@@ -315,9 +330,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	 *
 	 * @param   JoomlaContainer $container The DI container.
 	 *
-	 * @return  $this
-	 *
-	 * @since   1.0
+	 * @return  AbstractEngine  Return self to support chaining.
 	 */
 	public function setContainer(JoomlaContainer $container)
 	{

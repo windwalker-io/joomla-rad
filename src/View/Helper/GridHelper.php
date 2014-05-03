@@ -14,30 +14,31 @@ use Windwalker\Bootstrap\Dropdown;
 use Windwalker\Data\Data;
 use Joomla\Registry\Registry;
 use Windwalker\DI\Container;
+use Windwalker\Html\HtmlElement;
 
 /**
- * Class GridHelper
+ * A helper to handle list grid operation.
  *
- * @since 1.0
+ * @since 2.0
  */
 class GridHelper
 {
 	/**
-	 * Property view.
+	 * View instance.
 	 *
-	 * @var object
+	 * @var \JView
 	 */
 	public $view;
 
 	/**
-	 * Property config.
+	 * Config object.
 	 *
 	 * @var \JRegistry
 	 */
 	public $config = array();
 
 	/**
-	 * Property fields.
+	 * The fields mapper.
 	 *
 	 * @var array
 	 */
@@ -56,31 +57,31 @@ class GridHelper
 	);
 
 	/**
-	 * Property state.
+	 * State object.
 	 *
 	 * @var \JRegistry
 	 */
 	public $state;
 
 	/**
-	 * Property current.
+	 * The current item object.
 	 *
-	 * @var
+	 * @var object
 	 */
 	public $current;
 
 	/**
-	 * Property row.
+	 * The row count.
 	 *
-	 * @var
+	 * @var integer
 	 */
 	public $row;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param object $view
-	 * @param array  $config
+	 * @param object $view   The view object.
+	 * @param array  $config The config object.
 	 */
 	public function __construct($view, $config = array())
 	{
@@ -107,10 +108,10 @@ class GridHelper
 	}
 
 	/**
-	 * registerTableSort
+	 * Register table drg sorting script.
 	 *
-	 * @param string $task
-	 * @param int    $tableId
+	 * @param   string   $task    Sorting task for ajax.
+	 * @param   integer  $tableId The table id selector.
 	 *
 	 * @return bool
 	 */
@@ -135,28 +136,28 @@ class GridHelper
 	}
 
 	/**
-	 * sortTitle
+	 * Method to sort a column in a grid
 	 *
-	 * @param string $label
-	 * @param string $field
-	 * @param string $task
-	 * @param string $new_direction
-	 * @param string $tip
-	 * @param string $icon
+	 * @param   string  $label  The link title
+	 * @param   string  $field  The order field for the column
+	 * @param   string  $task   An optional task override
+	 * @param   string  $newDir An optional direction for the new column
+	 * @param   string  $tip    An optional text shown as tooltip title instead of $title
+	 * @param   string  $icon   Icon to show
 	 *
-	 * @return mixed
+	 * @return  string
 	 */
-	public function sortTitle($label, $field, $task = null, $new_direction = 'asc', $tip = '', $icon = null)
+	public function sortTitle($label, $field, $task = null, $newDir = 'asc', $tip = '', $icon = null)
 	{
 		$listOrder = $this->state->get('list.ordering');
 		$listDirn  = $this->state->get('list.direction');
 		$formName  = $this->config->get('form_name', 'adminForm');
 
-		return \JHtml::_('searchtools.sort', $label, $field, $listDirn, $listOrder, $task, $new_direction, $tip, $icon, $formName);
+		return \JHtmlSearchtools::sort($label, $field, $listDirn, $listOrder, $task, $newDir, $tip, $icon, $formName);
 	}
 
 	/**
-	 * orderTitle
+	 * The reorder title.
 	 *
 	 * @return string
 	 */
@@ -168,12 +169,12 @@ class GridHelper
 	}
 
 	/**
-	 * setItem
+	 * Set current item for this loop.
 	 *
-	 * @param mixed $item
-	 * @param int   $i
+	 * @param object  $item The item object.
+	 * @param integer $i    The row number.
 	 *
-	 * @return bool
+	 * @return GridHelper Return self to support chaining.
 	 */
 	public function setItem($item, $i)
 	{
@@ -213,10 +214,12 @@ class GridHelper
 		$this->state->set('access.canCheckin', $canCheckin);
 		$this->state->set('access.canChange', $canChange);
 		$this->state->set('access.canEditOwn', $canEditOwn);
+
+		return $this;
 	}
 
 	/**
-	 * dragSort
+	 * Drag sort symbol.
 	 *
 	 * @return string
 	 */
@@ -257,27 +260,29 @@ HTML;
 	}
 
 	/**
-	 * checkbox
+	 * Checkbox input.
 	 *
-	 * @return  mixed
+	 * @return  string Checkbox html code.
 	 */
 	public function checkbox()
 	{
 		$pkName = $this->config->get('field.pk');
 
-		return JHtml::_('grid.id', $this->row, $this->current->$pkName);
+		return \JHtmlGrid::id($this->row, $this->current->$pkName);
 	}
 
 	/**
-	 * editTitle
+	 * Build the edit link.
 	 *
-	 * @param array  $append
-	 * @param string $task
-	 * @param array  $attribs
+	 * @param   string  $title    Title of link, default is an icon.
+	 * @param   string  $task     View name to build task: `{view}.edit.edit`.
+	 * @param   int     $id       Edit id.
+	 * @param   array   $query    URL query array.
+	 * @param   array   $attribs  Link element attributes.
 	 *
 	 * @return string
 	 */
-	public function editTitle($append = array(), $task = null, $attribs = null)
+	public function editTitle($title = null, $task = null, $id = null, $query = array(), $attribs = array())
 	{
 		$canEdit    = $this->state->get('access.canEdit', true);
 		$canEditOwn = $this->state->get('access.canEditOwn', true);
@@ -286,13 +291,15 @@ HTML;
 		$pkName     = $this->config->get('field.pk');
 		$titleField = $this->config->get('field.title');
 
-		$query = array(
+		$title = $title ? : $this->escape($item->$titleField);
+
+		$defaultQuery = array(
 			'option' => $this->config->get('option'),
 			'task'   => $task ? : $this->config->get('view_item') . '.edit.edit',
-			$pkName  => $this->current->$pkName
+			$pkName  => $id ? : $this->current->$pkName
 		);
 
-		$query = array_merge($query, $append);
+		$query = array_merge($defaultQuery, $query);
 
 		$uri = new \JUri;
 
@@ -300,20 +307,71 @@ HTML;
 
 		if ($canEdit || $canEditOwn)
 		{
-			return \JHtml::link($uri, $this->escape($item->$titleField), $attribs);
+			return \JHtml::link($uri, $title, $attribs);
 		}
 		else
 		{
-			return $this->escape($item->$titleField);
+			return $item->$titleField;
 		}
 	}
 
 	/**
-	 * state
+	 * For some list page to quickly build edit link button.
 	 *
-	 * @param string $taskPrefix
+	 * Usage: `echo $grid->editButton('address', $id);`
 	 *
-	 * @return mixed
+	 * @param   string  $title    Title of link, default is an icon.
+	 * @param   string  $task     View name to build task: `{view}.edit.edit`.
+	 * @param   int     $id       Edit id.
+	 * @param   array   $query    URL query array.
+	 * @param   array   $attribs  Link element attributes.
+	 *
+	 * @return  string  Link element.
+	 */
+	public function editButton($title = null, $task = null, $id = null, $query = array(), $attribs = array())
+	{
+		$title = $title ? : new HtmlElement('span', null, array('class' => 'icon-edit icon-white glyphicon glyphicon-edit'));
+
+		$attribs['class'] = !empty($attribs['class']) ? $attribs['class'] : 'btn btn-mini';
+
+		return $this->editTitle($title, $task, $id, $query, $attribs);
+	}
+
+	/**
+	 * Make a link to direct to foreign table item.
+	 * Note that the ordering or id and title are different from `editButton()`, but others are same.
+	 *
+	 * Usage: `echo $grid->foreignLink('customer', $item->customer_name, $item->customer_id);`
+	 *
+	 * @param   string  $title    Title of link, default is an icon.
+	 * @param   string  $task     View name to build task: `{view}.edit.edit`.
+	 * @param   int     $fk       Edit foreign id.
+	 * @param   array   $query    URL query array.
+	 * @param   array   $attribs  Link element attributes.
+	 *
+	 * @return  string  Link element.
+	 */
+	public function foreignLink($title = null, $task = null, $fk = null, $query = array(), $attribs = array())
+	{
+		if (!$fk)
+		{
+			return '';
+		}
+
+		$title = $title . ' <small class="icon-out-2 glyphicon glyphicon-share"></small>';
+
+		$attribs['class'] = 'text-muted muted';
+		$attribs['target'] = '_blank';
+
+		return $this->editTitle($title, $task, $fk, $query, $attribs);
+	}
+
+	/**
+	 * State button.
+	 *
+	 * @param string $taskPrefix The task prefix.
+	 *
+	 * @return string State button html code.
 	 */
 	public function state($taskPrefix = null)
 	{
@@ -322,15 +380,15 @@ HTML;
 		$taskPrefix = $taskPrefix ? : $this->config->get('view_list') . '.state.';
 		$field      = $this->config->get('field.state', 'state');
 
-		return \JHtml::_('jgrid.published', $item->$field, $this->row, $taskPrefix, $canChange, 'cb', $item->publish_up, $item->publish_down);
+		return \JHtmlJGrid::published($item->$field, $this->row, $taskPrefix, $canChange, 'cb', $item->publish_up, $item->publish_down);
 	}
 
 	/**
-	 * checkoutButton
+	 * Check-out button.
 	 *
-	 * @param string $taskPrefix
+	 * @param string $taskPrefix The task prefix.
 	 *
-	 * @return string
+	 * @return string Check-out button html code.
 	 */
 	public function checkoutButton($taskPrefix = null)
 	{
@@ -347,8 +405,7 @@ HTML;
 			return '';
 		}
 
-		return \JHtml::_(
-			'jgrid.checkedout',
+		return \JHtmlJGrid::checkedout(
 			$this->row,
 			$item->$authorNameField,
 			$item->$chkTimeField,
@@ -358,20 +415,25 @@ HTML;
 	}
 
 	/**
-	 * createdData
+	 * Created date.
 	 *
-	 * @param string $format
+	 * @param string $format The date format.
 	 *
-	 * @return  mixed
+	 * @return  string Date string.
 	 */
 	public function createdDate($format = '')
 	{
 		$field = $this->config->get('field.created', 'created');
 		$format  = $format ? : JText::_('DATE_FORMAT_LC4');
 
-		return JHtml::_('date', $this->current->$field, $format);
+		return JHtml::date($this->current->$field, $format);
 	}
 
+	/**
+	 * The language title.
+	 *
+	 * @return  string Language title.
+	 */
 	public function language()
 	{
 		$field = $this->config->get('field.language', 'language');
@@ -404,11 +466,11 @@ HTML;
 	}
 
 	/**
-	 * can
+	 * Can do what?
 	 *
-	 * @param string $action
+	 * @param string $action The action which can do or not.
 	 *
-	 * @return boolean
+	 * @return boolean Can do or not.
 	 */
 	public function can($action)
 	{
@@ -425,7 +487,6 @@ HTML;
 	 * @return  string  The escaped output.
 	 *
 	 * @see     \JView::escape()
-	 * @since   12.1
 	 */
 	public function escape($output)
 	{

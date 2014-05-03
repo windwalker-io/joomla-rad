@@ -11,9 +11,9 @@ namespace Windwalker\View\Helper;
 use Windwalker\Data\Data;
 
 /**
- * Class ViewHtmlHelper
+ * The View Html Helper
  *
- * @since 1.0
+ * @since 2.0
  */
 class ViewHtmlHelper
 {
@@ -27,7 +27,7 @@ class ViewHtmlHelper
 	 * @param   string  $link  Has link URL?
 	 * @param   string  $class Set class to this wrap.
 	 *
-	 * @return  string    Information HTML.
+	 * @return  string  Information HTML.
 	 */
 	public static function showInfo($item, $key = null, $label = null, $icon = '', $link = null, $class = null)
 	{
