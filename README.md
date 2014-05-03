@@ -20,7 +20,7 @@ The version 2 has already release `1.0`.
 
 ``` bash
 cd /your/joomla/dir
-php composer.phar create-project windwalker/joomla-rad libraries/windwalker dev-staging -s dev
+php composer.phar create-project windwalker/joomla-rad libraries/windwalker 2.0.* -s dev
 ```
 
 ## Generate a new extension
