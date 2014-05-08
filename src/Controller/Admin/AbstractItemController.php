@@ -64,7 +64,7 @@ abstract class AbstractItemController extends AbstractAdminController
 		parent::prepareExecute();
 
 		$this->data     = $this->input->post->get('jform', array(), 'array');
-		$this->context  = $this->option . '.item.' . $this->task;
+		$this->context  = sprintf('%s.edit.%s', $this->option, $this->name);
 
 		$this->recordId = $this->input->getInt($this->urlVar);
 
