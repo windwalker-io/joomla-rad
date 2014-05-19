@@ -68,8 +68,8 @@ class Route
 
 		$data['view'] = isset($data['view']) ? $data['view'] : null;
 		
-		// If itemid exists, use itemid as menu item
-		if (isset($data['Itemid']))
+		// If itemid exists and view not, use itemid as menu item
+		if (isset($data['Itemid']) && empty($data['view']))
 		{
 			if ($item = $menu->getItem($data['Itemid']))
 			{
