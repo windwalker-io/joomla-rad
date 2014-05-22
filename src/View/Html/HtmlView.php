@@ -86,6 +86,7 @@ class HtmlView extends AbstractHtmlView
 		$data->view->name     = $this->getName();
 		$data->view->viewItem = $this->viewItem;
 		$data->view->viewList = $this->viewList;
+		$data->view->layout   = $this->layout;
 
 		// Uri data
 		$uri = \JUri::getInstance();
