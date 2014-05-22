@@ -129,4 +129,42 @@ class UriHelper
 
 		return $uri;
 	}
+	
+	/**
+	 * Give a relative path, return path with host.
+	 *
+	 * @param   string $path A system path.
+	 *
+	 * @return  string  Path with host added.
+	 */
+	public static function pathAddHost($path)
+	{
+		if (!$path)
+		{
+			return '';
+		}
+
+		// Build path
+		$uri = new \JURI($path);
+
+		if ($uri->getHost())
+		{
+			return $path;
+		}
+
+		$uri->parse(\JURI::root());
+		$root_path = $uri->getPath();
+
+		if (strpos($path, $root_path) === 0)
+		{
+			$num  = \JString::strlen($root_path);
+			$path = \JString::substr($path, $num);
+		}
+
+		$uri->setPath($uri->getPath() . $path);
+		$uri->setScheme('http');
+		$uri->setQuery(null);
+
+		return $uri->toString();
+	}
 }
