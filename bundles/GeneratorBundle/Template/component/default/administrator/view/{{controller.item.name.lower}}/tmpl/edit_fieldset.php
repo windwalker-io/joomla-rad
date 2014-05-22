@@ -18,7 +18,7 @@ $fieldset = $data->fieldset;
 
 	<?php foreach ($data->form->getFieldset($fieldset->name) as $field): ?>
 		<div id="control_<?php echo $field->id; ?>">
-			<?php echo $field->getControlGroup() . "\n\n"; ?>
+			<?php echo $field->renderField() . "\n\n"; ?>
 		</div>
 	<?php endforeach;?>
 </fieldset>
