@@ -52,6 +52,9 @@ abstract class {{extension.name.cap}}Component extends Component
 
 		$asset->windwalker();
 
+		// Register tasks
+		TaskMapper::register($this);
+
 		parent::prepare();
 	}
 

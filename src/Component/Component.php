@@ -124,13 +124,23 @@ class Component
 	 */
 	public function execute()
 	{
+		$dispatcher = $this->container->get('event.dispatcher');
+
 		$this->loadConfiguration();
 
 		$this->prepare();
 
+		// Event
+		$dispatcher->trigger('onComponentBeforeExecute', array($this->name, $this, $this->input));
+
 		$result = $this->doExecute();
 
-		return $this->postExecute($result);
+		// Event
+		$dispatcher->trigger('onComponentAfterExecute', array($this->name, $this, $this->input, $result));
+
+		$result = $this->postExecute($result);
+
+		return $result;
 	}
 
 	/**
@@ -182,6 +192,11 @@ class Component
 	 */
 	protected function init()
 	{
+		$dispatcher = $this->container->get('event.dispatcher');
+
+		// Event
+		$dispatcher->trigger('onComponentBeforeInit', array($this->name, $this, $this->input));
+
 		// We build component path constant, helpe us get path easily.
 		$this->path['self']          = JPATH_BASE . '/components/' . strtolower($this->option);
 		$this->path['site']          = JPATH_ROOT . '/components/' . strtolower($this->option);
@@ -218,6 +233,9 @@ class Component
 		// @TODO: Should use event listener
 		$this->registerTask('finder.elfinder.display', '\\Windwalker\\Elfinder\\Controller\\DisplayController');
 		$this->registerTask('finder.elfinder.connect', '\\Windwalker\\Elfinder\\Controller\\ConnectController');
+
+		// Event
+		$dispatcher->trigger('onComponentAfterInit', array($this->name, $this, $this->input));
 	}
 
 	/**
