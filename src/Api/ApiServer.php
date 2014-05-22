@@ -6,10 +6,12 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Windwalker\System\Api;
+namespace Windwalker\Api;
 
+use Joomla\Registry\Registry;
+use Windwalker\Api\Authentication\Authentication;
 use Windwalker\System\ExtensionHelper;
-use Windwalker\View\Json\JsonResponse;
+use Windwalker\Api\Response\JsonResponse;
 
 /**
  * API server.
@@ -26,15 +28,33 @@ class ApiServer
 	protected $component = null;
 
 	/**
+	 * Property option.
+	 *
+	 * @var  \Joomla\Registry\Registry
+	 */
+	protected $option = null;
+
+	/**
+	 * Property uri.
+	 *
+	 * @var  \JUri
+	 */
+	protected $uri = null;
+
+	/**
 	 * Class init.
 	 *
-	 * @param  string $option The component option name.
+	 * @param  string   $element The component option name.
+	 * @param  \JUri    $uri     The uri object.
+	 * @param  Registry $option  The option of this server.
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct($option)
+	public function __construct($element, \JUri $uri, Registry $option = null)
 	{
-		$extracted = ExtensionHelper::extractElement($option);
+		$extracted = ExtensionHelper::extractElement($element);
+		$this->option = $option ? : new Registry;
+		$this->uri = $uri;
 
 		if ($extracted['type'] !== 'component')
 		{
@@ -47,11 +67,14 @@ class ApiServer
 	/**
 	 * Register the API server.
 	 *
+	 * @throws \Exception
 	 * @return  boolean
 	 */
 	public function register()
 	{
-		if (!$this->isApi(\JURI::getInstance()))
+		$uri = \JURI::getInstance();
+
+		if (!$this->isApi())
 		{
 			return false;
 		}
@@ -61,6 +84,15 @@ class ApiServer
 
 		// Restore Joomla handler and using our Json handler.
 		JsonResponse::registerErrorHandler();
+
+		// Authentication
+		if (!$this->isUserOperation($uri) && $this->option['authorise'])
+		{
+			if (!Authentication::authenticate($input->get('session_key')))
+			{
+				throw new \Exception(\JText::_('JERROR_ALERTNOAUTHOR'), 403);
+			}
+		}
 
 		// Set Format to JSON
 		$input->set('format', 'json');
@@ -83,13 +115,45 @@ class ApiServer
 	 *
 	 * @return  boolean True is api server.
 	 */
-	public function isApi(\JUri $uri)
+	public function isApi(\JUri $uri = null)
 	{
+		$uri   = $uri ? : $this->uri;
 		$path  = $uri->getPath();
 		$root  = \JUri::root(true);
 		$route = substr($path, strlen($root));
 
 		return (strpos($route, '/api') === 0);
+	}
+
+	/**
+	 * isRoot
+	 *
+	 * @param \JUri $uri
+	 *
+	 * @return  bool
+	 */
+	public function isRoot(\JUri $uri = null)
+	{
+		$uri  = $uri ? : $this->uri;
+		$path = $uri->getPath();
+
+		return rtrim($path, '/') == '/api';
+	}
+
+	/**
+	 * isUserOperation
+	 *
+	 * @param \JUri $uri
+	 *
+	 * @return  boolean
+	 */
+	public function isUserOperation(\JUri $uri)
+	{
+		$path  = $uri->getPath();
+		$root  = \JUri::root(true);
+		$route = substr($path, strlen($root));
+
+		return (strpos($route, '/api/user') === 0);
 	}
 
 	/**
@@ -107,12 +171,12 @@ class ApiServer
 		$path = $uri->getPath();
 
 		// No path & method, return 404.
-		if (trim($path, '/') == 'api')
+		if ($this->isRoot($uri))
 		{
 			throw new \InvalidArgumentException('No method.', 404);
 		}
 
-		// Direct our URI to iCRM
+		// Direct our URI to component
 		$path = 'component/' . $this->component . '/' . $path;
 		$uri->setPath($path);
 		$uri->setVar('format', 'json');
