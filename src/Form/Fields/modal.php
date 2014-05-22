@@ -98,13 +98,13 @@ class JFormFieldModal extends JFormField
 		$html[] = '</span>';
 
 		// The active article id field.
-		if (0 == (int) $this->value)
+		if (!$this->value)
 		{
 			$value = '';
 		}
 		else
 		{
-			$value = (int) $this->value;
+			$value = $this->value;
 		}
 
 		// Class='required' for client side validation

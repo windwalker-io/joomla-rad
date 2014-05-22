@@ -131,7 +131,7 @@ $function = $input->get('function', 'jSelectArticle');
 
 					<!--ID-->
 					<td class="center">
-						<?php echo (int) $item->id; ?>
+						<?php echo $item->id; ?>
 					</td>
 
 				</tr>

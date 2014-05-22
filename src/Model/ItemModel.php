@@ -41,7 +41,7 @@ class ItemModel extends AbstractAdvancedModel
 	 */
 	public function getItem($pk = null)
 	{
-		$pk = (!empty($pk)) ? $pk : (int) $this->state->get($this->getName() . '.id');
+		$pk = (!empty($pk)) ? $pk : $this->state->get($this->getName() . '.id');
 		$table = $this->getTable();
 
 		if ($pk > 0)

@@ -47,7 +47,7 @@ abstract class ComponentHelper
 		elseif (!$id && $categoryId)
 		{
 			$section = 'category';
-			$assetName .= '.category.' . (int) $categoryId;
+			$assetName .= '.category.' . $categoryId;
 		}
 		elseif ($id && !$categoryId)
 		{

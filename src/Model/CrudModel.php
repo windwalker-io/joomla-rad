@@ -113,10 +113,10 @@ class CrudModel extends FormModel
 	 */
 	public function getItem($pk = null)
 	{
-		$pk = (!empty($pk)) ? $pk : (int) $this->state->get($this->getName() . '.id');
+		$pk = (!empty($pk)) ? $pk : $this->state->get($this->getName() . '.id');
 		$table = $this->getTable();
 
-		if ($pk > 0)
+		if (!empty($pk))
 		{
 			// Attempt to load the row.
 			$table->load($pk);

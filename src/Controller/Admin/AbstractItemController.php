@@ -66,7 +66,7 @@ abstract class AbstractItemController extends AbstractAdminController
 		$this->data     = $this->input->post->get('jform', array(), 'array');
 		$this->context  = sprintf('%s.edit.%s', $this->option, $this->name);
 
-		$this->recordId = $this->input->getInt($this->urlVar);
+		$this->recordId = $this->input->get($this->urlVar);
 
 		// Populate the row id from the session.
 		$this->data[$this->key] = $this->recordId;
@@ -88,7 +88,7 @@ abstract class AbstractItemController extends AbstractAdminController
 		// Add the id to the list if non-zero.
 		if (!empty($id))
 		{
-			array_push($values, (int) $id);
+			array_push($values, $id);
 			$values = array_unique($values);
 			$this->app->setUserState($context . '.id', $values);
 
@@ -121,7 +121,7 @@ abstract class AbstractItemController extends AbstractAdminController
 		$values = (array) $this->app->getUserState($context . '.id');
 
 		// Do a strict search of the edit list values.
-		$index = array_search((int) $id, $values, true);
+		$index = array_search($id, $values, true);
 
 		if (is_int($index))
 		{
@@ -158,7 +158,7 @@ abstract class AbstractItemController extends AbstractAdminController
 		{
 			$values = (array) $this->app->getUserState($context . '.id');
 
-			$result = in_array((int) $id, $values);
+			$result = in_array($id, $values);
 
 			if (defined('JDEBUG') && JDEBUG)
 			{

@@ -27,7 +27,7 @@ class EditController extends AbstractItemController
 		$cid = $this->input->post->get('cid', array(), 'array');
 
 		// Get the previous record id (if any) and the current record id.
-		$recordId = (int) (count($cid) ? $cid[0] : $this->recordId);
+		$recordId = count($cid) ? $cid[0] : $this->recordId;
 
 		// Access check.
 		if (!$this->allowEdit(array($this->key => $recordId), $this->key))
