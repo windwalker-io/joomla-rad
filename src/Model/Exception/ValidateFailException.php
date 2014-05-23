@@ -27,7 +27,7 @@ class ValidateFailException extends \Exception
 	 *
 	 * @param array $errors The validate errors.
 	 */
-	public function __construct(error $errors)
+	public function __construct(array $errors)
 	{
 		$this->errors = $errors;
 
@@ -47,11 +47,11 @@ class ValidateFailException extends \Exception
 	/**
 	 * Set errors.
 	 *
-	 * @param $errors
+	 * @param array $errors The error messages.
 	 *
 	 * @return ValidateFailException Return self to support chaining.
 	 */
-	public function setErrors(error $errors)
+	public function setErrors(array $errors)
 	{
 		$this->errors = $errors;
 
