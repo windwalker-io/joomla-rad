@@ -18,19 +18,6 @@ use Composer\Script\CommandEvent;
 class ComposerInstaller
 {
 	/**
-	 * The bin file content.
-	 *
-	 * @var  string
-	 */
-	static protected $binFile = <<<BIN
-#!/usr/bin/env php
-<?php
-
-include_once dirname(__DIR__) . '/libraries/windwalker/bin/windwalker.php';
-
-BIN;
-
-	/**
 	 * Do install.
 	 *
 	 * @param CommandEvent $event The command event.
@@ -40,29 +27,26 @@ BIN;
 	public static function install(CommandEvent $event)
 	{
 		$windPath = getcwd();
+		$root = realpath($windPath . '/../..');
 
 		$io = $event->getIO();
 
 		// Create console file.
 		$io->write('Writing console file to bin.');
 
-		file_put_contents($windPath . '/../../bin/windwalker', static::$binFile);
+		WindwalkerInstaller::createBinFile($root);
 
 		// Config file
 		$io->write('Prepare config file.');
 
-		copy($windPath . '/config.dist.json', $windPath . '/config.json');
+		WindwalkerInstaller::copyConfigFile($root);
 
 		// Bundles dir
 		$bundlesDir = dirname($windPath) . '/windwalker-bundles';
 
-		if (!is_dir($bundlesDir))
+		if (WindwalkerInstaller::createBundleDir($root))
 		{
 			$io->write('Create bundle folder: ' . $bundlesDir);
-
-			mkdir($bundlesDir);
-
-			file_put_contents($bundlesDir . '/index.html', '<!DOCTYPE html><title></title>');
 		}
 
 		// Complete

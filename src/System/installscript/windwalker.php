@@ -55,6 +55,10 @@ if ($install_windwalker)
 		$status = $cross;
 	}
 
+	include_once __DIR__ . '/../Installer/WindwalkerInstaller.php';
+
+	\Windwalker\System\Installer\WindwalkerInstaller::install(JPATH_ROOT);
+
 	// Set success table
 	$grid->addRow(array('class' => 'row' . ($i % 2)));
 	$grid->setRowCell('num',     ++$i, $td_class);

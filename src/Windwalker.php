@@ -49,6 +49,30 @@ class Windwalker
 		$container->registerServiceProvider(new \Windwalker\Provider\SystemProvider);
 
 		// Register bundles
+		$this->registerBundles($container);
+
+		// Load language
+		$lang = $container->get('language');
+		$lang->load('lib_windwalker', JPATH_BASE, null, false, false)
+		|| $lang->load('lib_windwalker', WINDWALKER, null, false, false)
+		|| $lang->load('lib_windwalker', JPATH_BASE, $lang->getDefault(), false, false)
+		|| $lang->load('lib_windwalker', WINDWALKER, $lang->getDefault(), false, false);
+	}
+
+	/**
+	 * Register Bundles
+	 *
+	 * @param Container $container DI container.
+	 *
+	 * @return  void
+	 */
+	protected function registerBundles(Container $container)
+	{
+		if (! is_dir(WINDWALKER_BUNDLE))
+		{
+			return;
+		}
+
 		$paths = new \Windwalker\Filesystem\Path\PathCollection(
 			array(
 				WINDWALKER . '/bundles',
@@ -75,13 +99,6 @@ class Windwalker
 				$class::registerProvider($container);
 			}
 		}
-
-		// Load language
-		$lang = $container->get('language');
-		$lang->load('lib_windwalker', JPATH_BASE, null, false, false)
-		|| $lang->load('lib_windwalker', WINDWALKER, null, false, false)
-		|| $lang->load('lib_windwalker', JPATH_BASE, $lang->getDefault(), false, false)
-		|| $lang->load('lib_windwalker', WINDWALKER, $lang->getDefault(), false, false);
 	}
 
 	/**
