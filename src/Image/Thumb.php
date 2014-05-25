@@ -147,6 +147,12 @@ class Thumb
 					$type = IMAGETYPE_JPEG;
 					break;
 			}
+			
+			// Create folder
+			if (!is_dir(dirname($file_path)))
+			{
+				\JFolder::create(dirname($file_path));
+			}
 
 			$img[0]->toFile($file_path, $type, array('quality' => $q));
 

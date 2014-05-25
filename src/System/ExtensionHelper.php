@@ -117,7 +117,7 @@ class ExtensionHelper
 				break;
 
 			case 'plugin':
-				$plugin = \JPluginHelper::getPlugin($extension['group'], 'plg_' . $extension['name']);
+				$plugin = \JPluginHelper::getPlugin($extension['group'], $extension['name']);
 				$params = $plugin->params;
 				$params = new Registry($params);
 				break;
