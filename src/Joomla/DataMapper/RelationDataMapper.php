@@ -8,9 +8,9 @@
 
 namespace Windwalker\Joomla\DataMapper;
 
-use Joomla\Database\DatabaseDriver;
-use Windwalker\Database\DatabaseFactory;
-use Windwalker\Database\QueryHelper;
+use \JDatabaseDriver as DatabaseDriver;
+use Windwalker\Joomla\Database\DatabaseFactory;
+use Windwalker\Joomla\Database\QueryHelper;
 
 /**
  * Relation Database Mapper.
