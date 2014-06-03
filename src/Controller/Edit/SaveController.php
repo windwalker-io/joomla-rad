@@ -186,7 +186,7 @@ class SaveController extends AbstractItemController
 			$this->app->setUserState($this->context . '.data', $validData);
 
 			// Redirect back to the edit screen.
-			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
+			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()), 500, $e);
 		}
 
 		return $validData;
