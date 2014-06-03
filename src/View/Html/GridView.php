@@ -247,7 +247,7 @@ class GridView extends ListHtmlView
 			'ignore_access'  => false
 		);
 
-		$config['fields'] = !empty($config['fields']) ? $config['fields'] : $this->configureFields();
+		$config['field'] = !empty($config['field']) ? $config['field'] : $this->configureFields();
 
 		$config = with(new Registry($defaultConfig))
 			->loadArray($config);
