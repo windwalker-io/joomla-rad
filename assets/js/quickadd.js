@@ -34,6 +34,8 @@ var AKQuickAdd = ({
         inputs.each( function(e){
             e.removeClass('required');
             e.set('default', e.get('value'));
+            
+            e.erase('required').erase('aria-required');
         });
     }
     ,
