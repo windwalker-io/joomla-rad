@@ -235,7 +235,7 @@ class LiteListener extends \JEvent
 	 *
 	 * @return  boolean
 	 */
-	public function onUserBeforeSave($user, $isNew, $success, $msg)
+	public function onUserBeforeSave($user, $isNew, $success, $msg = null)
 	{
 		$result = array();
 
@@ -254,7 +254,7 @@ class LiteListener extends \JEvent
 	 *
 	 * @return    boolean
 	 */
-	public function onUserAfterSave($user, $isNew, $success, $msg)
+	public function onUserAfterSave($user, $isNew, $success, $msg = null)
 	{
 		$result = array();
 
@@ -307,7 +307,7 @@ class LiteListener extends \JEvent
 	 *
 	 * @return  boolean
 	 */
-	public function onUserBeforeDelete($user, $isnew, $success, $msg)
+	public function onUserBeforeDelete($user, $isnew, $success, $msg = null)
 	{
 		$result = array();
 
@@ -325,7 +325,7 @@ class LiteListener extends \JEvent
 	 *
 	 * @return  boolean
 	 */
-	public function onUserAfterDelete($user, $success, $msg)
+	public function onUserAfterDelete($user, $success, $msg = null)
 	{
 		$result = array();
 
