@@ -73,7 +73,7 @@ class DisplayController extends Controller
 
 		if (!$view)
 		{
-			throw new \LogicException(sprintf('View not found. Name: %s, Format: %s'), $viewName, $viewFormat);
+			throw new \LogicException(sprintf('View not found. Name: %s, Format: %s', $viewName, $viewFormat));
 		}
 
 		$this->assignModel($view);
