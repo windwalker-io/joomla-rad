@@ -88,7 +88,7 @@ class AssetHelper implements ContainerAwareInterface
 		// Setup dependencies.
 		$this->paths = $paths ? : new \SplPriorityQueue((array) $paths);
 
-		$this->registerPaths();
+		$this->registerPaths(false);
 	}
 
 	/**
@@ -433,19 +433,24 @@ class AssetHelper implements ContainerAwareInterface
 	/**
 	 * Register default paths.
 	 *
+	 * @param boolean $includeTemplate True to include template path. Should be false before system routing.
+	 *
 	 * @return void
 	 */
-	protected function registerPaths()
+	protected function registerPaths($includeTemplate = true)
 	{
 		$app = $this->getContainer()->get('app');
 
 		$prefix = $app->isAdmin() ? 'administrator/' : '';
 
-		// (1) Find: templates/[tmpl]/[type]/[name]/[file_name].[type]
-		$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}/{name}', 800);
+		if ($includeTemplate && $app->isSite())
+		{
+			// (1) Find: templates/[tmpl]/[type]/[name]/[file_name].[type]
+			$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}/{name}', 800);
 
-		// (2) Find: templates/[tmpl]/[type]/[file_name].[type]
-		$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}', 700);
+			// (2) Find: templates/[tmpl]/[type]/[file_name].[type]
+			$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}', 700);
+		}
 
 		// (3) Find: components/[name]/asset/[type]/[file_name].[type]
 		$this->paths->insert($prefix . 'components/{name}/asset/{type}', 600);
@@ -473,6 +478,20 @@ class AssetHelper implements ContainerAwareInterface
 
 		// (11) Find: libraries/windwalker/assets/[file_name].[type] (For legacy)
 		$this->paths->insert('libraries/windwalker/assets', 10);
+	}
+
+	/**
+	 * Reset paths.
+	 *
+	 * @param boolean $includeTemplate True to include template path. Should be false before system routing.
+	 *
+	 * @return  AssetHelper
+	 */
+	public function resetPaths($includeTemplate = true)
+	{
+		$this->setPaths(new \SplPriorityQueue)->registerPaths($includeTemplate);
+
+		return $this;
 	}
 
 	/**
