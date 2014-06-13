@@ -76,6 +76,8 @@ class ComponentProvider implements ServiceProviderInterface
 			'\\Windwalker\\Helper\\AssetHelper',
 			function($asset, $container) use($name)
 			{
+				$asset->resetPaths();
+
 				$asset = clone $asset;
 
 				return $asset->setName('com_' . strtolower($name))
