@@ -192,6 +192,21 @@ class ToolbarHelper
 	}
 
 	/**
+	 * Add Custom button by html.
+	 *
+	 * @param string $html The button html string.
+	 *
+	 * @return  void
+	 */
+	public function custom($html)
+	{
+		$bar = JToolbar::getInstance('toolbar');
+
+		// Add a custom button.
+		$bar->appendButton('Custom', $html);
+	}
+
+	/**
 	 * Writes a common 'delete' button for a list of records.
 	 *
 	 * @param   string  $task  An override for the task.
@@ -200,7 +215,7 @@ class ToolbarHelper
 	 *
 	 * @return  void
 	 */
-	public static function deleteList($task = 'remove', $alt = 'JTOOLBAR_DELETE', $msg = '')
+	public function deleteList($task = 'remove', $alt = 'JTOOLBAR_DELETE', $msg = '')
 	{
 		$bar = JToolbar::getInstance('toolbar');
 
