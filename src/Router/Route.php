@@ -33,13 +33,13 @@ class Route
 
 		if (count($resource) == 2)
 		{
-			$data['option'] = $resource[0];
-			$data['view']   = $resource[1];
+			$data['option']    = $resource[0];
+			$data['_resource'] = $resource[1];
 		}
 		elseif (count($resource) == 1)
 		{
-			$data['option'] = $resource[0];
-			$data['view']   = null;
+			$data['option']    = $resource[0];
+			$data['_resource'] = null;
 		}
 
 		$url = new \JUri;
@@ -67,13 +67,15 @@ class Route
 		$Itemid = null;
 
 		$data['view'] = isset($data['view']) ? $data['view'] : null;
-		
+
 		// If itemid exists and view not, use itemid as menu item
 		if (isset($data['Itemid']) && empty($data['view']))
 		{
 			if ($item = $menu->getItem($data['Itemid']))
 			{
-				return array('Itemid' => $item->id, 'option' => $data['option']);
+				$data['Itemid'] = $item->id;
+
+				return $data;
 			}
 		}
 
@@ -88,7 +90,7 @@ class Route
 
 				if ($option == $data['option'] && $view == $data['view'] && $id == $data['id'])
 				{
-					$data = array('Itemid' => $item->id, 'option' => $data['option']);
+					$data['Itemid'] = $item->id;
 
 					return $data;
 				}
@@ -96,7 +98,7 @@ class Route
 		}
 
 		// Find option and view
-		if (!$Itemid)
+		if (!$Itemid && !empty($data['view']))
 		{
 			foreach ($items as $item)
 			{
@@ -105,17 +107,17 @@ class Route
 
 				if ($option == $data['option'] && $view == $data['view'])
 				{
-					$Itemid = $item->id;
-
 					unset($data['view']);
 
-					break;
+					$data['Itemid'] = $item->id;
+
+					return $data;
 				}
 			}
 		}
 
 		// Find option
-		if (!$Itemid /* && !empty($data['view'])*/)
+		if (!$Itemid && empty($data['view']))
 		{
 			foreach ($items as $item)
 			{
@@ -123,16 +125,11 @@ class Route
 
 				if ($option == $data['option'])
 				{
-					$Itemid = $item->id;
+					$data['Itemid'] = $item->id;
 
-					break;
+					return $data;
 				}
 			}
-		}
-
-		if ($Itemid)
-		{
-			$data['Itemid'] = $Itemid;
 		}
 
 		return $data;

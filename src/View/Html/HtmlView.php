@@ -65,7 +65,10 @@ class HtmlView extends AbstractHtmlView
 		$doc = $this->container->get('document');
 		$doc->setTitle($title);
 
-		\JToolbarHelper::title($title, $icons);
+		if ($this->container->get('app')->isAdmin())
+		{
+			\JToolbarHelper::title($title, $icons);
+		}
 	}
 
 	/**

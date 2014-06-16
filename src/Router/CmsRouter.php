@@ -53,4 +53,33 @@ class CmsRouter extends Router
 		// Get the view name based on the route patterns and requested route.
 		return $name = $this->parseRoute($route);
 	}
+
+	/**
+	 * Build route by raw url.
+	 *
+	 * @param array &$queries
+	 *
+	 * @return  array
+	 */
+	public function buildByRaw(&$queries)
+	{
+		if (empty($queries['view']))
+		{
+			return array();
+		}
+
+		foreach ($this->maps as $view => $map)
+		{
+			if ($map['controller'] == $queries['view'])
+			{
+				unset($queries['view']);
+
+				return $this->build($view, $map);
+
+				break;
+			}
+		}
+
+		return array();
+	}
 }

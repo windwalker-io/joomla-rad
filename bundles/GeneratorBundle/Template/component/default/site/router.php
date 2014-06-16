@@ -35,11 +35,15 @@ function {{extension.name.cap}}BuildRoute(&$query)
 
 	$query = \Windwalker\Router\Route::build($query);
 
-	if (!empty($query['view']))
+	if (!empty($query['_resource']))
 	{
-		$segments = $router->build($query['view'], $query);
+		$segments = $router->build($query['_resource'], $query);
 
-		unset($query['view']);
+		unset($query['_resource']);
+	}
+	else
+	{
+		$segments = $router->buildByRaw($query);
 	}
 
 	return $segments;

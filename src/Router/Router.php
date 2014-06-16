@@ -332,8 +332,10 @@ class Router
 
 		$pattern = $this->resources[$name];
 
-		foreach ($queries as $key => $var)
+		foreach ($this->maps[$name]['vars'] as $key)
 		{
+			$var = isset($queries[$key]) ? $queries[$key] : $this->input->get($key, 'null');
+
 			if (is_array($var) || is_object($var))
 			{
 				$var = implode('/', (array) $var);
