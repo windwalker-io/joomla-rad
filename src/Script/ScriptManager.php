@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Windwalker\Html\Asset;
+namespace Windwalker\Script;
 
 use Windwalker\DI\Container;
 use Windwalker\Helper\AssetHelper;
@@ -16,7 +16,7 @@ use Windwalker\Helper\AssetHelper;
  *
  * @since 2.0
  */
-class AssetManager
+class ScriptManager
 {
 	/**
 	 * THe asset helpers storage.
@@ -63,6 +63,38 @@ class AssetManager
 		}
 
 		static::$initialised['underscore'] = true;
+	}
+
+	/**
+	 * Include Backbone. Note this library may not support old IE browser.
+	 *
+	 * Please see: http://backbonejs.org/
+	 *
+	 * @param   boolean $noConflict
+	 *
+	 * @return  void
+	 */
+	public static function backbone($noConflict = false)
+	{
+		if (!empty(static::$initialised['backbone']))
+		{
+			return;
+		}
+
+		// Dependency
+		\JHtmlJquery::framework(true);
+		static::underscore();
+
+		$asset = $asset = static::getHelper();
+
+		$asset->addJs('backbone.js');
+
+		if ($noConflict)
+		{
+			$asset->internalJS(';var backbone = Backbone.noConflict();');
+		}
+
+		static::$initialised['backbone'] = true;
 	}
 
 	/**
