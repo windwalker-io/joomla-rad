@@ -57,6 +57,15 @@ class SystemProvider extends ServiceProvider
 			}
 		);
 
+		// Asset
+		$container->share(
+			'helper.asset',
+			function()
+			{
+				return new \Windwalker\Helper\AssetHelper;
+			}
+		);
+
 		// Detect deferent environment
 		if (defined('WINDWALKER_CONSOLE'))
 		{

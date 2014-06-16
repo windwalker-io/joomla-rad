@@ -38,12 +38,5 @@ class WebProvider implements ServiceProviderInterface
 		// Input
 		$container->alias('input', 'JInput')
 			->share('JInput', \JFactory::getApplication()->input);
-
-		// Helpers
-		if (\JFactory::getApplication() instanceof \JApplicationCms)
-		{
-			$container->alias('helper.asset', '\\Windwalker\\Helper\\AssetHelper')
-				->buildSharedObject('\\Windwalker\\Helper\\AssetHelper');
-		}
 	}
 }

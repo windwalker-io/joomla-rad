@@ -73,7 +73,7 @@ class ComponentProvider implements ServiceProviderInterface
 
 		// Asset Helper
 		$container->extend(
-			'\\Windwalker\\Helper\\AssetHelper',
+			'helper.asset',
 			function($asset, $container) use($name)
 			{
 				$asset->resetPaths();
@@ -84,7 +84,5 @@ class ComponentProvider implements ServiceProviderInterface
 					->setContainer($container);
 			}
 		);
-
-		$container->alias('helper.asset', '\\Windwalker\\Helper\\AssetHelper');
 	}
 }
