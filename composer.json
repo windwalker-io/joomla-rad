@@ -14,6 +14,7 @@
 		"asika/joomla-console": "1.1.*",
 		"asika/php-code-generator": "0.1.*",
 		"joomla/registry": "~1.0",
+		"joomla/filesystem": "~1.0",
 		"filp/whoops": "1.*"
 	},
 	"require-dev": {

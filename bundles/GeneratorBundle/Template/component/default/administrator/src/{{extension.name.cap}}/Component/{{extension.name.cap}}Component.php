@@ -32,7 +32,7 @@ abstract class {{extension.name.cap}}Component extends Component
 	 *
 	 * @return void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 		if (JDEBUG)
 		{

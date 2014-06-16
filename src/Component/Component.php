@@ -181,7 +181,7 @@ class Component
 	 *
 	 * @return void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 	}
 
@@ -190,7 +190,7 @@ class Component
 	 *
 	 * @return void
 	 */
-	protected function init()
+	public function init()
 	{
 		$dispatcher = $this->container->get('event.dispatcher');
 

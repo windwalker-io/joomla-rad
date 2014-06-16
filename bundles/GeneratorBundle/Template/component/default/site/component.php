@@ -30,7 +30,7 @@ final class {{extension.name.cap}}Component extends \{{extension.name.cap}}\Comp
 	 *
 	 * @return void
 	 */
-	protected function prepare()
+	public function prepare()
 	{
 		parent::prepare();
 	}
