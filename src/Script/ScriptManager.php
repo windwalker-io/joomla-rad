@@ -40,6 +40,25 @@ class ScriptManager
 	protected static $modules = array();
 
 	/**
+	 * Load RequireJS.
+	 *
+	 * @return  void
+	 */
+	public static function requireJS()
+	{
+		if (!empty(static::$initialised['requirejs']))
+		{
+			return;
+		}
+
+		$asset = $asset = static::getHelper();
+
+		$asset->addJs('require.js');
+
+		static::$initialised['requirejs'] = true;
+	}
+
+	/**
 	 * Load underscore.
 	 *
 	 * @param boolean $noConflict Enable underscore no conflict mode.
