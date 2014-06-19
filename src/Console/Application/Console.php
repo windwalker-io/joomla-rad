@@ -17,8 +17,6 @@ use Joomla\Registry\Registry;
 use Windwalker\Console\Descriptor\CommandDescriptor;
 use Windwalker\DI\Container;
 use Windwalker\Console\Descriptor\OptionDescriptor;
-use Windwalker\Helper\PathHelper;
-use Windwalker\System\ExtensionHelper;
 
 /**
  * Console Class.
@@ -227,50 +225,5 @@ HELP
 		$this->container = $container;
 
 		return $this;
-	}
-
-	/**
-	 * executeComponent
-	 *
-	 * @param string $option
-	 * @param string $client
-	 * @param array  $input
-	 *
-	 * @return  mixed
-	 */
-	public static function executeComponent($option, $client = 'site', $input = array())
-	{
-		$element = ExtensionHelper::extractElement($option);
-		$input = new \JInput($input);
-
-		if (! defined('JPATH_COMPONENT_ADMINISTRATOR'))
-		{
-			define('JPATH_COMPONENT_ADMINISTRATOR', PathHelper::get($option, 'admin'));
-			define('JPATH_COMPONENT_SITE', PathHelper::get($option, 'site'));
-			define('JPATH_COMPONENT', PathHelper::get($option, $client));
-		}
-
-		$_SERVER['HTTP_HOST'] = 'windwalker';
-
-		if ($client == 'admin')
-		{
-			$client = 'administrator';
-		}
-
-		$appClass = 'JApplication' . ucfirst($client);
-
-		$console = \JFactory::$application;
-
-		\JFactory::$application = new $appClass($input);
-
-		$class = ucfirst($element['name']) . 'Component';
-
-		$component = new $class(ucfirst($element['name']), $input, \JFactory::$application);
-
-		$result = $component->execute();
-
-		\JFactory::$application = $console;
-
-		return $result;
 	}
 }

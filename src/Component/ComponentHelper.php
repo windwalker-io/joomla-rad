@@ -10,6 +10,7 @@ namespace Windwalker\Component;
 
 use Windwalker\Helper\PathHelper;
 use Windwalker\Object\Object;
+use Windwalker\System\ExtensionHelper;
 
 /**
  * Component Helper class.
@@ -66,6 +67,54 @@ abstract class ComponentHelper
 		{
 			$result->set($action->name, $user->authorise($action->name, $assetName));
 		}
+
+		return $result;
+	}
+
+	/**
+	 * Execute Component.
+	 *
+	 * @param string $option Component option name.
+	 * @param string $client `admin` or `site`.
+	 * @param array  $input  Input object.
+	 *
+	 * @return  mixed
+	 */
+	public static function executeComponent($option, $client = 'site', $input = array())
+	{
+		$element = ExtensionHelper::extractElement($option);
+		$input = new \JInput($input);
+
+		// Prevent class conflict
+		class_alias('JString', 'Joomla\\String\\String');
+
+		if (! defined('JPATH_COMPONENT_ADMINISTRATOR'))
+		{
+			define('JPATH_COMPONENT_ADMINISTRATOR', PathHelper::get($option, 'admin'));
+			define('JPATH_COMPONENT_SITE', PathHelper::get($option, 'site'));
+			define('JPATH_COMPONENT', PathHelper::get($option, $client));
+		}
+
+		$_SERVER['HTTP_HOST'] = 'windwalker';
+
+		if ($client == 'admin')
+		{
+			$client = 'administrator';
+		}
+
+		$appClass = 'JApplication' . ucfirst($client);
+
+		$console = \JFactory::$application;
+
+		\JFactory::$application = $appClass::getInstance('site', $input);
+
+		$class = ucfirst($element['name']) . 'Component';
+
+		$component = new $class(ucfirst($element['name']), $input, \JFactory::$application);
+
+		$result = $component->execute();
+
+		\JFactory::$application = $console;
 
 		return $result;
 	}
