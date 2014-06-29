@@ -189,7 +189,7 @@ class GridView extends ListHtmlView
 
 			'checkin' => array(
 				'handler'  => 'checkin',
-				'args'     => array($this->viewList . '.state.checkin'),
+				'args'     => array($this->viewList . '.check.checkin'),
 				'access'   => 'core.create',
 				'priority' => 500
 			),
