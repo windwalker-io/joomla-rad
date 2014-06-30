@@ -51,14 +51,12 @@ class XmlHelper
 	 */
 	public static function getAttribute(\SimpleXMLElement $xml, $attr, $default = null)
 	{
-		$value = (string) $xml[$attr];
-
-		if (!$value)
+		if (!isset($xml[$attr]))
 		{
 			return $default;
 		}
 
-		return $value;
+		return (string) $xml[$attr];
 	}
 
 	/**
