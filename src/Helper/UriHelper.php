@@ -167,4 +167,28 @@ class UriHelper
 
 		return $uri->toString();
 	}
+	
+	/**
+	 * Is home page?
+	 *
+	 * @return  boolean
+	 */
+	public static function isHome()
+	{
+		$uri  = \JUri::getInstance();
+		$root = $uri::root(true);
+
+		// Get site route
+		$route = \JString::substr($uri->getPath(), \JString::strlen($root));
+
+		// Remove index.php
+		$route = str_replace('index.php', '', $route);
+
+		if (! trim($route, '/') && ! $uri->getVar('option'))
+		{
+			return true;
+		}
+
+		return false;
+	}
 }
