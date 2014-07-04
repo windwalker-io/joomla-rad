@@ -69,8 +69,6 @@ class HtmlView extends AbstractHtmlView
 		{
 			\JToolbarHelper::title($title, $icons);
 		}
-
-		$toolbar = $this->getToolbarHelper();
 	}
 
 	/**

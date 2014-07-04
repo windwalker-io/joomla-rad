@@ -78,14 +78,14 @@ class EditView extends ItemHtmlView
 	 *
 	 * @return  void
 	 */
-	protected function setTitle($title = null, $icons = 'pencil-2')
+	protected function setTitle($title = null, $icons = 'pencil-2 article')
 	{
 		if (!$title)
 		{
 			$title = \JText::_(sprintf('COM_%s_%s_TITLE_ITEM_EDIT', strtoupper($this->prefix), strtoupper($this->viewItem)));
 		}
 
-		parent::setTitle($title, 'pencil-2 article');
+		parent::setTitle($title, $icons);
 	}
 
 	/**

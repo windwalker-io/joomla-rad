@@ -109,14 +109,14 @@ class GridView extends ListHtmlView
 	 *
 	 * @return  void
 	 */
-	protected function setTitle($title = null, $icons = 'stack')
+	protected function setTitle($title = null, $icons = 'stack article')
 	{
 		if (!$title)
 		{
 			$title = \JText::_(sprintf('COM_%s_%s_TITLE_LIST', strtoupper($this->prefix), strtoupper($this->getName())));
 		}
 
-		parent::setTitle($title, 'stack article');
+		parent::setTitle($title, $icons);
 	}
 
 	/**
