@@ -265,7 +265,7 @@ class ListModel extends FormModel
 		// Debug
 		if (JDEBUG)
 		{
-			ProfilerHelper::mark((string) $query);
+			ProfilerHelper::mark(QueryHelper::highlightQuery($this->db->replacePrefix((string) $query)));
 		}
 
 		return $query;

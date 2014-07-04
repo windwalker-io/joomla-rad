@@ -50,61 +50,6 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 	}
 
 	/**
-	 * Add a table into storage.
-	 *
-	 * Example: `addTable('item', '#__items', 'item.catid = cat.id')`
-	 *
-	 * @param string $alias     Table select alias.
-	 * @param string $table     Table name.
-	 * @param mixed  $condition Join conditions, use string or array.
-	 * @param string $joinType  The Join type.
-	 *
-	 * @return  QueryHelper  Return self to support chaining.
-	 */
-	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT')
-	{
-		$tableStorage = array();
-
-		$tableStorage['name'] = $table;
-		$tableStorage['join']  = strtoupper($joinType);
-
-		if ($condition)
-		{
-			$condition = (string) new \JDatabaseQueryElement('ON', (array) $condition, ' AND ');
-		}
-		else
-		{
-			$tableStorage['join'] = 'FROM';
-		}
-
-		// Remove too many spaces
-		$condition = preg_replace('/\s(?=\s)/', '', $condition);
-
-		$tableStorage['condition'] = trim($condition);
-
-		$this->tables[$alias] = $tableStorage;
-
-		return $this;
-	}
-
-	/**
-	 * Remove a table from storage.
-	 *
-	 * @param string $alias Table alias.
-	 *
-	 * @return  QueryHelper Return self to support chaining.
-	 */
-	public function removeTable($alias)
-	{
-		if (!empty($this->tables[$alias]))
-		{
-			unset($this->tables[$alias]);
-		}
-
-		return $this;
-	}
-
-	/**
 	 * Filter fields.
 	 *
 	 * @return  array Filter fields.
@@ -163,5 +108,43 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 	public static function publishingItems($prefix = '', $published_col = 'published')
 	{
 		return self::publishingPeriod($prefix) . " AND {$prefix}{$published_col} >= '1' ";
+	}
+
+	/**
+	 * Simple highlight for SQL queries.
+	 *
+	 * @param   string  $query  The query to highlight.
+	 *
+	 * @return  string
+	 */
+	public static function highlightQuery($query)
+	{
+		$newlineKeywords = '#\b(FROM|LEFT|INNER|OUTER|WHERE|SET|VALUES|ORDER|GROUP|HAVING|LIMIT|ON|AND|CASE)\b#i';
+
+		$query = htmlspecialchars($query, ENT_QUOTES);
+
+		$query = preg_replace($newlineKeywords, '<br />&#160;&#160;\\0', $query);
+
+		$regex = array(
+
+			// Tables are identified by the prefix.
+			'/(=)/'
+			=> '<b class="text-error">$1</b>',
+
+			// All uppercase words have a special meaning.
+			'/(?<!\w|>)([A-Z_]{2,})(?!\w)/x'
+			=> '<span class="text-info">$1</span>',
+
+			// Tables are identified by the prefix.
+			'/(' . \JFactory::getDbo()->getPrefix() . '[a-z_0-9]+)/'
+			=> '<span class="text-success">$1</span>'
+
+		);
+
+		$query = preg_replace(array_keys($regex), array_values($regex), $query);
+
+		$query = str_replace('*', '<b style="color: red;">*</b>', $query);
+
+		return $query;
 	}
 }
