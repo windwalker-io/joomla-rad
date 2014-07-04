@@ -8,7 +8,9 @@
 
 // No direct access
 use Windwalker\DI\Container;
+use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\XmlHelper;
+use Windwalker\String\String;
 
 defined('_JEXEC') or die;
 
@@ -367,8 +369,35 @@ SCRIPT;
 		$start_path = XmlHelper::get($this->element, 'start_path', '/');
 		$onlymimes  = XmlHelper::get($this->element, 'onlymimes', '');
 
+		$root = $this->convertPath($root);
+		$start_path = $this->convertPath($start_path);
+
 		$link = "index.php?option={$handler}&task=finder.elfinder.display&tmpl=component&finder_id={$this->id}&root={$root}&start_path={$start_path}&onlymimes={$onlymimes}";
 
 		return $link;
+	}
+
+	/**
+	 * convertPath
+	 *
+	 * @param string $path
+	 *
+	 * @return  string
+	 */
+	protected function convertPath($path)
+	{
+		$user = Container::getInstance()->get('user');
+		$date = DateHelper::getDate();
+
+		$replace = array(
+			'username' => $user->username,
+			'name' => $user->name,
+			'session' => \JFactory::getSession()->getId(),
+			'year' => $date->year,
+			'month' => $date->month,
+			'day' => $date->day
+		);
+
+		return String::parseVariable($path, $replace);
 	}
 }

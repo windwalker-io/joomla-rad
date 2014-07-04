@@ -13,6 +13,8 @@ use elFinderConnector;
 use JPath;
 use JURI;
 use Joomla\Registry\Registry;
+use Windwalker\Helper\DateHelper;
+use Windwalker\String\String;
 use Windwalker\View\Json\AbstractJsonView;
 
 /**
@@ -78,6 +80,9 @@ class ConnectView extends AbstractJsonView
 		$root       = $input->getPath('root', '/');
 		$start_path = $input->getPath('start_path', '/');
 
+		$this->createFolder($root);
+		$this->createFolder($root . '/' . $start_path);
+
 		$opts = array(
 			// 'debug' => true,
 			'roots' => array(
@@ -115,6 +120,25 @@ class ConnectView extends AbstractJsonView
 		$connector->run();
 
 		exit();
+	}
+
+	/**
+	 * Create Folder.
+	 *
+	 * @param string $path The path to create.
+	 *
+	 * @return  void
+	 */
+	protected function createFolder($path)
+	{
+		$path = JPATH_ROOT . '/' . $path;
+
+		if (! is_dir($path))
+		{
+			\JFolder::create($path);
+
+			file_put_contents($path . '/index.html', '<!DOCTYPE html><title></title>');
+		}
 	}
 
 	/**
