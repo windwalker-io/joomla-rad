@@ -70,6 +70,7 @@ class DisplayView extends AbstractHtmlView
 		$root       = $config->get('root', $input->get('root', '/'));
 		$start_path = $config->get('start_path', $input->get('start_path', '/'));
 		$site_root  = JURI::root(true) . '/';
+		$height     = $config->get('height', 445);
 
 		$toolbar = $config->get('toolbar', $this->defaultToolbar);
 		$toolbar = json_encode($toolbar);
@@ -94,8 +95,9 @@ class DisplayView extends AbstractHtmlView
 		// Set Script
 		$getFileCallback = !$modal ? '' : "
             ,
-            getFileCallback : function(file){
-                if (window.parent) window.parent.AKFinderSelect( '{$finder_id}',AKFinderSelected, window.elFinder, '{$site_root}');
+            getFileCallback : function(file)
+            {
+                if (window.parent) window.parent.AKFinderSelect( '{$finder_id}', AKFinderSelected, window.elFinder, '{$site_root}');
             }";
 
 		$script = <<<SCRIPT
@@ -107,18 +109,21 @@ class DisplayView extends AbstractHtmlView
             elFinder = $('#elfinder').elfinder({
                 url         : 'index.php?option={$com_option}&task=finder.elfinder.connect&root={$root}&start_path={$start_path}' ,
                 width       : '100%' ,
-                height      : 445 ,
+                height      : {$height} ,
                 onlyMimes   : [$onlymimes],
                 lang        : '{$lang_code}',
                 uiOptions   : {
                     toolbar : {$toolbar}
                 },
                 handlers    : {
-                    select : function(event, elfinderInstance) {
+                    select : function(event, elfinderInstance)
+                    {
                         var selected = event.data.selected;
 
-                        if (selected.length) {
+                        if (selected.length)
+                        {
                             AKFinderSelected = [];
+
                             jQuery.each(selected, function(i, e){
                                     AKFinderSelected[i] = elfinderInstance.file(e);
                             });
@@ -131,7 +136,7 @@ class DisplayView extends AbstractHtmlView
 
             }).elfinder('instance');
 
-            elFinder.ui.statusbar.append( '<div class="akfinder-upload-limit">{$upload_limit}</div>' );
+            elFinder.ui.statusbar.append('<div class="akfinder-upload-limit">{$upload_limit}</div>');
         });
 SCRIPT;
 

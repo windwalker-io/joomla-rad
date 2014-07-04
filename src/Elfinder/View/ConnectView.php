@@ -38,11 +38,11 @@ class ConnectView extends AbstractJsonView
 	{
 		// Init some API objects
 		// ================================================================================
-		$container  = $this->getContainer();
-		$input      = $container->get('input');
-		$config     = new Registry($this->config);
+		$container = $this->getContainer();
+		$input     = $container->get('input');
+		$config    = new Registry($this->config);
 
-		// Set E_ALL for debuging
+		// Set E_ALL for debugging
 		error_reporting($config->get('error_reporting', 0));
 
 		$elfinder_path = WINDWALKER . '/assets/js/elfinder/php/';
@@ -103,7 +103,7 @@ class ConnectView extends AbstractJsonView
 			)
 		);
 
-		$opts = array_merge($opts, $config->toArray());
+		$opts = $config->get('option') ? : $opts;
 
 		foreach ($opts['roots'] as $driver)
 		{
