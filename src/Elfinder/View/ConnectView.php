@@ -75,8 +75,8 @@ class ConnectView extends AbstractJsonView
 		}
 
 		// Get Some Request
-		$root       = $input->get('root', '/');
-		$start_path = $input->get('start_path', '/');
+		$root       = $input->getPath('root', '/');
+		$start_path = $input->getPath('start_path', '/');
 
 		$opts = array(
 			// 'debug' => true,
