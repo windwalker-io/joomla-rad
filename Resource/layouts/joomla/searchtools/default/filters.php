@@ -19,7 +19,7 @@ $searches = $data['view']->filterForm->getFieldset('multisearch');
 <?php if ($searches) : ?>
 	<?php foreach ($searches as $fieldName => $field) : ?>
 		<div class="js-stools-field-filter">
-			<?php echo $field->label; ?>
+			<?php echo isset($displayData['option']['no_label']) ? $field->label : ''; ?>
 			<?php echo $field->input; ?>
 		</div>
 	<?php endforeach; ?>
@@ -28,7 +28,7 @@ $searches = $data['view']->filterForm->getFieldset('multisearch');
 <?php if ($filters) : ?>
 	<?php foreach ($filters as $fieldName => $field) : ?>
 		<div class="js-stools-field-filter">
-			<?php echo $field->label; ?>
+			<?php echo isset($displayData['option']['no_label']) ? $field->label : ''; ?>
 			<?php echo $field->input; ?>
 		</div>
 	<?php endforeach; ?>
