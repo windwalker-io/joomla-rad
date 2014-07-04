@@ -203,6 +203,11 @@ class SaveController extends AbstractItemController
 	{
 		$this->input->set('layout', null);
 
+		// Attempt to check-in the current record.
+		$data = array('cid' => array($this->recordId), 'quiet' => true);
+
+		$this->fetch($this->prefix, $this->viewList . '.check.checkin', $data);
+
 		// Clear the record id and data from the session.
 		$this->releaseEditId($this->context, $this->recordId);
 
