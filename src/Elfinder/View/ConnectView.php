@@ -13,8 +13,6 @@ use elFinderConnector;
 use JPath;
 use JURI;
 use Joomla\Registry\Registry;
-use Windwalker\Helper\DateHelper;
-use Windwalker\String\String;
 use Windwalker\View\Json\AbstractJsonView;
 
 /**
