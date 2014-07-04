@@ -172,6 +172,10 @@ SCRIPT;
 
 		$asset->addJs('js/jquery-ui/js/jquery-ui.min.js');
 		$asset->addJs('js/elfinder/js/elfinder.min.js');
-		$asset->addJs('js/elfinder/js/i18n/elfinder.' . $lang_code . '.js');
+
+		if (is_file(WINDWALKER . '/asset/js/elfinder/js/i18n/elfinder.' . $lang_code . '.js'))
+		{
+			$asset->addJs('js/elfinder/js/i18n/elfinder.' . $lang_code . '.js');
+		}
 	}
 }
