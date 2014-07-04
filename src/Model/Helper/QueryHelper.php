@@ -8,8 +8,6 @@
 
 namespace Windwalker\Model\Helper;
 
-use JDatabaseDriver;
-use JDatabaseQuery;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Joomla\Database\DatabaseFactory;
@@ -21,34 +19,6 @@ use Windwalker\Joomla\Database\DatabaseFactory;
  */
 class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 {
-	/**
-	 * THe first table only select columns' name.
-	 *
-	 * For example: `item.title AS title`
-	 *
-	 * @const integer
-	 */
-	const COLS_WITH_FIRST = 1;
-
-	/**
-	 * The first table select column with prefix as alias.
-	 *
-	 * For example: `item.title AS item_title`
-	 *
-	 * @const integer
-	 */
-	const COLS_PREFIX_WITH_FIRST = 2;
-
-	/**
-	 * Constructor.
-	 *
-	 * @param JDatabaseDriver $db The db adapter.
-	 */
-	public function __construct(JDatabaseDriver $db = null)
-	{
-		$this->db = $db ? : $this->getDb();
-	}
-
 	/**
 	 * Filter fields.
 	 *
@@ -115,7 +85,7 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 	 *
 	 * @param   string  $query  The query to highlight.
 	 *
-	 * @return  string
+	 * @return  string  Highlighted query string.
 	 */
 	public static function highlightQuery($query)
 	{
@@ -129,7 +99,7 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 
 			// Tables are identified by the prefix.
 			'/(=)/'
-			=> '<b class="text-error">$1</b>',
+			=> '<strong class="text-error">$1</strong>',
 
 			// All uppercase words have a special meaning.
 			'/(?<!\w|>)([A-Z_]{2,})(?!\w)/x'
@@ -143,7 +113,7 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 
 		$query = preg_replace(array_keys($regex), array_values($regex), $query);
 
-		$query = str_replace('*', '<b style="color: red;">*</b>', $query);
+		$query = str_replace('*', '<strong style="color: red;">*</strong>', $query);
 
 		return $query;
 	}
