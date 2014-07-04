@@ -12,13 +12,14 @@ use JDatabaseDriver;
 use JDatabaseQuery;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
+use Windwalker\Joomla\Database\DatabaseFactory;
 
 /**
  * The Query Helper
  *
  * @since 2.0
  */
-class QueryHelper
+class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 {
 	/**
 	 * THe first table only select columns' name.
@@ -37,27 +38,6 @@ class QueryHelper
 	 * @const integer
 	 */
 	const COLS_PREFIX_WITH_FIRST = 2;
-
-	/**
-	 * A cache to store Table columns.
-	 *
-	 * @var array
-	 */
-	protected $columnCache;
-
-	/**
-	 * THe db adapter.
-	 *
-	 * @var  JDatabaseDriver
-	 */
-	protected $db = null;
-
-	/**
-	 * Tables storage.
-	 *
-	 * @var  array
-	 */
-	protected $tables = array();
 
 	/**
 	 * Constructor.
@@ -125,54 +105,6 @@ class QueryHelper
 	}
 
 	/**
-	 * Get select fields.
-	 *
-	 * @param int $prefixFirst Prefix first.
-	 *
-	 * @return  array Select fields.
-	 */
-	public function getSelectFields($prefixFirst = self::COLS_WITH_FIRST)
-	{
-		$fields = array();
-
-		$i = 0;
-
-		foreach ($this->tables as $alias => $table)
-		{
-			if (empty($this->columnCache[$table['name']]))
-			{
-				$this->columnCache[$table['name']] = $this->db->getTableColumns($table['name']);
-			}
-
-			$columns = $this->columnCache[$table['name']];
-
-			foreach ($columns as $column => $var)
-			{
-				if ($i === 0)
-				{
-					if ($prefixFirst & self::COLS_WITH_FIRST)
-					{
-						$fields[] = $this->db->quoteName("{$alias}.{$column}", $column);
-					}
-
-					if ($prefixFirst & self::COLS_PREFIX_WITH_FIRST)
-					{
-						$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$alias}_{$column}");
-					}
-				}
-				else
-				{
-					$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$alias}_{$column}");
-				}
-			}
-
-			$i++;
-		}
-
-		return $fields;
-	}
-
-	/**
 	 * Filter fields.
 	 *
 	 * @return  array Filter fields.
@@ -183,12 +115,7 @@ class QueryHelper
 
 		foreach ($this->tables as $alias => $table)
 		{
-			if (empty($this->columnCache[$table['name']]))
-			{
-				$this->columnCache[$table['name']] = $this->db->getTableColumns($table['name']);
-			}
-
-			$columns = $this->columnCache[$table['name']];
+			$columns = DatabaseFactory::getCommand()->getColumns($table['name']);
 
 			foreach ($columns as $key => $var)
 			{
@@ -197,33 +124,6 @@ class QueryHelper
 		}
 
 		return $fields;
-	}
-
-	/**
-	 * Register query table.
-	 *
-	 * @param JDatabaseQuery $query The db query.
-	 *
-	 * @return  JDatabaseQuery The db query object.
-	 */
-	public function registerQueryTables(JDatabaseQuery $query)
-	{
-		foreach ($this->tables as $alias => $table)
-		{
-			if ($table['join'] == 'FROM')
-			{
-				$query->from($query->quoteName($table['name']) . ' AS ' . $query->quoteName($alias));
-			}
-			else
-			{
-				$query->join(
-					$table['join'],
-					$query->quoteName($table['name']) . ' AS ' . $query->quoteName($alias) . ' ' . $table['condition']
-				);
-			}
-		}
-
-		return $query;
 	}
 
 	/**
@@ -263,34 +163,5 @@ class QueryHelper
 	public static function publishingItems($prefix = '', $published_col = 'published')
 	{
 		return self::publishingPeriod($prefix) . " AND {$prefix}{$published_col} >= '1' ";
-	}
-
-	/**
-	 * Get db adapter.
-	 *
-	 * @return  \JDatabaseDriver Db adapter.
-	 */
-	public function getDb()
-	{
-		if (!$this->db)
-		{
-			$this->db = Container::getInstance()->get('db');
-		}
-
-		return $this->db;
-	}
-
-	/**
-	 * Set db adapter.
-	 *
-	 * @param   \JDatabaseDriver $db The db adapter.
-	 *
-	 * @return  QueryHelper  Return self to support chaining.
-	 */
-	public function setDb($db)
-	{
-		$this->db = $db;
-
-		return $this;
 	}
 }

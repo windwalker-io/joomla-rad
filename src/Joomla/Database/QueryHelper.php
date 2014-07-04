@@ -18,8 +18,22 @@ use Windwalker\Compare\Compare;
  */
 class QueryHelper
 {
+	/**
+	 * THe first table only select columns' name.
+	 *
+	 * For example: `item.title AS title`
+	 *
+	 * @const integer
+	 */
 	const COLS_WITH_FIRST = 1;
 
+	/**
+	 * The first table select column with prefix as alias.
+	 *
+	 * For example: `item.title AS item_title`
+	 *
+	 * @const integer
+	 */
 	const COLS_PREFIX_WITH_FIRST = 2;
 
 	/**

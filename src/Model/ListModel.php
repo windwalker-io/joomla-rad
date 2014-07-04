@@ -87,6 +87,13 @@ class ListModel extends FormModel
 	protected $searchFields = array();
 
 	/**
+	 * Property selectType.
+	 *
+	 * @var  integer
+	 */
+	protected $selectType = null;
+
+	/**
 	 * Constructor
 	 *
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
@@ -215,10 +222,10 @@ class ListModel extends FormModel
 		$this->prepareGetQuery($query);
 
 		// Build filter query
-		$this->processFilters($query);
+		$this->processFilters($query, $this->state->get('filter', array()));
 
 		// Build search query
-		$this->processSearches($query);
+		$this->processSearches($query, $this->state->get('search', array()));
 
 		// Ordering
 		$this->processOrdering($query);
@@ -243,7 +250,9 @@ class ListModel extends FormModel
 
 		if (!$select)
 		{
-			$select = $queryHelper->getSelectFields(QueryHelper::COLS_WITH_FIRST | QueryHelper::COLS_PREFIX_WITH_FIRST);
+			$selectType = $this->selectType ? : QueryHelper::COLS_WITH_FIRST | QueryHelper::COLS_PREFIX_WITH_FIRST;
+
+			$select = $queryHelper->getSelectFields($selectType);
 		}
 
 		$query->select($select);
@@ -254,7 +263,10 @@ class ListModel extends FormModel
 		$this->postGetQuery($query);
 
 		// Debug
-		ProfilerHelper::mark((string) $query);
+		if (JDEBUG)
+		{
+			ProfilerHelper::mark((string) $query);
+		}
 
 		return $query;
 	}
