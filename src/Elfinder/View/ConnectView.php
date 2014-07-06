@@ -106,7 +106,7 @@ class ConnectView extends AbstractJsonView
 			)
 		);
 
-		$opts = $config->get('option') ? : $opts;
+		$opts = (array) $config->get('option') ? : $opts;
 
 		foreach ($opts['roots'] as $driver)
 		{
