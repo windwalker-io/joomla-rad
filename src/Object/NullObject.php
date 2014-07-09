@@ -96,12 +96,16 @@ class NullObject extends \JObject implements NullObjectInterface
 		return false;
 	}
 
+
 	/**
 	 * Call magic.
 	 *
+	 * @param string $name
+	 * @param array  $args
+	 *
 	 * @return  void
 	 */
-	public function __call()
+	public function __call($name, $args)
 	{
 		return;
 	}
@@ -109,9 +113,11 @@ class NullObject extends \JObject implements NullObjectInterface
 	/**
 	 * Get magic.
 	 *
+	 * @param string $name
+	 *
 	 * @return  null
 	 */
-	public function __get()
+	public function __get($name)
 	{
 		return null;
 	}
