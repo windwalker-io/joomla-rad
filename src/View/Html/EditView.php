@@ -30,14 +30,6 @@ class EditView extends ItemHtmlView
 	{
 		parent::__construct($model, $container, $config, $paths);
 
-		if (!$this->buttons)
-		{
-			$component = $this->container->get('component');
-			$canDo     = $component->getActions($this->viewItem);
-
-			$this->buttons = \JArrayHelper::getValue($config, 'buttons', $this->configureToolbar(null, $canDo));
-		}
-
 		if (!$this->toolbarConfig)
 		{
 			$this->toolbarConfig = \JArrayHelper::getValue($config, 'toolbar', array());
