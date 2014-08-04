@@ -43,7 +43,7 @@ class TableHelper
 	 * @param \JDatabaseDriver $db     Database adapter.
 	 * @param string           $pkName The primary key name.
 	 */
-	public function __construct($table, \JDatabaseDriver $db, $pkName = 'id')
+	public function __construct($table, \JDatabaseDriver $db = null, $pkName = 'id')
 	{
 		$this->db = $db ? : $this->getDb();
 		$this->table = $table;
