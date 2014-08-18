@@ -39,7 +39,12 @@ class Save2newController extends SaveController
 	{
 		// Clear the record id and data from the session.
 		$this->releaseEditId($this->context, $this->recordId);
-		$this->app->setUserState($this->context . '.data', null);
+
+		// If save success, clean session.
+		if ($return)
+		{
+			$this->app->setUserState($this->context . '.data', null);
+		}
 
 		// Redirect back to the edit screen.
 		$this->input->set('layout', 'edit');
