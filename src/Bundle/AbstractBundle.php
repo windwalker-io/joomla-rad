@@ -105,6 +105,12 @@ class AbstractBundle implements ContainerAwareInterface
 		$namespace = $reflection->getNamespaceName();
 
 		$path = dirname($reflection->getFileName()) . '/Command';
+
+		if (!is_dir($path))
+		{
+			return;
+		}
+
 		$path = new PathLocator($path);
 
 		foreach ($path as $file)
