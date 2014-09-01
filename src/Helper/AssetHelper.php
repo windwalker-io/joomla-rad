@@ -59,7 +59,7 @@ class AssetHelper implements ContainerAwareInterface
 	 *
 	 * @var string
 	 */
-	protected $sumName = 'md5sum';
+	protected $sumName = 'MD5SUM';
 
 	/**
 	 * Mootools loaded.
