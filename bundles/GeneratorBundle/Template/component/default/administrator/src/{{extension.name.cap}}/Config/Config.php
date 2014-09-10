@@ -8,6 +8,7 @@
 namespace {{extension.name.cap}}\Config;
 
 use Windwalker\System\Config\AbstractConfig;
+use Windwalker\Helper\PathHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -36,6 +37,6 @@ abstract class Config extends AbstractConfig
 		$type = static::$type;
 		$ext  = (static::$type == 'yaml') ? 'yml' : $type;
 
-		return {{extension.name.upper}}_ADMIN . '/etc/config.' . $ext;
+		return PathHelper::getAdmin('{{extension.name.upper}}') . '/etc/config.' . $ext;
 	}
 }
