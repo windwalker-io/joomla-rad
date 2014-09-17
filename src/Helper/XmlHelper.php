@@ -21,7 +21,7 @@ class XmlHelper
 	 * @var  array
 	 */
 	static protected $falseValue = array(
-		'disbaled',
+		'disabled',
 		'false',
 		'null',
 		'0',
