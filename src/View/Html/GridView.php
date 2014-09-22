@@ -196,7 +196,11 @@ class GridView extends ListHtmlView
 
 			'delete' => array(
 				'handler' => 'deleteList',
-				'args'     => array($this->viewList . '.state.delete'),
+				'args'     => array(
+					$this->viewList . '.state.delete',
+					'JTOOLBAR_DELETE',
+					'LIB_WINDWALKER_TOOLBAR_CONFIRM_DELETE'
+				),
 				'access'  => (
 					ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'state'))
 					&& $canDo->get('core.delete')
