@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="library" version="3.2" method="upgrade">
+<extension type="library" version="3.3" method="upgrade">
 	<name>windwalker</name>
 	<libraryname>windwalker</libraryname>
 	<creationDate>2012-11-23</creationDate>
@@ -8,8 +8,8 @@
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
 	<authorUrl>http://asikart.com</authorUrl>
-	<version>4.0.7</version>
-	<newversion>2.0.7</newversion>
+	<version>4.0.8</version>
+	<newversion>2.0.8</newversion>
 	<description>LIB_WINDWALKER_XML_DESC</description>
 
 	<files>
