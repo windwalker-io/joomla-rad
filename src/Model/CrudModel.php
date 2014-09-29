@@ -312,6 +312,9 @@ class CrudModel extends FormModel
 			// Set primary
 			$table->$key = $pk;
 
+			// Load origin data
+			$table->load($pk);
+
 			// Bind data
 			$table->bind($data);
 
