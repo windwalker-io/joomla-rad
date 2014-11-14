@@ -30,10 +30,11 @@ class HtmlHelper
 	{
 		if (function_exists('tidy_repair_string') && $use_tidy)
 		{
-			$TidyConfig = array('indent'         => true,
-								'output-xhtml'   => true,
-								'show-body-only' => true,
-								'wrap'           => false
+			$TidyConfig = array(
+				'indent'         => true,
+				'output-xhtml'   => true,
+				'show-body-only' => true,
+				'wrap'           => false
 			);
 
 			return tidy_repair_string($html, $TidyConfig, 'utf8');
