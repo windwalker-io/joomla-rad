@@ -1,0 +1,11 @@
+{
+	"{{controller.list.name.lower}}": {
+		"pattern": "{{controller.list.name.lower}}/:id",
+		"view" : "{{controller.list.name.lower}}"
+	},
+
+	"{{controller.item.name.lower}}": {
+		"pattern": "{{controller.item.name.lower}}/:id/:alias",
+		"view" : "{{controller.item.name.lower}}"
+	}
+}
