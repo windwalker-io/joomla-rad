@@ -22,9 +22,9 @@ abstract class Authentication
 	 * So we get session key from request, then we use this key to find session data in DB, if found, means user has logged in.
 	 * We can use get this session data and restore into php session that Joomla will know this user has logged in.
 	 *
-	 * @param string $sessionKey
+	 * @param   string  $sessionKey
 	 *
-	 * @throws \Exception
+	 * @throws  \Exception
 	 *
 	 * @return  boolean
 	 */
