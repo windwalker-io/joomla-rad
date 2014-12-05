@@ -20,8 +20,10 @@ class Save2copyController extends ApplyController
 	 *
 	 * @return void
 	 */
-	protected function preSaveHook()
+	protected function prepareExecute()
 	{
+		parent::prepareExecute();
+
 		// Attempt to check-in the current record.
 		$data = array('cid' => array($this->recordId), 'quiet' => true);
 
@@ -29,6 +31,18 @@ class Save2copyController extends ApplyController
 
 		// Reset the ID and then treat the request as for Apply.
 		$this->data[$this->key] = 0;
+		$this->data['checked_out'] = '';
+		$this->data['checked_out_time'] = '';
+
+		if (isset($this->data['title']))
+		{
+			$this->data['title'] = \JString::increment($this->data['title']);
+		}
+
+		if (isset($this->data['alias']))
+		{
+			$this->data['alias'] = \JString::increment($this->data['alias'], 'dash');
+		}
 	}
 
 	/**
@@ -38,8 +52,16 @@ class Save2copyController extends ApplyController
 	 */
 	protected function doExecute()
 	{
-		$this->input->set('jform', $this->data);
+		$data = array('jform' => $this->data, $this->key => 0);
 
-		return $this->fetch($this->prefix, $this->name . '.edit.save', $this->input);
+		$input = new \JInput($data);
+
+		$input->post = $input;
+
+		$result = $this->fetch($this->prefix, $this->name . '.edit.save', $input);
+
+		$this->input->set('layout', 'edit');
+
+		return $result;
 	}
 }
