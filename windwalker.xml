@@ -17,7 +17,7 @@
 		<folder>bin</folder>
 		<folder>bundles</folder>
 		<folder>language</folder>
-		<folder>Resource</folder>
+		<folder>resource</folder>
 		<folder>vendor</folder>
 		<folder>src</folder>
 		<file>.gitignore</file>

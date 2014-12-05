@@ -38,7 +38,7 @@ class Thumb
 	 *
 	 * @var string
 	 */
-	protected $defaultImage = 'libraries/windwalker/Resource/images/default-image.png';
+	protected $defaultImage = 'libraries/windwalker/resource/images/default-image.png';
 
 	/**
 	 * Extension name.

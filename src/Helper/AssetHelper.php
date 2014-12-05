@@ -470,11 +470,11 @@ class AssetHelper implements ContainerAwareInterface
 		// (8) Find: media/windwalker/[file_name].[type]
 		$this->paths->insert('media/windwalker', 100);
 
-		// (9) Find: libraries/windwalker/Resource/asset/[type]/[file_name].[type] (For legacy)
-		$this->paths->insert('libraries/windwalker/Resource/asset/{type}', 50);
+		// (9) Find: libraries/windwalker/resource/asset/[type]/[file_name].[type] (For legacy)
+		$this->paths->insert('libraries/windwalker/resource/asset/{type}', 50);
 
-		// (10) Find: libraries/windwalker/assets/[file_name].[type] (For legacy)
-		$this->paths->insert('libraries/windwalker/Resource/asset', 20);
+		// (10) Find: libraries/windwalker/resource/assets/[file_name].[type] (For legacy)
+		$this->paths->insert('libraries/windwalker/resource/asset', 20);
 
 		// (11) Find: libraries/windwalker/assets/[file_name].[type] (For legacy)
 		$this->paths->insert('libraries/windwalker/assets', 10);
