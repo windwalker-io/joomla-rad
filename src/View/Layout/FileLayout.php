@@ -29,7 +29,7 @@ class FileLayout extends \JLayoutFile
 		// (2) Windwalker layouts.
 		$this->addIncludePaths(WINDWALKER . '/resource/layouts');
 
-		// (3) Standard Joomla! layouts overriden
+		// (3) Standard Joomla! template override
 		$this->addIncludePaths(JPATH_THEMES . '/' . $app->getTemplate() . '/html/layouts');
 
 		// Component layouts & overrides if exist

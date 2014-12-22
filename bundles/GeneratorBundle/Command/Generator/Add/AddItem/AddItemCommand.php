@@ -53,11 +53,11 @@ class AddItemCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
 		// $this->addArgument();
 
-		parent::configure();
+		parent::initialise();
 	}
 
 	/**

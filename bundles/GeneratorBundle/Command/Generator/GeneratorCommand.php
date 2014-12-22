@@ -8,9 +8,10 @@
 
 namespace GeneratorBundle\Command\Generator;
 
-use Joomla\Console\Option\Option;
+use GeneratorBundle\Command\Generator\Add\AddCommand;
+use GeneratorBundle\Command\Generator\Convert\ConvertCommand;
+use GeneratorBundle\Command\Generator\Init\InitCommand;
 use Windwalker\Console\Command\Command;
-use Windwalker\DI\Container;
 
 defined('WINDWALKER') or die;
 
@@ -54,22 +55,22 @@ class GeneratorCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
-		parent::configure();
+		parent::initialise();
 
-		$this->addOption(
-			array('c', 'client'),
-			null,
-			'Site or administrator (admin)',
-			Option::IS_GLOBAL
-		)
-		->addOption(
-			array('t', 'tmpl'),
-			'default',
-			'Using template.',
-			Option::IS_GLOBAL
-		);
+		$this->addCommand(new InitCommand);
+		$this->addCommand(new ConvertCommand);
+		$this->addCommand(new AddCommand);
+
+		$this->addGlobalOption('c')
+			->alias('client')
+			->description('Site or administrator (admin)');
+
+		$this->addGlobalOption('t')
+			->alias('tmpl')
+			->defaultValue('default')
+			->description('Using template.');
 	}
 
 	/**

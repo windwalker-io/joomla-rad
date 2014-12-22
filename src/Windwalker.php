@@ -9,6 +9,7 @@
 namespace Windwalker;
 
 use Windwalker\DI\Container;
+use Windwalker\Filesystem\Path\PathCollection;
 
 /**
  * Windwalker main application.
@@ -73,14 +74,14 @@ class Windwalker
 			return;
 		}
 
-		$paths = new \Windwalker\Filesystem\Path\PathCollection(
+		$paths = new PathCollection(
 			array(
 				WINDWALKER . '/bundles',
 				WINDWALKER_BUNDLE,
 			)
 		);
 
-		$bundles = $paths->findAll('Bundle$');
+		$bundles = $paths->find('Bundle$');
 
 		$config = $container->get('windwalker.config');
 

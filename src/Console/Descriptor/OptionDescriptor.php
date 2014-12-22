@@ -8,8 +8,8 @@
 
 namespace Windwalker\Console\Descriptor;
 
-use Joomla\Console\Descriptor\Text\TextOptionDescriptor;
-use Joomla\Console\Option\Option;
+use Windwalker\Console\Descriptor\Text\TextOptionDescriptor;
+use Windwalker\Console\Option\Option;
 
 /**
  * Class Option Descriptor
@@ -59,7 +59,7 @@ EOF;
 		/** @var Option */
 		$name        = $option->getName();
 		$description = $option->getDescription() ?: 'No description';
-		$aliases     = $option->getAlias();
+		$aliases     = $option->getAliases();
 
 		// Merge aliases
 		array_unshift($aliases, $name);
@@ -103,7 +103,7 @@ EOF;
 		{
 			/** @var $item Option */
 			$name        = $item->getName();
-			$aliases     = $item->getAlias();
+			$aliases     = $item->getAliases();
 
 			// Merge aliases
 			array_unshift($aliases, $name);

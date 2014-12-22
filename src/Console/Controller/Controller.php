@@ -8,9 +8,9 @@
 
 namespace Windwalker\Console\Controller;
 
-use Joomla\Input;
 use Windwalker\Console\Application\Console;
 use Windwalker\Console\Command\Command;
+use Windwalker\Console\IO\IO;
 
 /**
  * Windwalker Console Base Controller Class
@@ -29,9 +29,16 @@ abstract class Controller implements \JController
 	/**
 	 * The input object.
 	 *
-	 * @var  Input\Cli
+	 * @var  IO
 	 */
 	protected $input;
+
+	/**
+	 * Property io.
+	 *
+	 * @var IO
+	 */
+	protected $io;
 
 	/**
 	 * Property command.
@@ -49,7 +56,7 @@ abstract class Controller implements \JController
 	{
 		// Setup dependencies.
 		$this->app     = $command->getApplication() ? : $this->loadApplication();
-		$this->input   = $command->getInput() ? : $this->loadInput();
+		$this->input   = $this->io = $command->getIO();
 		$this->command = $command;
 	}
 
@@ -66,7 +73,7 @@ abstract class Controller implements \JController
 	/**
 	 * Get the input object.
 	 *
-	 * @return  Input\Cli  The input object.
+	 * @return  IO  The input object.
 	 */
 	public function getInput()
 	{
@@ -100,7 +107,7 @@ abstract class Controller implements \JController
 		// Unserialize the input.
 		$this->input = unserialize($input);
 
-		if (!($this->input instanceof Input\Cli))
+		if (!($this->input instanceof IO))
 		{
 			throw new \UnexpectedValueException(sprintf('%s::unserialize would not accept a `%s`.', get_class($this), gettype($this->input)));
 		}
@@ -119,13 +126,37 @@ abstract class Controller implements \JController
 	}
 
 	/**
+	 * Method to get property Io
+	 *
+	 * @return  IO
+	 */
+	public function getIO()
+	{
+		return $this->io;
+	}
+
+	/**
+	 * Method to set property io
+	 *
+	 * @param   IO $io
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setIO($io)
+	{
+		$this->io = $io;
+
+		return $this;
+	}
+
+	/**
 	 * Load the input object.
 	 *
-	 * @return  Input\Cli  The input object.
+	 * @return  IO  The input object.
 	 */
 	protected function loadInput()
 	{
-		return $this->app->input;
+		return $this->app->getIO();
 	}
 
 	/**
@@ -183,18 +214,5 @@ abstract class Controller implements \JController
 		$this->out($text, $nl);
 
 		die;
-	}
-
-	/**
-	 * Get argument or close this appliction.
-	 *
-	 * @param   integer $arg Argument offset.
-	 * @param   string  $msg Close message.
-	 *
-	 * @return  string Return argument value.
-	 */
-	public function getOrClose($arg, $msg = '')
-	{
-		return $this->command->getOrClose($arg, $msg);
 	}
 }

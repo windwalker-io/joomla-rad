@@ -15,7 +15,7 @@ use GeneratorBundle\Action;
  *
  * @since 1.0
  */
-class InitController extends PluginController
+class InitController extends AbstractPluginController
 {
 	/**
 	 * Execute the controller.

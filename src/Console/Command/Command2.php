@@ -71,27 +71,4 @@ abstract class Command extends JoomlaCommand
 
 		\JFactory::getApplication()->triggerEvent('onConsoleLoadCommand', array($context, $this));
 	}
-
-	/**
-	 * Get argument or close this appliction.
-	 *
-	 * @param integer $arg Argument offset.
-	 * @param string  $msg Close message.
-	 *
-	 * @return  string Return argument value.
-	 */
-	public function getOrClose($arg, $msg = '')
-	{
-		if (isset($this->input->args[$arg]))
-		{
-			return $this->input->args[$arg];
-		}
-
-		$this->out()->out($msg)
-			->out()->out('Usage:')->out($this->usage);
-
-		$this->application->close();
-
-		return false;
-	}
 }

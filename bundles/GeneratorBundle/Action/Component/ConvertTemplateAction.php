@@ -9,7 +9,7 @@
 namespace GeneratorBundle\Action\Component;
 
 use GeneratorBundle\Action\AbstractAction;
-use Joomla\Filesystem\Folder;
+use Windwalker\Filesystem\Folder;
 
 /**
  * Class ConvertTemplateAction

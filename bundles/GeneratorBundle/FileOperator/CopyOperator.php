@@ -9,7 +9,7 @@
 namespace GeneratorBundle\FileOperator;
 
 use CodeGenerator\FileOperator\CopyOperator as CodeGeneratorCopyOperator;
-use Joomla\Filesystem\File;
+use Windwalker\Filesystem\File;
 use Windwalker\String\String;
 
 /**

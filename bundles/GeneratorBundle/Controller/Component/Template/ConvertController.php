@@ -9,14 +9,14 @@
 namespace GeneratorBundle\Controller\Component\Template;
 
 use GeneratorBundle\Action;
-use GeneratorBundle\Controller\Component\ComponentController;
+use GeneratorBundle\Controller\Component\AbstractComponentController;
 
 /**
  * Class ConvertController
  *
  * @since 1.0
  */
-class ConvertController extends ComponentController
+class ConvertController extends AbstractComponentController
 {
 	/**
 	 * Do Execute.

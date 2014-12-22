@@ -9,16 +9,16 @@
 namespace GeneratorBundle\Controller\Module;
 
 use CodeGenerator\IO\IOInterface;
-use GeneratorBundle\Controller\JoomlaExtensionController;
-use Joomla\Registry\Registry;
+use GeneratorBundle\Controller\AbstractJExtensionController;
+use Windwalker\Registry\Registry;
 use Windwalker\DI\Container;
 
 /**
- * Class PluginController
+ * Class AbstractPluginController
  *
  * @since 1.0
  */
-abstract class ModuleController extends JoomlaExtensionController
+abstract class AbstractModuleController extends AbstractJExtensionController
 {
 	/**
 	 * Constructor.

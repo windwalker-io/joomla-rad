@@ -9,21 +9,20 @@
 namespace GeneratorBundle\Controller\Component;
 
 use CodeGenerator\IO\IOInterface;
-use GeneratorBundle\Controller\JoomlaExtensionController;
+use GeneratorBundle\Controller\AbstractJExtensionController;
 
-use Joomla\Console\Prompter\TextPrompter;
-use Joomla\Filesystem\Path;
-use Joomla\Registry\Registry;
+use Windwalker\Filesystem\Path;
+use Windwalker\Registry\Registry;
 
 use Windwalker\DI\Container;
 use Windwalker\Helper\PathHelper;
 
 /**
- * Class ComponentController
+ * Class AbstractComponentController
  *
  * @since 1.0
  */
-abstract class ComponentController extends JoomlaExtensionController
+abstract class AbstractComponentController extends AbstractJExtensionController
 {
 	/**
 	 * Constructor.

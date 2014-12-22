@@ -15,7 +15,7 @@ use GeneratorBundle\Action;
  *
  * @since 1.0
  */
-class InitController extends ComponentController
+class InitController extends AbstractComponentController
 {
 	/**
 	 * Execute the controller.

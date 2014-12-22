@@ -8,21 +8,28 @@
 
 namespace GeneratorBundle\Controller;
 
-use CodeGenerator\Controller\TaskController;
+use CodeGenerator\Controller\AbstractTaskController;
 use CodeGenerator\IO\IOInterface;
-use Joomla\Filesystem\Path;
-use Joomla\Registry\Registry;
+use Windwalker\Filesystem\Path;
+use Windwalker\Registry\Registry;
 use Windwalker\Console\Command\Command;
 use Windwalker\DI\Container;
 use Windwalker\Helper\PathHelper;
 
 /**
- * Class JoomlaExtensionController
+ * Class AbstractJExtensionController
  *
  * @since 1.0
  */
-abstract class JoomlaExtensionController extends TaskController
+abstract class AbstractJExtensionController extends AbstractTaskController
 {
+	/**
+	 * Property container.
+	 *
+	 * @var  Container
+	 */
+	protected $container;
+
 	/**
 	 * Constructor.
 	 *
@@ -87,6 +94,9 @@ abstract class JoomlaExtensionController extends TaskController
 
 		$config['dir.src'] = Path::clean($config['dir.src']);
 
-		parent::__construct($container, $io, $config);
+		// Push container
+		$this->container = $container;
+
+		parent::__construct($io, $config);
 	}
 }
