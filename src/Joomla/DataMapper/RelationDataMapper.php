@@ -8,10 +8,6 @@
 
 namespace Windwalker\Joomla\DataMapper;
 
-use \JDatabaseDriver as DatabaseDriver;
-use Windwalker\Joomla\Database\DatabaseFactory;
-use Windwalker\Joomla\Database\QueryHelper;
-
 /**
  * Relation Database Mapper.
  *

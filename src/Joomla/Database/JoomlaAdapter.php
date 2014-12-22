@@ -15,7 +15,7 @@ use Windwalker\Data\DataSet;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
+class JoomlaAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 {
 	/**
 	 * Constructor.
@@ -99,17 +99,18 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	/**
 	 * Do update action.
 	 *
-	 * @param string $table       The table name.
-	 * @param mixed  $data        Data set contain data we want to update.
-	 * @param array  $condFields  The where condition tell us record exists or not, if not set,
-	 *                            will use primary key instead.
+	 * @param string $table         The table name.
+	 * @param mixed  $data          Data set contain data we want to update.
+	 * @param array  $condFields    The where condition tell us record exists or not, if not set,
+	 *                              will use primary key instead.
+	 * @param bool   $updateNulls   Update empty fields or not.
 	 *
 	 * @throws \Exception
 	 * @return  mixed Updated data set.
 	 */
-	public function updateOne($table, $data, array $condFields = array())
+	public function updateOne($table, $data, array $condFields = array(), $updateNulls = false)
 	{
-		return $this->db->updateObject($table, $data, $condFields);
+		return $this->db->updateObject($table, $data, $condFields, $updateNulls);
 	}
 
 	/**
@@ -124,7 +125,19 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 */
 	public function updateAll($table, $data, array $conditions = array())
 	{
+		$query = $this->db->getQuery(true);
 
+		foreach ($data as $key => $value)
+		{
+			$query->set($query->format('%n = %q', $key, $value));
+		}
+
+		// Conditions.
+		QueryHelper::buildWheres($query, $conditions);
+
+		$query->update($table);
+
+		return $this->db->setQuery($query)->execute();
 	}
 
 	/**
@@ -138,7 +151,14 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 */
 	public function delete($table, array $conditions = array())
 	{
+		$query = $this->db->getQuery(true);
 
+		// Conditions.
+		QueryHelper::buildWheres($query, $conditions);
+
+		$query->delete($table);
+
+		return $this->db->setQuery($query)->execute();
 	}
 
 	/**
@@ -150,7 +170,9 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 */
 	public function getFields($table)
 	{
+		$columns = $this->db->getTableColumns($table);
 
+		return array_keys($columns);
 	}
 
 	/**
@@ -162,7 +184,7 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 */
 	public function transactionStart($asSavePoint = false)
 	{
-
+		$this->db->transactionStart($asSavePoint);
 	}
 
 	/**
@@ -174,7 +196,7 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 */
 	public function transactionCommit($asSavePoint = false)
 	{
-
+		$this->db->transactionCommit($asSavePoint);
 	}
 
 	/**
@@ -186,6 +208,6 @@ class DatabaseAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 */
 	public function transactionRollback($asSavePoint = false)
 	{
-
+		$this->db->transactionRollback($asSavePoint);
 	}
 }

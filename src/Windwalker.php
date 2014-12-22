@@ -10,6 +10,8 @@ namespace Windwalker;
 
 use Windwalker\DI\Container;
 use Windwalker\Filesystem\Path\PathCollection;
+use Windwalker\Joomla\DataMapper\DataMapperProvider;
+use Windwalker\Provider\SystemProvider;
 
 /**
  * Windwalker main application.
@@ -47,7 +49,8 @@ class Windwalker
 		// Register global provider
 		$container = Container::getInstance();
 
-		$container->registerServiceProvider(new \Windwalker\Provider\SystemProvider);
+		$container->registerServiceProvider(new SystemProvider)
+			->registerServiceProvider(new DataMapperProvider);
 
 		// Register bundles
 		$this->registerBundles($container);
