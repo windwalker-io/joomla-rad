@@ -8,7 +8,6 @@
 
 namespace Windwalker\Api\View;
 
-use Joomla\Registry\Registry;
 use Windwalker\Api\Response\JsonResponse;
 use Windwalker\View\Json\AbstractJsonView;
 

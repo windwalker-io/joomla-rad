@@ -8,8 +8,8 @@
 
 namespace Windwalker\Image;
 
-use Joomla\Filesystem\Path;
-use Joomla\Registry\Registry;
+use Windwalker\Filesystem\Path;
+use Windwalker\Registry\Registry;
 use Windwalker\Helper\CurlHelper;
 use Windwalker\System\ExtensionHelper;
 

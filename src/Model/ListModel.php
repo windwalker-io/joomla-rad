@@ -10,7 +10,6 @@ namespace Windwalker\Model;
 
 use JArrayHelper;
 use JDatabaseQuery;
-use Joomla\Registry\Registry;
 use JPagination;
 use JPluginHelper;
 

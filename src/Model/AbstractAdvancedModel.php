@@ -8,7 +8,7 @@
 
 namespace Windwalker\Model;
 
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\System\ExtensionHelper;
 

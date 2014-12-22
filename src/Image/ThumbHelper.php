@@ -8,7 +8,7 @@
 
 namespace Windwalker\Image;
 
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 
 /**
  * A quick thumb generator, will return generated thumb url.

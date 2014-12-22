@@ -8,7 +8,7 @@
 
 namespace Windwalker\Controller\Resolver;
 
-use Joomla\Utilities\ArrayHelper;
+use Windwalker\Utilities\ArrayHelper;
 use Windwalker\String\StringNormalise;
 
 /**

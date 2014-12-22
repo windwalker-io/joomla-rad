@@ -8,7 +8,7 @@
 
 namespace Windwalker\System\Config;
 
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\System\ExtensionHelper;
 
 /**

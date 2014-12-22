@@ -10,11 +10,15 @@
         }
     ],
     "require": {
-        "windwalker/framework": "1.*",
+        "windwalker/compare": "~2.0@stable",
+        "windwalker/cache": "~2.0@stable",
+        "windwalker/data": "~2.0@stable",
+        "windwalker/datamapper": "~2.0@stable",
+        "windwalker/router": "~2.0@stable",
+        "windwalker/filesystem": "~2.0@stable",
         "windwalker/console": "~2.0@stable",
         "asika/php-code-generator": "~2.0@stable",
-        "joomla/registry": "~1.0",
-        "joomla/filesystem": "~1.0",
+        "joomla/string": "~1.0@stable",
         "symfony/yaml": "2.*",
         "filp/whoops": "1.*"
     },

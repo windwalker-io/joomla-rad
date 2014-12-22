@@ -8,7 +8,6 @@
 
 namespace Windwalker\Helper;
 
-use Joomla\String\Normalise;
 use Windwalker\String\StringNormalise;
 
 /**
