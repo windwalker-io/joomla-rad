@@ -31,7 +31,7 @@ php bin/windwalker generator init com_flower sakura.sakuras -c admin
 
 ## Documentation
 
-[Windwalker RAD Document](http://ventoviro.github.io/windwalker-rad-doc/)
+[Windwalker RAD Document](http://rad.windwalker.io/)
 
 ## About
 Author
