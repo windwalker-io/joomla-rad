@@ -120,7 +120,7 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends GridVie
 		$buttonSet = parent::configureToolbar($buttonSet, $canDo);
 
 		// In debug mode, we remove trash button but use delete button instead.
-		if (JDEBUG)
+		// if (JDEBUG)
 		{
 			$buttonSet['trash']['access']  = false;
 			$buttonSet['delete']['access'] = true;

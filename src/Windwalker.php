@@ -125,5 +125,8 @@ class Windwalker
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.path');
+
+		// Aliases
+		class_alias('Windwalker\Router\CmsRoute', 'Windwalker\Router\Route');
 	}
 }

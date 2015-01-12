@@ -15,7 +15,7 @@ use Windwalker\DI\Container;
  *
  * @since 1.0
  */
-abstract class AbstractAction extends \CodeGenerator\Action\AbstractAction
+abstract class AbstractAction extends \Muse\Action\AbstractAction
 {
 	/**
 	 * Constructor.

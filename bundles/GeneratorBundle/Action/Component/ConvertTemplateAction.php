@@ -38,7 +38,10 @@ class ConvertTemplateAction extends AbstractAction
 		$dest = $this->config['dir.dest'];
 
 		// Remove dir first
-		Folder::delete($dest);
+		if (is_dir($dest))
+		{
+			Folder::delete($dest);
+		}
 
 		$this->container->get('operator.convert')->copy($src, $dest, $replace);
 	}

@@ -8,8 +8,8 @@
 
 namespace GeneratorBundle\Controller;
 
-use CodeGenerator\Controller\AbstractTaskController;
-use CodeGenerator\IO\IOInterface;
+use Muse\Controller\AbstractTaskController;
+use Muse\IO\IOInterface;
 use Windwalker\Filesystem\Path;
 use Windwalker\Registry\Registry;
 use Windwalker\Console\Command\Command;
@@ -34,7 +34,7 @@ abstract class AbstractJExtensionController extends AbstractTaskController
 	 * Constructor.
 	 *
 	 * @param   \Windwalker\DI\Container      $container
-	 * @param   \CodeGenerator\IO\IOInterface $io
+	 * @param   \Muse\IO\IOInterface $io
 	 * @param   Registry                      $config
 	 */
 	public function __construct(Container $container, IOInterface $io, Registry $config = null)

@@ -9,3 +9,6 @@ composer.lock
 
 # Windwalker #
 /config.json
+
+# TEST #
+/phpunit.xml

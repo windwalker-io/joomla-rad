@@ -1,0 +1,9 @@
+{
+	"name" : "smstw/{{extension.name.lower}}",
+
+	"require" : {
+	},
+
+	"require-dev" : {
+	}
+}

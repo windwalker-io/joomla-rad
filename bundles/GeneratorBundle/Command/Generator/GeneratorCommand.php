@@ -11,6 +11,7 @@ namespace GeneratorBundle\Command\Generator;
 use GeneratorBundle\Command\Generator\Add\AddCommand;
 use GeneratorBundle\Command\Generator\Convert\ConvertCommand;
 use GeneratorBundle\Command\Generator\Init\InitCommand;
+use GeneratorBundle\Command\Generator\Test\TestCommand;
 use Windwalker\Console\Command\Command;
 
 defined('WINDWALKER') or die;
@@ -62,6 +63,7 @@ class GeneratorCommand extends Command
 		$this->addCommand(new InitCommand);
 		$this->addCommand(new ConvertCommand);
 		$this->addCommand(new AddCommand);
+		$this->addCommand(new TestCommand);
 
 		$this->addGlobalOption('c')
 			->alias('client')
