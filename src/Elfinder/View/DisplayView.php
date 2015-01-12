@@ -8,8 +8,7 @@
 
 namespace Windwalker\Elfinder\View;
 
-use Joomla\Registry\Registry;
-use JRegistry;
+use Windwalker\Registry\Registry;
 use JURI;
 use Windwalker\View\Html\AbstractHtmlView;
 

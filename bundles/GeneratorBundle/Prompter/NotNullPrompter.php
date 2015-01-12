@@ -8,7 +8,7 @@
 
 namespace GeneratorBundle\Prompter;
 
-use Joomla\Console\Prompter\ValidatePrompter;
+use Windwalker\Console\Prompter\ValidatePrompter;
 
 /**
  * Class NotNullPrompter

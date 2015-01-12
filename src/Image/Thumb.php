@@ -8,8 +8,8 @@
 
 namespace Windwalker\Image;
 
-use Joomla\Filesystem\Path;
-use Joomla\Registry\Registry;
+use Windwalker\Filesystem\Path;
+use Windwalker\Registry\Registry;
 use Windwalker\Helper\CurlHelper;
 use Windwalker\System\ExtensionHelper;
 
@@ -38,7 +38,7 @@ class Thumb
 	 *
 	 * @var string
 	 */
-	protected $defaultImage = 'libraries/windwalker/Resource/images/default-image.png';
+	protected $defaultImage = 'libraries/windwalker/resource/images/default-image.png';
 
 	/**
 	 * Extension name.

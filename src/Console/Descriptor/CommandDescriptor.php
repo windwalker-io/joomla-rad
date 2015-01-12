@@ -8,8 +8,8 @@
 
 namespace Windwalker\Console\Descriptor;
 
-use Joomla\Console\Command\AbstractCommand;
-use Joomla\Console\Descriptor\Text\TextCommandDescriptor;
+use Windwalker\Console\Command\AbstractCommand;
+use Windwalker\Console\Descriptor\Text\TextCommandDescriptor;
 
 /**
  * Class Option Descriptor

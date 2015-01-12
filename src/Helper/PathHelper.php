@@ -8,7 +8,7 @@
 
 namespace Windwalker\Helper;
 
-use Joomla\String\Inflector;
+use Windwalker\String\StringInflector;
 use Windwalker\System\ExtensionHelper;
 
 /**
@@ -59,7 +59,7 @@ class PathHelper
 		}
 
 		// Build path
-		$extension = Inflector::getInstance()->toPlural($extension);
+		$extension = StringInflector::getInstance()->toPlural($extension);
 		$path = $extension . '/' . $folder;
 
 		if (!$absolute)

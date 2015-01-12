@@ -14,10 +14,7 @@ use Windwalker\Console\Command\Command;
 /**
  * Class GenerateCommand
  *
- * @package     Joomla.Cli
- * @subpackage  JConsole
- *
- * @since       3.2
+ * @since  2.0
  */
 class GenerateCommand extends Command
 {
@@ -47,7 +44,7 @@ class GenerateCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $usage = 'example <command> [option]';
+	protected $usage = 'gen-command <name> <namespace> [option]';
 
 	/**
 	 * Template to generate command.
@@ -72,7 +69,7 @@ defined('WINDWALKER') or die;
 /**
  * Class {{CLASS}}
  *
- * @since  2.0
+ * @since  2.1
  */
 class {{CLASS}}Command extends Command
 {
@@ -109,11 +106,11 @@ class {{CLASS}}Command extends Command
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
-		// \$this->addArgument();
+		// \$this->addCommand();
 
-		parent::configure();
+		parent::initialise();
 	}
 
 	/**
@@ -134,7 +131,7 @@ TMPL;
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
 		$this->addOption(
 			array('d', 'description'),
@@ -142,7 +139,7 @@ TMPL;
 			'Command description'
 		);
 
-		parent::configure();
+		parent::initialise();
 	}
 
 	/**
@@ -155,15 +152,13 @@ TMPL;
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 
-		@$name       = $this->input->args[0] ? : exit("Please enter command name");
-		@$namespace  = $this->input->args[1] ? : exit("Please enter command namespace");
+		@$name       = $this->getArgument(0) ? : exit("Please enter command name");
+		@$namespace  = $this->getArgument(1) ? : exit("Please enter command namespace");
 		$description = $this->getOption('d') ? : $name;
 
 		if (!$name || !$namespace)
 		{
-			$this->out('Need name & namespace.');
-
-			return;
+			throw new \InvalidArgumentException('Need name & namespace.');
 		}
 
 		// Regularize Namespace

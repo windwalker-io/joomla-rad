@@ -14,7 +14,7 @@ use Windwalker\Data\Data;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Object\Object;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 
 /**
  * The toolbar helper.

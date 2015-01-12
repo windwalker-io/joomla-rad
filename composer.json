@@ -1,41 +1,45 @@
 {
-	"name": "windwalker/joomla-rad",
-	"description": "Rapido de la vento viro.",
-	"license": "GNU Lesser General Public License",
-	"minimum-stability": "beta",
-	"authors": [
-		{
-			"name": "Simon Asika",
-			"email": "asika32764@gmail.com"
-		}
-	],
-	"require": {
-		"windwalker/framework": "1.*",
-		"asika/joomla-console": "1.1.*",
-		"asika/php-code-generator": "0.1.*",
-		"joomla/registry": "~1.0",
-		"joomla/filesystem": "~1.0",
-		"symfony/yaml": "2.*",
-		"filp/whoops": "1.*"
-	},
-	"require-dev": {
-	},
-	"autoload": {
-		"psr-4": {
-			"": "../../cli/windwalker",
-			"Windwalker\\": "src"
-		}
-	},
-	"scripts": {
-		"post-install-cmd": [
-			"Windwalker\\System\\Installer\\ComposerInstaller::install"
-		],
-		"post-update-cmd": []
-	},
-	"bin": [
-		"src/init.php"
-	],
-	"config": {
-		"bin-dir": "../../bin"
-	}
+    "name": "windwalker/joomla-rad",
+    "description": "Rapido de la vento viro.",
+    "license": "GNU Lesser General Public License",
+    "minimum-stability": "beta",
+    "authors": [
+        {
+            "name": "Simon Asika",
+            "email": "asika32764@gmail.com"
+        }
+    ],
+    "require": {
+        "windwalker/compare": "~2.0@stable",
+        "windwalker/cache": "~2.0@stable",
+        "windwalker/data": "~2.0@stable",
+        "windwalker/datamapper": "~2.0@stable",
+        "windwalker/router": "~2.0@stable",
+        "windwalker/filesystem": "~2.0@stable",
+        "windwalker/console": "~2.0@stable",
+        "asika/php-code-generator": "~2.0@stable",
+        "joomla/string": "~1.0@stable",
+        "symfony/yaml": "2.*",
+        "filp/whoops": "1.*"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "": "../../cli/windwalker",
+            "Windwalker\\": "src"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Windwalker\\System\\Installer\\ComposerInstaller::install"
+        ],
+        "post-update-cmd": []
+    },
+    "bin": [
+        "src/init.php"
+    ],
+    "config": {
+        "bin-dir": "../../bin"
+    }
 }

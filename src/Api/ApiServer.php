@@ -8,7 +8,7 @@
 
 namespace Windwalker\Api;
 
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\Api\Authentication\Authentication;
 use Windwalker\System\ExtensionHelper;
 use Windwalker\Api\Response\JsonResponse;

@@ -8,10 +8,6 @@
 
 namespace Windwalker\View\Engine;
 
-use Joomla\DI\ContainerAwareInterface;
-use SplPriorityQueue;
-use Windwalker\DI\Container;
-
 /**
  * The php engine.
  *

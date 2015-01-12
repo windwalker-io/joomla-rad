@@ -9,7 +9,7 @@
 namespace GeneratorBundle\Action\Module;
 
 use GeneratorBundle\Action\AbstractAction;
-use Joomla\Filesystem\File;
+use Windwalker\Filesystem\File;
 
 /**
  * Class ReplaceXmlClientAction

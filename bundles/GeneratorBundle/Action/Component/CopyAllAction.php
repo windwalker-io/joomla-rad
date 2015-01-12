@@ -9,7 +9,6 @@
 namespace GeneratorBundle\Action\Component;
 
 use GeneratorBundle\Action\AbstractAction;
-use CodeGenerator\Controller\TaskController;
 
 /**
  * Class CopyBasefilesAction

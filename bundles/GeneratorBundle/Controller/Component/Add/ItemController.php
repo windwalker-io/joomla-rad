@@ -9,14 +9,14 @@
 namespace GeneratorBundle\Controller\Component\Add;
 
 use GeneratorBundle\Action\Component\Subsystem;
-use GeneratorBundle\Controller\Component\ComponentController;
+use GeneratorBundle\Controller\Component\AbstractComponentController;
 
 /**
  * Class SubsystemController
  *
  * @since 1.0
  */
-class ItemController extends ComponentController
+class ItemController extends AbstractComponentController
 {
 	/**
 	 * Do Execute.

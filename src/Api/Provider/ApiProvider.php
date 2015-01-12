@@ -9,7 +9,7 @@
 namespace Windwalker\Api\Provider;
 
 use Joomla\DI\Container;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\Api\ApiServer;
 use Windwalker\Api\Listener\ApiListener;
 use Windwalker\DI\ServiceProvider;

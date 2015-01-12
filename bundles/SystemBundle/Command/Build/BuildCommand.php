@@ -2,6 +2,7 @@
 
 namespace SystemBundle\Command\Build;
 
+use SystemBundle\Command\Build\Generate\GenerateCommand;
 use Windwalker\Console\Command\Command;
 
 /**
@@ -33,12 +34,14 @@ class BuildCommand extends Command
 	protected $description = 'Some useful tools for building system.';
 
 	/**
-	 * configure
+	 * initialise
 	 *
 	 * @return  void
 	 */
-	public function configure()
+	public function initialise()
 	{
-		parent::configure();
+		parent::initialise();
+
+		$this->addCommand(new GenerateCommand);
 	}
 }

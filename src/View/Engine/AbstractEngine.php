@@ -12,7 +12,7 @@ use SplPriorityQueue;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\Container as JoomlaContainer;
 use Windwalker\DI\Container;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 
 /**
  * The view engine.

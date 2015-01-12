@@ -8,7 +8,6 @@
 
 namespace Windwalker\String;
 
-use JString;
 use Windwalker\Helper\ArrayHelper;
 
 /**
@@ -16,7 +15,7 @@ use Windwalker\Helper\ArrayHelper;
  *
  * @since 2.0
  */
-class String extends JString
+class String extends \JString
 {
 	/**
 	 * Quote a string.

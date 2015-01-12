@@ -8,6 +8,9 @@
 
 namespace GeneratorBundle\Command\Generator\Add;
 
+use GeneratorBundle\Command\Generator\Add\AddItem\AddItemCommand;
+use GeneratorBundle\Command\Generator\Add\AddList\AddListCommand;
+use GeneratorBundle\Command\Generator\Add\Subsystem\SubsystemCommand;
 use Windwalker\Console\Command\Command;
 
 defined('WINDWALKER') or die;
@@ -52,11 +55,13 @@ class AddCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
-		// $this->addArgument();
+		$this->addCommand(new AddItemCommand);
+		$this->addCommand(new AddListCommand);
+		$this->addCommand(new SubsystemCommand);
 
-		parent::configure();
+		parent::initialise();
 	}
 
 	/**

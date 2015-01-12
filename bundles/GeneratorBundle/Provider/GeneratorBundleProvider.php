@@ -8,7 +8,7 @@
 
 namespace GeneratorBundle\Provider;
 
-use GeneratorBundle\IO\IO;
+use CodeGenerator\Windwalker\IO;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
 use Windwalker\Console\Command\Command;
