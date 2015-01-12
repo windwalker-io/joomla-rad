@@ -8,7 +8,7 @@
 
 namespace GeneratorBundle\Controller\Module;
 
-use CodeGenerator\IO\IOInterface;
+use Muse\IO\IOInterface;
 use GeneratorBundle\Controller\AbstractJExtensionController;
 use Windwalker\Registry\Registry;
 use Windwalker\DI\Container;
@@ -24,7 +24,7 @@ abstract class AbstractModuleController extends AbstractJExtensionController
 	 * Constructor.
 	 *
 	 * @param   \Windwalker\DI\Container      $container
-	 * @param   \CodeGenerator\IO\IOInterface $io
+	 * @param   \Muse\IO\IOInterface $io
 	 * @param   Registry                      $config
 	 */
 	public function __construct(Container $container, IOInterface $io, Registry $config = null)

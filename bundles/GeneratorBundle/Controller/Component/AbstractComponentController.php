@@ -8,7 +8,7 @@
 
 namespace GeneratorBundle\Controller\Component;
 
-use CodeGenerator\IO\IOInterface;
+use Muse\IO\IOInterface;
 use GeneratorBundle\Controller\AbstractJExtensionController;
 
 use Windwalker\Filesystem\Path;

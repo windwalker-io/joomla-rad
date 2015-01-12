@@ -8,8 +8,8 @@
 
 namespace GeneratorBundle\Controller;
 
-use CodeGenerator\Controller\AbstractController;
-use CodeGenerator\IO\IOInterface;
+use Muse\Controller\AbstractController;
+use Muse\IO\IOInterface;
 use GeneratorBundle\Prompter\ElementPrompter;
 use GeneratorBundle\Provider\GeneratorBundleProvider;
 use GeneratorBundle\Provider\OperatorProvider;
