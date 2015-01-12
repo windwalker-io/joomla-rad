@@ -64,7 +64,7 @@ class Console extends \Windwalker\Console\Console
 		// Make Windows no ANSI color
 		if (defined('PHP_WINDOWS_VERSION_BUILD'))
 		{
-			$io->set('ansi', true);
+			$io->setOption('ansi', true);
 		}
 
 		\JFactory::$application = $this;
