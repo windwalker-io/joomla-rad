@@ -3,7 +3,7 @@
 	<name>windwalker</name>
 	<libraryname>windwalker</libraryname>
 	<creationDate>2012-11-23</creationDate>
-	<copyright>Copyright (C) Asikart 2008 - 2014. All rights reserved.</copyright>
+	<copyright>Copyright (C) Asikart 2008 - 2015. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
@@ -20,12 +20,15 @@
 		<folder>resource</folder>
 		<folder>vendor</folder>
 		<folder>src</folder>
+		<folder>test</folder>
 		<file>.gitignore</file>
 		<file>composer.json</file>
 		<file>composer.lock</file>
 		<file>config.dist.json</file>
 		<file>windwalker.xml</file>
 		<file>index.html</file>
+		<file>phpunit.xml.dist</file>
+		<file>README.md</file>
 
 		<!-- Legacy -->
 		<folder>admin</folder>
