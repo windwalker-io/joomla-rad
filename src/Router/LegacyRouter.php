@@ -17,7 +17,7 @@ use JInput as Input;
  *
  * @since 2.0
  */
-class Router
+class LegacyRouter
 {
 	/**
 	 * Controller class name prefix for creating controller objects by name.
@@ -95,7 +95,7 @@ class Router
 	 * @param   callable  $buildHandler   The build callback.
 	 * @param   callable  $parserHandler  The parse callback.
 	 *
-	 * @return  Router Return self to support chaining.
+	 * @return  LegacyRouter Return self to support chaining.
 	 */
 	public function register($name, $pattern, $controller, $buildHandler = null, $parserHandler = null)
 	{
@@ -112,7 +112,7 @@ class Router
 	 * @param   string $pattern    The route pattern to use for matching.
 	 * @param   string $controller The controller name to map to the given pattern.
 	 *
-	 * @return  Router  Returns itself to support chaining.
+	 * @return  LegacyRouter  Returns itself to support chaining.
 	 *
 	 * @since   1.0
 	 */
@@ -200,7 +200,7 @@ class Router
 	 *
 	 * @param   string  $prefix  Controller class name prefix for creating controller objects by name.
 	 *
-	 * @return  Router  Returns itself to support chaining.
+	 * @return  LegacyRouter  Returns itself to support chaining.
 	 *
 	 * @since   1.0
 	 */
@@ -216,7 +216,7 @@ class Router
 	 *
 	 * @param   string  $name  The default page controller name for an empty route.
 	 *
-	 * @return  Router  Returns itself to support chaining.
+	 * @return  LegacyRouter  Returns itself to support chaining.
 	 *
 	 * @since   1.0
 	 */
@@ -299,7 +299,7 @@ class Router
 	 * @param string $name
 	 * @param string $pattern
 	 *
-	 * @return  Router
+	 * @return  LegacyRouter
 	 */
 	public function addResource($name, $pattern)
 	{
@@ -402,7 +402,7 @@ class Router
 	 * @param string   $name
 	 * @param callable $handler
 	 *
-	 * @return  Router  Return self to support chaining.
+	 * @return  LegacyRouter  Return self to support chaining.
 	 */
 	public function setParseHandler($name, $handler)
 	{
@@ -417,7 +417,7 @@ class Router
 	 * @param string   $name
 	 * @param callable $handler
 	 *
-	 * @return  Router  Return self to support chaining.
+	 * @return  LegacyRouter  Return self to support chaining.
 	 */
 	public function setBuildHandler($name, $handler)
 	{

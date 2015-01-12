@@ -13,7 +13,7 @@ namespace Windwalker\Router;
  *
  * @since 2.0
  */
-class CmsRouter extends Router
+class CmsRouter extends LegacyRouter
 {
 	/**
 	 * Singleton instance.
