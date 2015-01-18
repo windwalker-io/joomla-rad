@@ -134,7 +134,7 @@ $grid->registerTableSort();
 		</td>
 
 		<!--TITLE-->
-		<td class="nowrap has-context quick-edit-wrap">
+		<td class="has-context quick-edit-wrap">
 			<div class="item-title">
 				<!-- Checkout -->
 				<?php echo $grid->checkoutButton(); ?>
