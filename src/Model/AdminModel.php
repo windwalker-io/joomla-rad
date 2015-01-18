@@ -279,7 +279,7 @@ abstract class AdminModel extends CrudModel
 		// Publish_up date
 		if (property_exists($table, 'publish_up') && !$table->publish_up)
 		{
-			$table->publish_up = $date->toSql();
+			$table->publish_up = $this->db->getNullDate();
 		}
 
 		// Modified date
