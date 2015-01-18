@@ -37,6 +37,6 @@ abstract class Config extends AbstractConfig
 		$type = static::$type;
 		$ext  = (static::$type == 'yaml') ? 'yml' : $type;
 
-		return PathHelper::getAdmin('{{extension.name.upper}}') . '/etc/config.' . $ext;
+		return PathHelper::getAdmin('{{extension.element.lower}}') . '/etc/config.' . $ext;
 	}
 }
