@@ -6,6 +6,15 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+/*
+ * Ensure that required path constants are defined.  These can be overridden within the phpunit.xml file
+ * if you chose to create a custom version of that file.
+ */
+if (!defined('JPATH_ROOT'))
+{
+	define('JPATH_ROOT', realpath(dirname(__DIR__)));
+}
+
 $autoload = __DIR__ . '/../vendor/autoload.php';
 
 if (!is_file($autoload))
