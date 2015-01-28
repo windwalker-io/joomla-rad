@@ -1,22 +1,30 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
- * @license	GNU General Public License version 2 or later; see LICENSE
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2008 - 2014 Asikart.com. All rights reserved.
+ * @license    GNU Lesser General Public License version 2.1 or later.
  */
+namespace Windwalker\Filesystem\Test;
 
-use Windwalker\Filesystem\Path;
+use Joomla\Filesystem\Path;
 use Windwalker\Filesystem\Path\PathLocator;
 use Windwalker\Filesystem\Path\PathCollection;
 
 /**
  * Tests for the PathCollection class.
  *
- * @since  1.0
+ * @since  2.0
  */
-class PathCollectionTest extends PHPUnit_Framework_TestCase
+class PathCollectionTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * Property collection.
+	 *
+	 * @var PathCollection
+	 */
 	public $collection;
-	
+
 	/**
 	 * setUp description
 	 *
@@ -26,19 +34,19 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  setUpReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function setUp()
 	{
 		$this->collection = new PathCollection();
 	}
-	
+
 	/**
 	 * Data provider for testClean() method.
 	 *
 	 * @return  array
 	 *
-	 * @since   1.0
+	 * @since   2.0
 	 */
 	public function getPathData()
 	{
@@ -48,20 +56,20 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 				'/var/www/foo/bar',
 				array(new PathLocator('/var/www/foo/bar'))
 			),
-			
+
 			'paths with on key' => array(
 				array(
 					'/',
 					'/var/www/foo/bar',
-					'/var/www/joomla/bar/foo'
+					'/var/www/windwalker/bar/foo'
 				),
 				array(
 					new PathLocator('/'),
 					new PathLocator('/var/www/foo/bar'),
-					new PathLocator('/var/www/joomla/bar/foo')
+					new PathLocator('/var/www/windwalker/bar/foo')
 				)
 			),
-			
+
 			'paths with key' => array(
 				array(
 					'root' => '/',
@@ -74,13 +82,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 			)
 		);
 	}
-	
+
 	/**
 	 * Data provider for testClean() method.
 	 *
 	 * @return  array
 	 *
-	 * @since   1.0
+	 * @since   2.0
 	 */
 	public function getIteratorData()
 	{
@@ -90,12 +98,12 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 					__DIR__ . '/files/folder1',
 					__DIR__ . '/files/folder2'
 				),
-				
+
 				array(
 					Path::clean(__DIR__ . '/files/folder1'),
 					Path::clean(__DIR__ . '/files/folder2')
 				),
-				
+
 				false
 			),
 			/*
@@ -116,7 +124,7 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 			*/
 		);
 	}
-	
+
 	/**
 	 * name description
 	 *
@@ -126,7 +134,7 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  nameReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function getIteratorRecursiveData()
 	{
@@ -137,32 +145,32 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 					__DIR__ . '/files/folder2',
 					__DIR__ . '/files/file2.txt',
 				),
-				
+
 				array(
 					Path::clean(__DIR__ . '/files/folder1'),
 					Path::clean(__DIR__ . '/files/folder2')
 				),
-				
+
 				false
 			),
-			
+
 			'rescurive' => array(
 				array(
 					__DIR__ . '/files'
 				),
-				
+
 				array(
 					Path::clean(__DIR__ . '/files/folder1'),
 					Path::clean(__DIR__ . '/files/folder1/path1'),
 					Path::clean(__DIR__ . '/files/folder2/file2.html'),
 					Path::clean(__DIR__ . '/files/file2.txt')
 				),
-				
+
 				true
 			)
 		);
 	}
-	
+
 	/**
 	 * test__construct description
 	 *
@@ -172,17 +180,17 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  test__constructReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function test__construct()
 	{
 		$collections = new PathCollection('/var/www/foo/bar');
-		
+
 		$paths = $collections->getPaths();
-		
+
 		$this->assertEquals(array(new PathLocator('/var/www/foo/bar')), $paths);
 	}
-	
+
 	/**
 	 * testAddPaths description
 	 *
@@ -193,18 +201,18 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 * @return  string  testAddPathsReturn
 	 *
 	 * @dataProvider  getPathData
-	 * 
-	 * @since  1.0
+	 *
+	 * @since  2.0
 	 */
 	public function testAddPaths($paths, $expects)
 	{
 		$this->collection->addPaths($paths);
-		
+
 		$paths = $this->collection->getPaths();
-		
+
 		$this->assertEquals($paths, $expects);
 	}
-	
+
 	/**
 	 * addPath description
 	 *
@@ -214,17 +222,17 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  addPathReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function testAddPath()
 	{
 		$path = new PathLocator('/var/foo/bar');
-		
+
 		$this->collection->addPath($path, 'bar');
-		
+
 		$this->assertEquals($path, $this->collection->getPath('bar'));
 	}
-	
+
 	/**
 	 * removePath description
 	 *
@@ -234,21 +242,21 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  removePathReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function testRemovePath()
 	{
 		$path = new PathLocator('/var/foo/bar');
-		
+
 		$this->collection->addPath($path, 'bar');
-		
+
 		$this->collection->removePath('bar');
-		
+
 		$path = $this->collection->getPath('bar');
-		
+
 		$this->assertNull($path);
 	}
-	
+
 	/**
 	 * getPaths description
 	 *
@@ -259,20 +267,20 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 * @return  string  getPathsReturn
 	 *
 	 * @dataProvider  getPathData
-	 * 
-	 * @since  1.0
+	 *
+	 * @since  2.0
 	 */
 	public function testGetPaths($paths, $expects)
 	{
 		$this->setUp();
-		
+
 		$this->collection->addPaths($paths);
-		
+
 		$paths = $this->collection->getPaths();
-		
+
 		$this->assertEquals($paths, $expects);
 	}
-	
+
 	/**
 	 * getPath description
 	 *
@@ -282,19 +290,19 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  getPathReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function testGetPath()
 	{
 		$path = new PathLocator('/var/foo/bar2');
-		
+
 		$this->collection->addPath($path, 'bar2');
-		
+
 		$this->assertEquals($path, $this->collection->getPath('bar2'));
-		
+
 		$this->assertEquals(new PathLocator('/'), $this->collection->getPath('bar3', '/'));
 	}
-	
+
 	/**
 	 * getIterator description
 	 *
@@ -306,26 +314,26 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @dataProvider  getIteratorData
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function testGetIterator($paths, $expects, $rescursive)
 	{
 		$this->setUp();
-		
+
 		$this->collection->addPaths($paths);
-		
+
 		$iterator = $this->collection;
-		
+
 		$compare = array();
-		
+
 		foreach($iterator as $file)
 		{
 			$compare[] = (string) $file;
 		}
-		
+
 		$this->assertEquals($compare, $expects);
 	}
-	
+
 	/**
 	 * testDiresctoryIterator description
 	 *
@@ -335,13 +343,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  testDiresctoryIteratorReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function testGetDiresctoryIterator()
 	{
-		
+
 	}
-	
+
 	/**
 	 * setPrefix description
 	 *
@@ -351,30 +359,30 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  setPrefixReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function testSetPrefix()
 	{
 		$this->setUp();
-		
-		$this->collection->addPath('joomla/dir/foo/bar', 'foo');
-		$this->collection->addPath('joomla/dir/yoo/hoo', 'yoo');
-		
+
+		$this->collection->addPath('windwalker/dir/foo/bar', 'foo');
+		$this->collection->addPath('windwalker/dir/yoo/hoo', 'yoo');
+
 		$this->collection->setPrefix('/var/www');
-		
+
 		$expects = array(
-			Path::clean('/var/www/joomla/dir/foo/bar'),
-			Path::clean('/var/www/joomla/dir/yoo/hoo'),
+			Path::clean('/var/www/windwalker/dir/foo/bar'),
+			Path::clean('/var/www/windwalker/dir/yoo/hoo'),
 		);
-		
+
 		$paths = array(
 			(string) $this->collection->getPath('foo'),
 			(string) $this->collection->getPath('yoo')
 		);
-		
+
 		$this->assertEquals($paths, $expects);
 	}
-	
+
 	/**
 	 * find description
 	 *
@@ -384,13 +392,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  findReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function find()
 	{
-		
+
 	}
-	
+
 	/**
 	 * findAll description
 	 *
@@ -400,13 +408,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  findAllReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function findAll()
 	{
-		
+
 	}
-	
+
 	/**
 	 * toArray description
 	 *
@@ -416,13 +424,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  toArrayReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function toArray()
 	{
-		
+
 	}
-	
+
 	/**
 	 * getFiles description
 	 *
@@ -432,13 +440,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  getFilesReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function getFiles($rescursive = false)
 	{
-		
+
 	}
-	
+
 	/**
 	 * getFolders description
 	 *
@@ -448,13 +456,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  getFoldersReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function getFolders($rescursive)
 	{
-		
+
 	}
-	
+
 	/**
 	 * appendAll description
 	 *
@@ -464,13 +472,13 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  appendAllReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function appendAll()
 	{
-		
+
 	}
-	
+
 	/**
 	 * prependAll description
 	 *
@@ -480,10 +488,10 @@ class PathCollectionTest extends PHPUnit_Framework_TestCase
 	 *
 	 * @return  string  prependAllReturn
 	 *
-	 * @since  1.0
+	 * @since  2.0
 	 */
 	public function prependAll()
 	{
-		
+
 	}
 }
