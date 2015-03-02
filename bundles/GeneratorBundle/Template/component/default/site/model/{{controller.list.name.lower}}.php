@@ -110,20 +110,6 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 		$input  = $this->container->get('input');
 		$app    = $this->container->get('app');
 
-		// Order
-		// =====================================================================================
-		$orderCol = $params->get('orderby', 'a.ordering');
-		$this->state->set('list.ordering', $orderCol);
-
-		// Order Dir
-		// =====================================================================================
-		$listOrder = $params->get('order_dir', 'asc');
-		$this->state->set('list.direction', $listOrder);
-
-		// Limitstart
-		// =====================================================================================
-		$this->state->set('list.start', $input->getInt('limitstart', 0));
-
 		// Max Level
 		// =====================================================================================
 		$maxLevel = $params->get('maxLevel');
@@ -157,6 +143,20 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 		$this->state->set('filter.language', $app->getLanguageFilter());
 
 		parent::populateState($ordering, 'ASC');
+
+		// Order
+		// =====================================================================================
+		$orderCol = $params->get('orderby', 'a.ordering');
+		$this->state->set('list.ordering', $orderCol);
+
+		// Order Dir
+		// =====================================================================================
+		$listOrder = $params->get('order_dir', 'asc');
+		$this->state->set('list.direction', $listOrder);
+
+		// Limitstart
+		// =====================================================================================
+		$this->state->set('list.start', $input->getInt('limitstart', 0));
 	}
 
 	/**
