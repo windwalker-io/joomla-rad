@@ -111,9 +111,6 @@ class Windwalker
 		// Load Composer
 		include_once dirname(__DIR__) . '/vendor/autoload.php';
 
-		// Load Joomla framework
-		\JLoader::registerNamespace('Joomla', JPATH_LIBRARIES . '/framework');
-
 		// Load Windwalker framework
 		\JLoader::registerNamespace('Windwalker', dirname(__DIR__));
 

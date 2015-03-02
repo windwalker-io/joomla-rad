@@ -202,7 +202,7 @@ class GridView extends ListHtmlView
 					'LIB_WINDWALKER_TOOLBAR_CONFIRM_DELETE'
 				),
 				'access'  => (
-					ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'state'))
+					ArrayHelper::getValue($filterState, $this->viewItem . '.' . $grid->config->get('field.state', 'state')) == -2
 					&& $canDo->get('core.delete')
 				),
 				'priority' => 400
@@ -212,7 +212,7 @@ class GridView extends ListHtmlView
 				'handler' => 'trash',
 				'args'     => array($this->viewList . '.state.trash'),
 				'access'  => (
-					!ArrayHelper::getValue($filterState, $grid->config->get('field.state', 'state'))
+					ArrayHelper::getValue($filterState, $this->viewItem . '.' . $grid->config->get('field.state', 'state')) != -2
 					&& $canDo->get('core.edit.state')
 				),
 				'priority' => 300
