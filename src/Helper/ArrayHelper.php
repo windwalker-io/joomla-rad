@@ -294,24 +294,27 @@ class ArrayHelper
 	/**
 	 * Query a two-dimensional array values to get second level array.
 	 *
-	 * @param   array   $array    An array to query.
-	 * @param   mixed   $queries  Query strings, may contain Comparison Operators: '>', '>=', '<', '<='.
-	 *                            <br />Example:
-	 *                            <br />array(
-	 *                            <br />    'id'          => 6 ,   // Get all elements where id=6
-	 *                            <br />    '>published'  => 0     // Get all elements where published>0
-	 *                            <br />) ;
-	 * @param  boolean $keepKey  Keep origin array keys.
+	 * @param   array    $array    An array to query.
+	 * @param   mixed    $queries  Query strings, may contain Comparison Operators: '>', '>=', '<', '<='.
+	 *                             Example:
+	 *                             array(
+	 *                                 'id'         => 6,   // Get all elements where id=6
+	 *                                 '>published' => 0    // Get all elements where published>0
+	 *                             );
+	 * @param   boolean  $strict   Use strict to compare equals.
+	 * @param   boolean  $keepKey  Keep origin array keys.
 	 *
-	 * @return   array    An new two-dimensional array queried.
+	 * @return  array  An new two-dimensional array queried.
+	 *
+	 * @since   2.0
 	 */
-	public static function query($array, $queries = array(), $keepKey = false)
+	public static function query($array, $queries = array(), $strict = false, $keepKey = false)
 	{
 		$results = array();
 		$queries = (array) $queries;
 
 		// Visit Array
-		foreach ($array as $k => $v)
+		foreach ((array) $array as $k => $v)
 		{
 			$data = (array) $v;
 
@@ -325,39 +328,53 @@ class ArrayHelper
 				 */
 				$value = null;
 
-				if (substr($val, -2) == '>=')
+				if (substr($key, -2) == '>=')
 				{
-					if (static::getValue($data, $key) >= substr($val, 0, -2))
+					if (static::getByPath($data, trim(substr($key, 0, -2))) >= $val)
 					{
 						$value = $v;
 					}
 				}
-				elseif (substr($val, -2) == '<=')
+				elseif (substr($key, -2) == '<=')
 				{
-					if (static::getValue($data, $key) <= substr($val, 0, -2))
+					if (static::getByPath($data, trim(substr($key, 0, -2))) <= $val)
 					{
 						$value = $v;
 					}
 				}
-				elseif (substr($val, -1) == '>')
+				elseif (substr($key, -1) == '>')
 				{
-					if (static::getValue($data, $key) > substr($val, 0, -1))
+					if (static::getByPath($data, trim(substr($key, 0, -1))) > $val)
 					{
 						$value = $v;
 					}
 				}
-				elseif (substr($val, -1) == '<')
+				elseif (substr($key, -1) == '<')
 				{
-					if (static::getValue($data, $key) < substr($val, 0, -1))
+					if (static::getByPath($data, trim(substr($key, 0, -1))) < $val)
 					{
 						$value = $v;
 					}
 				}
 				else
 				{
-					if (static::getValue($data, $key) == $val)
+					if ($strict)
 					{
-						$value = $v;
+						if (static::getByPath($data, $key) === $val)
+						{
+							$value = $v;
+						}
+					}
+					else
+					{
+						// Workaround for PHP 5.4 object compare bug, see: https://bugs.php.net/bug.php?id=62976
+						$compare1 = is_object(static::getByPath($data, $key)) ? get_object_vars(static::getByPath($data, $key)) : static::getByPath($data, $key);
+						$compare2 = is_object($val) ? get_object_vars($val) : $val;
+
+						if ($compare1 == $compare2)
+						{
+							$value = $v;
+						}
 					}
 				}
 
