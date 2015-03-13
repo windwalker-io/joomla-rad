@@ -90,7 +90,7 @@ $function = $input->get('function', 'jSelectArticle');
 				?>
 				<tr class="row<?php echo $i % 2; ?>">
 					<!--TITLE-->
-					<td class="n/owrap has-context quick-edit-wrap">
+					<td class="has-context quick-edit-wrap">
 						<div class="item-title">
 							<a class="pointer" style="cursor: pointer;"
 								onclick="if (window.parent) window.parent.<?php echo $this->escape($function); ?>('<?php echo $item->id; ?>','<?php echo $this->escape(addslashes($item->title)); ?>');"

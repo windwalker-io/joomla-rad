@@ -273,19 +273,19 @@ abstract class AdminModel extends CrudModel
 		// Created date
 		if (property_exists($table, 'created') && !$table->created)
 		{
-			$table->created = $date->toSql(true);
+			$table->created = $date->toSql();
 		}
 
 		// Publish_up date
 		if (property_exists($table, 'publish_up') && !$table->publish_up)
 		{
-			$table->publish_up = $date->toSql(true);
+			$table->publish_up = $this->db->getNullDate();
 		}
 
 		// Modified date
 		if (property_exists($table, 'modified') && $table->id)
 		{
-			$table->modified = $date->toSql(true);
+			$table->modified = $date->toSql();
 		}
 
 		// Created user
