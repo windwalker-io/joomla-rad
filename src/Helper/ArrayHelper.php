@@ -8,13 +8,14 @@
 
 namespace Windwalker\Helper;
 
-use JArrayHelper;
+use Windwalker\String\Utf8String;
+use \Windwalker\Utilities\ArrayHelper as WindwalkerArrayHelper;
 
 // No direct access
 defined('_JEXEC') or die;
 
 /**
- * Enhance JArrayHelper, and add some useful functions.
+ * Enhance static, and add some useful functions.
  *
  * @since 2.0
  */
@@ -206,7 +207,7 @@ class ArrayHelper
 		{
 			if (strpos($key, $prefix) === 0)
 			{
-				$key2 = \JString::substr($key, \JString::strlen($prefix));
+				$key2 = Utf8String::substr($key, Utf8String::strlen($prefix));
 				self::setValue($target, $key2, $row);
 			}
 		}
@@ -326,35 +327,35 @@ class ArrayHelper
 
 				if (substr($val, -2) == '>=')
 				{
-					if (JArrayHelper::getValue($data, $key) >= substr($val, 0, -2))
+					if (static::getValue($data, $key) >= substr($val, 0, -2))
 					{
 						$value = $v;
 					}
 				}
 				elseif (substr($val, -2) == '<=')
 				{
-					if (JArrayHelper::getValue($data, $key) <= substr($val, 0, -2))
+					if (static::getValue($data, $key) <= substr($val, 0, -2))
 					{
 						$value = $v;
 					}
 				}
 				elseif (substr($val, -1) == '>')
 				{
-					if (JArrayHelper::getValue($data, $key) > substr($val, 0, -1))
+					if (static::getValue($data, $key) > substr($val, 0, -1))
 					{
 						$value = $v;
 					}
 				}
 				elseif (substr($val, -1) == '<')
 				{
-					if (JArrayHelper::getValue($data, $key) < substr($val, 0, -1))
+					if (static::getValue($data, $key) < substr($val, 0, -1))
 					{
 						$value = $v;
 					}
 				}
 				else
 				{
-					if (JArrayHelper::getValue($data, $key) == $val)
+					if (static::getValue($data, $key) == $val)
 					{
 						$value = $v;
 					}
@@ -402,7 +403,7 @@ class ArrayHelper
 	}
 
 	/**
-	 * A function like JArrayHelper::getValue(), but support object.
+	 * A function similar to JArrayHelper::getValue(), but support object.
 	 *
 	 * @param   mixed  &$array   An array or object to getValue.
 	 * @param   string $key      Array key to get value.
@@ -414,7 +415,7 @@ class ArrayHelper
 	{
 		if (is_array($array))
 		{
-			return JArrayHelper::getValue($array, $key, $default);
+			return WindwalkerArrayHelper::getValue($array, $key, $default);
 		}
 
 		// If not Array, we do not detect it for warning not Object
