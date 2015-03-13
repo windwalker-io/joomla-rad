@@ -37,7 +37,18 @@ class ArrayHelper
 			return null;
 		}
 
-		$args = is_array($arguments) ? $arguments : explode('.', $arguments);
+		if (is_array($arguments))
+		{
+			$args = $arguments;
+		}
+		elseif (is_string($arguments))
+		{
+			$args = explode('.', $arguments);
+		}
+		else
+		{
+			return null;
+		}
 
 		$dataTmp = $data;
 
