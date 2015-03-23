@@ -116,9 +116,8 @@ class Container extends JoomlaContainer
 	 */
 	public function get($key, $forceNew = false)
 	{
-		$raw = $this->getRaw($key);
-
 		$key = $this->resolveAlias($key);
+		$raw = $this->getRaw($key);
 
 		if (is_null($raw))
 		{
