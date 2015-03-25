@@ -361,12 +361,70 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, ArrayHelper::pivotToTwoDimension($origin, $keys));
 	}
 
+	/**
+	 * Method to test query()
+	 *
+	 * @covers  \Windwalker\Helper\ArrayHelper::query
+	 *
+	 * @return  void
+	 */
 	public function testQuery()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$data = array(
+			array(
+				'id' => 1,
+				'title' => 'Julius Caesar',
+				'data' => (object) array('foo' => 'bar'),
+			),
+			array(
+				'id' => 2,
+				'title' => 'Macbeth',
+				'data' => array(),
+			),
+			array(
+				'id' => 3,
+				'title' => 'Othello',
+				'data' => 123,
+			),
+			array(
+				'id' => 4,
+				'title' => 'Hamlet',
+				'data' => true,
+			),
 		);
+
+		// Test id equals
+		$this->assertEquals(array($data[1]), ArrayHelper::query($data, array('id' => 2)));
+
+		// Test strict equals
+		$this->assertEquals(array($data[0], $data[2], $data[3]), ArrayHelper::query($data, array('data' => true), false));
+		$this->assertEquals(array($data[3]), ArrayHelper::query($data, array('data' => true), true));
+
+		// Test id GT
+		$this->assertEquals(array($data[1], $data[2], $data[3]), ArrayHelper::query($data, array('id >' => 1)));
+
+		// Test id GTE
+		$this->assertEquals(array($data[1], $data[2], $data[3]), ArrayHelper::query($data, array('id >=' => 2)));
+
+		// Test id LT
+		$this->assertEquals(array($data[0], $data[1]), ArrayHelper::query($data, array('id <' => 3)));
+
+		// Test id LTE
+		$this->assertEquals(array($data[0], $data[1]), ArrayHelper::query($data, array('id <=' => 2)));
+
+		// Test array equals
+		$this->assertEquals(array($data[1]), ArrayHelper::query($data, array('data' => array())));
+
+		// Test object equals
+		$object = new \stdClass;
+		$object->foo = 'bar';
+		$this->assertEquals(array($data[0], $data[3]), ArrayHelper::query($data, array('data' => $object)));
+
+		// Test object strict equals
+		$this->assertEquals(array($data[0]), ArrayHelper::query($data, array('data' => $data[0]['data']), true));
+
+		// Test Keep Key
+		$this->assertEquals(array(1 => $data[1], 2 => $data[2], 3 => $data[3]), ArrayHelper::query($data, array('id >=' => 2), false, true));
 	}
 
 	/**
