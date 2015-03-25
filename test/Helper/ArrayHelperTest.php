@@ -62,7 +62,7 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase
 		// Test null return
 		$this->assertEquals(null, ArrayHelper::getByPath($data, ''));
 		$this->assertEquals(null, ArrayHelper::getByPath($data, null));
-		$this->assertEquals(null, ArrayHelper::getByPath($data, []));
+		$this->assertEquals(null, ArrayHelper::getByPath($data, array()));
 		$this->assertEquals(null, ArrayHelper::getByPath($data, new \stdClass));
 
 		// Test paths

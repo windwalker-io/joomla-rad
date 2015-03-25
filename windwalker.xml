@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="library" version="3.3" method="upgrade">
+<extension type="library" version="3.4" method="upgrade">
 	<name>windwalker</name>
 	<libraryname>windwalker</libraryname>
 	<creationDate>2012-11-23</creationDate>
@@ -8,38 +8,28 @@
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
 	<authorUrl>http://asikart.com</authorUrl>
-	<version>4.0.10</version>
-	<newversion>2.0.10</newversion>
+	<version>4.1.0-alpha</version>
+	<newversion>2.1.0-alpha</newversion>
 	<description>LIB_WINDWALKER_XML_DESC</description>
 
 	<files>
-		<!-- 2.0 -->
+		<folder>assets</folder>
 		<folder>bin</folder>
 		<folder>bundles</folder>
 		<folder>language</folder>
 		<folder>resource</folder>
-		<folder>vendor</folder>
 		<folder>src</folder>
 		<folder>test</folder>
+		<folder>vendor</folder>
 		<file>.gitignore</file>
+		<file>.travis.yml</file>
 		<file>composer.json</file>
 		<file>composer.lock</file>
 		<file>config.dist.json</file>
-		<file>windwalker.xml</file>
 		<file>index.html</file>
 		<file>phpunit.xml.dist</file>
 		<file>README.md</file>
-
-		<!-- Legacy -->
-		<folder>admin</folder>
-		<folder>assets</folder>
-		<folder>component</folder>
-		<folder>base</folder>
-		<folder>form</folder>
-		<folder>helpers</folder>
-		<folder>html</folder>
-		<folder>layouts</folder>
-		<file>init.php</file>
+		<file>windwalker.xml</file>
 	</files>
 
 	<languages folder="language">
@@ -50,10 +40,8 @@
 		<language tag="en-GB">en-GB/en-GB.lib_windwalker.sys.ini</language>
 	</languages>
 
-	<!--
 	<updateservers>
-		<server type="extension" priority="1" name="WindWalker Framework">http://update.asikart.com/library/lib_windwalker.xml</server>
+		<server type="extension" priority="1" name="WindWalker Framework">https://raw.githubusercontent.com/ventoviro/windwalker-joomla-rad/staging/update.xml</server>
 	</updateservers>
-	-->
 </extension>
 

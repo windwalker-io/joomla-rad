@@ -1,6 +1,7 @@
 # Development system files #
 .*
 !/.gitignore
+!.travis.yml
 
 # Composer #
 /vendor
