@@ -30,31 +30,33 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Method to test repair() for closed HTML tags with Tidy.
 	 *
-	 * @param string $html_string_closed
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
 	 * @dataProvider repairHtmlClosedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepairHtmlClosedTidy($html_string_closed)
+	public function testRepairHtmlClosedTidy($expected, $data)
 	{
-		$this->assertSame($html_string_closed, HtmlHelper::repair($html_string_closed));
+		$this->assertSame($expected, HtmlHelper::repair($data));
 	}
 
 	/**
 	 * Method to test repair() for closed HTML tags.
 	 *
-	 * @param string $html_string_closed
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
 	 * @dataProvider repairHtmlClosedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepairHtmlClosed($html_string_closed)
+	public function testRepairHtmlClosed($expected, $data)
 	{
-		$this->assertSame($html_string_closed, HtmlHelper::repair($html_string_closed, false));
+		$this->assertSame($expected, HtmlHelper::repair($data, false));
 	}
 
 	/**
@@ -65,51 +67,112 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 	public function repairHtmlClosedDataProvider()
 	{
 		return array(
-			array(<<<HTML_STR_CLOSED_1
+			array(
+				<<<EXPECTED_1
 <p>
   Over my dead body
 </p>
-HTML_STR_CLOSED_1
-),
-			array(<<<HTML_STR_CLOSED_2
+EXPECTED_1
+,
+				<<<DATA_1
+<p>
+  Over my dead body
+</p>
+DATA_1
+,
+			),
+			array(
+				<<<EXPECTED_2
 <div>
   <p>
     Over my dead body
   </p>
 </div>
-HTML_STR_CLOSED_2
-),
+EXPECTED_2
+,
+				<<<DATA_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+DATA_2
+,
+			),
 		);
 	}
 
 	/**
 	 * Method to test repair() for unclosed HTML tags with Tidy.
 	 *
-	 * @param string $html_string_unclosed
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
-	 * @dataProvider repairHtmlUnclosedDataProvider
+	 * @dataProvider repairHtmlUnclosedTidyDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepairHtmlUnclosedTidy($html_string_unclosed)
+	public function testRepairHtmlUnclosedTidy($expected, $data)
 	{
-		$this->assertNotSame($html_string_unclosed, HtmlHelper::repair($html_string_unclosed));
+		$this->assertSame($expected, HtmlHelper::repair($data));
 	}
 
 	/**
 	 * Method to test repair() for unclosed HTML tags.
 	 *
-	 * @param string $html_string_unclosed
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
 	 * @dataProvider repairHtmlUnclosedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepairHtmlUnclosed($html_string_unclosed)
+	public function testRepairHtmlUnclosed($expected, $data)
 	{
-		$this->assertNotSame($html_string_unclosed, HtmlHelper::repair($html_string_unclosed, false));
+		$this->assertSame($expected, HtmlHelper::repair($data, false));
+	}
+
+	/**
+	 * repairHtmlUnclosedTidyDataProvider
+	 *
+	 * @return array
+	 */
+	public function repairHtmlUnclosedTidyDataProvider()
+	{
+		return array(
+			array(
+				<<<EXPECTED_1
+<p>
+  Over my dead body
+</p>
+EXPECTED_1
+,
+				<<<DATA_1
+<p>
+  Over my dead body
+DATA_1
+,
+			),
+			array(
+				<<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+EXPECTED_2
+,
+				<<<DATA_2
+<div>
+  <p>
+    Over my dead body
+</div>
+DATA_2
+,
+			),
+		);
 	}
 
 	/**
@@ -120,49 +183,67 @@ HTML_STR_CLOSED_2
 	public function repairHtmlUnclosedDataProvider()
 	{
 		return array(
-			array(<<<HTML_STR_UNCLOSED_1
+			array(
+				<<<EXPECTED_1
+<p>
+  Over my dead body</p>
+EXPECTED_1
+,
+				<<<DATA_1
 <p>
   Over my dead body
-HTML_STR_UNCLOSED_1
-),
-			array(<<<HTML_STR_UNCLOSED_2
+DATA_1
+,
+			),
+			array(
+				<<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+</div></p>
+EXPECTED_2
+,
+				<<<DATA_2
 <div>
   <p>
     Over my dead body
 </div>
-HTML_STR_UNCLOSED_2
-),
+DATA_2
+,
+			),
 		);
 	}
 
 	/**
 	 * Method to test repair() for unopened HTML tags with Tidy.
 	 *
-	 * @param string $html_string_unopened
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
 	 * @dataProvider repairHtmlUnopenedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepairHtmlUnopenedTidy($html_string_unopened)
+	public function testRepairHtmlUnopenedTidy($expected, $data)
 	{
-		$this->assertNotSame($html_string_unopened, HtmlHelper::repair($html_string_unopened));
+		$this->assertNotSame($expected, HtmlHelper::repair($data));
 	}
 
 	/**
 	 * Method to test repair() for unopened HTML tags.
 	 *
-	 * @param string $html_string_unopened
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
 	 * @dataProvider repairHtmlUnopenedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepairHtmlUnopened($html_string_unopened)
+	public function testRepairHtmlUnopened($expected, $data)
 	{
-		$this->assertSame($html_string_unopened, HtmlHelper::repair($html_string_unopened, false));
+		$this->assertSame($expected, HtmlHelper::repair($data, false));
 	}
 
 	/**
@@ -173,18 +254,34 @@ HTML_STR_UNCLOSED_2
 	public function repairHtmlUnopenedDataProvider()
 	{
 		return array(
-			array(<<<HTML_STR_UNOPENED_1
+			array(
+				<<<EXPECTED_1
   Over my dead body
 </p>
-HTML_STR_UNOPENED_1
-),
-			array(<<<HTML_STR_UNOPENED_2
+EXPECTED_1
+,
+				<<<DATA_1
+  Over my dead body
+</p>
+DATA_1
+,
+			),
+			array(
+				<<<EXPECTED_2
 <div>
     Over my dead body
   </p>
 </div>
-HTML_STR_UNOPENED_2
-),
+EXPECTED_2
+,
+				<<<DATA_2
+<div>
+    Over my dead body
+  </p>
+</div>
+DATA_2
+,
+			),
 		);
 	}
 
