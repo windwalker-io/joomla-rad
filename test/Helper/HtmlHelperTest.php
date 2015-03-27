@@ -62,44 +62,42 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * repairHtmlClosedDataProvider
 	 *
-	 * @return array
+	 * @return array $returns
 	 */
 	public function repairHtmlClosedDataProvider()
 	{
-		return array(
-			array(
-				<<<EXPECTED_1
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
 <p>
   Over my dead body
 </p>
-EXPECTED_1
-,
-				<<<DATA_1
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
 <p>
   Over my dead body
 </p>
-DATA_1
-,
-			),
-			array(
-				<<<EXPECTED_2
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
 <div>
   <p>
     Over my dead body
   </p>
 </div>
-EXPECTED_2
-,
-				<<<DATA_2
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
 <div>
   <p>
     Over my dead body
   </p>
 </div>
-DATA_2
-,
-			),
-		);
+DATA_2;
+
+		return $returns;
 	}
 
 	/**
@@ -137,81 +135,77 @@ DATA_2
 	/**
 	 * repairHtmlUnclosedTidyDataProvider
 	 *
-	 * @return array
+	 * @return array $returns
 	 */
 	public function repairHtmlUnclosedTidyDataProvider()
 	{
-		return array(
-			array(
-				<<<EXPECTED_1
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
 <p>
   Over my dead body
 </p>
-EXPECTED_1
-,
-				<<<DATA_1
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
 <p>
   Over my dead body
-DATA_1
-,
-			),
-			array(
-				<<<EXPECTED_2
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
 <div>
   <p>
     Over my dead body
   </p>
 </div>
-EXPECTED_2
-,
-				<<<DATA_2
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
 <div>
   <p>
     Over my dead body
 </div>
-DATA_2
-,
-			),
-		);
+DATA_2;
+
+		return $returns;
 	}
 
 	/**
 	 * repairHtmlUnclosedDataProvider
 	 *
-	 * @return array
+	 * @return array $returns
 	 */
 	public function repairHtmlUnclosedDataProvider()
 	{
-		return array(
-			array(
-				<<<EXPECTED_1
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
 <p>
   Over my dead body</p>
-EXPECTED_1
-,
-				<<<DATA_1
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
 <p>
   Over my dead body
-DATA_1
-,
-			),
-			array(
-				<<<EXPECTED_2
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
 <div>
   <p>
     Over my dead body
 </div></p>
-EXPECTED_2
-,
-				<<<DATA_2
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
 <div>
   <p>
     Over my dead body
 </div>
-DATA_2
-,
-			),
-		);
+DATA_2;
+
+		return $returns;
 	}
 
 	/**
@@ -249,40 +243,38 @@ DATA_2
 	/**
 	 * repairHtmlUnopenedDataProvider
 	 *
-	 * @return array
+	 * @return array $returns
 	 */
 	public function repairHtmlUnopenedDataProvider()
 	{
-		return array(
-			array(
-				<<<EXPECTED_1
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
   Over my dead body
 </p>
-EXPECTED_1
-,
-				<<<DATA_1
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
   Over my dead body
 </p>
-DATA_1
-,
-			),
-			array(
-				<<<EXPECTED_2
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
 <div>
     Over my dead body
   </p>
 </div>
-EXPECTED_2
-,
-				<<<DATA_2
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
 <div>
     Over my dead body
   </p>
 </div>
-DATA_2
-,
-			),
-		);
+DATA_2;
+
+		return $returns;
 	}
 
 	/**
