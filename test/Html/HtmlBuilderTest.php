@@ -57,7 +57,7 @@ class HtmlBuilderTest extends \PHPUnit_Framework_TestCase
 		{
 			$tagName = $singleTag;
 
-			$element = HtmlBuilder::create($tagName, '', $attributes);
+			$element = HtmlBuilder::create($tagName);
 
 			$pattern = '#<' . $tagName . ' />#';
 			$matchResult = preg_match($pattern, $element, $matches);
