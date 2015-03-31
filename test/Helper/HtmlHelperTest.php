@@ -35,12 +35,21 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @dataProvider repairHtmlClosedDataProvider
+	 * @dataProvider repairHtmlClosedTidyDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
 	public function testRepairHtmlClosedTidy($expected, $data)
 	{
-		$this->assertSame($expected, HtmlHelper::repair($data));
+		if (!function_exists('tidy_repair_string'))
+		{
+			$this->markTestSkipped(
+				'The Tidy extension is not available.'
+			);
+		}
+		else
+		{
+			$this->assertSame($expected, HtmlHelper::repair($data));
+		}
 	}
 
 	/**
@@ -60,16 +69,17 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * repairHtmlClosedDataProvider
+	 * repairHtmlClosedTidyDataProvider
 	 *
 	 * @return array $returns
 	 */
-	public function repairHtmlClosedDataProvider()
+	public function repairHtmlClosedTidyDataProvider()
 	{
 		$returns = array();
 
 		$returns[0] = array();
 		$returns[1] = array();
+		$returns[2] = array();
 
 		$returns[0][0] = <<<EXPECTED_1
 <p>
@@ -97,6 +107,80 @@ EXPECTED_2;
 </div>
 DATA_2;
 
+		$returns[2][0] = <<<EXPECTED_3
+<table>
+  <tr>
+    <td>
+      Over my dead body
+    </td>
+  </tr>
+</table>
+EXPECTED_3;
+		$returns[2][1] = <<<DATA_3
+      <table>
+  <tr><td>
+    Over my dead body</td>
+    </tr>
+ </table>
+DATA_3;
+
+		return $returns;
+	}
+
+	/**
+	 * repairHtmlClosedDataProvider
+	 *
+	 * @return array $returns
+	 */
+	public function repairHtmlClosedDataProvider()
+	{
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+		$returns[2] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
+<p>
+  Over my dead body
+</p>
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
+<p>
+  Over my dead body
+</p>
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+DATA_2;
+
+		$returns[2][0] = <<<EXPECTED_3
+      <table>
+  <tr><td>
+    Over my dead body</td>
+    </tr>
+ </table>
+EXPECTED_3;
+		$returns[2][1] = <<<DATA_3
+      <table>
+  <tr><td>
+    Over my dead body</td>
+    </tr>
+ </table>
+DATA_3;
+
 		return $returns;
 	}
 
@@ -113,7 +197,16 @@ DATA_2;
 	 */
 	public function testRepairHtmlUnclosedTidy($expected, $data)
 	{
-		$this->assertSame($expected, HtmlHelper::repair($data));
+		if (!function_exists('tidy_repair_string'))
+		{
+			$this->markTestSkipped(
+				'The Tidy extension is not available.'
+			);
+		}
+		else
+		{
+			$this->assertSame($expected, HtmlHelper::repair($data));
+		}
 	}
 
 	/**
@@ -221,7 +314,16 @@ DATA_2;
 	 */
 	public function testRepairHtmlUnopenedTidy($expected, $data)
 	{
-		$this->assertNotSame($expected, HtmlHelper::repair($data));
+		if (!function_exists('tidy_repair_string'))
+		{
+			$this->markTestSkipped(
+				'The Tidy extension is not available.'
+			);
+		}
+		else
+		{
+			$this->assertNotSame($expected, HtmlHelper::repair($data));
+		}
 	}
 
 	/**
@@ -280,17 +382,17 @@ DATA_2;
 	/**
 	 * Method to test getJSObject().
 	 *
-	 * @param array $array
+	 * @param string $expected
+	 * @param array $data
 	 *
 	 * @return void
 	 *
 	 * @dataProvider getJSObjectDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::getJSObject
 	 */
-	public function testGetJSObject($array)
+	public function testGetJSObject($expected, $data)
 	{
-		json_decode(HtmlHelper::getJSObject($array));
-		$this->assertTrue(json_last_error() === JSON_ERROR_NONE);
+		$this->assertSame($expected, HtmlHelper::getJSObject($data));
 	}
 
 	/**
@@ -302,15 +404,17 @@ DATA_2;
 	{
 		return array(
 			array(
-				array('foo' => 'bar')
+				'{"foo": "bar"}',
+				array('foo' => 'bar'),
 			),
 			array(
+				'{"goo": 23,"hoo": true,"joo": {"koo": "car"}}',
 				array(
 					'goo' => 23,
 					'hoo' => true,
 					'ioo' => null,
 					'joo' => array('koo' => 'car'),
-				)
+				),
 			),
 		);
 	}
