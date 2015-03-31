@@ -8,6 +8,8 @@
 
 namespace Windwalker\Test\Helper;
 
+use Windwalker\Helper\HtmlHelper;
+
 /**
  * Test class of {className}
  *
@@ -24,36 +26,396 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 	}
-	
+
 	/**
-	 * Method to test repair().
+	 * Method to test repair() for closed HTML tags with Tidy.
+	 *
+	 * @param string $expected
+	 * @param string $data
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\HtmlHelper::repair
-	 * @TODO   Implement testRepair().
+	 * @dataProvider repairHtmlClosedTidyDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::repair
 	 */
-	public function testRepair()
+	public function testRepairHtmlClosedTidy($expected, $data)
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		if (!function_exists('tidy_repair_string'))
+		{
+			$this->markTestSkipped(
+				'The Tidy extension is not available.'
+			);
+		}
+		else
+		{
+			$this->assertSame($expected, HtmlHelper::repair($data));
+		}
+	}
+
+	/**
+	 * Method to test repair() for closed HTML tags.
+	 *
+	 * @param string $expected
+	 * @param string $data
+	 *
+	 * @return void
+	 *
+	 * @dataProvider repairHtmlClosedDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 */
+	public function testRepairHtmlClosed($expected, $data)
+	{
+		$this->assertSame($expected, HtmlHelper::repair($data, false));
+	}
+
+	/**
+	 * repairHtmlClosedTidyDataProvider
+	 *
+	 * @return array $returns
+	 */
+	public function repairHtmlClosedTidyDataProvider()
+	{
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+		$returns[2] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
+<p>
+  Over my dead body
+</p>
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
+<p>
+  Over my dead body
+</p>
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+DATA_2;
+
+		$returns[2][0] = <<<EXPECTED_3
+<table>
+  <tr>
+    <td>
+      Over my dead body
+    </td>
+  </tr>
+</table>
+EXPECTED_3;
+		$returns[2][1] = <<<DATA_3
+      <table>
+  <tr><td>
+    Over my dead body</td>
+    </tr>
+ </table>
+DATA_3;
+
+		return $returns;
+	}
+
+	/**
+	 * repairHtmlClosedDataProvider
+	 *
+	 * @return array $returns
+	 */
+	public function repairHtmlClosedDataProvider()
+	{
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+		$returns[2] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
+<p>
+  Over my dead body
+</p>
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
+<p>
+  Over my dead body
+</p>
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+DATA_2;
+
+		$returns[2][0] = <<<EXPECTED_3
+      <table>
+  <tr><td>
+    Over my dead body</td>
+    </tr>
+ </table>
+EXPECTED_3;
+		$returns[2][1] = <<<DATA_3
+      <table>
+  <tr><td>
+    Over my dead body</td>
+    </tr>
+ </table>
+DATA_3;
+
+		return $returns;
+	}
+
+	/**
+	 * Method to test repair() for unclosed HTML tags with Tidy.
+	 *
+	 * @param string $expected
+	 * @param string $data
+	 *
+	 * @return void
+	 *
+	 * @dataProvider repairHtmlUnclosedTidyDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 */
+	public function testRepairHtmlUnclosedTidy($expected, $data)
+	{
+		if (!function_exists('tidy_repair_string'))
+		{
+			$this->markTestSkipped(
+				'The Tidy extension is not available.'
+			);
+		}
+		else
+		{
+			$this->assertSame($expected, HtmlHelper::repair($data));
+		}
+	}
+
+	/**
+	 * Method to test repair() for unclosed HTML tags.
+	 *
+	 * @param string $expected
+	 * @param string $data
+	 *
+	 * @return void
+	 *
+	 * @dataProvider repairHtmlUnclosedDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 */
+	public function testRepairHtmlUnclosed($expected, $data)
+	{
+		$this->assertSame($expected, HtmlHelper::repair($data, false));
+	}
+
+	/**
+	 * repairHtmlUnclosedTidyDataProvider
+	 *
+	 * @return array $returns
+	 */
+	public function repairHtmlUnclosedTidyDataProvider()
+	{
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
+<p>
+  Over my dead body
+</p>
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
+<p>
+  Over my dead body
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+  </p>
+</div>
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
+<div>
+  <p>
+    Over my dead body
+</div>
+DATA_2;
+
+		return $returns;
+	}
+
+	/**
+	 * repairHtmlUnclosedDataProvider
+	 *
+	 * @return array $returns
+	 */
+	public function repairHtmlUnclosedDataProvider()
+	{
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
+<p>
+  Over my dead body</p>
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
+<p>
+  Over my dead body
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
+<div>
+  <p>
+    Over my dead body
+</div></p>
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
+<div>
+  <p>
+    Over my dead body
+</div>
+DATA_2;
+
+		return $returns;
+	}
+
+	/**
+	 * Method to test repair() for unopened HTML tags with Tidy.
+	 *
+	 * @param string $expected
+	 * @param string $data
+	 *
+	 * @return void
+	 *
+	 * @dataProvider repairHtmlUnopenedDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 */
+	public function testRepairHtmlUnopenedTidy($expected, $data)
+	{
+		if (!function_exists('tidy_repair_string'))
+		{
+			$this->markTestSkipped(
+				'The Tidy extension is not available.'
+			);
+		}
+		else
+		{
+			$this->assertNotSame($expected, HtmlHelper::repair($data));
+		}
+	}
+
+	/**
+	 * Method to test repair() for unopened HTML tags.
+	 *
+	 * @param string $expected
+	 * @param string $data
+	 *
+	 * @return void
+	 *
+	 * @dataProvider repairHtmlUnopenedDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 */
+	public function testRepairHtmlUnopened($expected, $data)
+	{
+		$this->assertSame($expected, HtmlHelper::repair($data, false));
+	}
+
+	/**
+	 * repairHtmlUnopenedDataProvider
+	 *
+	 * @return array $returns
+	 */
+	public function repairHtmlUnopenedDataProvider()
+	{
+		$returns = array();
+
+		$returns[0] = array();
+		$returns[1] = array();
+
+		$returns[0][0] = <<<EXPECTED_1
+  Over my dead body
+</p>
+EXPECTED_1;
+		$returns[0][1] = <<<DATA_1
+  Over my dead body
+</p>
+DATA_1;
+
+		$returns[1][0] = <<<EXPECTED_2
+<div>
+    Over my dead body
+  </p>
+</div>
+EXPECTED_2;
+		$returns[1][1] = <<<DATA_2
+<div>
+    Over my dead body
+  </p>
+</div>
+DATA_2;
+
+		return $returns;
 	}
 
 	/**
 	 * Method to test getJSObject().
 	 *
+	 * @param string $expected
+	 * @param array $data
+	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\HtmlHelper::getJSObject
-	 * @TODO   Implement testGetJSObject().
+	 * @dataProvider getJSObjectDataProvider
+	 * @covers       Windwalker\Helper\HtmlHelper::getJSObject
 	 */
-	public function testGetJSObject()
+	public function testGetJSObject($expected, $data)
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$this->assertSame($expected, HtmlHelper::getJSObject($data));
+	}
+
+	/**
+	 * repairHtmlUnopenedDataProvider
+	 *
+	 * @return array
+	 */
+	public function getJSObjectDataProvider()
+	{
+		return array(
+			array(
+				'{"foo": "bar"}',
+				array('foo' => 'bar'),
+			),
+			array(
+				'{"goo": 23,"hoo": true,"joo": {"koo": "car"}}',
+				array(
+					'goo' => 23,
+					'hoo' => true,
+					'ioo' => null,
+					'joo' => array('koo' => 'car'),
+				),
+			),
 		);
 	}
 }
