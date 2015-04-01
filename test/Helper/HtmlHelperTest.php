@@ -45,11 +45,11 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 			$this->markTestSkipped(
 				'The Tidy extension is not available.'
 			);
+
+			return;
 		}
-		else
-		{
-			$this->assertSame($expected, HtmlHelper::repair($data));
-		}
+
+		$this->assertSame($expected, HtmlHelper::repair($data));
 	}
 
 	/**
@@ -202,11 +202,11 @@ DATA_3;
 			$this->markTestSkipped(
 				'The Tidy extension is not available.'
 			);
+
+			return;
 		}
-		else
-		{
-			$this->assertSame($expected, HtmlHelper::repair($data));
-		}
+
+		$this->assertSame($expected, HtmlHelper::repair($data));
 	}
 
 	/**
@@ -319,11 +319,11 @@ DATA_2;
 			$this->markTestSkipped(
 				'The Tidy extension is not available.'
 			);
+
+			return;
 		}
-		else
-		{
-			$this->assertNotSame($expected, HtmlHelper::repair($data));
-		}
+
+		$this->assertNotSame($expected, HtmlHelper::repair($data));
 	}
 
 	/**
