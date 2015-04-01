@@ -50,7 +50,7 @@ class HtmlBuilder
 		{
 			if ($value !== null && $value !== false && $value !== '')
 			{
-				$tag .= ' ' . $key . '=' . String::quote($value, '""');
+				$tag .= ' ' . $key . '=' . String::quote($value, '"');
 			}
 		}
 
