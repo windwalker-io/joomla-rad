@@ -18,72 +18,131 @@ use Windwalker\Html\HtmlBuilder;
 class HtmlBuilderTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * testCreate
+	 * testPairedTag
 	 *
+	 * @param $tagName
+	 * @param $expect
+	 * @param $id
+	 * @param $className
+	 *
+	 * @dataProvider pairedTagProvider
 	 * @covers \Windwalker\Html\HtmlBuilder::create()
 	 */
-	public function testCreate()
+	public function testPairedTag($tagName, $expect, $id, $className)
 	{
-		// Prepare attributes, (目前加 $attributes 參數 render 後會多一個雙引號, 之後再補上相關 test)
+		// Create element
+		$attributes = array('id' => $id, 'class' => $className);
+		$originElement = HtmlBuilder::create($tagName, $expect, $attributes);
+
+		$dom = new \DOMDocument;
+		$dom->loadHTML("<html><body>" . $originElement . "</body></html>");
+
+		$domNode = $dom->getElementById($id);
+
+		// Test attributes
+		$this->assertInstanceOf('DOMNode', $domNode);
+		$this->assertEquals($className, $domNode->getAttribute('class'));
+
+		$domNode->removeAttribute('id');
+		$domNode->removeAttribute('class');
+
+		// Convert DOMNode to string
+		$element = $dom->saveHTML($domNode);
+
+		// Remove redundant white spaces
+		$trimmedElement = preg_replace('/\s+/', ' ', $element);
+
+		$pattern = '#<' . $tagName . '>(.*?)</' . $tagName . '>#';
+		$matchResult = preg_match($pattern, $trimmedElement, $matches);
+
+		// Test open and close tag and innerText
+		$this->assertTrue(true, $matchResult);
+		$this->assertEquals($expect, trim($matches[1]));
+	}
+
+	/**
+	 * testSingleTag
+	 *
+	 * @param $tagName
+	 * @param $id
+	 * @param $className
+	 *
+	 * @dataProvider singleTagProvider
+	 * @covers \Windwalker\Html\HtmlBuilder::create()
+	 */
+	public function testSingleTag($tagName, $id, $className)
+	{
+		$attributes = array('id' => $id, 'class' => $className);
+		$originElement = HtmlBuilder::create($tagName, '', $attributes);
+
+		$dom = new \DOMDocument;
+		$dom->loadHTML("<html><body>" . $originElement . "</body></html>");
+
+		$domNode = $dom->getElementById($id);
+
+		// Test attributes
+		$this->assertInstanceOf('DOMNode', $domNode);
+		$this->assertEquals($className, $domNode->getAttribute('class'));
+
+		$domNode->removeAttribute('id');
+		$domNode->removeAttribute('class');
+
+		// Convert DOMNode to string
+		$element = $dom->saveHTML($domNode);
+
+		$pattern = '#<' . $tagName . ' />#';
+		$matchResult = preg_match($pattern, $element, $matches);
+
+		// Text open tag
+		$this->assertTrue(true, $matchResult);
+	}
+
+	/**
+	 * pairedTagProvider
+	 *
+	 * @return  array
+	 */
+	public function pairedTagProvider()
+	{
+		$innerText = 'Hello world!';
 		$id = 'test-id';
 		$className = 'test-class';
-		$attributes = ['id' => $id, 'class' => $className];
 
-		// Test paired tags
-		$pairedTags = $this->getPairedTags();
-
-		foreach ($pairedTags as $pairedTag)
-		{
-			$tagName = $pairedTag;
-			$innerText = 'hello world';
-
-			$element = HtmlBuilder::create($tagName, $innerText);
-
-			// Remove redundant white spaces
-			$trimmedElement = preg_replace('/\s+/', ' ', $element);
-
-			$pattern = '#<' . $tagName . '>(.*?)</' . $tagName . '>#';
-			$matchResult = preg_match($pattern, $trimmedElement, $matches);
-
-			// Test open and close tag and innerText
-			$this->assertTrue(true, $matchResult);
-			$this->assertEquals($innerText, trim($matches[1]));
-		}
-
-		// Check single tag
-		$singleTags = $this->getSingleTags();
-
-		foreach ($singleTags as $singleTag)
-		{
-			$tagName = $singleTag;
-
-			$element = HtmlBuilder::create($tagName);
-
-			$pattern = '#<' . $tagName . ' />#';
-			$matchResult = preg_match($pattern, $element, $matches);
-
-			// Check open tag
-			$this->assertTrue(true, $matchResult);
-		}
+		return array(
+			array('p', $innerText, $id, $className),
+			array('a', $innerText, $id, $className),
+			array('div', $innerText, $id, $className),
+			array('h1', $innerText, $id, $className),
+			array('form', $innerText, $id, $className),
+			array('li', $innerText, $id, $className),
+			array('ul', $innerText, $id, $className),
+			array('table', $innerText, $id, $className),
+			array('style', $innerText, $id, $className),
+			array('script', $innerText, $id, $className)
+		);
 	}
 
 	/**
-	 * getPairedTags
+	 * singleTagProvider
 	 *
 	 * @return  array
 	 */
-	public function getPairedTags()
+	public function singleTagProvider()
 	{
-		return array('p', 'a', 'div', 'h1', 'form', 'li', 'ul', 'table', 'style', 'script');
-	}
+		$id = 'test-id';
+		$className = 'test-class';
 
-	/**
-	 * getSingleTags
-	 *
-	 * @return  array
-	 */
-	public function getSingleTags()
-	{
-		return array('input', 'img');
+		return array(
+			array('input', $id, $className),
+			array('img', $id, $className),
+			array('br', $id, $className),
+			array('hr', $id, $className),
+			array('area', $id, $className),
+			array('param', $id, $className),
+			array('base', $id, $className),
+			array('link', $id, $className),
+			array('meta', $id, $className),
+			array('option', $id, $className)
+		);
 	}
 }
