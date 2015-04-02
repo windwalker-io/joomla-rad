@@ -116,9 +116,8 @@ class Container extends JoomlaContainer
 	 */
 	public function get($key, $forceNew = false)
 	{
-		$raw = $this->getRaw($key);
-
 		$key = $this->resolveAlias($key);
+		$raw = $this->getRaw($key);
 
 		if (is_null($raw))
 		{
@@ -136,6 +135,31 @@ class Container extends JoomlaContainer
 		}
 
 		return call_user_func($raw['callback'], $this);
+	}
+
+	/**
+	 * Get the raw data assigned to a key.
+	 * Override to prevent joomla-framework bug not resolving parent aliases
+	 *
+	 * @param   string  $key  The key for which to get the stored item.
+	 *
+	 * @return  mixed
+	 */
+	protected function getRaw($key)
+	{
+		$key = $this->resolveAlias($key);
+
+		if (isset($this->dataStore[$key]))
+		{
+			return $this->dataStore[$key];
+		}
+
+		if ($this->parent instanceof Container)
+		{
+			return $this->parent->getRaw($key);
+		}
+
+		return null;
 	}
 
 	/**
