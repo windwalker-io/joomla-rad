@@ -18,131 +18,96 @@ use Windwalker\Html\HtmlBuilder;
 class HtmlBuilderTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * testPairedTag
+	 * testCreate
 	 *
 	 * @param $tagName
+	 * @param $content
+	 * @param $attributes
 	 * @param $expect
-	 * @param $id
-	 * @param $className
 	 *
-	 * @dataProvider pairedTagProvider
 	 * @covers \Windwalker\Html\HtmlBuilder::create()
+	 * @dataProvider htmlProvider
 	 */
-	public function testPairedTag($tagName, $expect, $id, $className)
+	public function testCreate($tagName, $content, $attributes, $expect)
 	{
-		// Create element
-		$attributes = array('id' => $id, 'class' => $className);
-		$originElement = HtmlBuilder::create($tagName, $expect, $attributes);
+		$html = HtmlBuilder::create($tagName, $content, $attributes);
 
-		$dom = new \DOMDocument;
-		$dom->loadHTML("<html><body>" . $originElement . "</body></html>");
+		// See http://stackoverflow.com/questions/6225351/how-to-minify-php-page-html-output
+		$search = array(
+			'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
+			'/[^\S ]+\</s',  // strip whitespaces before tags, except space
+			'/(\s)+/s'       // shorten multiple whitespace sequences
+		);
 
-		$domNode = $dom->getElementById($id);
+		$replace = array(
+			'>',
+			'<',
+			'\\1'
+		);
 
-		// Test attributes
-		$this->assertInstanceOf('DOMNode', $domNode);
-		$this->assertEquals($className, $domNode->getAttribute('class'));
-
-		$domNode->removeAttribute('id');
-		$domNode->removeAttribute('class');
-
-		// Convert DOMNode to string
-		$element = $dom->saveHTML($domNode);
-
-		// Remove redundant white spaces
-		$trimmedElement = preg_replace('/\s+/', ' ', $element);
-
-		$pattern = '#<' . $tagName . '>(.*?)</' . $tagName . '>#';
-		$matchResult = preg_match($pattern, $trimmedElement, $matches);
-
-		// Test open and close tag and innerText
-		$this->assertTrue(true, $matchResult);
-		$this->assertEquals($expect, trim($matches[1]));
-	}
-
-	/**
-	 * testSingleTag
-	 *
-	 * @param $tagName
-	 * @param $id
-	 * @param $className
-	 *
-	 * @dataProvider singleTagProvider
-	 * @covers \Windwalker\Html\HtmlBuilder::create()
-	 */
-	public function testSingleTag($tagName, $id, $className)
-	{
-		$attributes = array('id' => $id, 'class' => $className);
-		$originElement = HtmlBuilder::create($tagName, '', $attributes);
-
-		$dom = new \DOMDocument;
-		$dom->loadHTML("<html><body>" . $originElement . "</body></html>");
-
-		$domNode = $dom->getElementById($id);
-
-		// Test attributes
-		$this->assertInstanceOf('DOMNode', $domNode);
-		$this->assertEquals($className, $domNode->getAttribute('class'));
-
-		$domNode->removeAttribute('id');
-		$domNode->removeAttribute('class');
-
-		// Convert DOMNode to string
-		$element = $dom->saveHTML($domNode);
-
-		$pattern = '#<' . $tagName . ' />#';
-		$matchResult = preg_match($pattern, $element, $matches);
-
-		// Text open tag
-		$this->assertTrue(true, $matchResult);
-	}
-
-	/**
-	 * pairedTagProvider
-	 *
-	 * @return  array
-	 */
-	public function pairedTagProvider()
-	{
-		$innerText = 'Hello world!';
-		$id = 'test-id';
-		$className = 'test-class';
-
-		return array(
-			array('p', $innerText, $id, $className),
-			array('a', $innerText, $id, $className),
-			array('div', $innerText, $id, $className),
-			array('h1', $innerText, $id, $className),
-			array('form', $innerText, $id, $className),
-			array('li', $innerText, $id, $className),
-			array('ul', $innerText, $id, $className),
-			array('table', $innerText, $id, $className),
-			array('style', $innerText, $id, $className),
-			array('script', $innerText, $id, $className)
+		$this->assertEquals(
+			preg_replace($search, $replace, $expect),
+			preg_replace($search, $replace, $html)
 		);
 	}
 
 	/**
-	 * singleTagProvider
+	 * htmlProvider
 	 *
 	 * @return  array
 	 */
-	public function singleTagProvider()
+	public function htmlProvider()
 	{
-		$id = 'test-id';
-		$className = 'test-class';
-
 		return array(
-			array('input', $id, $className),
-			array('img', $id, $className),
-			array('br', $id, $className),
-			array('hr', $id, $className),
-			array('area', $id, $className),
-			array('param', $id, $className),
-			array('base', $id, $className),
-			array('link', $id, $className),
-			array('meta', $id, $className),
-			array('option', $id, $className)
+			// paired tag
+			array(
+				'p',
+				'Hello world',
+				array('id' => 'test-id', 'class' => 'test-class'),
+				'<p id="test-id" class="test-class">Hello world</p>'
+			),
+			// ul>li*2
+			array(
+				'ul',
+				HtmlBuilder::create('li', 'Hello world', array()) . HtmlBuilder::create('li', 'Hello world', array()),
+				array('id' => 'test-id', 'class' => 'test-class'),
+				'<ul id="test-id" class="test-class">
+					<li>Hello world</li>
+					<li>Hello world</li>
+				</ul>'
+			),
+			// select>option*2
+			array(
+				'select',
+				HtmlBuilder::create('option', 'BOY', array('value' => 1, 'selected'))
+				. HtmlBuilder::create('option', 'GIRL', array('value' => 2)),
+				array('id' => 'test-id', 'class' => 'test-class'),
+				'<select id="test-id" class="test-class">
+					<option value="1" selected>BOY</option>
+					<option value="2">GIRL</option>
+				</select>'
+			),
+			// single tag without content
+			array(
+				'img',
+				'',
+				array('id' => 'test-id', 'class' => 'test-class', 'src' => 'http://placehold.it/100x100'),
+				'<img id="test-id" class="test-class" src="http://placehold.it/100x100" />'
+			),
+			// br tag
+			array(
+				'br',
+				'',
+				array(),
+				'<br />'
+			),
+			// HTML5
+			array(
+				'video',
+				'',
+				array('id' => 'test-id', 'controls', 'muted'),
+				'<video id="test-id" controls muted></video>'
+			)
 		);
 	}
 }
