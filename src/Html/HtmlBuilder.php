@@ -48,13 +48,6 @@ class HtmlBuilder
 
 		foreach ((array) $attribs as $key => $value)
 		{
-			if (is_int($key))
-			{
-				$tag .= ' ' . $value;
-
-				continue;
-			}
-
 			if ($value !== null && $value !== false && $value !== '')
 			{
 				$tag .= ' ' . $key . '=' . String::quote($value, '"');

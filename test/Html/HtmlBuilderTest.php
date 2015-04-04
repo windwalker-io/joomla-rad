@@ -79,11 +79,11 @@ class HtmlBuilderTest extends \PHPUnit_Framework_TestCase
 			// select>option*2
 			array(
 				'select',
-				HtmlBuilder::create('option', 'BOY', array('value' => 1, 'selected'))
+				HtmlBuilder::create('option', 'BOY', array('value' => 1, 'selected' => 'selected'))
 				. HtmlBuilder::create('option', 'GIRL', array('value' => 2)),
 				array('id' => 'test-id', 'class' => 'test-class'),
 				'<select id="test-id" class="test-class">
-					<option value="1" selected>BOY</option>
+					<option value="1" selected="selected">BOY</option>
 					<option value="2">GIRL</option>
 				</select>'
 			),
@@ -105,8 +105,8 @@ class HtmlBuilderTest extends \PHPUnit_Framework_TestCase
 			array(
 				'video',
 				'',
-				array('id' => 'test-id', 'controls', 'muted'),
-				'<video id="test-id" controls muted></video>'
+				array('id' => 'test-id', 'controls' => 'true', 'muted' => 'true'),
+				'<video id="test-id" controls="true" muted="true"></video>'
 			)
 		);
 	}
