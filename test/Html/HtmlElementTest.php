@@ -149,13 +149,12 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @covers \Windwalker\Html\HtmlElement::setName()
 	 */
-	public function xtestSetName()
+	public function testSetName()
 	{
-		// TODO: set paired to single tag?
 		$html = new HtmlElement('div', '', array('id' => 'test-id', 'class' => 'test-class'));
-		$html->setName('img');
+		$html->setName('input');
 
-		echo $html;
+		$this->assertEquals('<input id="test-id" class="test-class" />', DomHelper::minify($html));
 	}
 
 	/**
