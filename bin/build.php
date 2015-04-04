@@ -47,7 +47,7 @@ GI;
 
 		rename('composer.phar', BUILD_ROOT . '/composer.phar');
 
-		$this->exec(sprintf('php %s/composer.phar update', BUILD_ROOT));
+		$this->exec(sprintf('php %s/composer.phar install', BUILD_ROOT));
 
 		$this->out('>> Remove composer.phar');
 		unlink(sprintf('%s/composer.phar', BUILD_ROOT));
