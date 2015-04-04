@@ -67,11 +67,11 @@ if (!empty($plugins))
 
 			// Set success table
 			$grid->addRow(array('class' => 'row' . ($i % 2)));
-			$grid->setRowCell('num', ++$i, $td_class);
-			$grid->setRowCell('type', JText::_('COM_INSTALLER_TYPE_PLUGIN'), $td_class);
+			$grid->setRowCell('num', ++$i, $tdClass);
+			$grid->setRowCell('type', JText::_('COM_INSTALLER_TYPE_PLUGIN'), $tdClass);
 			$grid->setRowCell('name', JText::_($var), array());
-			$grid->setRowCell('version', $installer->manifest->version, $td_class);
-			$grid->setRowCell('state', $status, $td_class);
+			$grid->setRowCell('version', $installer->manifest->version, $tdClass);
+			$grid->setRowCell('state', $status, $tdClass);
 			$grid->setRowCell('info', JText::_($installer->manifest->description), array());
 		}
 	}

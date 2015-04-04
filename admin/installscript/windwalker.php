@@ -51,10 +51,10 @@ if ($install_windwalker)
 
 	// Set success table
 	$grid->addRow(array('class' => 'row' . ($i % 2)));
-	$grid->setRowCell('num', ++$i, $td_class);
-	$grid->setRowCell('type', JText::_('COM_INSTALLER_TYPE_LIBRARY'), $td_class);
+	$grid->setRowCell('num', ++$i, $tdClass);
+	$grid->setRowCell('type', JText::_('COM_INSTALLER_TYPE_LIBRARY'), $tdClass);
 	$grid->setRowCell('name', JText::_('LIB_WINDWALKER'), array());
-	$grid->setRowCell('version', $installer->manifest->version, $td_class);
-	$grid->setRowCell('state', $status, $td_class);
+	$grid->setRowCell('version', $installer->manifest->version, $tdClass);
+	$grid->setRowCell('state', $status, $tdClass);
 	$grid->setRowCell('info', JText::_($installer->manifest->description), array());
 }

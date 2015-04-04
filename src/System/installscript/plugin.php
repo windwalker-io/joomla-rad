@@ -11,9 +11,9 @@ defined('_JEXEC') or die;
 
 // Set plugin install success info
 $grid->addRow(array('class' => 'row' . ($i % 2)));
-$grid->setRowCell('num',     ++$i, $td_class);
-$grid->setRowCell('type',    JText::_('COM_INSTALLER_TYPE_PLUGIN'), $td_class);
+$grid->setRowCell('num',     ++$i, $tdClass);
+$grid->setRowCell('type',    JText::_('COM_INSTALLER_TYPE_PLUGIN'), $tdClass);
 $grid->setRowCell('name',    JText::_(strtoupper($manifest->name)), array());
-$grid->setRowCell('version', $manifest->version, $td_class);
-$grid->setRowCell('state',   $tick, $td_class);
+$grid->setRowCell('version', $manifest->version, $tdClass);
+$grid->setRowCell('state',   $tick, $tdClass);
 $grid->setRowCell('info',    '', array());

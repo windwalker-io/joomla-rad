@@ -35,7 +35,7 @@ $i = 0;
 $tick  = '<i class="icon-publish"></i>';
 $cross = '<i class="icon-unpublish"></i>';
 
-$td_class = array('style' => 'text-align:center;');
+$tdClass = array('style' => 'text-align:center;');
 
 // Set Extension install success info
 // ========================================================================

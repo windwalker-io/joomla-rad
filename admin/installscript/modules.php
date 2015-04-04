@@ -38,11 +38,11 @@ if (!empty($modules))
 
 			// Set success table
 			$grid->addRow(array('class' => 'row' . ($i % 2)));
-			$grid->setRowCell('num', ++$i, $td_class);
-			$grid->setRowCell('type', JText::_('COM_INSTALLER_TYPE_MODULE'), $td_class);
+			$grid->setRowCell('num', ++$i, $tdClass);
+			$grid->setRowCell('type', JText::_('COM_INSTALLER_TYPE_MODULE'), $tdClass);
 			$grid->setRowCell('name', JText::_(strtoupper($var)), array());
-			$grid->setRowCell('version', $installer->manifest->version, $td_class);
-			$grid->setRowCell('state', $status, $td_class);
+			$grid->setRowCell('version', $installer->manifest->version, $tdClass);
+			$grid->setRowCell('state', $status, $tdClass);
 			$grid->setRowCell('info', JText::_($installer->manifest->description), array());
 		}
 	}
