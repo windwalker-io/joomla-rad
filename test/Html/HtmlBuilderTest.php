@@ -20,13 +20,15 @@ class HtmlBuilderTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * testCreate
 	 *
-	 * @param $tagName
-	 * @param $content
-	 * @param $attributes
-	 * @param $expect
+	 * @param string $tagName
+	 * @param string $content
+	 * @param string $attributes
+	 * @param string $expect
 	 *
 	 * @covers \Windwalker\Html\HtmlBuilder::create()
 	 * @dataProvider htmlProvider
+	 *
+	 * @return void
 	 */
 	public function testCreate($tagName, $content, $attributes, $expect)
 	{
