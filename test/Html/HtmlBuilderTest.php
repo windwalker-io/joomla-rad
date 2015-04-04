@@ -6,7 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Windwalker\Test\Helper;
+namespace Windwalker\Test\Html;
 
 use Windwalker\Html\HtmlBuilder;
 
