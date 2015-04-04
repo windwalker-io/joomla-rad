@@ -5,7 +5,6 @@
 # Composer #
 /vendor
 !vendor/index.html
-composer.lock
 
 # Windwalker #
 /config.json
