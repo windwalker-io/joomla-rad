@@ -285,7 +285,6 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array('div', $string, $string),
 			array('ul', HtmlBuilder::create('li', $string), '<li>' . $string . '</li>')
-			//TODO: array('img', $string, $string),
 		);
 	}
 }
