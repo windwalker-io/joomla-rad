@@ -86,8 +86,6 @@ class ProfilerHelper
 			$namespace = 'Application';
 		}
 
-		$buffer = 'No Profiler data.';
-
 		if (isset(self::$profiler[$namespace]))
 		{
 			$_PROFILER = self::$profiler[$namespace];
