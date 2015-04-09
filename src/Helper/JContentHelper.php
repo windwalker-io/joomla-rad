@@ -16,6 +16,16 @@ namespace Windwalker\Helper;
 class JContentHelper
 {
 	/**
+	 * @var callable Article link route handler
+	 */
+	public static $articleRouteHandler = array('ContentHelperRoute', 'getArticleRoute');
+
+	/**
+	 * @var callable Category link route handler
+	 */
+	public static $categoryRouteHandler = array('ContentHelperRoute', 'getCategoryRoute');
+
+	/**
 	 * Get article link url by slug.
 	 *
 	 * @param  string  $slug     The id slug, eg: "43:artile-alias"
@@ -28,7 +38,7 @@ class JContentHelper
 	{
 		include_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 
-		$path = \ContentHelperRoute::getArticleRoute($slug, $catslug);
+		$path = call_user_func(static::$articleRouteHandler, $slug, $catslug);
 
 		if ($absolute)
 		{
@@ -52,7 +62,7 @@ class JContentHelper
 	{
 		include_once JPATH_ROOT . '/components/com_content/helpers/route.php';
 
-		$path = \ContentHelperRoute::getCategoryRoute($catid);
+		$path = call_user_func(static::$categoryRouteHandler, $catid);
 
 		if ($absolute)
 		{
