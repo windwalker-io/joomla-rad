@@ -95,31 +95,25 @@ class ProfilerHelperTest extends \PHPUnit_Framework_TestCase
 		$namespace = 'unit-test';
 
 		ProfilerHelper::mark('foo', $namespace);
-
-		usleep(200000);
-
 		ProfilerHelper::mark('bar', $namespace);
-
-		usleep(300000);
-
 		ProfilerHelper::mark('foobar', $namespace);
 
 		$app = Container::getInstance()->get('app');
 		$buffer = $app->getUserState('windwalker.system.profiler.' . $namespace);
 
+		$regexpPattern = '/^unit-test [0-9]+\.[0-9]{3} seconds \([0-9]+\.[0-9]{3}\); [0-9]+\.[0-9]{2} MB \([0-9]+\.[0-9]{3}\) - %s/';
+
 		// Assert $buffer[0]
-		$this->assertSame('unit-test 0.000 seconds (0.000);', substr($buffer[0], 0, 32));
-		$this->assertSame(' - foo', substr($buffer[0], -6));
+		$regexp = sprintf($regexpPattern, 'foo');
+		$this->assertTrue((bool) preg_match($regexp, $buffer[0]));
 
 		// Assert $buffer[1]
-		$this->assertSame('unit-test 0.2', substr($buffer[1], 0, 13));
-		$this->assertSame('seconds (0.2', substr($buffer[1], 16, 12));
-		$this->assertSame(' - bar', substr($buffer[1], -6));
+		$regexp = sprintf($regexpPattern, 'bar');
+		$this->assertTrue((bool) preg_match($regexp, $buffer[1]));
 
 		// Assert $buffer[2]
-		$this->assertSame('unit-test 0.5', substr($buffer[2], 0, 13));
-		$this->assertSame('seconds (0.3', substr($buffer[2], 16, 12));
-		$this->assertSame(' - foobar', substr($buffer[2], -9));
+		$regexp = sprintf($regexpPattern, 'foobar');
+		$this->assertTrue((bool) preg_match($regexp, $buffer[2]));
 	}
 
 	/**
