@@ -97,7 +97,7 @@ class ProfilerHelper
 		}
 		else
 		{
-			$buffer = $app->getUserState('windwalker.system.profiler.' . $namespace);
+			$buffer = $app->getUserState('windwalker.system.profiler.' . $namespace, array());
 			$buffer = $buffer ? implode("\n<br />\n", $buffer) : '';
 		}
 
