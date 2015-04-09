@@ -124,4 +124,34 @@ class ProfilerHelper
 
 		return '';
 	}
+
+	/**
+	 * Get a profiler instance with a namespace
+	 *
+	 * @param   string  $namespace The JProfiler instance ID. Default is the core profiler "Application".
+	 *
+	 * @return  JProfiler|null
+	 */
+	public static function getProfiler($namespace = 'Windwalker')
+	{
+		if (isset(static::$profiler[$namespace]))
+		{
+			return static::$profiler[$namespace];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Set a profiler instance with a namespace
+	 *
+	 * @param   string    $namespace The JProfiler instance ID. Default is the core profiler "Application".
+	 * @param   JProfiler $profiler  The JProfiler instance.
+	 *
+	 * @return  void
+	 */
+	public static function setProfiler($namespace = 'Windwalker', JProfiler $profiler)
+	{
+		static::$profiler[$namespace] = $profiler;
+	}
 }
