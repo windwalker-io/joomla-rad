@@ -8,7 +8,6 @@
 
 namespace Windwalker\Helper;
 
-use JFactory;
 use JProfiler;
 use Windwalker\DI\Container;
 
@@ -34,7 +33,7 @@ class ProfilerHelper
 	protected static $stateBuffer = array();
 
 	/**
-	 * A helper to add JProfiler log mark. Need to trun on the debug mode.
+	 * A helper to add JProfiler log mark. Need to turn on the debug mode.
 	 *
 	 * @param   string $text      Log text.
 	 * @param   string $namespace The JProfiler instance ID. Default is the core profiler "Application".
@@ -43,14 +42,15 @@ class ProfilerHelper
 	 */
 	public static function mark($text, $namespace = 'Windwalker')
 	{
-		$app = Container::getInstance()->get('app');
+		$container = Container::getInstance();
+		$app = $container->get('app');
 
 		if ($namespace == 'core' || !$namespace)
 		{
 			$namespace = 'Application';
 		}
 
-		if (!JDEBUG)
+		if (!$container->get('joomla.config')->get('debug'))
 		{
 			return;
 		}
