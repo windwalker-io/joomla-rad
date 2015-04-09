@@ -16,12 +16,16 @@ namespace Windwalker\Helper;
 class JContentHelper
 {
 	/**
-	 * @var callable Article link route handler
+	 * Property for article link route handler
+	 *
+	 * @var callable
 	 */
 	public static $articleRouteHandler = array('ContentHelperRoute', 'getArticleRoute');
 
 	/**
-	 * @var callable Category link route handler
+	 * Property for category link route handler
+	 *
+	 * @var callable
 	 */
 	public static $categoryRouteHandler = array('ContentHelperRoute', 'getCategoryRoute');
 
