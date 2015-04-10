@@ -11,53 +11,7 @@ namespace Windwalker\Test\Helper;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ProfilerHelper;
 use Windwalker\Test\DI\ContainerHelper;
-
-/**
- * Class MockApplication
- */
-class MockApplication
-{
-	/**
-	 * Property userState.
-	 *
-	 * @var  \JRegistry
-	 */
-	public $userState;
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		$this->userState = new \JRegistry;
-	}
-
-	/**
-	 * Gets a user state.
-	 *
-	 * @param   string  $key      The path of the state.
-	 * @param   mixed   $default  Optional default value, returned if the internal value is null.
-	 *
-	 * @return  mixed  The user state or null.
-	 */
-	public function getUserState($key, $default = null)
-	{
-		return $this->userState->get($key, $default);
-	}
-
-	/**
-	 * Sets the value of a user state variable.
-	 *
-	 * @param   string  $key    The path of the state.
-	 * @param   string  $value  The value of the variable.
-	 *
-	 * @return  mixed  The previous state, if one existed.
-	 */
-	public function setUserState($key, $value)
-	{
-		return $this->userState->set($key, $value);
-	}
-}
+use Windwalker\Test\Mock\ApplicationCms;
 
 /**
  * Test class of Windwalker\Helper\ProfilerHelper
@@ -80,7 +34,19 @@ class ProfilerHelperTest extends \PHPUnit_Framework_TestCase
 
 		$config->set('debug', 1);
 
-		ContainerHelper::setApplication(new MockApplication);
+		ContainerHelper::setApplication(new ApplicationCms);
+	}
+
+	/**
+	 * Tears down the fixture, for example, close a network connection.
+	 *
+	 * This method is called after a test is executed.
+	 *
+	 * @return void
+	 */
+	public function tearDown()
+	{
+		ContainerHelper::restoreApplication();
 	}
 
 	/**
