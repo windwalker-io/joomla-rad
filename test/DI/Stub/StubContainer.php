@@ -1,8 +1,8 @@
 <?php
 /**
- * Part of windwalker_joomla_rad project. 
+ * Part of Windwalker project Test files.
  *
- * @copyright  Copyright (C) 2011 - 2015 Achiever, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -26,12 +26,8 @@ class StubContainer extends Container
 	{
 		parent::__construct($parent);
 
+		// Add fake root $instance and children
 		self::$instance = new \ArrayObject;
 		self::$children['foo'] = new \ArrayObject;
-	}
-
-	public function getDataStore()
-	{
-		return $this->dataStore;
 	}
 }
