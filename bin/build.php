@@ -41,8 +41,23 @@ class Build
 	 */
 	public function execute()
 	{
+		// Prepare zip name.
+		$zipFile = BUILD_ROOT . '/../windwalker-rad-%s.zip';
+
+		$version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : null;
+
+		if (!$version)
+		{
+			$this->out('Please enter a version.');
+			$this->out('[Usage] php build.php <version>');
+
+			exit();
+		}
+
+		// Remove unnecessary files and folders.
 		$this->removeFiles();
 
+		// Prepare load composer
 		$this->exec("php -r \"readfile('https://getcomposer.org/installer');\" | php");
 
 		rename('composer.phar', BUILD_ROOT . '/composer.phar');
@@ -50,29 +65,39 @@ class Build
 		$this->exec(sprintf('php %s/composer.phar install', BUILD_ROOT));
 
 		$this->out('>> Remove composer.phar');
+
 		unlink(sprintf('%s/composer.phar', BUILD_ROOT));
 
+		// Include dependency to do more things.
 		include BUILD_ROOT . '/vendor/autoload.php';
+
+		$zipFile = new \SplFileInfo(\Windwalker\Filesystem\Path::clean(sprintf($zipFile, $version)));
 
 		$dir = new \Windwalker\Filesystem\Path\PathLocator(BUILD_ROOT);
 
+		// Start ZIP archive
 		$zip = new ZipArchive;
 
-		@unlink(BUILD_ROOT . '/../rad.zip');
+		@unlink();
 
-		$zip->open(BUILD_ROOT . '/../rad.zip', ZIPARCHIVE::CREATE);
+		$zip->open($zipFile->getPathname(), ZIPARCHIVE::CREATE);
 
 		foreach ($dir->getFiles(true) as $file)
 		{
 			$file = str_replace(BUILD_ROOT . DIRECTORY_SEPARATOR , '', $file->getPathname());
 
-			$this->out('Zip file: ' . $file);
+			if (strpos($file, '.') === 0)
+			{
+				continue;
+			}
+
+			$this->out('[Zip file] ' . $file);
 			$zip->addFile($file);
 		}
 
 		$zip->close();
 
-		$this->out('Zip success to: ' . realpath(BUILD_ROOT . '/../rad.zip'));
+		$this->out('Zip success to: ' . realpath($zipFile->getPathname()));
 	}
 
 	/**
@@ -92,6 +117,13 @@ class Build
 			}
 			elseif (is_dir($path))
 			{
+				$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
+
+				foreach($files as $file) 
+				{
+        			$file->isDir() && !$file->isLink() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+				}
+
 				rmdir($path);
 			}
 
