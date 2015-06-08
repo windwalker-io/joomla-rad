@@ -17,7 +17,7 @@ use Windwalker\Test\Model\Stub\StubModel;
 use Windwalker\Test\TestHelper;
 
 /**
- * Test class of {className}
+ * Test class of Model
  *
  * @since {DEPLOY_VERSION}
  */
