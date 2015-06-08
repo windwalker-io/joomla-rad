@@ -18,7 +18,6 @@
         "windwalker/filesystem": "~2.0@stable",
         "windwalker/console": "~2.0@stable",
         "asika/muse": "~1.0@stable",
-        "joomla/string": "~1.0@stable",
         "symfony/yaml": "2.*",
         "filp/whoops": "1.*"
     },

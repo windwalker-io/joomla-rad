@@ -14,19 +14,17 @@
 class Build
 {
 	/**
-	 * Property gitignore.
+	 * Property removes.
 	 *
-	 * @var  string
+	 * @var  array
 	 */
-	protected $gitignore = <<<GI
-# Development system files #
-.*
-!/.gitignore
-
-# Windwalker #
-/config.json
-GI;
-
+	protected $removes = array(
+		'test',
+		'.gitignore',
+		'.travis.yml',
+		'phpunit.dist.xml',
+		'README.md'
+	);
 
 	/**
 	 * Class init.
@@ -43,6 +41,8 @@ GI;
 	 */
 	public function execute()
 	{
+		$this->removeFiles();
+
 		$this->exec("php -r \"readfile('https://getcomposer.org/installer');\" | php");
 
 		rename('composer.phar', BUILD_ROOT . '/composer.phar');
@@ -51,9 +51,6 @@ GI;
 
 		$this->out('>> Remove composer.phar');
 		unlink(sprintf('%s/composer.phar', BUILD_ROOT));
-
-		$this->out('>> Writing .gitignore');
-		file_put_contents(BUILD_ROOT . '/.gitignore', $this->gitignore);
 
 		include BUILD_ROOT . '/vendor/autoload.php';
 
@@ -69,11 +66,6 @@ GI;
 		{
 			$file = str_replace(BUILD_ROOT . DIRECTORY_SEPARATOR , '', $file->getPathname());
 
-			if (strpos($file, '.') === 0 && $file != '.gitignore')
-			{
-				continue;
-			}
-
 			$this->out('Zip file: ' . $file);
 			$zip->addFile($file);
 		}
@@ -81,6 +73,32 @@ GI;
 		$zip->close();
 
 		$this->out('Zip success to: ' . realpath(BUILD_ROOT . '/../rad.zip'));
+	}
+
+	/**
+	 * removeFiles
+	 *
+	 * @return  void
+	 */
+	public function removeFiles()
+	{
+		foreach ($this->removes as $remove)
+		{
+			$path = BUILD_ROOT . '/' . $remove;
+
+			if (is_file($path))
+			{
+				unlink($path);
+			}
+			elseif (is_dir($path))
+			{
+				rmdir($path);
+			}
+
+			$this->out('[Remove] ' . $remove);
+		}
+
+		$this->out();
 	}
 
 	/**
@@ -109,7 +127,7 @@ GI;
 	 *
 	 * @return  Build
 	 */
-	public function out($text, $nl = true)
+	public function out($text = null, $nl = true)
 	{
 		fwrite(STDOUT, $text . ($nl ? "\n" : ''));
 
