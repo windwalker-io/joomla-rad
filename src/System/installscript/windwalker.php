@@ -12,14 +12,14 @@ defined('_JEXEC') or die;
 // Install WindWalker
 // ========================================================================
 $installer    = new JInstaller;
-$install_path = dirname($path) . '/windwalker';
+$installPath = dirname($path) . '/windwalker';
 
 // Version compare
-$windwalker_xml_path = JPATH_LIBRARIES . '/windwalker/windwalker.xml';
-$install_windwalker  = true;
+$windwalkerXMLPath = JPATH_LIBRARIES . '/windwalker/windwalker.xml';
+$installWindwalker  = true;
 
 // If inner windwalker exists, compare versions.
-if (is_file($windwalker_xml_path) && is_file($install_path . '/windwalker.xml'))
+if (is_file($windwalkerXMLPath) && is_file($installPath . '/windwalker.xml'))
 {
 	$class = 'SimpleXMLElement';
 
@@ -28,25 +28,25 @@ if (is_file($windwalker_xml_path) && is_file($install_path . '/windwalker.xml'))
 		$class = 'JXMLElement';
 	}
 
-	$windwalker_xml = simplexml_load_file($windwalker_xml_path, $class);
-	$install_xml    = simplexml_load_file($install_path . '/windwalker.xml', $class);
+	$windwalkerXML = simplexml_load_file($windwalkerXMLPath, $class);
+	$installXML    = simplexml_load_file($installPath . '/windwalker.xml', $class);
 
-	if ((string) $install_xml->version <= (string) $windwalker_xml->version)
+	if (version_compare((string) $installXML->version, (string) $windwalkerXML->version, '<='))
 	{
-		$install_windwalker = false;
+		$installWindwalker = false;
 	}
 }
-elseif (!is_dir($install_path))
+elseif (!is_dir($installPath))
 {
-	$install_path = JPATH_LIBRARIES . '/windwalker';
+	$installPath = JPATH_LIBRARIES . '/windwalker';
 
-	$install_windwalker = false;
+	$installWindwalker = false;
 }
 
 // Do install
-if ($install_windwalker)
+if ($installWindwalker)
 {
-	if ($result[] = $installer->install($install_path))
+	if ($result[] = $installer->install($installPath))
 	{
 		$status = $tick;
 	}
@@ -61,10 +61,10 @@ if ($install_windwalker)
 
 	// Set success table
 	$grid->addRow(array('class' => 'row' . ($i % 2)));
-	$grid->setRowCell('num',     ++$i, $td_class);
-	$grid->setRowCell('type',    JText::_('COM_INSTALLER_TYPE_LIBRARY'), $td_class);
+	$grid->setRowCell('num',     ++$i, $tdClass);
+	$grid->setRowCell('type',    JText::_('COM_INSTALLER_TYPE_LIBRARY'), $tdClass);
 	$grid->setRowCell('name',    JText::_('LIB_WINDWALKER'), array());
-	$grid->setRowCell('version', $installer->manifest->version, $td_class);
-	$grid->setRowCell('state',   $status, $td_class);
+	$grid->setRowCell('version', $installer->manifest->version, $tdClass);
+	$grid->setRowCell('state',   $status, $tdClass);
 	$grid->setRowCell('info',    JText::_($installer->manifest->description), array());
 }
