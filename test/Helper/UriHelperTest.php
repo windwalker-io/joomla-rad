@@ -33,6 +33,9 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		$this->instance = null;
+
+		// For $this->testIsHome()
+		$_SERVER['HTTP_HOST'] = 'php.localhost';
 	}
 
 	/**
@@ -136,5 +139,23 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 			array('^&=#%20$%!~', '^&=# $%!~'),
 			array('\x20%20\x20', '\x20 \x20'),
 		);
+	}
+
+	/**
+	 * The method to test UriHelper::isHome.
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Helper\UriHelper::isHome
+	 * @group  isHome
+	 */
+	public function testIsHome()
+	{
+		if (php_sapi_name() === 'cli')
+		{
+			$this->markTestSkipped(
+				'It is better to test UriHelper::isHome through HTTP request.'
+			);
+		}
 	}
 }
