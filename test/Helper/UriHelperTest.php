@@ -46,7 +46,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Method to test UriHelper::base64 in decoding cases.
+	 * The method to test UriHelper::base64 in decoding cases.
 	 *
 	 * @param string $expected
 	 * @param string $url
@@ -63,7 +63,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Method to test UriHelper::base64 in encoding cases.
+	 * The method to test UriHelper::base64 in encoding cases.
 	 *
 	 * @param string $expected
 	 * @param string $url
@@ -104,6 +104,37 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 			array('www.google.com', 'd3d3Lmdvb2dsZS5jb20='),
 			array('www.bm-sms.com.tw', 'd3d3LmJtLXNtcy5jb20udHc='),
 			array('tw.test.com/dummy/path/to?arg=1&arg=2', 'dHcudGVzdC5jb20vZHVtbXkvcGF0aC90bz9hcmc9MSZhcmc9Mg=='),
+		);
+	}
+
+	/**
+	 * The method to test UriHelper::safe.
+	 *
+	 * @param string $expected
+	 * @param string $uri
+	 *
+	 * @return void
+	 *
+	 * @dataProvider uriDataProvider
+	 * @covers       Windwalker\Helper\UriHelper::safe
+	 * @group        safe
+	 */
+	public function testSafe($expected, $uri)
+	{
+		$this->assertSame($expected, UriHelper::safe($uri));
+	}
+
+	/**
+	 * uriDataProvider
+	 *
+	 * @return array
+	 */
+	public function uriDataProvider()
+	{
+		return array(
+			array('www.dummy.com/?page=2&title=test%20page', 'www.dummy.com/?page=2&title=test page'),
+			array('^&=#%20$%!~', '^&=# $%!~'),
+			array('\x20%20\x20', '\x20 \x20'),
 		);
 	}
 }
