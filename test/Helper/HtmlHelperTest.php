@@ -9,13 +9,14 @@
 namespace Windwalker\Test\Helper;
 
 use Windwalker\Helper\HtmlHelper;
+use Windwalker\Test\TestCase\DomTestCase;
 
 /**
  * Test class of {className}
  *
  * @since {DEPLOY_VERSION}
  */
-class HtmlHelperTest extends \PHPUnit_Framework_TestCase
+class HtmlHelperTest extends DomTestCase
 {
 	/**
 	 * Tears down the fixture, for example, closes a network connection.
@@ -49,7 +50,7 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 			return;
 		}
 
-		$this->assertSame($expected, HtmlHelper::repair($data));
+		$this->assertDomStringEqualsDomString($expected, HtmlHelper::repair($data));
 	}
 
 	/**
@@ -206,7 +207,7 @@ DATA_3;
 			return;
 		}
 
-		$this->assertSame($expected, HtmlHelper::repair($data));
+		$this->assertDomStringEqualsDomString($expected, HtmlHelper::repair($data));
 	}
 
 	/**
