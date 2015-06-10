@@ -409,6 +409,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	public function set($key, $value)
 	{
 		$this->state->set($key, $value);
+
 		return $this;
 	}
 
