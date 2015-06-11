@@ -9,7 +9,7 @@
 namespace {{ test.class.namespace }};
 
 /**
- * Test class of {className}
+ * Test class of \{{ origin.class.name }}
  *
  * @since {DEPLOY_VERSION}
  */
@@ -18,7 +18,7 @@ class {{ test.class.shortname }} extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test instance.
 	 *
-	 * @var {className}
+	 * @var \{{ origin.class.name }}
 	 */
 	protected $instance;
 
@@ -30,7 +30,7 @@ class {{ test.class.shortname }} extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->instance = new {{ origin.class.name }};
+		$this->instance = new \{{ origin.class.name }};
 	}
 
 	/**

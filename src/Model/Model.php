@@ -10,14 +10,16 @@ namespace Windwalker\Model;
 
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
+use Joomla\Registry\Registry;
 use Windwalker\DI\Container;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * Windwalker basic model class.
  *
  * @since 2.0
  */
-class Model extends \JModelDatabase implements ContainerAwareInterface
+class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAccess
 {
 	/**
 	 * The model (base) name
@@ -68,13 +70,15 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 *
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
 	 * @param   JoomlaContainer    $container Service container.
-	 * @param   \JRegistry         $state     The model state.
+	 * @param   Registry           $state     The model state.
 	 * @param   \JDatabaseDriver   $db        The database adapter.
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
+	public function __construct($config = array(), JoomlaContainer $container = null, Registry $state = null, \JDatabaseDriver $db = null)
 	{
+		$this->prefix = !empty($config['prefix']) ? $config['prefix'] : $this->prefix;
+
 		// Guess the option from the class name (Option)Model(View).
 		if (empty($this->prefix))
 		{
@@ -91,19 +95,19 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 		$this->option = 'com_' . $this->prefix;
 
 		// Guess name
-		$this->name = $this->name ? : \JArrayHelper::getValue($config, 'name', $this->getName());
+		$this->name = $this->name ? : ArrayHelper::getValue($config, 'name', $this->getName());
 
 		// Register the paths for the form
 		$this->registerTablePaths($config);
 
 		// Set the clean cache event
-		$this->eventCleanCache = $this->eventCleanCache ? : \JArrayHelper::getValue($config, 'event_clean_cache', 'onContentCleanCache');
+		$this->eventCleanCache = $this->eventCleanCache ? : ArrayHelper::getValue($config, 'event_clean_cache', 'onContentCleanCache');
 
 		$this->container = $container ? : $this->getContainer();
 
-		$state = new \JRegistry($config);
-
 		parent::__construct($state, $db);
+
+		$this->state->loadArray($config);
 
 		// Guess the context as Option.ModelName.
 		$this->context = $this->context ? : strtolower($this->option . '.' . $this->getName());
@@ -241,7 +245,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 */
 	protected function populateState()
 	{
-		$this->loadState();
+		// $this->loadState();
 	}
 
 	/**
@@ -375,5 +379,111 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 		$this->container = $container;
 
 		return $this;
+	}
+
+	/**
+	 * Get value from a state key.
+	 *
+	 * @param string $key      Key to get this value.
+	 * @param mixed  $default  Default value if key not exists.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	public function get($key, $default = null)
+	{
+		return $this->state->get($key, $default);
+	}
+
+	/**
+	 * Set value to state.
+	 *
+	 * @param string $key    Key of this state.
+	 * @param mixed  $value  Value of this state.
+	 *
+	 * @return  static  Return self to support chaining.
+	 *
+	 * @since   2.1
+	 */
+	public function set($key, $value)
+	{
+		$this->state->set($key, $value);
+
+		return $this;
+	}
+
+	/**
+	 * Reset the state.
+	 *
+	 * @return  static  Return self to support chaining.
+	 *
+	 * @since   2.1
+	 */
+	public function reset()
+	{
+		$this->state = $this->loadState();
+
+		return $this;
+	}
+
+	/**
+	 * Is a property exists or not.
+	 *
+	 * @param mixed $offset Offset key.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   2.1
+	 */
+	public function offsetExists($offset)
+	{
+		return $this->state->exists($offset);
+	}
+
+	/**
+	 * Get a property.
+	 *
+	 * @param mixed $offset Offset key.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  mixed The value to return.
+	 *
+	 * @since   2.1
+	 */
+	public function offsetGet($offset)
+	{
+		return $this->state->get($offset);
+	}
+
+	/**
+	 * Set a value to property.
+	 *
+	 * @param mixed $offset Offset key.
+	 * @param mixed $value  The value to set.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	public function offsetSet($offset, $value)
+	{
+		$this->state->set($offset, $value);
+	}
+
+	/**
+	 * Unset a property.
+	 *
+	 * @param mixed $offset Offset key to unset.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	public function offsetUnset($offset)
+	{
+		$this->state->set($offset, null);
 	}
 }
