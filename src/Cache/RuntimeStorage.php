@@ -10,6 +10,8 @@ namespace Windwalker\Cache;
 
 /**
  * The RuntimeStorage class.
+ *
+ * @deprecated  Use Windwalker Cache package instead.
  * 
  * @since  1.0
  */
