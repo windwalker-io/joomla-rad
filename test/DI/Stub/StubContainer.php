@@ -30,4 +30,14 @@ class StubContainer extends Container
 		self::$instance = new \ArrayObject;
 		self::$children['foo'] = new \ArrayObject;
 	}
+
+	/**
+	 * getParent
+	 *
+	 * @return  \Joomla\DI\Container
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
 }
