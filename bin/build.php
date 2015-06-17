@@ -78,7 +78,7 @@ class Build
 		// Start ZIP archive
 		$zip = new ZipArchive;
 
-		@unlink();
+		@unlink($zipFile->getPathname());
 
 		$zip->open($zipFile->getPathname(), ZIPARCHIVE::CREATE);
 
@@ -121,7 +121,7 @@ class Build
 
 				foreach($files as $file) 
 				{
-        			$file->isDir() && !$file->isLink() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+					$file->isDir() && !$file->isLink() ? rmdir($file->getPathname()) : unlink($file->getPathname());
 				}
 
 				rmdir($path);
