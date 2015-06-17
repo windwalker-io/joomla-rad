@@ -1,5 +1,10 @@
 ![windwalker-logo-500](https://cloud.githubusercontent.com/assets/1639206/2870854/176b987a-d2e4-11e3-8be6-9f70304a8499.png)
 
+[![Latest Stable Version](https://poser.pugx.org/windwalker/joomla-rad/v/stable)](https://packagist.org/packages/windwalker/joomla-rad) 
+[![Total Downloads](https://poser.pugx.org/windwalker/joomla-rad/downloads)](https://packagist.org/packages/windwalker/joomla-rad) 
+[![Latest Unstable Version](https://poser.pugx.org/windwalker/joomla-rad/v/unstable)](https://packagist.org/packages/windwalker/joomla-rad) 
+[![License](https://poser.pugx.org/windwalker/joomla-rad/license)](https://packagist.org/packages/windwalker/joomla-rad)
+
 ## Introduction
 
 **Windwalker** is a RAD framework of Joomla! CMS.
