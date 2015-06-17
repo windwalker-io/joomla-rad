@@ -102,7 +102,7 @@ class ProfilerHelper
 		$buffer = $buffer ? $buffer : 'No Profiler data.';
 
 		// Get last page logs
-		$state_buffer = \JArrayHelper::getValue(self::$stateBuffer, $namespace);
+		$state_buffer = ArrayHelper::getValue(self::$stateBuffer, $namespace);
 
 		if ($state_buffer)
 		{

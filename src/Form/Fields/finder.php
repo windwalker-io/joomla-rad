@@ -10,7 +10,7 @@
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\XmlHelper;
-use Windwalker\String\String;
+use Windwalker\String\StringHelper;
 
 defined('_JEXEC') or die;
 
@@ -398,6 +398,6 @@ SCRIPT;
 			'day' => $date->day
 		);
 
-		return String::parseVariable($path, $replace);
+		return StringHelper::parseVariable($path, $replace);
 	}
 }
