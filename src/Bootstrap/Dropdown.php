@@ -37,7 +37,7 @@ class Dropdown extends \JHtmlActionsdropdown
 	 */
 	public static function clean()
 	{
-		static::$dropDownList = null;
+		static::$dropDownList = array();
 	}
 
 	/**

@@ -15,7 +15,7 @@ use Joomla\DI\Container as JoomlaContainer;
  *
  * Based on Joomla DI Container.
  *
- * @since 2.0
+ * @since  2.0
  */
 class Container extends JoomlaContainer
 {
@@ -43,7 +43,7 @@ class Container extends JoomlaContainer
 	/**
 	 * Get the container instance by name.
 	 *
-	 * @param string $name Container name, if is null, get the main container.
+	 * @param   string  $name  Container name, if is null, get the main container.
 	 *
 	 * @return Container
 	 */
@@ -116,9 +116,8 @@ class Container extends JoomlaContainer
 	 */
 	public function get($key, $forceNew = false)
 	{
-		$raw = $this->getRaw($key);
-
 		$key = $this->resolveAlias($key);
+		$raw = $this->getRaw($key);
 
 		if (is_null($raw))
 		{
@@ -136,6 +135,38 @@ class Container extends JoomlaContainer
 		}
 
 		return call_user_func($raw['callback'], $this);
+	}
+
+	/**
+	 * Get the raw data assigned to a key.
+	 * Override to prevent joomla-framework bug not resolving parent aliases
+	 *
+	 * @param   string  $key  The key for which to get the stored item.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.0.11
+	 */
+	protected function getRaw($key)
+	{
+		if (isset($this->dataStore[$key]))
+		{
+			return $this->dataStore[$key];
+		}
+
+		$aliasKey = $this->resolveAlias($key);
+
+		if ($aliasKey != $key && isset($this->dataStore[$aliasKey]))
+		{
+			return $this->dataStore[$aliasKey];
+		}
+
+		if ($this->parent instanceof JoomlaContainer)
+		{
+			return $this->parent->getRaw($key);
+		}
+
+		return null;
 	}
 
 	/**

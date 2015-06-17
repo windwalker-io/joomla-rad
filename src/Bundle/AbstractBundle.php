@@ -113,6 +113,7 @@ class AbstractBundle implements ContainerAwareInterface
 
 		$path = new PathLocator($path);
 
+		/** @var \SplFileInfo $file */
 		foreach ($path as $file)
 		{
 			if (!$file->isDir())
