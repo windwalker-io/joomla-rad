@@ -13,6 +13,8 @@ use Windwalker\Helper\ArrayHelper;
 /**
  * Windwalker String. Based on Joomla String.
  *
+ * @deprecated  Use \Windwalker\String\StringHelper instead.
+ *
  * @since 2.0
  */
 class String extends \JString
