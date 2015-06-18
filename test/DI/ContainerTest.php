@@ -38,6 +38,8 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetInstance()
 	{
+		$backup = Container::getInstance();
+
 		$stub = new StubContainer(Container::getInstance());
 
 		$this->assertInstanceOf('Joomla\\DI\\Container', $stub::getInstance());
@@ -45,6 +47,11 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
 		// Test parent
 		$this->assertSame(StubContainer::getInstance(), StubContainer::getInstance('stub')->getParent());
+
+		// Put backup instance back
+		$ref = new \ReflectionProperty('Windwalker\DI\Container', 'instance');
+		$ref->setAccessible(true);
+		$ref->setValue($backup);
 	}
 
 	/**
