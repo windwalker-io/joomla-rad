@@ -22,7 +22,7 @@ class Build
 		'test',
 		'.gitignore',
 		'.travis.yml',
-		'phpunit.dist.xml',
+		'phpunit.xml.dist',
 		'README.md'
 	);
 
