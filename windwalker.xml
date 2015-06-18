@@ -13,7 +13,6 @@
 	<description>LIB_WINDWALKER_XML_DESC</description>
 
 	<files>
-		<folder>assets</folder>
 		<folder>bin</folder>
 		<folder>bundles</folder>
 		<folder>language</folder>
