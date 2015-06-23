@@ -91,9 +91,7 @@ class Component
 	 */
 	public function __construct($name = null, $input = null, $application = null, $container = null)
 	{
-		$this->application = $application ?: \JFactory::getApplication();
-		$this->input       = $input       ?: $this->application->input;
-		$this->name        = $name;
+		$this->name = $name;
 
 		// Guess component name.
 		if (!$this->name)
@@ -112,7 +110,9 @@ class Component
 
 		$this->option = 'com_' . strtolower($this->name);
 
-		$this->container = $container ?: Container::getInstance($this->option);
+		$this->container   = $container   ?: Container::getInstance($this->option);
+		$this->application = $application ?: $this->container->get('app');
+		$this->input       = $input       ?: $this->application->input;
 
 		$this->init();
 	}
