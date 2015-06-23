@@ -18,13 +18,6 @@ use Windwalker\Helper\UriHelper;
 class UriHelperTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test instance.
-	 *
-	 * @var object
-	 */
-	protected $instance;
-
-	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 *
@@ -32,9 +25,6 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->instance = null;
-
-		// For $this->testIsHome()
 		$_SERVER['HTTP_HOST'] = 'php.localhost';
 	}
 
@@ -46,6 +36,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function tearDown()
 	{
+		unset($_SERVER['HTTP_HOST']);
 	}
 
 	/**
@@ -157,5 +148,45 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 				'It is better to test UriHelper::isHome through HTTP request.'
 			);
 		}
+	}
+
+	/**
+	 * The method to test UriHelper::pathAddHost.
+	 *
+	 * @param string $expected
+	 * @param string $path
+	 *
+	 * @return void
+	 *
+	 * @dataProvider pathDataProvider
+	 * @covers       Windwalker\Helper\UriHelper::pathAddHost
+	 * @group        pathAddHost
+	 */
+	public function testPathAddHost($expected, $path)
+	{
+		if (php_sapi_name() === 'cli')
+		{
+			$this->assertSame($expected, UriHelper::pathAddHost($path));
+			echo 'It is better to test UriHelper::pathAddHost through HTTP request.';
+		}
+	}
+
+	/**
+	 * pathDataProvider
+	 *
+	 * @return array
+	 */
+	public function pathDataProvider()
+	{
+		return array(
+			// Not path
+			array('', null),
+
+			// No host
+			array('http://php.localhost' . dirname($_SERVER['SCRIPT_NAME']) . '/www.bm-sms.com.tw', 'www.bm-sms.com.tw'),
+
+			// Normal case
+			array('http://www.bm-sms.com.tw/', 'http://www.bm-sms.com.tw/'),
+		);
 	}
 }
