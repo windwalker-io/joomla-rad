@@ -30,9 +30,9 @@ class LanguageHelper
 	 * Translate a long text by Google, if it too long, will separate it..
 	 *
 	 * @param   string  $text      String to translate.
-	 * @param   string  $SourceLan Translate from this language, eg: 'zh-tw'. Empty will auto detect.
+	 * @param   string  $SourceLan Translate from this language, eg: 'zh-TW'. Empty will auto detect.
 	 * @param   string  $ResultLan Translate to this language, eg: 'en'. Empty will auto detect.
-	 * @param   integer $separate  Separate text by a number of words, batch translate them and re combine to return.
+	 * @param   integer $separate  Separate text by a number of words, batch translate them and recombine to return.
 	 *
 	 * @return  string    Translated text.
 	 */
