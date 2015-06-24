@@ -102,6 +102,7 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 		$testFileName = 'test' . $fileName;
 
 		$filePath = __DIR__ . '/../../' . $fileName;
+		$testFilePath = __DIR__ . '/../../' . $testFileName;
 
 		// Read file on local
 		$oriFileContent = file_get_contents($filePath);
@@ -119,6 +120,6 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 		}
 
 		// Remove temporary downloaded file.
-		unlink($testFileName);
+		unlink($testFilePath);
 	}
 }
