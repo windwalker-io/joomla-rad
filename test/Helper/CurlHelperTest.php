@@ -80,10 +80,11 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($helperOutput->body, $jHttpOutput->body);
 
 		// Test with Restful Api 'POST'
-		$helperOutput = (string) CurlHelper::get($url, 'post', array('key' => 'value'), array('testHeader'))->body;
-		$jHttpOutput = (string) $http->post($url, array('key' => 'value'), array('testHeader'))->body;
+		$helperOutput = CurlHelper::get($url, 'post', array('key' => 'value'), array('testHeader'));
+		$jHttpOutput = $http->post($url, array('key' => 'value'), array('testHeader'));
 
-		$this->assertEquals($helperOutput, $jHttpOutput);
+		$this->assertEquals($helperOutput->code, $jHttpOutput->code);
+		$this->assertEquals($helperOutput->body, $jHttpOutput->body);
 	}
 
 	/**
