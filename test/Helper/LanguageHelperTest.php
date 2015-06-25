@@ -8,7 +8,10 @@
 
 namespace Windwalker\Test\Helper;
 
-use \Windwalker\Helper\LanguageHelper;
+use Windwalker\DI\Container;
+use Windwalker\Helper\LanguageHelper;
+use Windwalker\Model\Model;
+use Windwalker\Test\Mock\MockLanguage;
 
 /**
  * Test class of \Windwalker\Helper\LanguageHelper
@@ -91,14 +94,29 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Helper\LanguageHelper::loadAll
-	 * @TODO   Implement testLoadAll().
 	 */
 	public function testLoadAll()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$container = Container::getInstance();
+
+		$mock = new MockLanguage;
+
+		// Set Mock object into container
+		$container->share('mock.language', $mock);
+
+		// Change container key to use mock object
+		LanguageHelper::setKey('mock.language');
+
+		// Test loadAll method
+		LanguageHelper::loadAll('en-GB', 'com_blog');
+		$this->assertEquals(true,  $mock->loadExecuted);
+
+		// Reset load flag
+		$mock->loadExecuted = false;
+
+		// Test is folder not exist
+		LanguageHelper::loadAll('unknown-lang', 'com_blog');
+		$this->assertEquals(false, $mock->loadExecuted);
 	}
 
 	/**
@@ -107,13 +125,21 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Helper\LanguageHelper::loadLanguage
-	 * @TODO   Implement testLoadLanguage().
 	 */
 	public function testLoadLanguage()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$container = Container::getInstance();
+
+		// Set Mock object into container
+		$mock = new MockLanguage;
+
+		// Set Mock object into container
+		$container->share('mock.language', $mock);
+
+		// Change container key to use mock object
+		LanguageHelper::setKey('mock.language');
+
+		LanguageHelper::loadLanguage('com_content');
+		$this->assertEquals(true, $mock->loadExecuted);
 	}
 }

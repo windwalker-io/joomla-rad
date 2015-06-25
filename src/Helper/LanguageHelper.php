@@ -20,6 +20,13 @@ use Windwalker\DI\Container;
 class LanguageHelper
 {
 	/**
+	 * Property Language instance key for Container
+	 *
+	 * @var  string
+	 */
+	protected static $key = 'language';
+
+	/**
 	 * An API key for Google translate.
 	 *
 	 * @var string
@@ -131,7 +138,7 @@ class LanguageHelper
 			return false;
 		}
 
-		$language = Container::getInstance()->get('language');
+		$language = Container::getInstance()->get(static::$key);
 
 		foreach ($files as $file)
 		{
@@ -165,11 +172,23 @@ class LanguageHelper
 	 */
 	public static function loadLanguage($ext, $client = 'site')
 	{
-		$lang = Container::getInstance()->get('language');
+		$lang = Container::getInstance()->get(static::$key);
 
 		return $lang->load($ext, JPATH_BASE, null, false, false)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, false, false)
 			|| $lang->load($ext, JPATH_BASE, null, true)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, true);
+	}
+
+	/**
+	 * Set language key
+	 *
+	 * @param null $newKey
+	 *
+	 * @return  void
+	 */
+	public static function setKey($newKey = null)
+	{
+		static::$key = $newKey;
 	}
 }
