@@ -74,9 +74,9 @@ class Component
 	 * @var array
 	 */
 	protected $path = array(
-		'self',
-		'site',
-		'administrator'
+		'self' => '',
+		'site' => '',
+		'administrator' => '',
 	);
 
 	/**
