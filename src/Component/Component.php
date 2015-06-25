@@ -202,9 +202,20 @@ class Component
 		$this->path['site']          = JPATH_ROOT . '/components/' . strtolower($this->option);
 		$this->path['administrator'] = JPATH_ROOT . '/administrator/components/' . strtolower($this->option);
 
-		define(strtoupper($this->name) . '_SELF',  $this->path['self']);
-		define(strtoupper($this->name) . '_SITE',  $this->path['site']);
-		define(strtoupper($this->name) . '_ADMIN', $this->path['administrator']);
+		if (!defined(strtoupper($this->name) . '_SELF'))
+		{
+			define(strtoupper($this->name) . '_SELF',  $this->path['self']);
+		}
+
+		if (!defined(strtoupper($this->name) . '_SITE'))
+		{
+			define(strtoupper($this->name) . '_SITE',  $this->path['site']);
+		}
+
+		if (!defined(strtoupper($this->name) . '_ADMIN'))
+		{
+			define(strtoupper($this->name) . '_ADMIN', $this->path['administrator']);
+		}
 
 		// Register some useful object for this component.
 		$this->container->registerServiceProvider(new ComponentProvider($this->name, $this));
