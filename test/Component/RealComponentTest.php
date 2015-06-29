@@ -179,4 +179,80 @@ class RealComponentTest extends AbstractBaseTestCase
 
 		$this->assertStringSafeEquals('foo controller data: bar', $component->execute());
 	}
+
+	/**
+	 * Method to test getActions().
+	 *
+	 * @return void
+	 *
+	 * @see  StubAdmin/access.xml
+	 *
+	 * @covers Windwalker\Component\Component::getActions
+	 */
+	public function testGetActions()
+	{
+		$actions = $this->createComponent()->getActions('sakura');
+
+		$this->assertArrayHasKey('windwalker.component.running', $actions->getProperties());
+
+		$actions = $this->createComponent()->getActions('sakura', 3, 0);
+
+		$this->assertArrayHasKey('windwalker.category.running', $actions->getProperties());
+
+		$actions = $this->createComponent()->getActions('sakura', 0, 25);
+
+		$this->assertArrayHasKey('windwalker.sakura.running', $actions->getProperties());
+
+		$actions = $this->createComponent()->getActions('sakura', 3, 25);
+
+		$this->assertArrayHasKey('windwalker.sakura.running', $actions->getProperties());
+	}
+
+	/**
+	 * Method to test getPath().
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Component\Component::getPath
+	 * @TODO   Implement testGetPath().
+	 */
+	public function testGetPath()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
+
+	/**
+	 * Method to test getSitePath().
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Component\Component::getSitePath
+	 * @TODO   Implement testGetSitePath().
+	 */
+	public function testGetSitePath()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
+
+	/**
+	 * Method to test getAdminPath().
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Component\Component::getAdminPath
+	 * @TODO   Implement testGetAdminPath().
+	 */
+	public function testGetAdminPath()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
 }

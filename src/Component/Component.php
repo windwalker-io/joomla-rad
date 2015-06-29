@@ -331,7 +331,7 @@ class Component
 	{
 		$user = $this->container->get('user');
 
-		return ComponentHelper::getActions($user, $this->option, $assetName, $categoryId, $id);
+		return ComponentHelper::getActions($user, $this->getAdminPath(), $assetName, $categoryId, $id);
 	}
 
 	/**
