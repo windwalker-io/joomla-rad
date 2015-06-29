@@ -56,7 +56,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testTranslate()
 	{
-		if (!WINDWALKER_TEST_GOOGLE_TRANSLATE)
+		if (!defined('WINDWALKER_TEST_GOOGLE_TRANSLATE') || !WINDWALKER_TEST_GOOGLE_TRANSLATE)
 		{
 			$this->markTestSkipped('Skip Google Translate test.');
 		}
@@ -79,7 +79,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGTranslate()
 	{
-		if (!WINDWALKER_TEST_GOOGLE_TRANSLATE)
+		if (!defined('WINDWALKER_TEST_GOOGLE_TRANSLATE') || !WINDWALKER_TEST_GOOGLE_TRANSLATE)
 		{
 			$this->markTestSkipped('Skip Google Translate test.');
 		}

@@ -39,7 +39,7 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		if (!WINDWALKER_TEST_CURL_HELPER)
+		if (!defined('WINDWALKER_TEST_CURL_HELPER') || !WINDWALKER_TEST_CURL_HELPER)
 		{
 			$this->markTestSkipped('Do not test CURL in client computer.');
 		}
