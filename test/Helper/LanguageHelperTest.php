@@ -56,6 +56,11 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testTranslate()
 	{
+		if (!WINDWALKER_TEST_GOOGLE_TRANSLATE)
+		{
+			$this->markTestSkipped('Skip Google Translate test.');
+		}
+
 		$testParagraph = 'admin article news';
 
 		$expectedResult = '管理員文章新聞';
@@ -74,6 +79,11 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGTranslate()
 	{
+		if (!WINDWALKER_TEST_GOOGLE_TRANSLATE)
+		{
+			$this->markTestSkipped('Skip Google Translate test.');
+		}
+
 		$testDictionary = array(
 			'admin' => '管理員',
 			'article' => '文章',

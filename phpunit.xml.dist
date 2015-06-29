@@ -10,6 +10,7 @@
 		<ini name="error_reporting" value="32767" />
 
 		<const name="WINDWALKER_TEST_CURL_HELPER" value="0" />
+		<const name="WINDWALKER_TEST_GOOGLE_TRANSLATE" value="0" />
 	</php>
 	<testsuites>
 		<testsuite name="RAD">
