@@ -13,7 +13,7 @@ use Windwalker\DI\Container;
 /**
  * Class ContainerHelper
  */
-class ContainerHelper
+class TestContainerHelper
 {
 	/**
 	 * Property of original Application instance
@@ -42,6 +42,8 @@ class ContainerHelper
 
 		$container->alias('app', $className);
 		$container->share($className, $app);
+
+		\JFactory::$application = $app;
 	}
 
 	/**
@@ -56,5 +58,7 @@ class ContainerHelper
 
 		$container->alias('app', $className);
 		$container->share($className, static::$originalApplication);
+
+		\JFactory::$application = static::$originalApplication;
 	}
 }
