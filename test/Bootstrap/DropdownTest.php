@@ -94,7 +94,7 @@ class DropdownTest extends \PHPUnit_Framework_TestCase
 	 * @param string $prefix
 	 * @param string $task
 	 *
-	 * @covers       \Windwalker\Helper\AssetHelper::duplicate
+	 * @covers       \Windwalker\Bootstrap\Dropdown::duplicate
 	 * @dataProvider duplicateProvider
 	 */
 	public function testDuplicate($label, $icon, $id, $prefix, $task)
