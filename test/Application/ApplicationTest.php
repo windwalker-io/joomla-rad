@@ -28,8 +28,6 @@ class ApplicationTest extends \JApplicationCms
 	 */
 	public function __construct(\JInput $input = null, Registry $config = null, \JApplicationWebClient $client = null)
 	{
-		$_SERVER['HTTP_HOST'] = 'rad.windwalker.io';
-
 		$config = $config ? : new Registry;
 
 		$config->set('session', false);

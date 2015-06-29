@@ -43,3 +43,6 @@ require_once JPATH_CONFIGURATION . '/configuration.php';
 
 // System configuration.
 $config = new JConfig;
+
+// Some environment override
+$_SERVER['HTTP_HOST'] = 'rad.windwalker.io';
