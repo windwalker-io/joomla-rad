@@ -191,19 +191,25 @@ class RealComponentTest extends AbstractBaseTestCase
 	 */
 	public function testGetActions()
 	{
-		$actions = $this->createComponent()->getActions('sakura');
+		$component = $this->createComponent();
+
+		// Get component ACL actions
+		$actions = $component->getActions('sakura');
 
 		$this->assertArrayHasKey('windwalker.component.running', $actions->getProperties());
 
-		$actions = $this->createComponent()->getActions('sakura', 3, 0);
+		// Get single item ACL actions
+		$actions = $component->getActions('sakura', 3, 0);
 
 		$this->assertArrayHasKey('windwalker.category.running', $actions->getProperties());
 
-		$actions = $this->createComponent()->getActions('sakura', 0, 25);
+		// Get category ACL actions
+		$actions = $component->getActions('sakura', 0, 25);
 
 		$this->assertArrayHasKey('windwalker.sakura.running', $actions->getProperties());
 
-		$actions = $this->createComponent()->getActions('sakura', 3, 25);
+		// Get items ACL actions
+		$actions = $component->getActions('sakura', true, true);
 
 		$this->assertArrayHasKey('windwalker.sakura.running', $actions->getProperties());
 	}
