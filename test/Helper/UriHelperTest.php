@@ -9,6 +9,7 @@
 namespace Windwalker\Test\Helper;
 
 use Windwalker\Helper\UriHelper;
+use Windwalker\Test\TestHelper;
 
 /**
  * Test class of UriHelper.
@@ -25,7 +26,12 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
+		TestHelper::setValue('JUri', 'base', array());
+
+		\JFactory::getConfig()->set('live_site', 'http://php.localhost/flower/sakura');
+
 		$_SERVER['HTTP_HOST'] = 'php.localhost';
+		$_SERVER['REQUEST_URI'] = '/flower/sakura';
 	}
 
 	/**
@@ -36,7 +42,12 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function tearDown()
 	{
+		TestHelper::setValue('Juri', 'base', array());
+
 		unset($_SERVER['HTTP_HOST']);
+		unset($_SERVER['REQUEST_URI']);
+
+		\JFactory::getConfig()->set('live_site', null);
 	}
 
 	/**
@@ -137,17 +148,39 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
+	 * @dataProvider  isHomeProvider
+	 *
 	 * @covers Windwalker\Helper\UriHelper::isHome
 	 * @group  isHome
 	 */
-	public function testIsHome()
+	public function testIsHome($uri, $expected, $errMsg)
 	{
-		if (php_sapi_name() === 'cli')
-		{
-			$this->markTestSkipped(
-				'It is better to test UriHelper::isHome through HTTP request.'
-			);
-		}
+		$ref = new \ReflectionProperty('JUri', 'instances');
+		$ref->setAccessible(true);
+		$instances = $ref->getValue();
+
+		$instances['SERVER'] = null;
+
+		$_SERVER['REQUEST_URI'] = $uri;
+
+		$ref->setValue($instances);
+
+		$this->assertEquals($expected, UriHelper::isHome($expected), 'Request: ' . $uri . ' ' . $errMsg);
+	}
+
+	/**
+	 * isHomeProvider
+	 *
+	 * @return  array
+	 */
+	public function isHomeProvider()
+	{
+		return array(
+			array('/flower/sakura', true, 'should be home.'),
+			array('/flower/sakura/index.php', true, 'should be home.'),
+			array('/flower/sakura/bloom.html', false, 'should not be home.'),
+			array('/flower/sakura/beautiful', false, 'should not be home.'),
+		);
 	}
 
 	/**
@@ -160,12 +193,32 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testDownload()
 	{
-		if (php_sapi_name() === 'cli')
-		{
-			$this->markTestSkipped(
-				'It is better to test UriHelper::download manual.'
-			);
-		}
+		// Test redirect download with no absolute
+		$this->assertEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', false, false, array('test' => true)));
+
+		// Test Streaming
+		ob_start();
+
+		UriHelper::download(__FILE__, true, true, array('test' => true));
+
+		$content = ob_get_contents();
+
+		ob_end_clean();
+
+		$this->assertStringEqualsFile(__FILE__, $content);
+
+		$headers = array(
+			'Content-Type: application/octet-stream',
+			'Cache-Control: no-store, no-cache, must-revalidate',
+			'Cache-Control: pre-check=0, post-check=0, max-age=0',
+			'Content-Transfer-Encoding: binary',
+			'Content-Encoding: none',
+			'Content-type: application/force-download',
+			'Content-length: ' . filesize(__FILE__),
+			'Content-Disposition: attachment; filename="' . basename(__FILE__) . '"'
+		);
+
+		$this->assertEquals($headers, UriHelper::$headerBuffer);
 	}
 
 	/**
@@ -182,11 +235,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testPathAddHost($expected, $path)
 	{
-		if (php_sapi_name() === 'cli')
-		{
-			$this->assertSame($expected, UriHelper::pathAddHost($path));
-			echo 'It is better to test UriHelper::pathAddHost through HTTP request.';
-		}
+		$this->assertSame($expected, UriHelper::pathAddHost($path));
 	}
 
 	/**
@@ -200,11 +249,14 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 			// Not path
 			array('', null),
 
-			// No host
-			array('http://php.localhost' . dirname($_SERVER['SCRIPT_NAME']) . '/www.bm-sms.com.tw', 'www.bm-sms.com.tw'),
+			// Root relative path
+			array('http://php.localhost/flower/sakura/bloom.html', '/flower/sakura/bloom.html'),
 
-			// Normal case
-			array('http://www.bm-sms.com.tw/', 'http://www.bm-sms.com.tw/'),
+			// Base relative path
+			array('http://php.localhost/flower/sakura/bloom.html', 'bloom.html'),
+
+			// Full URL
+			array('http://php.localhost/flower/sakura/bloom.html', 'http://php.localhost/flower/sakura/bloom.html'),
 		);
 	}
 }
