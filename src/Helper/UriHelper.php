@@ -68,6 +68,8 @@ class UriHelper
 	{
 		$test = isset($option['test']) ? $option['test'] : null;
 
+		static::$headerBuffer = array();
+
 		if ($stream)
 		{
 			if (!$absolute)
@@ -136,12 +138,7 @@ class UriHelper
 	 */
 	protected static function header($data, $test = false)
 	{
-		if (!$test)
-		{
-			header($data);
-		}
-
-		static::$headerBuffer[] = $data;
+		$test ? (static::$headerBuffer[] = $data) : header($data);
 	}
 
 	/**
