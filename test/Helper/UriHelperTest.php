@@ -151,6 +151,24 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * The method to test UriHelper::download.
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Helper\UriHelper::download
+	 * @group  download
+	 */
+	public function testDownload()
+	{
+		if (php_sapi_name() === 'cli')
+		{
+			$this->markTestSkipped(
+				'It is better to test UriHelper::download manual.'
+			);
+		}
+	}
+
+	/**
 	 * The method to test UriHelper::pathAddHost.
 	 *
 	 * @param string $expected
