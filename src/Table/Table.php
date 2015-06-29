@@ -10,6 +10,7 @@ namespace Windwalker\Table;
 
 use JTable;
 use Windwalker\DI\Container;
+use Windwalker\Relation\Relation;
 
 /**
  * Windwalker active record Table.
@@ -32,6 +33,25 @@ class Table extends \JTable
 		$db = $db ?: Container::getInstance()->get('db');
 
 		parent::__construct($table, $key, $db);
+
+		// Prepare Relation handler
+		$this->_relation = new Relation($this);
+
+		$this->configure();
+	}
+
+	/**
+	 * Configure this table.
+	 *
+	 * This method will run after \Windwalker\Table\Table::__construct().
+	 *
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	protected function configure()
+	{
+		// Do some stuff
 	}
 
 	/**
