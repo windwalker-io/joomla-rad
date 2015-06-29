@@ -164,14 +164,17 @@ class RealComponentTest extends AbstractBaseTestCase
 	 */
 	public function testExecute()
 	{
+		// Test with view
 		$component = $this->createComponent(array('view' => 'sakura'));
 
 		$this->assertStringSafeEquals('Sakura Tmpl default', $component->execute());
 
+		// Test with view and layout
 		$component = $this->createComponent(array('view' => 'sakura', 'layout' => 'foo'));
 
 		$this->assertStringSafeEquals('Sakura Tmpl foo', $component->execute());
 
+		// Test with controller task
 		$component = $this->createComponent(array('task' => 'sakura.edit.foo', 'data' => 'bar'));
 
 		$this->assertStringSafeEquals('foo controller data: bar', $component->execute());
