@@ -8,6 +8,7 @@
 
 namespace Windwalker\Test\Table\Stub;
 
+use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
 
 /**
@@ -34,6 +35,6 @@ class StubTableLocations extends Table
 	 */
 	protected function configure()
 	{
-		
+
 	}
 }

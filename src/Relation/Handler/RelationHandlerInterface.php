@@ -16,11 +16,9 @@ namespace Windwalker\Relation\Handler;
  */
 interface RelationHandlerInterface
 {
-	public function load($conditions);
+	public function load();
 
-	public function update();
-
-	public function create();
+	public function store();
 
 	public function delete();
 }

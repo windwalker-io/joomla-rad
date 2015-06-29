@@ -9,6 +9,7 @@
 namespace Windwalker\Relation\Handler;
 
 use Windwalker\Relation\Action;
+use Windwalker\Table\Table;
 
 /**
  * The AbstractRelationHandler class.
@@ -17,6 +18,13 @@ use Windwalker\Relation\Action;
  */
 abstract class AbstractRelationHandler implements RelationHandlerInterface
 {
+	/**
+	 * Property parent.
+	 *
+	 * @var  Table
+	 */
+	protected $parent;
+
 	/**
 	 * Property table.
 	 *
@@ -76,6 +84,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Class init.
 	 *
+	 * @param Table   $parent
 	 * @param string  $field
 	 * @param \JTable $table
 	 * @param array   $fks
@@ -83,17 +92,42 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 * @param string  $onDelete
 	 * @param array   $options
 	 */
-	public function __construct($field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
+	public function __construct($parent, $field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
 		$options = array())
 	{
+		$this->parent   = $parent;
 		$this->table    = $table;
 		$this->onUpdate = $onUpdate;
 		$this->onDelete = $onDelete;
-		$this->field   = $field;
+		$this->field    = $field;
 		$this->fks      = (array) $fks;
 		$this->options  = $options;
 
 		$this->tableName = $this->table->getTableName();
 		$this->db = $table->getDbo();
+	}
+
+	/**
+	 * Method to get property Parent
+	 *
+	 * @return  Table
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * Method to set property parent
+	 *
+	 * @param   Table $parent
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setParent($parent)
+	{
+		$this->parent = $parent;
+
+		return $this;
 	}
 }

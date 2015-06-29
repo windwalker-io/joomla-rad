@@ -20,6 +20,13 @@ use Windwalker\Relation\Relation;
 class Table extends \JTable
 {
 	/**
+	 * Property _relation.
+	 *
+	 * @var  Relation
+	 */
+	public $_relation;
+
+	/**
 	 * Object constructor to set table and key fields.  In most cases this will
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
@@ -55,6 +62,32 @@ class Table extends \JTable
 	}
 
 	/**
+	 * Method to load a row from the database by primary key and bind the fields
+	 * to the JTable instance properties.
+	 *
+	 * @param   mixed    $keys   An optional primary key value to load the row by, or an array of fields to match.  If not
+	 *                           set the instance property value is used.
+	 * @param   boolean  $reset  True to reset the default values before loading the new row.
+	 *
+	 * @return  boolean  True if successful. False if row not found.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @throws  \RuntimeException
+	 * @throws  \UnexpectedValueException
+	 */
+	public function load($keys = null, $reset = true)
+	{
+		if (!($result = parent::load($keys, $reset)))
+		{
+			return $result;
+		}
+
+		$this->_relation->load();
+
+		return $result;
+	}
+
+	/**
 	 * Method to store a row in the database from the JTable instance properties.
 	 * If a primary key value is set the row with that primary key value will be
 	 * updated with the instance property values.  If no primary key value is set
@@ -75,6 +108,18 @@ class Table extends \JTable
 			}
 		}
 
-		return parent::store($updateNulls);
+		if (!$result = parent::store($updateNulls))
+		{
+			return $result;
+		}
+
+		if ($this->hasPrimaryKey())
+		{
+			$this->_relation->update();
+		}
+		else
+		{
+			$this->_relation->create();
+		}
 	}
 }

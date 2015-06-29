@@ -8,6 +8,8 @@
 
 namespace Windwalker\Relation\Handler;
 
+use Windwalker\Model\Helper\QueryHelper;
+
 /**
  * The OneToManyRelation class.
  * 
@@ -18,17 +20,23 @@ class OneToManyRelation extends AbstractRelationHandler
 	/**
 	 * load
 	 *
-	 * @param array $conditions
-	 *
-	 * @return  \JTable[]
+	 * @return  void
 	 */
-	public function load($conditions)
+	public function load()
 	{
+		$conditions = array();
+
+		foreach ($this->fks as $field => $foreign)
+		{
+			$conditions[$foreign] = $this->parent->$field;
+		}
+
 		$query = $this->db->getQuery(true);
 
+		QueryHelper::buildWheres($query, $conditions);
+
 		$query->select('*')
-			->from($this->tableName)
-			->where($conditions);
+			->from($this->tableName);
 
 		$items = $this->db->setQuery($query)->loadObjectList();
 
@@ -45,17 +53,41 @@ class OneToManyRelation extends AbstractRelationHandler
 			$results[] = $itemTable;
 		}
 
-		return $results;
+		$this->parent->{$this->field} = $results;
 	}
 
-	public function update()
+	public function store()
 	{
+		$items = $this->parent->{$this->field};
 
-	}
+		if ($items instanceof \Traversable)
+		{
+			$items = iterator_to_array($items);
+		}
 
-	public function create()
-	{
+		if (!is_array($items))
+		{
+			throw new \InvalidArgumentException('Relation items should be array');
+		}
 
+		$table = clone $this->table;
+		$table->reset();
+
+		foreach ($items as $item)
+		{
+			if (!($item instanceof \JTable))
+			{
+				$itemTable = clone $table;
+				$itemTable->bind($item);
+			}
+			else
+			{
+				$itemTable = $table;
+			}
+
+			$itemTable->check();
+			$itemTable->store(true);
+		}
 	}
 
 	public function delete()

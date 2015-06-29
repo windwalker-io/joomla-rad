@@ -17,7 +17,7 @@ use Windwalker\Table\Table;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class Relation
+class Relation implements RelationHandlerInterface
 {
 	/**
 	 * Property parent.
@@ -58,30 +58,35 @@ class Relation
 			$table = $this->getTable($table, $this->prefix);
 		}
 
-		$relation = new OneToManyRelation($field, $table, $fks, $onUpdate, $onDelete, $options);
+		$relation = new OneToManyRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
+
+		$relation->setParent($this->parent);
+
+		$this->relations[$field] = $relation;
 	}
 
 	public function load()
 	{
-		// Build conditions
-		$conditions = array();
-
-		foreach ($this->fks as $field => $foreigns)
+		foreach ($this->relations as $relation)
 		{
-			if (is_array($foreigns))
-			{
-				foreach ($foreigns as $foreign)
-				{
-
-				}
-
-
-			}
-
-
-
+			$relation->load();
 		}
+	}
 
+	public function store()
+	{
+		foreach ($this->relations as $relation)
+		{
+			$relation->store();
+		}
+	}
+
+	public function delete()
+	{
+		foreach ($this->relations as $relation)
+		{
+			$relation->delete();
+		}
 	}
 
 	/**
