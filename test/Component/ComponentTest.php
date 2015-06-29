@@ -78,6 +78,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers \Windwalker\Component\Component::__construct
+	 * @covers \Windwalker\Component\Component::init
 	 */
 	public function testConstructor()
 	{
@@ -114,6 +115,54 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	public function testConstructorException()
 	{
 		new Component;
+	}
+
+	/**
+	 * Method to test registerTask().
+	 *
+	 * @return void
+	 *
+	 * @covers \Windwalker\Component\Component::registerTask
+	 * @TODO   Implement testRegisterTask().
+	 */
+	public function testRegisterTask()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
+
+	/**
+	 * Method to test unregisterTask().
+	 *
+	 * @return void
+	 *
+	 * @covers \Windwalker\Component\Component::unregisterTask
+	 * @TODO   Implement testUnregisterTask().
+	 */
+	public function testUnregisterTask()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
+	}
+
+	/**
+	 * Method to test getActions().
+	 *
+	 * @return void
+	 *
+	 * @covers \Windwalker\Component\Component::getActions
+	 * @TODO   Implement testGetActions().
+	 */
+	public function testGetActions()
+	{
+		// Remove the following lines when you implement this test.
+		$this->markTestIncomplete(
+			'This test has not been implemented yet.'
+		);
 	}
 
 	/**
@@ -160,6 +209,20 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * testGetReflection
+	 *
+	 * @return  void
+	 *
+	 * @covers \Windwalker\Component\Component::getReflection
+	 */
+	public function testGetReflection()
+	{
+		$component = new Component($this->componentName);
+
+		$this->assertEquals(new \ReflectionClass($component), $component->getReflection());
+	}
+
+	/**
 	 * testGetPath
 	 *
 	 * @return  void
@@ -177,6 +240,38 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($site, $component->getPath('site'));
 		$this->assertEquals($admin, $component->getPath('admin'));
 		$this->assertEquals($admin, $component->getPath('administrator'));
+	}
+
+	/**
+	 * testGetSitePath
+	 *
+	 * @return  void
+	 *
+	 * @covers \Windwalker\Component\Component::getSitePath
+	 */
+	public function testGetSitePath()
+	{
+		$component = new Component($this->componentName);
+
+		$site = JPATH_ROOT . '/components/com_' . strtolower($this->componentName);
+
+		$this->assertEquals($site, $component->getSitePath());
+	}
+
+	/**
+	 * testGetAdminPath
+	 *
+	 * @return  void
+	 *
+	 * @covers \Windwalker\Component\Component::getAdminPath
+	 */
+	public function testGetAdminPath()
+	{
+		$component = new Component($this->componentName);
+
+		$admin = JPATH_ROOT . '/administrator/components/com_' . strtolower($this->componentName);
+
+		$this->assertEquals($admin, $component->getAdminPath());
 	}
 
 	/**
