@@ -74,9 +74,9 @@ class Component
 	 * @var array
 	 */
 	protected $path = array(
-		'self',
-		'site',
-		'administrator'
+		'self' => '',
+		'site' => '',
+		'administrator' => '',
 	);
 
 	/**
@@ -91,9 +91,7 @@ class Component
 	 */
 	public function __construct($name = null, $input = null, $application = null, $container = null)
 	{
-		$this->application = $application ?: \JFactory::getApplication();
-		$this->input       = $input       ?: $this->application->input;
-		$this->name        = $name;
+		$this->name = $name;
 
 		// Guess component name.
 		if (!$this->name)
@@ -112,7 +110,9 @@ class Component
 
 		$this->option = 'com_' . strtolower($this->name);
 
-		$this->container = $container ?: Container::getInstance($this->option);
+		$this->container   = $container   ?: Container::getInstance($this->option);
+		$this->application = $application ?: $this->container->get('app');
+		$this->input       = $input       ?: $this->application->input;
 
 		$this->init();
 	}
@@ -202,9 +202,20 @@ class Component
 		$this->path['site']          = JPATH_ROOT . '/components/' . strtolower($this->option);
 		$this->path['administrator'] = JPATH_ROOT . '/administrator/components/' . strtolower($this->option);
 
-		define(strtoupper($this->name) . '_SELF',  $this->path['self']);
-		define(strtoupper($this->name) . '_SITE',  $this->path['site']);
-		define(strtoupper($this->name) . '_ADMIN', $this->path['administrator']);
+		if (!defined(strtoupper($this->name) . '_SELF'))
+		{
+			define(strtoupper($this->name) . '_SELF',  $this->path['self']);
+		}
+
+		if (!defined(strtoupper($this->name) . '_SITE'))
+		{
+			define(strtoupper($this->name) . '_SITE',  $this->path['site']);
+		}
+
+		if (!defined(strtoupper($this->name) . '_ADMIN'))
+		{
+			define(strtoupper($this->name) . '_ADMIN', $this->path['administrator']);
+		}
 
 		// Register some useful object for this component.
 		$this->container->registerServiceProvider(new ComponentProvider($this->name, $this));
