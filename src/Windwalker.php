@@ -49,7 +49,7 @@ class Windwalker
 		// Register global provider
 		$container = Container::getInstance();
 
-		$container->registerServiceProvider(new SystemProvider)
+		$container->registerServiceProvider(new SystemProvider(defined('WINDWALKER_CONSOLE')))
 			->registerServiceProvider(new DataMapperProvider);
 
 		// Register bundles

@@ -10,8 +10,8 @@ namespace Windwalker\Test\Helper;
 
 use Windwalker\DI\Container;
 use Windwalker\Helper\ProfilerHelper;
-use Windwalker\Test\DI\ContainerHelper;
-use Windwalker\Test\Mock\ApplicationCms;
+use Windwalker\Test\DI\TestContainerHelper;
+use Windwalker\Test\Application\ApplicationTest;
 
 /**
  * Test class of Windwalker\Helper\ProfilerHelper
@@ -34,7 +34,7 @@ class ProfilerHelperTest extends \PHPUnit_Framework_TestCase
 
 		$config->set('debug', 1);
 
-		ContainerHelper::setApplication(new ApplicationCms);
+		TestContainerHelper::setApplication(new ApplicationTest);
 	}
 
 	/**
@@ -46,7 +46,7 @@ class ProfilerHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function tearDown()
 	{
-		ContainerHelper::restoreApplication();
+		TestContainerHelper::restoreApplication();
 	}
 
 	/**

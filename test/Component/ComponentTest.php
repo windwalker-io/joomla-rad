@@ -9,8 +9,8 @@
 namespace Windwalker\Test\Component;
 
 use Windwalker\Component\Component;
-use Windwalker\Test\DI\ContainerHelper;
-use Windwalker\Test\Mock\ApplicationCms;
+use Windwalker\Test\DI\TestContainerHelper;
+use Windwalker\Test\Application\ApplicationTest;
 use Windwalker\Test\TestHelper;
 
 /**
@@ -36,10 +36,10 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$app        = new ApplicationCms;
+		$app        = new ApplicationTest;
 		$app->input = new \JInput;
 
-		ContainerHelper::setApplication($app);
+		TestContainerHelper::setApplication($app);
 
 		$dirs = array(
 			JPATH_ROOT . '/components/com_testcomponent',
@@ -65,7 +65,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function tearDown()
 	{
-		ContainerHelper::restoreApplication();
+		TestContainerHelper::restoreApplication();
 
 		// Remove component files
 		$this->removeDirectory(JPATH_BASE . '/components/com_testcomponent');
@@ -84,7 +84,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	{
 		$component = new Component($this->componentName);
 
-		$this->assertInstanceOf('Windwalker\Test\Mock\ApplicationCms', $component->getApplication());
+		$this->assertInstanceOf('Windwalker\Test\Application\ApplicationTest', $component->getApplication());
 		$this->assertInstanceOf('Windwalker\DI\Container', $component->getContainer());
 		$this->assertInstanceOf('JInput', $component->getInput());
 		$this->assertNull($component->getDefaultController());
@@ -174,7 +174,7 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testExecute()
 	{
-		$controller = $this->getMock('WindWalker\Controller\Controller', array('setComponentPath', 'setContainer', 'execute'));
+		$controller = $this->getMock('Windwalker\Controller\Controller', array('doExecute', 'setComponentPath', 'setContainer', 'execute'));
 
 		$controller->expects($this->once())
 			->method('setComponentPath');
