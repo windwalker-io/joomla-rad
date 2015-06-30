@@ -90,7 +90,8 @@ class RealComponentTest extends AbstractBaseTestCase
 					'self' => __DIR__ . '/StubAdmin',
 					'site' => __DIR__ . '/StubSite',
 					'administrator' => __DIR__ . '/StubAdmin',
-				)
+				),
+				'constants' => false
 			)
 		);
 
@@ -128,6 +129,10 @@ class RealComponentTest extends AbstractBaseTestCase
 	 */
 	public function test__construct()
 	{
+		// Test no constants
+		$this->createComponent();
+		$this->assertFalse(defined('STUB_ADMIN'));
+
 		// Create with no params
 		$component = new StubComponent;
 
@@ -139,6 +144,9 @@ class RealComponentTest extends AbstractBaseTestCase
 		$this->assertSame($container->get('app'), $component->getApplication());
 		$this->assertSame($container->get('app')->input, $component->getInput());
 		$this->assertEquals('com_stub', $component->getOption());
+		$this->assertEquals(STUB_ADMIN, $component->getAdminPath());
+		$this->assertEquals(STUB_SITE, $component->getSitePath());
+		$this->assertEquals(STUB_SELF, $component->getPath());
 
 		// Create with manually set params
 		$app = new ApplicationTest;

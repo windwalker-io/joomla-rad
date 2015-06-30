@@ -220,7 +220,7 @@ class Component
 		$this->path['site'] = $this->config->get('init.path.site') ? : JPATH_ROOT . '/components/' . strtolower($this->option);
 		$this->path['administrator'] = $this->config->get('init.path.administrator') ? : JPATH_ROOT . '/administrator/components/' . strtolower($this->option);
 
-		if ($this->config->get('init.constants'))
+		if ($this->config->get('init.constants', true))
 		{
 			if (!defined(strtoupper($this->name) . '_SELF'))
 			{
