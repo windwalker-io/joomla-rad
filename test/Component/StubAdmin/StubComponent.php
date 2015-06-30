@@ -17,5 +17,5 @@ use Windwalker\Component\Component;
  */
 class StubComponent extends Component
 {
-	// Test class with no action.
+	protected $defaultController = 'foo';
 }

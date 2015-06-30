@@ -15,6 +15,7 @@ use Windwalker\Test\Component\StubAdmin\StubComponent;
 use Windwalker\Test\DI\TestContainerHelper;
 use Windwalker\Test\Application\ApplicationTest;
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
+use Windwalker\Test\TestHelper;
 
 /**
  * Test class of \Windwalker\Component\Component
@@ -154,6 +155,22 @@ class RealComponentTest extends AbstractBaseTestCase
 		$container = new Container;
 		$container->registerServiceProvider(new SystemProvider);
 
+		// Mock Event
+		$event = $this->getMock('JEventDispatcher', array('trigger'), array('eventName'), 'MockDispatcher');
+		$event->expects($this->at(0))
+			->method('trigger')
+			->with(
+				'onComponentBeforeInit'
+			);
+
+		$event->expects($this->at(1))
+			->method('trigger')
+			->with(
+				'onComponentAfterInit'
+			);
+
+		$container->share('JEventDispatcher', $event)->alias('event.dispatcher', 'JEventDispatcher');
+
 		$component = new StubComponent('flower', $input, $app, $container);
 
 		$this->assertSame($container, $component->getContainer());
@@ -161,6 +178,14 @@ class RealComponentTest extends AbstractBaseTestCase
 		$this->assertSame($input, $component->getInput());
 		$this->assertEquals('com_flower', $component->getOption());
 		$this->assertEquals('flower', $component->getName());
+
+		// Other test
+		$this->assertEquals('foo', $input->get('controller'));
+		$this->assertEquals('foo', $input->get('task'));
+
+		$paths = TestHelper::getValue('JFormHelper', 'paths');
+		$this->assertTrue(in_array(WINDWALKER_SOURCE . '/Form/Fields', $paths['field']));
+		$this->assertTrue(in_array(WINDWALKER_SOURCE . '/Form/Forms', $paths['form']));
 	}
 
 	/**
