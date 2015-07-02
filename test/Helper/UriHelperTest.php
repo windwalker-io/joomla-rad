@@ -146,14 +146,17 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * The method to test UriHelper::isHome.
 	 *
+	 * @param bool   $expected
+	 * @param string $uri
+	 * @param string $errMsg
+	 *
 	 * @return void
 	 *
-	 * @dataProvider  isHomeProvider
-	 *
-	 * @covers Windwalker\Helper\UriHelper::isHome
-	 * @group  isHome
+	 * @dataProvider isHomeDataProvider
+	 * @covers       Windwalker\Helper\UriHelper::isHome
+	 * @group        isHome
 	 */
-	public function testIsHome($uri, $expected, $errMsg)
+	public function testIsHome($expected, $uri, $errMsg)
 	{
 		$ref = new \ReflectionProperty('JUri', 'instances');
 		$ref->setAccessible(true);
@@ -169,17 +172,17 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * isHomeProvider
+	 * isHomeDataProvider
 	 *
-	 * @return  array
+	 * @return array
 	 */
-	public function isHomeProvider()
+	public function isHomeDataProvider()
 	{
 		return array(
-			array('/flower/sakura', true, 'should be home.'),
-			array('/flower/sakura/index.php', true, 'should be home.'),
-			array('/flower/sakura/bloom.html', false, 'should not be home.'),
-			array('/flower/sakura/beautiful', false, 'should not be home.'),
+			array(true, '/flower/sakura', 'should be home.'),
+			array(true, '/flower/sakura/index.php', 'should be home.'),
+			array(false, '/flower/sakura/bloom.html', 'should not be home.'),
+			array(false, '/flower/sakura/beautiful', 'should not be home.'),
 		);
 	}
 
