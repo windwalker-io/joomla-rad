@@ -48,14 +48,16 @@ class ModalHelper
 	public static function modalLink($title, $selector, $option = array())
 	{
 		$tag     = JArrayHelper::getValue($option, 'tag', 'a');
-		$id      = isset($option['id']) ? " id=\"{$option['id']}\"" : "id=\"{$selector}_link\"";
-		$class   = isset($option['class']) ? " class=\"{$option['class']} cursor-pointer\"" : 'class="cursor-pointer"';
+		$id      = isset($option['id']) ? " id=\"{$option['id']}\"" : " id=\"{$selector}_link\"";
+		$class   = isset($option['class']) ? " class=\"{$option['class']} cursor-pointer\"" : ' class="cursor-pointer"';
 		$onclick = isset($option['onclick']) ? " onclick=\"{$option['onclick']}\"" : '';
 		$icon    = JArrayHelper::getValue($option, 'icon', '');
 
-		$button = "<{$tag} data-toggle=\"modal\" data-target=\"#$selector\"{$id}{$class}{$onclick}>
-               <i class=\"{$icon}\" title=\"$title\"></i>
-                $title</{$tag}>";
+		$button = <<<HTML
+<{$tag} data-toggle="modal" data-target="#$selector"{$id}{$class}{$onclick}>
+	<i class="{$icon}" title="$title"></i>
+$title</{$tag}>
+HTML;
 
 		return $button;
 	}
