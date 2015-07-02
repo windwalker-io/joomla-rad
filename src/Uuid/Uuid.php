@@ -70,7 +70,7 @@ class Uuid
 	 * valid UUID) and a value (the name). Given the same namespace and
 	 * name, the output is always the same.
 	 *
-	 * @param  uuid   $namespace The namespace from other UUID.
+	 * @param  string $namespace The namespace from other UUID.
 	 * @param  string $name      The value to generate UUID.
 	 *
 	 * @return string UUID v3.
@@ -156,7 +156,7 @@ class Uuid
 	 * valid UUID) and a value (the name). Given the same namespace and
 	 * name, the output is always the same.
 	 *
-	 * @param  uuid   $namespace The namespace from other UUID.
+	 * @param  string $namespace The namespace from other UUID.
 	 * @param  string $name      The value to generate UUID.
 	 *
 	 * @return string UUID v5.

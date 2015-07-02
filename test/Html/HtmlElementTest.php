@@ -160,7 +160,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * testOffsetExist
 	 *
-	 * @covers \Windwalker\Html\HtmlElement::offsetExist()
+	 * @covers \Windwalker\Html\HtmlElement::offsetExists()
 	 */
 	public function testOffsetExist()
 	{
