@@ -34,11 +34,13 @@ abstract class AbstractFacade implements FacadeInterface
 	/**
 	 * getInstance
 	 *
-	 * @return  mixed
+	 * @param bool $forceNew
+	 *
+	 * @return mixed
 	 */
-	public static function getInstance()
+	public static function getInstance($forceNew = false)
 	{
-		return static::getContainer()->get(static::getDIKey());
+		return static::getContainer()->get(static::getDIKey(), $forceNew);
 	}
 
 	/**
