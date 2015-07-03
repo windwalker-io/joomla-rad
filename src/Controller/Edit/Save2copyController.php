@@ -8,6 +8,8 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Windwalker\String\StringHelper;
+
 /**
  * Save2Copy Controller
  *
@@ -36,12 +38,12 @@ class Save2copyController extends ApplyController
 
 		if (isset($this->data['title']))
 		{
-			$this->data['title'] = \JString::increment($this->data['title']);
+			$this->data['title'] = StringHelper::increment($this->data['title']);
 		}
 
 		if (isset($this->data['alias']))
 		{
-			$this->data['alias'] = \JString::increment($this->data['alias'], 'dash');
+			$this->data['alias'] = StringHelper::increment($this->data['alias'], 'dash');
 		}
 	}
 

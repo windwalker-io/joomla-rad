@@ -12,6 +12,7 @@ use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
 use JTable;
 use Windwalker\Helper\DateHelper;
+use Windwalker\String\StringHelper;
 
 /**
  * Prototype admin model.
@@ -421,8 +422,8 @@ abstract class AdminModel extends CrudModel
 
 		while ($table->load(array('alias' => $alias, 'catid' => $categoryId)))
 		{
-			$title = \JString::increment($title);
-			$alias = \JString::increment($alias, 'dash');
+			$title = StringHelper::increment($title);
+			$alias = StringHelper::increment($alias, 'dash');
 		}
 
 		return array($title, $alias);

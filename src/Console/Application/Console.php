@@ -67,8 +67,6 @@ class Console extends \Windwalker\Console\Console
 			$io->setOption('ansi', true);
 		}
 
-		\JFactory::$application = $this;
-
 		parent::__construct($io, $config);
 
 		$this->rootCommand

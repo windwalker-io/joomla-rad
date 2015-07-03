@@ -9,6 +9,7 @@
 namespace Windwalker\Helper;
 
 use Windwalker\DI\Container;
+use Windwalker\String\Utf8String;
 
 /**
  * The Uri Helper
@@ -157,8 +158,8 @@ class UriHelper
 
 		if (strpos($path, $root_path) === 0)
 		{
-			$num  = \JString::strlen($root_path);
-			$path = \JString::substr($path, $num);
+			$num  = Utf8String::strlen($root_path);
+			$path = Utf8String::substr($path, $num);
 		}
 
 		$uri->setPath($uri->getPath() . $path);
@@ -179,7 +180,7 @@ class UriHelper
 		$root = $uri::root(true);
 
 		// Get site route
-		$route = \JString::substr($uri->getPath(), \JString::strlen($root));
+		$route = Utf8String::substr($uri->getPath(), Utf8String::strlen($root));
 
 		// Remove index.php
 		$route = str_replace('index.php', '', $route);
