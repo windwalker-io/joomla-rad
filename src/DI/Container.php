@@ -191,4 +191,22 @@ class Container extends JoomlaContainer
 			'data'    => $storage
 		);
 	}
+
+	/**
+	 * Method to check if specified dataStore key exists.
+	 *
+	 * A placeholder because older Joomla has no this method.
+	 *
+	 * @param   string  $key  Name of the dataStore key to check.
+	 *
+	 * @return  boolean  True for success
+	 *
+	 * @since   2.1
+	 */
+	public function exists($key)
+	{
+		$key = $this->resolveAlias($key);
+
+		return (bool) $this->getRaw($key);
+	}
 }
