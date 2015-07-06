@@ -9,7 +9,8 @@
 namespace Windwalker\Test\Helper;
 
 use \Windwalker\Helper\ModalHelper;
-use \JApplicationCms;
+use Windwalker\Test\DI\TestContainerHelper;
+use Windwalker\Test\Application\ApplicationTest;
 
 /**
  * Test class of \Windwalker\Helper\ModalHelper
@@ -33,6 +34,10 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
+		$app        = new ApplicationTest;
+		$app->input = new \JInput;
+
+		TestContainerHelper::setApplication($app);
 	}
 
 	/**
@@ -54,7 +59,20 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testModal()
 	{
-		$this->markTestSkipped('Skipped: Static proxy function of JHtmlBootstrap::modal()');
+		// Execute method
+		ModalHelper::modal('tag');
+
+		$bootstrap = new \ReflectionClass('JHtmlBootstrap');
+
+		// Load protected property
+		$loadedProp = $bootstrap->getProperty('loaded');
+		$loadedProp->setAccessible(true);
+
+		// Get value from protected property '$loaded'
+		$loaded = $loadedProp->getValue('JHtmlBootstrap');
+
+		// Test if JHtmlBootstrap::modal did executed
+		$this->assertEquals(true, isset($loaded['JHtmlBootstrap::modal']));
 	}
 
 	/**
@@ -110,6 +128,15 @@ HTML;
 	 */
 	public function testRenderModal()
 	{
+		$bootstrap = new \ReflectionClass('JHtmlBootstrap');
+
+		// Load protected property
+		$loadedProp = $bootstrap->getProperty('loaded');
+		$loadedProp->setAccessible(true);
+
+		// Get value from protected property '$loaded'
+		$loaded = $loadedProp->getValue('JHtmlBootstrap');
+
 		$selector = 'test-selector';
 		$option = array(
 			'title' => 'IM TITLE',
@@ -134,7 +161,10 @@ HTML;
 </div>
 HTML;
 
-		$this->assertEquals($expected, ModalHelper::renderModal($selector, $option['content']), $option);
+		$this->assertEquals($expected, ModalHelper::renderModal($selector, $option['content'], $option));
+
+		// Test if JHtmlBootstrap::modal did executed
+		$this->assertEquals(true, isset($loaded['JHtmlBootstrap::modal']));
 	}
 
 	/**
