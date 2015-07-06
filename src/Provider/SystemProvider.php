@@ -28,7 +28,7 @@ class SystemProvider extends ServiceProvider
 	 */
 	public function __construct($isConsole = false)
 	{
-		$this->isConsole = $isConsole;
+		$this->isConsole = (bool) $isConsole;
 	}
 
 	/**
