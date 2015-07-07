@@ -11,21 +11,16 @@ namespace Windwalker\Helper;
 use JFactory;
 use JFolder;
 use Windwalker\DI\Container;
+use Windwalker\Facade\AbstractFacade;
+use Windwalker\String\Utf8String;
 
 /**
  * Language Helper
  *
  * @since 2.0
  */
-class LanguageHelper
+class LanguageHelper extends AbstractFacade
 {
-	/**
-	 * Property Language instance key for Container
-	 *
-	 * @var  string
-	 */
-	protected static $key = 'language';
-
 	/**
 	 * An API key for Google translate.
 	 *
@@ -48,9 +43,9 @@ class LanguageHelper
 		// If text too big, separate it.
 		if ($separate)
 		{
-			if (\JString::strlen($text) > $separate)
+			if (Utf8String::strlen($text) > $separate)
 			{
-				$text = \JString::str_split($text, $separate);
+				$text = Utf8String::str_split($text, $separate);
 			}
 			else
 			{
@@ -138,7 +133,7 @@ class LanguageHelper
 			return false;
 		}
 
-		$language = Container::getInstance()->get(static::$key);
+		$language = static::getInstance();
 
 		foreach ($files as $file)
 		{
@@ -181,14 +176,12 @@ class LanguageHelper
 	}
 
 	/**
-	 * Set language key
+	 * The DI key to get data from container.
 	 *
-	 * @param null $newKey
-	 *
-	 * @return  void
+	 * @return  string
 	 */
-	public static function setKey($newKey = null)
+	public static function getDIKey()
 	{
-		static::$key = $newKey;
+		return 'language';
 	}
 }

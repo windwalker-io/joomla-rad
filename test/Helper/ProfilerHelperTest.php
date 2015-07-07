@@ -10,8 +10,6 @@ namespace Windwalker\Test\Helper;
 
 use Windwalker\DI\Container;
 use Windwalker\Helper\ProfilerHelper;
-use Windwalker\Test\DI\TestContainerHelper;
-use Windwalker\Test\Application\ApplicationTest;
 
 /**
  * Test class of Windwalker\Helper\ProfilerHelper
@@ -33,8 +31,6 @@ class ProfilerHelperTest extends \PHPUnit_Framework_TestCase
 		$config = $container->get('joomla.config');
 
 		$config->set('debug', 1);
-
-		TestContainerHelper::setApplication(new ApplicationTest);
 	}
 
 	/**
@@ -46,7 +42,10 @@ class ProfilerHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function tearDown()
 	{
-		TestContainerHelper::restoreApplication();
+		$container = Container::getInstance();
+		$config = $container->get('joomla.config');
+
+		$config->set('debug', 0);
 	}
 
 	/**

@@ -12,8 +12,7 @@ use Joomla\Registry\Registry;
 use Windwalker\DI\Container;
 use Windwalker\Provider\SystemProvider;
 use Windwalker\Test\Component\StubAdmin\StubComponent;
-use Windwalker\Test\DI\TestContainerHelper;
-use Windwalker\Test\Application\ApplicationTest;
+use Windwalker\Test\Application\TestApplication;
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
 use Windwalker\Test\TestHelper;
 
@@ -30,30 +29,6 @@ class RealComponentTest extends AbstractBaseTestCase
 	 * @var StubComponent
 	 */
 	protected $instance;
-
-	/**
-	 * setUpBeforeClass
-	 *
-	 * @return  void
-	 */
-	public static function setUpBeforeClass()
-	{
-		// Prepare Container
-		$app = new ApplicationTest;
-		$app->input = new \JInput;
-
-		TestContainerHelper::setApplication($app);
-	}
-
-	/**
-	 * tearDownAfterClass
-	 *
-	 * @return  void
-	 */
-	public static function tearDownAfterClass()
-	{
-		TestContainerHelper::restoreApplication();
-	}
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -150,7 +125,7 @@ class RealComponentTest extends AbstractBaseTestCase
 		$this->assertEquals(STUB_SELF, $component->getPath());
 
 		// Create with manually set params
-		$app = new ApplicationTest;
+		$app = new TestApplication;
 		$input = new \JInput;
 		$container = new Container;
 		$container->registerServiceProvider(new SystemProvider);

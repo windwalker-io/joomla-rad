@@ -10,4 +10,4 @@ include_once __DIR__ . '/Windwalker.php';
 
 $windwalker = new \Windwalker\Windwalker;
 
-$windwalker->init();
+$windwalker->init(defined('WINDWALKER_CONSOLE'));
