@@ -8,9 +8,12 @@
 
 namespace Windwalker\Test\Helper;
 
-use \Windwalker\Helper\ModalHelper;
+use Windwalker\Helper\ModalHelper;
+use Windwalker\DI\Container;
+use Windwalker\Provider\SystemProvider;
+use Windwalker\Component\Component;
 use Windwalker\Test\DI\TestContainerHelper;
-use Windwalker\Test\Application\ApplicationTest;
+use Windwalker\Test\Application\TestApplication;
 
 /**
  * Test class of \Windwalker\Helper\ModalHelper
@@ -34,7 +37,7 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$app        = new ApplicationTest;
+		$app        = new TestApplication;
 		$app->input = new \JInput;
 
 		TestContainerHelper::setApplication($app);
@@ -173,13 +176,24 @@ HTML;
 	 * @return void
 	 *
 	 * @covers Windwalker\Helper\ModalHelper::getQuickaddForm
-	 * @TODO   Implement testGetQuickaddForm().
 	 */
 	public function testGetQuickaddForm()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$id = 'stubQuickaddForm';
+
+		$pathToQuickaddForm = 'libraries/windwalker/test/Helper/stubQuickaddForm.xml';
+
+		$expectedForm = "
+<div class=\"control-group\" id=\"{$id}_title-wrap\">
+	<div class=\"control-label\">
+		<label id=\"{$id}_title-lbl\" for=\"{$id}_title\" class=\"required\">
+	stub_label<span class=\"star\">&#160;*</span></label>
+	</div>
+	<div class=\"controls\">
+		<input type=\"text\" name=\"{$id}[title]\" id=\"{$id}_title\" value=\"\" class=\"input-xlarge required\" required aria-required=\"true\" />
+	</div>
+</div>";
+
+		$this->assertEquals($expectedForm, ModalHelper::getQuickaddForm($id, $pathToQuickaddForm));
 	}
 }

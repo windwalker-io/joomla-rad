@@ -131,6 +131,7 @@ MODAL;
 		try
 		{
 			$form = new JForm($id . '.quickaddform', array('control' => $id));
+
 			$form->loadFile(JPATH_ROOT . '/' . $path);
 		}
 		catch (\Exception $e)
