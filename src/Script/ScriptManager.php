@@ -225,11 +225,13 @@ class ScriptManager
 			return static::$assetHelpers[$option];
 		}
 
-		try
+		$container = Container::getInstance($option);
+
+		if ($container->exists('helper.asset'))
 		{
-			$asset = Container::getInstance($option)->get('helper.asset');
+			$asset = $container->get('helper.asset');
 		}
-		catch (\UnexpectedValueException $e)
+		else
 		{
 			$asset = new AssetHelper($option);
 		}
