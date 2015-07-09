@@ -51,7 +51,7 @@ class ScriptManager
 			return;
 		}
 
-		$asset = $asset = static::getHelper();
+		$asset = static::getHelper();
 
 		$asset->addJs('require.js');
 
@@ -72,7 +72,7 @@ class ScriptManager
 			return;
 		}
 
-		$asset = $asset = static::getHelper();
+		$asset = static::getHelper();
 
 		$asset->addJs('underscore.js');
 
@@ -104,7 +104,7 @@ class ScriptManager
 		\JHtmlJquery::framework(true);
 		static::underscore();
 
-		$asset = $asset = static::getHelper();
+		$asset = static::getHelper();
 
 		$asset->addJs('backbone.js');
 
