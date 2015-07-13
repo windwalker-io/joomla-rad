@@ -64,7 +64,14 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBase64Decode($expected, $url)
 	{
+		// Decode
 		$this->assertSame($expected, UriHelper::base64('decode', $url));
+
+		// Encode
+		$this->assertNotSame($expected, UriHelper::base64('encode', $url));
+
+		// Other actions
+		$this->assertSame($url, UriHelper::base64('pardon?', $url));
 	}
 
 	/**
@@ -81,7 +88,14 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testBase64Encode($expected, $url)
 	{
+		// Encode
 		$this->assertSame($expected, UriHelper::base64('encode', $url));
+
+		// Decode
+		$this->assertNotSame($expected, UriHelper::base64('decode', $url));
+
+		// Other actions
+		$this->assertSame($url, UriHelper::base64('pardon?', $url));
 	}
 
 	/**
