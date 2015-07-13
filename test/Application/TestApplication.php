@@ -32,6 +32,13 @@ class TestApplication extends \JApplicationCms
 	public $messages = array();
 
 	/**
+	 * Property isAdmin.
+	 *
+	 * @var  bool
+	 */
+	public $isAdmin = true;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct(\JInput $input = null, Registry $config = null, \JApplicationWebClient $client = null)
@@ -106,5 +113,35 @@ class TestApplication extends \JApplicationCms
 
 		// Enqueue the message.
 		$this->messages[] = array('message' => $msg, 'type' => strtolower($type));
+	}
+
+	/**
+	 * getMessageQueue
+	 *
+	 * @return  array
+	 */
+	public function getMessageQueue()
+	{
+		return $this->messages;
+	}
+
+	/**
+	 * clearMessageQueue
+	 *
+	 * @return  void
+	 */
+	public function clearMessageQueue()
+	{
+		$this->messages = array();
+	}
+
+	/**
+	 * isAdmin
+	 *
+	 * @return  bool
+	 */
+	public function isAdmin()
+	{
+		return $this->isAdmin;
 	}
 }
