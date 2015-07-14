@@ -176,13 +176,11 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 		$ref->setAccessible(true);
 		$instances = $ref->getValue();
 
-		$instances['SERVER'] = null;
-
-		$_SERVER['REQUEST_URI'] = $uri;
+		$instances['SERVER'] = new \JUri($uri);
 
 		$ref->setValue($instances);
 
-		$this->assertEquals($expected, UriHelper::isHome($expected), 'Request: ' . $uri . ' ' . $errMsg);
+		$this->assertEquals($expected, UriHelper::isHome(), 'Request: ' . $uri . ' ' . $errMsg);
 	}
 
 	/**
@@ -210,20 +208,29 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testDownload()
 	{
-		// Test redirect download with no absolute
+		// Test redirect download
+		// Not absolute URL
 		$this->assertEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', false, false, array('test' => true)));
 
+		// Absolute URL
+		$this->assertNotEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', true, false, array('test' => true)));
+
 		// Test Streaming
+		// Not absolute URL
 		ob_start();
-
-		UriHelper::download(__FILE__, true, true, array('test' => true));
-
+		UriHelper::download(__FILE__, false, true, array('test' => true));
 		$content = ob_get_contents();
-
 		ob_end_clean();
+		$this->assertStringNotEqualsFile(__FILE__, $content);
 
+		// Absolute URL
+		ob_start();
+		UriHelper::download(__FILE__, true, true, array('test' => true));
+		$content = ob_get_contents();
+		ob_end_clean();
 		$this->assertStringEqualsFile(__FILE__, $content);
 
+		// Test headers
 		$headers = array(
 			'Content-Type: application/octet-stream',
 			'Cache-Control: no-store, no-cache, must-revalidate',

@@ -194,7 +194,7 @@ class UriHelper
 
 		return $uri->toString();
 	}
-	
+
 	/**
 	 * Is home page?
 	 *
