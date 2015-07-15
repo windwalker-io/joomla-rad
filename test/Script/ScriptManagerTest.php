@@ -229,8 +229,14 @@ class ScriptManagerTest extends \PHPUnit_Framework_TestCase
 
 		// Test case #4: test a module name that is not initialized
 		$testData = 'Test Data';
+		$phpunit = $this;
 
-		ScriptManager::setModule('initialized-module', function() use (&$testData) { $testData = 'Modified Test Data'; });
+		ScriptManager::setModule('initialized-module', function($name, $helper) use (&$testData, $phpunit) {
+			$testData = 'Modified Test Data';
+
+			$phpunit->assertEquals('initialized-module', $name);
+			$phpunit->assertInstanceOf('Windwalker\Helper\AssetHelper', $helper);
+		});
 		$this->reflectedInitialized->setValue(array());
 
 		$result = ScriptManager::load('initialized-module');
