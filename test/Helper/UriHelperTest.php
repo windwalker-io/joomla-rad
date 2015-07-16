@@ -208,24 +208,26 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testDownload()
 	{
+		UriHelper::setTestMode(true);
+
 		// Test redirect download
 		// Not absolute URL
-		$this->assertEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', false, false, array('test' => true)));
+		$this->assertEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', false, false));
 
 		// Absolute URL
-		$this->assertNotEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', true, false, array('test' => true)));
+		$this->assertNotEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', true, false));
 
 		// Test Streaming
 		// Not absolute URL
 		ob_start();
-		UriHelper::download(__FILE__, false, true, array('test' => true));
+		UriHelper::download(__FILE__, false, true);
 		$content = ob_get_contents();
 		ob_end_clean();
 		$this->assertStringNotEqualsFile(__FILE__, $content);
 
 		// Absolute URL
 		ob_start();
-		UriHelper::download(__FILE__, true, true, array('test' => true));
+		UriHelper::download(__FILE__, true, true);
 		$content = ob_get_contents();
 		ob_end_clean();
 		$this->assertStringEqualsFile(__FILE__, $content);

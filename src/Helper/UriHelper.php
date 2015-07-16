@@ -19,11 +19,30 @@ use Windwalker\String\Utf8String;
 class UriHelper
 {
 	/**
+	 * Property isTest to determine if test mode is on or not.
+	 *
+	 * @var  bool
+	 */
+	protected static $isTest = false;
+
+	/**
 	 * Property headerBuffer for test purpose.
 	 *
 	 * @var  array
 	 */
 	public static $headerBuffer = array();
+
+	/**
+	 * Setter of property $isTest.
+	 *
+	 * @param   boolean $isTest
+	 *
+	 * @return  void
+	 */
+	public static function setTestMode($isTest)
+	{
+		self::$isTest = (bool) $isTest;
+	}
 
 	/**
 	 * A base encode & decode function, will auto convert white space to plus to avoid errors.
@@ -66,7 +85,7 @@ class UriHelper
 	 */
 	public static function download($path, $absolute = false, $stream = false, $option = array())
 	{
-		$test = isset($option['test']) ? $option['test'] : null;
+		$test = self::$isTest;
 
 		static::$headerBuffer = array();
 
@@ -88,14 +107,14 @@ class UriHelper
 			ini_set('memory_limit', ArrayHelper::getValue($option, 'memory_limit', '1540M'));
 
 			// Set Header
-			static::header('Content-Type: application/octet-stream', $test);
-			static::header('Cache-Control: no-store, no-cache, must-revalidate', $test);
-			static::header('Cache-Control: pre-check=0, post-check=0, max-age=0', $test);
-			static::header('Content-Transfer-Encoding: binary', $test);
-			static::header('Content-Encoding: none', $test);
-			static::header('Content-type: application/force-download', $test);
-			static::header('Content-length: ' . $filesize, $test);
-			static::header('Content-Disposition: attachment; filename="' . $file['basename'] . '"', $test);
+			static::header('Content-Type: application/octet-stream');
+			static::header('Cache-Control: no-store, no-cache, must-revalidate');
+			static::header('Cache-Control: pre-check=0, post-check=0, max-age=0');
+			static::header('Content-Transfer-Encoding: binary');
+			static::header('Content-Encoding: none');
+			static::header('Content-type: application/force-download');
+			static::header('Content-length: ' . $filesize);
+			static::header('Content-Disposition: attachment; filename="' . $file['basename'] . '"');
 
 			$handle    = fopen($path, 'rb');
 			$chunksize = 1 * (1024 * 1024);
@@ -132,13 +151,12 @@ class UriHelper
 	 * header
 	 *
 	 * @param string $data
-	 * @param bool   $test
 	 *
 	 * @return  void
 	 */
-	protected static function header($data, $test = false)
+	protected static function header($data)
 	{
-		$test ? (static::$headerBuffer[] = $data) : header($data);
+		self::$isTest ? (static::$headerBuffer[] = $data) : header($data);
 	}
 
 	/**
@@ -156,7 +174,7 @@ class UriHelper
 
 		return $uri;
 	}
-	
+
 	/**
 	 * Give a relative path, return path with host.
 	 *
