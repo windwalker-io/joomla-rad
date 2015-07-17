@@ -26,11 +26,13 @@ class DateHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testJDate()
 	{
-		$JDate = new \JDate();
+		$getDateObj = DateHelper::getDate('2015-12-31 23:59:59', 'Asia/Taipei');
 
-		$getDateObj = DateHelper::getDate();
+		$this->assertInstanceOf('JDate', $getDateObj);
 
-		$this->assertEquals($getDateObj, $JDate);
+		$getTimeZone = $getDateObj->getTimezone()->getName();
+
+		$this->assertEquals('Asia/Taipei', $getTimeZone);
 	}
 
 	/**
@@ -42,27 +44,17 @@ class DateHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testFormatForNow()
 	{
-		$format = 'Y-m-d';
-
-		$getDateNowObject = DateHelper::getDate('now');
-
-		$getDateNowFormat = $getDateNowObject->format($format);
-
-		$this->assertInternalType('string', $getDateNowFormat);
-
-		$phpDate = date($format);
-
-		$this->assertInternalType('string', $phpDate);
-
-		$this->assertEquals($getDateNowFormat, $phpDate);
-
 		$this->markTestIncomplete(
-			'Waiting for MockDate to test, and refactor'
+			'Waiting for MockDate to test'
 		);
 	}
 
 	/**
 	 * Method of test testTimezone()
+	 *
+	 * @param string $utcDateTime
+	 * @param string $tzOffset
+	 * @param string $expected
 	 *
 	 * @return  void
 	 *
@@ -70,7 +62,7 @@ class DateHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @covers \Windwalker\Helper\DateHelper::getDate
 	 */
-	public function testTimezone($tzOffset, $expected)
+	public function testTimezone($utcDateTime, $tzOffset, $expected)
 	{
 		$inputDateTime = $expected;
 
@@ -78,7 +70,7 @@ class DateHelperTest extends \PHPUnit_Framework_TestCase
 
 		$translateToUTC = $utcDate->format('Y-m-d H:i:s');
 
-		$this->assertEquals('2015-01-01 00:00:00', $translateToUTC);
+		$this->assertEquals($utcDateTime, $translateToUTC);
 
 		$localDate = DateHelper::getDate($translateToUTC, 'UTC');
 
@@ -100,7 +92,7 @@ class DateHelperTest extends \PHPUnit_Framework_TestCase
 	{
 		$getOutput = DateHelper::getDate(null, null)->format('Y-m-d H:i:s');
 
-		$this->assertInternalType('string', $getOutput);
+		$this->assertRegExp('(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', $getOutput);
 	}
 
 	/**
@@ -110,13 +102,15 @@ class DateHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function timeZonesProvider()
 	{
+		$utcDateTime = '2015-01-01 00:00:00';
+
 		return array(
-			array('UTC', '2015-01-01 00:00:00'),
-			array('Asia/Taipei', '2015-01-01 08:00:00'),
-			array('Asia/Tokyo', '2015-01-01 09:00:00'),
-			array('US/Hawaii', '2014-12-31 14:00:00'),
-			array('America/Mexico_City', '2014-12-31 18:00:00'),
-			array('Australia/Sydney', '2015-01-01 11:00:00'),
+			array($utcDateTime ,'UTC', '2015-01-01 00:00:00'),
+			array($utcDateTime ,'Asia/Taipei', '2015-01-01 08:00:00'),
+			array($utcDateTime ,'Asia/Tokyo', '2015-01-01 09:00:00'),
+			array($utcDateTime ,'US/Hawaii', '2014-12-31 14:00:00'),
+			array($utcDateTime ,'America/Mexico_City', '2014-12-31 18:00:00'),
+			array($utcDateTime ,'Australia/Sydney', '2015-01-01 11:00:00'),
 		);
 	}
 }
