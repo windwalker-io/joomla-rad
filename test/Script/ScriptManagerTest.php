@@ -236,6 +236,7 @@ class ScriptManagerTest extends \PHPUnit_Framework_TestCase
 
 			$phpunit->assertEquals('initialized-module', $name);
 			$phpunit->assertInstanceOf('Windwalker\Helper\AssetHelper', $helper);
+			$phpunit->assertSame(ScriptManager::getHelper(), $helper);
 		});
 		$this->reflectedInitialized->setValue(array());
 
