@@ -6,6 +6,7 @@ use Joomla\DI\Container;
 use Windwalker\Registry\Registry;
 use Windwalker\DI\ServiceProvider;
 use Windwalker\Helper\DateHelper;
+use Windwalker\Script\ModuleManager;
 
 /**
  * Windwalker system provider.
@@ -80,6 +81,14 @@ class SystemProvider extends ServiceProvider
 			function()
 			{
 				return new \Windwalker\Helper\AssetHelper;
+			}
+		);
+
+		$container->share(
+			'script.manager',
+			function()
+			{
+				return new ModuleManager;
 			}
 		);
 
