@@ -106,13 +106,13 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Method to test setModule().
+	 * Method to test addModule().
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\ModuleManager::setModule
+	 * @covers Windwalker\Script\ModuleManager::addModule
 	 */
-	public function testSetModule()
+	public function testaddModule()
 	{
 		/**
 		 * Handler
@@ -124,7 +124,7 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 		 */
 		$handler = function ($name, $helper) {};
 
-		$this->instance->setModule('foo', $handler);
+		$this->instance->addModule('foo', $handler);
 
 		$this->assertInstanceOf('Windwalker\Script\Module', $this->instance->getModule('foo'));
 		$this->assertSame($handler, $this->instance->getModule('foo')->getHandler());
@@ -153,7 +153,7 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 		// Test case #2: test a module name that is initialized
 		$testData = 'Test Data';
 
-		$this->instance->setModule('initialized-module', function(Module $module, $asset) use (&$testData)
+		$this->instance->addModule('initialized-module', function(Module $module, $asset) use (&$testData)
 		{
 			$testData = 'Modified Test Data';
 		});
@@ -177,7 +177,7 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 		$testData = 'Test Data';
 		$phpunit = $this;
 
-		$this->instance->setModule('initialized-module', function(Module $module, AssetHelper $helper) use (&$testData, $phpunit)
+		$this->instance->addModule('initialized-module', function(Module $module, AssetHelper $helper) use (&$testData, $phpunit)
 		{
 			$testData = 'Modified Test Data';
 
@@ -410,8 +410,8 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__call()
 	{
-		$this->instance->setModule('foo', function() {});
-		$this->instance->setModule('bar', function() {});
+		$this->instance->addModule('foo', function() {});
+		$this->instance->addModule('bar', function() {});
 
 		$this->assertFalse($this->instance->fooBar());
 		$this->assertFalse($this->instance->loadFooBar());

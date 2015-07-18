@@ -16,11 +16,15 @@ use Windwalker\Helper\AssetHelper;
  *
  * @see \Windwalker\Script\ModuleManager
  *
- * @method  static  ModuleManager  getInstance()     ModuleManager
+ * @method  static  ModuleManager  getInstance()
  * @method  static  Module         getModule($name)
- * @method  static  ModuleManager  setModule($name, $module)
+ * @method  static  ModuleManager  addModule($name, $module)
  * @method  static  AssetHelper    getHelper($option = null)
  * @method  static  boolean        load($name)
+ * @method  static  boolean        getModules()
+ * @method  static  ModuleManager  setModules($modules)
+ * @method  static  boolean        getLegacy()
+ * @method  static  ModuleManager  setLegacy($legacy)
  *
  * @since 2.0
  */

@@ -26,13 +26,6 @@ class ModuleManager
 	protected $assetHelpers = array();
 
 	/**
-	 * The module initialised.
-	 *
-	 * @var  boolean[]
-	 */
-	protected $initialised = array();
-
-	/**
 	 * Modules handler storage.
 	 *
 	 * @var  Module[]
@@ -47,22 +40,21 @@ class ModuleManager
 	protected $legacy = false;
 
 	/**
+	 * Class init.
+	 */
+	public function __construct()
+	{
+		$this->registerCoreModules();
+	}
+
+	/**
 	 * Load RequireJS.
 	 *
 	 * @return  void
 	 */
 	public function requireJS()
 	{
-		if (!empty($this->initialised['requirejs']))
-		{
-			return;
-		}
-
-		$asset = static::getHelper();
-
-		$asset->addJs('require.js');
-
-		$this->initialised['requirejs'] = true;
+		$this->load(__FUNCTION__);
 	}
 
 	/**
@@ -74,21 +66,7 @@ class ModuleManager
 	 */
 	public function underscore($noConflict = true)
 	{
-		if (!empty($this->initialised['underscore']['init']))
-		{
-			return;
-		}
-
-		$asset = $this->getHelper();
-
-		$asset->addJs('underscore.js');
-
-		if ($noConflict)
-		{
-			$asset->internalJS(';var underscore = _.noConflict();');
-		}
-
-		$this->initialised['underscore']['init'] = true;
+		$this->load(__FUNCTION__, $noConflict);
 	}
 
 	/**
@@ -102,25 +80,7 @@ class ModuleManager
 	 */
 	public function backbone($noConflict = false)
 	{
-		if (!empty($this->initialised['backbone']))
-		{
-			return;
-		}
-
-		// Dependency
-		\JHtmlJquery::framework(true);
-		static::underscore();
-
-		$asset = static::getHelper();
-
-		$asset->addJs('backbone.js');
-
-		if ($noConflict)
-		{
-			$asset->internalJS(';var backbone = Backbone.noConflict();');
-		}
-
-		$this->initialised['backbone'] = true;
+		$this->load(__FUNCTION__, $noConflict);
 	}
 
 	/**
@@ -130,14 +90,7 @@ class ModuleManager
 	 */
 	public function windwalker()
 	{
-		if (!empty($this->initialised['windwalker']))
-		{
-			return;
-		}
-
-		static::getHelper()->windwalker();
-
-		$this->initialised['windwalker'] = true;
+		$this->load(__FUNCTION__);
 	}
 
 	/**
@@ -147,8 +100,23 @@ class ModuleManager
 	 * @param callable $handler
 	 *
 	 * @return  static
+	 *
+	 * @deprecated  3.0  Use addModule() instead.
 	 */
 	public function setModule($name, $handler)
+	{
+		return $this->addModule($name, $handler);
+	}
+
+	/**
+	 * Add Module callback.
+	 *
+	 * @param string   $name
+	 * @param callable $handler
+	 *
+	 * @return  static
+	 */
+	public function addModule($name, $handler)
 	{
 		$name = strtolower($name);
 
@@ -305,5 +273,68 @@ class ModuleManager
 		$this->legacy = $legacy;
 
 		return $this;
+	}
+
+	/**
+	 * registerCoreModules
+	 *
+	 * @return  void
+	 */
+	protected function registerCoreModules()
+	{
+		// RequireJS
+		$this->addModule('requireJS', function(Module $module, AssetHelper $asset)
+		{
+			if ($module->inited())
+			{
+				return;
+			}
+
+			$asset->addJs('require.js');
+		});
+
+		// Underscore
+		$this->addModule('underscore', function(Module $module, AssetHelper $asset, $noConflict = true)
+		{
+			if (!$module->inited())
+			{
+				$asset->addJs('underscore.js');
+			}
+
+			if (!$module->stateInited() && $noConflict)
+			{
+				$asset->internalJS(';var underscore = _.noConflict();');
+			}
+		});
+
+		// Backbone
+		$this->addModule('backbone', function(Module $module, AssetHelper $asset, $noConflict = true)
+		{
+			if (!$module->inited())
+			{
+				// Dependency
+				\JHtmlJquery::framework(true);
+
+				$module->getManager()->underscore();
+
+				$asset->addJs('backbone.js');
+			}
+
+			if (!$module->stateInited() && $noConflict)
+			{
+				$asset->internalJS(';var backbone = Backbone.noConflict();');
+			}
+		});
+
+		// Windwalker
+		$this->addModule('windwalker', function(Module $module, AssetHelper $asset, $noConflict = true)
+		{
+			if ($module->inited())
+			{
+				return;
+			}
+
+			$asset->windwalker();
+		});
 	}
 }
