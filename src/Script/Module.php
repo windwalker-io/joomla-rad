@@ -8,7 +8,6 @@
 
 namespace Windwalker\Script;
 
-use Windwalker\Data\Data;
 use Windwalker\Helper\AssetHelper;
 
 /**
@@ -60,7 +59,7 @@ class Module
 	 * @param callable      $handler
 	 * @param ModuleManager $manager
 	 */
-	public function __construct($name, $handler, ModuleManager $manager = null)
+	public function __construct($name, $handler, ModuleManager $manager)
 	{
 		$this->manager = $manager;
 
@@ -140,7 +139,7 @@ class Module
 			throw new \InvalidArgumentException('Name should be string.');
 		}
 
-		$this->name = $name;
+		$this->name = strtolower($name);
 
 		return $this;
 	}
@@ -194,18 +193,6 @@ class Module
 	public function setManager($manager)
 	{
 		$this->manager = $manager;
-
-		return $this;
-	}
-
-	/**
-	 * Reset module ID.
-	 *
-	 * @return  static
-	 */
-	public function resetId()
-	{
-		$this->id = null;
 
 		return $this;
 	}
