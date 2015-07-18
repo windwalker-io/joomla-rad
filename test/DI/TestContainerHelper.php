@@ -61,4 +61,32 @@ class TestContainerHelper
 
 		\JFactory::$application = static::$originalApplication;
 	}
+
+	/**
+	 * deleteChildInstance
+	 *
+	 * @param   string  $name  Container name
+	 *
+	 * @return  void
+	 */
+	public static function deleteChildInstance($name)
+	{
+		$name = trim((string) $name);
+
+		if (empty($name))
+		{
+			return;
+		}
+
+		$ref = new \ReflectionProperty('Windwalker\DI\Container', 'children');
+
+		$ref->setAccessible(true);
+
+		$value = $ref->getValue();
+
+		$value[$name] = null;
+
+		$ref->setValue($value);
+		$ref->setAccessible(false);
+	}
 }
