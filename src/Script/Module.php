@@ -87,8 +87,7 @@ class Module
 		$this->currentArguments = $arguments;
 		$id = $this->createStateId($this->currentArguments);
 
-		array_unshift($arguments, $asset);
-		array_unshift($arguments, $this);
+		array_unshift($arguments, $this, $asset);
 
 		call_user_func_array($this->handler, $arguments);
 
