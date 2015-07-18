@@ -52,6 +52,6 @@ class CliProvider extends ServiceProvider
 	 */
 	public function createConsole(Container $container)
 	{
-		return new Console(new IO, $container->get('windwalker.config'));
+		return new Console($container->get('io'), $container->get('windwalker.config'));
 	}
 }

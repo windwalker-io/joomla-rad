@@ -8,6 +8,7 @@
 
 namespace Windwalker\Test\Provider;
 
+use Windwalker\Console\IO\IO;
 use Windwalker\DI\Container;
 use Windwalker\Provider\CliProvider;
 use Windwalker\Registry\Registry;
@@ -37,6 +38,7 @@ class CliProviderTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertInstanceOf('Windwalker\Console\Application\Console', $container->get('app'));
 		$this->assertInstanceOf('Windwalker\Console\Application\Console', $container->get('Windwalker\Console\Application\Console'));
+		$this->assertSame($container->get('app')->getIO(), $container->get('io'));
 		$this->assertInstanceOf('Windwalker\Console\IO\IO', $container->get('io'));
 		$this->assertInstanceOf('Windwalker\Console\IO\IO', $container->get('input'));
 		$this->assertInstanceOf('Windwalker\Console\IO\IO', $container->get('Windwalker\Console\IO\IO'));
@@ -54,7 +56,8 @@ class CliProviderTest extends \PHPUnit_Framework_TestCase
 		$container = new Container;
 		$provider = new CliProvider;
 
-		$container->set('windwalker.config', new Registry(array('bundle' => array())));
+		$container->share('windwalker.config', new Registry(array('bundle' => array())));
+		$container->share('io', new IO);
 
 		$this->assertInstanceOf('Windwalker\Console\Application\Console', $provider->createConsole($container));
 	}
