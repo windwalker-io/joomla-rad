@@ -170,6 +170,85 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Method to test execute().
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Script\Module::execute
+	 */
+	public function testExecuteWithCustomStateId()
+	{
+		$testData = array();
+
+		$closure = function (Module $module, AssetHelper $asset, $foo = null, $bar = null) use (&$testData)
+		{
+			$module->setStateId($foo);
+
+			if (!$module->stateInited())
+			{
+				$testData['state'][] = $foo . ' ' . $bar;
+
+				$asset->internalJS($foo . ' ' . $bar);
+			}
+		};
+
+		$this->instance->setHandler($closure);
+
+		$asset = $this->getMock('Windwalker\Helper\AssetHelper', array('addJs', 'internalJS'));
+
+		$asset->expects($this->at(0))
+			->method('internalJS')
+			->with(' ');
+
+		$asset->expects($this->at(1))
+			->method('internalJS')
+			->with('John ');
+
+		$asset->expects($this->at(2))
+			->method('internalJS')
+			->with('Arnold T-800');
+
+		// Before execute
+		$this->assertArrayNotHasKey('state', $testData);
+
+		// First execute
+		$this->instance->execute($asset, array());
+
+		$this->assertEquals(array(' '), $testData['state']);
+		$this->assertCount(1, $testData['state']);
+
+		// Do not init again
+		$this->instance->execute($asset, array());
+
+		$this->assertEquals(array(' '), $testData['state']);
+		$this->assertCount(1, $testData['state']);
+
+		// State with one argument
+		$this->instance->execute($asset, array('John'));
+
+		$this->assertEquals(array(' ', 'John '), $testData['state']);
+		$this->assertCount(2, $testData['state']);
+
+		// State with one argument, second executed
+		$this->instance->execute($asset, array('John'));
+
+		$this->assertEquals(array(' ', 'John '), $testData['state']);
+		$this->assertCount(2, $testData['state']);
+
+		// State with two arguments
+		$this->instance->execute($asset, array('Arnold', 'T-800'));
+
+		$this->assertEquals(array(' ', 'John ', 'Arnold T-800'), $testData['state']);
+		$this->assertCount(3, $testData['state']);
+
+		// State with two arguments, second executed
+		$this->instance->execute($asset, array('Arnold', 'T-1000'));
+
+		$this->assertEquals(array(' ', 'John ', 'Arnold T-800'), $testData['state']);
+		$this->assertCount(3, $testData['state']);
+	}
+
+	/**
 	 * Method to test inited().
 	 *
 	 * @return void

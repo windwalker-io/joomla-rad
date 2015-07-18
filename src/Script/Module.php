@@ -46,6 +46,13 @@ class Module
 	protected $inited = false;
 
 	/**
+	 * Property id.
+	 *
+	 * @var  string
+	 */
+	protected $id;
+
+	/**
 	 * Property currentArguments.
 	 *
 	 * @var  array
@@ -85,8 +92,12 @@ class Module
 
 		call_user_func_array($this->handler, $arguments);
 
+		$id = $this->getStateId() ? : $id;
+
 		$this->inited['init'] = true;
 		$this->inited[$id] = true;
+
+		$this->setStateId(null);
 	}
 
 	/**
@@ -110,7 +121,7 @@ class Module
 	 */
 	public function stateInited($arguments = array())
 	{
-		$id = $this->getParameterID($arguments ? : $this->currentArguments);
+		$id = $this->getStateId() ? : $this->getParameterID($arguments ? : $this->currentArguments);
 
 		return $this->inited($id);
 	}
@@ -216,6 +227,30 @@ class Module
 	 */
 	public function getParameterID($arguments = array())
 	{
-		return sha1($this->name . serialize($arguments));
+		return sha1($this->name . serialize((array) $arguments));
+	}
+
+	/**
+	 * Method to get property Id
+	 *
+	 * @return  string
+	 */
+	public function getStateId()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * Method to set property id
+	 *
+	 * @param   string $id
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setStateId($id)
+	{
+		$this->id = $id;
+
+		return $this;
 	}
 }
