@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla34b project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -85,7 +85,7 @@ class Module
 	public function execute(AssetHelper $asset, $arguments = array())
 	{
 		$this->currentArguments = $arguments;
-		$id = $this->getParameterID($this->currentArguments);
+		$id = $this->createStateId($this->currentArguments);
 
 		array_unshift($arguments, $asset);
 		array_unshift($arguments, $this);
@@ -121,7 +121,7 @@ class Module
 	 */
 	public function stateInited($arguments = array())
 	{
-		$id = $this->getStateId() ? : $this->getParameterID($arguments ? : $this->currentArguments);
+		$id = $this->getStateId() ? : $this->createStateId($arguments ? : $this->currentArguments);
 
 		return $this->inited($id);
 	}
@@ -225,7 +225,7 @@ class Module
 	 *
 	 * @return  string
 	 */
-	public function getParameterID($arguments = array())
+	public function createStateId($arguments = array())
 	{
 		return sha1($this->name . serialize((array) $arguments));
 	}

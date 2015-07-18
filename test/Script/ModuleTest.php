@@ -258,18 +258,18 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 	public function testInited()
 	{
 		$this->assertFalse($this->instance->inited());
-		$this->assertFalse($this->instance->inited($this->instance->getParameterID(array('foo', 'bar'))));
+		$this->assertFalse($this->instance->inited($this->instance->createStateId(array('foo', 'bar'))));
 
 		$inited = array(
 			'init' => true,
-			$this->instance->getParameterID(array('foo', 'bar')) => true
+			$this->instance->createStateId(array('foo', 'bar')) => true
 		);
 
 		TestHelper::setValue($this->instance, 'inited', $inited);
 
 		$this->assertTrue($this->instance->inited());
-		$this->assertTrue($this->instance->inited($this->instance->getParameterID(array('foo', 'bar'))));
-		$this->assertFalse($this->instance->inited($this->instance->getParameterID(array('foo'))));
+		$this->assertTrue($this->instance->inited($this->instance->createStateId(array('foo', 'bar'))));
+		$this->assertFalse($this->instance->inited($this->instance->createStateId(array('foo'))));
 	}
 
 	/**
@@ -286,8 +286,8 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 
 		$inited = array(
 			'init' => true,
-			$this->instance->getParameterID(array('foo', 'bar')) => true,
-			$this->instance->getParameterID(array('flower', 'sakura')) => true,
+			$this->instance->createStateId(array('foo', 'bar')) => true,
+			$this->instance->createStateId(array('flower', 'sakura')) => true,
 		);
 
 		TestHelper::setValue($this->instance, 'currentArguments', array('foo', 'bar'));
@@ -375,11 +375,11 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\Module::getParameterID
+	 * @covers Windwalker\Script\createStateId::genStateId
 	 */
 	public function testGetParameterID()
 	{
-		$this->assertEquals(sha1($this->instance->getName() . serialize(array())), $this->instance->getParameterID());
-		$this->assertEquals(sha1($this->instance->getName() . serialize(array(1, 2, 3))), $this->instance->getParameterID(array(1, 2, 3)));
+		$this->assertEquals(sha1($this->instance->getName() . serialize(array())), $this->instance->createStateId());
+		$this->assertEquals(sha1($this->instance->getName() . serialize(array(1, 2, 3))), $this->instance->createStateId(array(1, 2, 3)));
 	}
 }
