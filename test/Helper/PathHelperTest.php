@@ -222,4 +222,16 @@ class PathHelperTest extends \PHPUnit_Framework_TestCase
 		$path = PathHelper::get($element, $client, $absolute);
 		$this->assertEquals($path, $result);
 	}
+
+	/**
+	 * testException
+	 *
+	 * @expectedException InvalidArgumentException
+	 *
+	 * @return  void
+	 */
+	public function testException()
+	{
+		PathHelper::get(null, null, null);
+	}
 }
