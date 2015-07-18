@@ -10,11 +10,12 @@ namespace Windwalker\Test\Application;
 
 use JApplicationCms;
 use Joomla\Registry\Registry;
+use Windwalker\Test\Joomla\MockSession;
 
 /**
  * Class ApplicationCms
  */
-class ApplicationTest extends \JApplicationCms
+class TestApplication extends \JApplicationCms
 {
 	/**
 	 * Property userState.
@@ -24,14 +25,17 @@ class ApplicationTest extends \JApplicationCms
 	public $userState;
 
 	/**
+	 * Property messages.
+	 *
+	 * @var  array
+	 */
+	public $messages = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct(\JInput $input = null, Registry $config = null, \JApplicationWebClient $client = null)
 	{
-		$config = $config ? : new Registry;
-
-		$config->set('session', false);
-
 		parent::__construct($input, $config, $client);
 
 		$this->userState = new \JRegistry;
@@ -79,8 +83,28 @@ class ApplicationTest extends \JApplicationCms
 	public function loadSession(\JSession $session = null)
 	{
 		// Set the session object.
-		$this->session = $session;
+		$this->session = new MockSession;
 
 		return $this;
+	}
+
+	/**
+	 * enqueueMessage
+	 *
+	 * @param string $msg
+	 * @param string $type
+	 *
+	 * @return  void
+	 */
+	public function enqueueMessage($msg, $type = 'message')
+	{
+		// Don't add empty messages.
+		if (!strlen($msg))
+		{
+			return;
+		}
+
+		// Enqueue the message.
+		$this->messages[] = array('message' => $msg, 'type' => strtolower($type));
 	}
 }

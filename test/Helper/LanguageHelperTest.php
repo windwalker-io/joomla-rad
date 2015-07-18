@@ -11,7 +11,7 @@ namespace Windwalker\Test\Helper;
 use Windwalker\DI\Container;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Model\Model;
-use Windwalker\Test\Mock\MockLanguage;
+use Windwalker\Test\Joomla\MockLanguage;
 
 /**
  * Test class of \Windwalker\Helper\LanguageHelper
@@ -115,7 +115,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 		$container->share('mock.language', $mock);
 
 		// Change container key to use mock object
-		LanguageHelper::setKey('mock.language');
+		LanguageHelper::setDIKey('mock.language');
 
 		// Test loadAll method
 		LanguageHelper::loadAll('en-GB', 'com_blog');
@@ -147,7 +147,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 		$container->share('mock.language', $mock);
 
 		// Change container key to use mock object
-		LanguageHelper::setKey('mock.language');
+		LanguageHelper::setDIKey('mock.language');
 
 		LanguageHelper::loadLanguage('com_content');
 		$this->assertEquals(true, $mock->loadExecuted);

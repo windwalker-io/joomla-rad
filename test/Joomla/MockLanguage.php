@@ -6,9 +6,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Windwalker\Test\Mock;
-
-use Windwalker\DI\Container;
+namespace Windwalker\Test\Joomla;
 
 class MockLanguage extends \JLanguage
 {
