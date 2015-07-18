@@ -28,7 +28,7 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @var  ModuleManager
 	 */
-	protected $instance;
+	public $instance;
 
 	/**
 	 * Property reflectedAssetHelpers.
@@ -184,7 +184,7 @@ class ModuleManagerTest extends \PHPUnit_Framework_TestCase
 			$phpunit->assertEquals('initialized-module', $module->__toString());
 			$phpunit->assertInstanceOf('Windwalker\Script\Module', $module);
 			$phpunit->assertInstanceOf('Windwalker\Helper\AssetHelper', $helper);
-			$phpunit->assertSame($this->instance->getHelper(), $helper);
+			$phpunit->assertSame($phpunit->instance->getHelper(), $helper);
 		});
 
 		$result = $this->instance->load('initialized-module');
