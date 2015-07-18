@@ -8,6 +8,8 @@
 
 namespace Windwalker\Controller\Batch;
 
+use Windwalker\String\StringHelper;
+
 /**
  * Copy Batch Controller.
  *
@@ -72,7 +74,7 @@ class CopyController extends AbstractBatchController
 			{
 				if (property_exists($this->table, $field))
 				{
-					$item[$field] = $condition[$field] = \JString::increment($item[$field], $type);
+					$item[$field] = $condition[$field] = StringHelper::increment($item[$field], $type);
 				}
 			}
 		}

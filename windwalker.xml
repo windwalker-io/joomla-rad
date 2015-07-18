@@ -13,22 +13,16 @@
 	<description>LIB_WINDWALKER_XML_DESC</description>
 
 	<files>
-		<folder>assets</folder>
 		<folder>bin</folder>
 		<folder>bundles</folder>
 		<folder>language</folder>
 		<folder>resource</folder>
 		<folder>src</folder>
-		<folder>test</folder>
 		<folder>vendor</folder>
-		<file>.gitignore</file>
-		<file>.travis.yml</file>
 		<file>composer.json</file>
 		<file>composer.lock</file>
 		<file>config.dist.json</file>
 		<file>index.html</file>
-		<file>phpunit.xml.dist</file>
-		<file>README.md</file>
 		<file>windwalker.xml</file>
 	</files>
 

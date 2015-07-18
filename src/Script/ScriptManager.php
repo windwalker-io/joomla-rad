@@ -51,7 +51,7 @@ class ScriptManager
 			return;
 		}
 
-		$asset = $asset = static::getHelper();
+		$asset = static::getHelper();
 
 		$asset->addJs('require.js');
 
@@ -72,7 +72,7 @@ class ScriptManager
 			return;
 		}
 
-		$asset = $asset = static::getHelper();
+		$asset = static::getHelper();
 
 		$asset->addJs('underscore.js');
 
@@ -104,7 +104,7 @@ class ScriptManager
 		\JHtmlJquery::framework(true);
 		static::underscore();
 
-		$asset = $asset = static::getHelper();
+		$asset = static::getHelper();
 
 		$asset->addJs('backbone.js');
 
@@ -225,11 +225,13 @@ class ScriptManager
 			return static::$assetHelpers[$option];
 		}
 
-		try
+		$container = Container::getInstance($option);
+
+		if ($container->exists('helper.asset'))
 		{
-			$asset = Container::getInstance($option)->get('helper.asset');
+			$asset = $container->get('helper.asset');
 		}
-		catch (\UnexpectedValueException $e)
+		else
 		{
 			$asset = new AssetHelper($option);
 		}

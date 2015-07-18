@@ -12,24 +12,14 @@ use Windwalker\Helper\HtmlHelper;
 use Windwalker\Test\TestCase\DomTestCase;
 
 /**
- * Test class of {className}
+ * Test class of HtmlHelper
  *
  * @since {DEPLOY_VERSION}
  */
 class HtmlHelperTest extends DomTestCase
 {
 	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @return void
-	 */
-	protected function tearDown()
-	{
-	}
-
-	/**
-	 * Method to test repair() for closed HTML tags with Tidy.
+	 * Method to test HtmlHelper::repair for closed HTML tags with Tidy.
 	 *
 	 * @param string $expected
 	 * @param string $data
@@ -38,6 +28,9 @@ class HtmlHelperTest extends DomTestCase
 	 *
 	 * @dataProvider repairHtmlClosedTidyDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 * @group        repair
+	 *
+	 * @requires extension tidy
 	 */
 	public function testRepairHtmlClosedTidy($expected, $data)
 	{
@@ -54,7 +47,7 @@ class HtmlHelperTest extends DomTestCase
 	}
 
 	/**
-	 * Method to test repair() for closed HTML tags.
+	 * Method to test HtmlHelper::repair for closed HTML tags.
 	 *
 	 * @param string $expected
 	 * @param string $data
@@ -63,6 +56,7 @@ class HtmlHelperTest extends DomTestCase
 	 *
 	 * @dataProvider repairHtmlClosedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 * @group        repair
 	 */
 	public function testRepairHtmlClosed($expected, $data)
 	{
@@ -186,7 +180,7 @@ DATA_3;
 	}
 
 	/**
-	 * Method to test repair() for unclosed HTML tags with Tidy.
+	 * Method to test HtmlHelper::repair for unclosed HTML tags with Tidy.
 	 *
 	 * @param string $expected
 	 * @param string $data
@@ -195,6 +189,9 @@ DATA_3;
 	 *
 	 * @dataProvider repairHtmlUnclosedTidyDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 * @group        repair
+	 *
+	 * @requires extension tidy
 	 */
 	public function testRepairHtmlUnclosedTidy($expected, $data)
 	{
@@ -211,7 +208,7 @@ DATA_3;
 	}
 
 	/**
-	 * Method to test repair() for unclosed HTML tags.
+	 * Method to test HtmlHelper::repair for unclosed HTML tags.
 	 *
 	 * @param string $expected
 	 * @param string $data
@@ -220,6 +217,7 @@ DATA_3;
 	 *
 	 * @dataProvider repairHtmlUnclosedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 * @group        repair
 	 */
 	public function testRepairHtmlUnclosed($expected, $data)
 	{
@@ -303,7 +301,7 @@ DATA_2;
 	}
 
 	/**
-	 * Method to test repair() for unopened HTML tags with Tidy.
+	 * Method to test HtmlHelper::repair for unopened HTML tags with Tidy.
 	 *
 	 * @param string $expected
 	 * @param string $data
@@ -312,6 +310,9 @@ DATA_2;
 	 *
 	 * @dataProvider repairHtmlUnopenedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 * @group        repair
+	 *
+	 * @requires extension tidy
 	 */
 	public function testRepairHtmlUnopenedTidy($expected, $data)
 	{
@@ -328,7 +329,7 @@ DATA_2;
 	}
 
 	/**
-	 * Method to test repair() for unopened HTML tags.
+	 * Method to test HtmlHelper::repair for unopened HTML tags.
 	 *
 	 * @param string $expected
 	 * @param string $data
@@ -337,6 +338,7 @@ DATA_2;
 	 *
 	 * @dataProvider repairHtmlUnopenedDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::repair
+	 * @group        repair
 	 */
 	public function testRepairHtmlUnopened($expected, $data)
 	{
@@ -381,7 +383,7 @@ DATA_2;
 	}
 
 	/**
-	 * Method to test getJSObject().
+	 * Method to test HtmlHelper::getJSObject.
 	 *
 	 * @param string $expected
 	 * @param array $data
@@ -390,6 +392,7 @@ DATA_2;
 	 *
 	 * @dataProvider getJSObjectDataProvider
 	 * @covers       Windwalker\Helper\HtmlHelper::getJSObject
+	 * @group        getJSObject
 	 */
 	public function testGetJSObject($expected, $data)
 	{

@@ -11,13 +11,15 @@ namespace Windwalker\Helper;
 use JFactory;
 use JFolder;
 use Windwalker\DI\Container;
+use Windwalker\Facade\AbstractFacade;
+use Windwalker\String\Utf8String;
 
 /**
  * Language Helper
  *
  * @since 2.0
  */
-class LanguageHelper
+class LanguageHelper extends AbstractFacade
 {
 	/**
 	 * An API key for Google translate.
@@ -30,9 +32,9 @@ class LanguageHelper
 	 * Translate a long text by Google, if it too long, will separate it..
 	 *
 	 * @param   string  $text      String to translate.
-	 * @param   string  $SourceLan Translate from this language, eg: 'zh-tw'. Empty will auto detect.
+	 * @param   string  $SourceLan Translate from this language, eg: 'zh-TW'. Empty will auto detect.
 	 * @param   string  $ResultLan Translate to this language, eg: 'en'. Empty will auto detect.
-	 * @param   integer $separate  Separate text by a number of words, batch translate them and re combine to return.
+	 * @param   integer $separate  Separate text by a number of words, batch translate them and recombine to return.
 	 *
 	 * @return  string    Translated text.
 	 */
@@ -41,9 +43,9 @@ class LanguageHelper
 		// If text too big, separate it.
 		if ($separate)
 		{
-			if (\JString::strlen($text) > $separate)
+			if (Utf8String::strlen($text) > $separate)
 			{
-				$text = \JString::str_split($text, $separate);
+				$text = Utf8String::str_split($text, $separate);
 			}
 			else
 			{
@@ -131,7 +133,7 @@ class LanguageHelper
 			return false;
 		}
 
-		$language = Container::getInstance()->get('language');
+		$language = static::getInstance();
 
 		foreach ($files as $file)
 		{
@@ -165,11 +167,21 @@ class LanguageHelper
 	 */
 	public static function loadLanguage($ext, $client = 'site')
 	{
-		$lang = Container::getInstance()->get('language');
+		$lang = Container::getInstance()->get(static::$key);
 
 		return $lang->load($ext, JPATH_BASE, null, false, false)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, false, false)
 			|| $lang->load($ext, JPATH_BASE, null, true)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, true);
+	}
+
+	/**
+	 * The DI key to get data from container.
+	 *
+	 * @return  string
+	 */
+	public static function getDIKey()
+	{
+		return 'language';
 	}
 }

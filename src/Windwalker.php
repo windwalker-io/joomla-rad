@@ -23,10 +23,13 @@ class Windwalker
 	/**
 	 * Init windalkwer.
 	 *
+	 * @param bool $cli
+	 *
 	 * @throws \Exception
-	 * @return  void
+	 *
+	 * @return void
 	 */
-	public function init()
+	public function init($cli = false)
 	{
 		$version = new \JVersion;
 
@@ -44,12 +47,14 @@ class Windwalker
 
 		define('WINDWALKER_SOURCE', __DIR__);
 
+		define('WINDWALKER_TEST', WINDWALKER . '/test');
+
 		define('WINDWALKER_BUNDLE', dirname(WINDWALKER) . '/windwalker-bundles');
 
 		// Register global provider
 		$container = Container::getInstance();
 
-		$container->registerServiceProvider(new SystemProvider)
+		$container->registerServiceProvider(new SystemProvider($cli))
 			->registerServiceProvider(new DataMapperProvider);
 
 		// Register bundles
@@ -112,6 +117,13 @@ class Windwalker
 	 */
 	public function autoload()
 	{
+		static $loaded = false;
+
+		if ($loaded)
+		{
+			return;
+		}
+
 		// Load Composer
 		include_once dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -125,5 +137,7 @@ class Windwalker
 
 		// Aliases
 		class_alias('Windwalker\Router\CmsRoute', 'Windwalker\Router\Route');
+
+		$loaded = true;
 	}
 }

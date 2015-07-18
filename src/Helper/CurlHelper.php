@@ -22,7 +22,7 @@ class CurlHelper
 	 * Request a page and return it as string.
 	 *
 	 * @param   string $url    A url to request.
-	 * @param   mixed  $method Request method, GET or POST. If is array, equal to $option.
+	 * @param   string $method Request method, GET or POST.
 	 * @param   string $query  Query string. eg: 'option=com_content&id=11&Itemid=125'. <br /> Only use for POST.
 	 * @param   array  $option An option array to override CURL OPT.
 	 *
@@ -38,11 +38,6 @@ class CurlHelper
 			$return->body = file_get_contents($url);
 
 			return $return;
-		}
-
-		if (is_array($method))
-		{
-			$option = $method;
 		}
 
 		$options = array(

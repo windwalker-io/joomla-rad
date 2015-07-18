@@ -23,22 +23,34 @@ abstract class ComponentHelper
 	 * Gets a list of the actions that can be performed.
 	 *
 	 * @param   \JUser  $user       The user object.
-	 * @param   string  $option     The component option.
+	 * @param   string  $component  The component access file path, component base path or option name.
 	 * @param   string  $assetName  The asset name
 	 * @param   integer $categoryId The category ID.
 	 * @param   integer $id         The item ID.
 	 *
 	 * @return  Object
 	 */
-	public static function getActions(\JUser $user, $option, $assetName, $categoryId = 0, $id = 0)
+	public static function getActions(\JUser $user, $component, $assetName, $categoryId = 0, $id = 0)
 	{
 		$result	= new Object;
 
-		$path = PathHelper::getAdmin($option) . '/etc/access.xml';
+		// New rules: If path is access file
+		$path = $component;
 
 		if (!is_file($path))
 		{
-			$path = PathHelper::getAdmin($option) . '/access.xml';
+			// New rules: If path is component base path
+			$path = $path . '/access.xml';
+		}
+
+		if (!is_file($path))
+		{
+			$path = PathHelper::getAdmin($component) . '/etc/access.xml';
+		}
+
+		if (!is_file($path))
+		{
+			$path = PathHelper::getAdmin($component) . '/access.xml';
 		}
 
 		if (!$id && !$categoryId)

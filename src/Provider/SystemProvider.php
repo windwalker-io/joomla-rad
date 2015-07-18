@@ -15,6 +15,23 @@ use Windwalker\Helper\DateHelper;
 class SystemProvider extends ServiceProvider
 {
 	/**
+	 * Property client.
+	 *
+	 * @var  string
+	 */
+	protected $isConsole = false;
+
+	/**
+	 * Class init.
+	 *
+	 * @param  boolean  $isConsole
+	 */
+	public function __construct($isConsole = false)
+	{
+		$this->isConsole = (bool) $isConsole;
+	}
+
+	/**
 	 * Registers the service provider with a DI container.
 	 *
 	 * @param   Container $container The DI container.
@@ -67,7 +84,7 @@ class SystemProvider extends ServiceProvider
 		);
 
 		// Detect deferent environment
-		if (defined('WINDWALKER_CONSOLE'))
+		if ($this->isConsole)
 		{
 			$container->registerServiceProvider(new CliProvider);
 		}

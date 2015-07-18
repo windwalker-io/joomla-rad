@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="test/bootstrap.php" colors="false"
+<phpunit bootstrap="test/bootstrap.php"
+	colors="false"
 	convertErrorsToExceptions="true"
 	convertNoticesToExceptions="true"
 	convertWarningsToExceptions="true"
@@ -9,11 +10,11 @@
 	<php>
 		<ini name="error_reporting" value="32767" />
 
-		<!--<const name="WINDWALKER_TEST_DB_DSN_MYSQL"      value="host=localhost;dbname=windwalker_test;user=root;pass=ut1234;prefix=ww_" />-->
-		<!--<const name="WINDWALKER_TEST_DB_DSN_POSTGRESQL" value="host=localhost;dbname=windwalker_test;user=root;pass=ut1234;prefix=ww_" />-->
-		<!--<const name="WINDWALKER_TEST_DB_DSN_ORACLE"     value="host=localhost;port=5432;dbname=windwalker_test;user=root;pass=ut1234;prefix=ww_" />-->
-		<!--<const name="WINDWALKER_TEST_DB_DSN_MSSQL"      value="host=localhost;port=1521;dbname=windwalker_test;user=root;pass=ut1234;prefix=ww_" />-->
-		<!--<const name="WINDWALKER_TEST_DB_DSN_SQLITE"     value="host=localhost;dbname=windwalker_test;user=root;pass=ut1234;prefix=ww_" />-->
+		<server name="HTTP_HOST" value="rad.windwalker.io"/>
+		<server name="REQUEST_URI" value="/flower/sakura"/>
+
+		<const name="WINDWALKER_TEST_CURL_HELPER" value="0" />
+		<const name="WINDWALKER_TEST_GOOGLE_TRANSLATE" value="0" />
 	</php>
 	<testsuites>
 		<testsuite name="RAD">

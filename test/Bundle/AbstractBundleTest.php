@@ -8,6 +8,7 @@
 
 namespace Windwalker\Test\Bundle;
 
+use Windwalker\Console\IO\IO;
 use Windwalker\DI\Container;
 use Windwalker\Console\Application\Console;
 use Windwalker\Registry\Registry;
@@ -86,7 +87,7 @@ class AbstractBundleTest extends \PHPUnit_Framework_TestCase
 	public function testRegisterCommands()
 	{
 		$config = new Registry(array('bundle' => array()));
-		$console = new Console(null, $config);
+		$console = new Console(new IO, $config);
 
 		StubBundle::registerCommands($console);
 

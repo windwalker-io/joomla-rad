@@ -12,8 +12,6 @@ use JApplicationCms;
 use JInput;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
-
-use Windwalker\Model\Model;
 use Windwalker\DI\Container;
 
 /**
@@ -268,18 +266,15 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 
 		$ref = $this->getReflection();
 
-		$name = explode('Controller', $ref->getName());
+		// Controller class name format: {Prefix}Controller{Name}
+		$name = explode('Controller', $ref->getShortName());
 
-		if ($name[0] == $this->getPrefix())
-		{
-			return $this->name = '';
-		}
-		elseif (!empty($name[1]))
+		if (!empty($name[1]))
 		{
 			return $this->name = trim($name[1], '\\');
 		}
 
-		return '';
+		return $this->name = '';
 	}
 
 	/**
@@ -389,11 +384,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 
 		$modelKey = 'model.' . strtolower($name);
 
-		try
-		{
-			$model = $container->get($modelKey, $forceNew);
-		}
-		catch (\InvalidArgumentException $e)
+		if (!$container->exists($modelKey))
 		{
 			$container->share(
 				$modelKey,
@@ -402,11 +393,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 					return new $modelName($config, $container, null, $container->get('db'));
 				}
 			);
-
-			$model = $container->get($modelKey);
 		}
 
-		return $model;
+		return $container->get($modelKey, $forceNew);
 	}
 
 	/**

@@ -26,9 +26,6 @@ class JContentHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$_SERVER['HTTP_HOST'] = 'example.com';
-		$_SERVER['REQUEST_URI'] = '/index.php';
-		$_SERVER['SCRIPT_NAME'] = '/index.php';
 	}
 
 	/**
@@ -46,7 +43,7 @@ class JContentHelperTest extends \PHPUnit_Framework_TestCase
 		$categorySlug = '34:category-foobar';
 
 		$this->assertSame('article/foobar', JContentHelper::getArticleLink($slug, $categorySlug));
-		$this->assertSame('http://example.com/article/foobar', JContentHelper::getArticleLink($slug, $categorySlug, true));
+		$this->assertSame(\JUri::root() . 'article/foobar', JContentHelper::getArticleLink($slug, $categorySlug, true));
 	}
 
 	/**
@@ -63,14 +60,29 @@ class JContentHelperTest extends \PHPUnit_Framework_TestCase
 		$categoryId = '34';
 
 		$this->assertSame('category/foobar', JContentHelper::getCategoryLink($categoryId));
-		$this->assertSame('http://example.com/category/foobar', JContentHelper::getCategoryLink($categoryId, true));
+		$this->assertSame(\JUri::root() . 'category/foobar', JContentHelper::getCategoryLink($categoryId, true));
 	}
 
+	/**
+	 * getArticleRoute
+	 *
+	 * @param string $slug
+	 * @param string $categorySlug
+	 *
+	 * @return  string
+	 */
 	public function getArticleRoute($slug, $categorySlug)
 	{
 		return 'article/foobar';
 	}
 
+	/**
+	 * getCategoryRoute
+	 *
+	 * @param int $categoryId
+	 *
+	 * @return  string
+	 */
 	public function getCategoryRoute($categoryId)
 	{
 		return 'category/foobar';

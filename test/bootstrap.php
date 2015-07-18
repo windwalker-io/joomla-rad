@@ -36,7 +36,15 @@ require_once JPATH_LIBRARIES . '/cms.php';
 restore_exception_handler();
 
 // Windwalker init
-include_once WINDWALKER_CONSOLE . '/../src/init.php';
+include_once dirname(__DIR__) . '/src/Windwalker.php';
+$windwalker = new \Windwalker\Windwalker;
+$windwalker->autoload();
+
+// Prepare TestApplication
+$app = new \Windwalker\Test\Application\TestApplication;
+\JFactory::$application = $app;
+
+$windwalker->init();
 
 // Import the configuration.
 require_once JPATH_CONFIGURATION . '/configuration.php';
