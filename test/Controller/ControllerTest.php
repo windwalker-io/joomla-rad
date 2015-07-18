@@ -8,15 +8,9 @@
 
 namespace Windwalker\Test\Bundle;
 
-require __DIR__ . '/Stub/controller.php';
-require __DIR__ . '/Stub/controller/foo.php';
-require __DIR__ . '/Stub/controller/bar.php';
-require __DIR__ . '/Stub/model/foo.php';
-require __DIR__ . '/Stub/model/bar.php';
-
 use Windwalker\DI\Container;
 use Joomla\Registry\Registry;
-use Windwalker\Test\DI\TestContainerHelper;
+use Windwalker\Test\Application\TestApplication;
 use Windwalker\Test\TestHelper;
 
 /**
@@ -27,6 +21,17 @@ use Windwalker\Test\TestHelper;
 class ControllerTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * setUpBeforeClass
+	 *
+	 * @return  void
+	 */
+	public static function setUpBeforeClass()
+	{
+		\JLoader::registerPrefix('Stub',  __DIR__ . '/Stub');
+		\JLoader::register('StubController',  __DIR__ . '/Stub/controller.php');
+	}
+
+	/**
 	 * Sets up the fixture, for example, open a network connection.
 	 *
 	 * This method is called before a test is executed.
@@ -35,9 +40,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		$config = new Registry(array('session' => false));
-
-		TestContainerHelper::setApplication(new \JApplicationCms(null, $config));
 	}
 
 	/**
@@ -49,7 +51,6 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function tearDown()
 	{
-		TestContainerHelper::restoreApplication();
 	}
 
 	/**
@@ -63,8 +64,8 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 	{
 		$controller = new \StubController;
 
-		$this->assertSame(\JFactory::getApplication(), TestHelper::getValue($controller, 'app'));
-		$this->assertSame(\JFactory::getApplication()->input, TestHelper::getValue($controller, 'input'));
+		$this->assertAttributeSame(\JFactory::getApplication(), 'app', $controller);
+		$this->assertAttributeSame(\JFactory::getApplication()->input, 'input', $controller);
 		$this->assertNull(TestHelper::getValue($controller, 'prefix'));
 		$this->assertNull(TestHelper::getValue($controller, 'option'));
 		$this->assertNull(TestHelper::getValue($controller, 'name'));
@@ -143,7 +144,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 		$container->alias('controller.resolver', $resolverClass)
 			->share(
 				$resolverClass,
-				function($container) use($resolverClass)
+				function(Container $container) use($resolverClass)
 				{
 					return new $resolverClass($container->get('app'), $container);
 				}
@@ -192,13 +193,11 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers \Windwalker\Controller\Controller::checkToken
-	 * @TODO   Implement testCheckToken().
 	 */
 	public function testCheckToken()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$this->markTestSkipped(
+			'This methos contains jexit() so we don\'t test it.'
 		);
 	}
 
@@ -273,6 +272,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 		$message = 'test messages...';
 		$type = 'warning';
 		$controller = new \StubControllerFoo;
+		/** @var TestApplication $app */
 		$app = $controller->getApplication();
 
 		$controller->setMessage($message, $type);
@@ -280,8 +280,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 		$expectMessages = array(
 			array('message' => $message, 'type' => strtolower($type)),
 		);
-		$actualMessages = TestHelper::getValue($app, '_messageQueue');
 
-		$this->assertEquals($expectMessages, $actualMessages);
+		$this->assertEquals($expectMessages, $app->messages);
 	}
 }
