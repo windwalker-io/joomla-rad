@@ -4,7 +4,7 @@ CREATE TABLE `#__testflower_locations` (
   `title` varchar(255) NOT NULL,
   `state` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 INSERT INTO `#__testflower_locations` (`id`, `title`, `state`) VALUES
 (1, '雲彩裡', 1),
@@ -19,14 +19,14 @@ CREATE TABLE `#__testflower_location_data` (
   `location_id` int(11) NOT NULL,
   `data` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 INSERT INTO `#__testflower_location_data` (`id`, `location_id`, `data`) VALUES
-(1, 1, '「至難得者，謂操曰：運籌決算有神功，二虎還須遜一龍。初到任，即設五色棒十餘條於縣之四門。有犯禁者，。'),
-(2, 2, '長，右有翼德ー，各引兵追襲張梁。那張角，一名張世平，一試矛兮一試刀。初到任，即設五色棒十餘里。後張。'),
-(3, 3, '有資財，當乘此車蓋。」遂一面遣中郎已被逮，別人領兵，我更助汝一千官軍，前來潁川打探消息，約期剿捕。。'),
-(4, 4, '壘。汝可引本部五百餘人，以天書三卷授之，曰：「此張角正殺敗董卓回寨。玄德謂關、張寶勢窮力乏，必獲惡。'),
-(5, 5, '朱雋，其道盧植也。玄德曰：「天公將軍。」劉焉然其說，隨即引兵攻擊賊寨，火燄張天，急引兵追襲張梁、張。');
+(6, 1, '「至難得者，謂操曰：運籌決算有神功，二虎還須遜一龍。初到任，即設五色棒十餘條於縣之四門。有犯禁者，。'),
+(7, 2, '長，右有翼德ー，各引兵追襲張梁。那張角，一名張世平，一試矛兮一試刀。初到任，即設五色棒十餘里。後張。'),
+(8, 3, '有資財，當乘此車蓋。」遂一面遣中郎已被逮，別人領兵，我更助汝一千官軍，前來潁川打探消息，約期剿捕。。'),
+(9, 4, '壘。汝可引本部五百餘人，以天書三卷授之，曰：「此張角正殺敗董卓回寨。玄德謂關、張寶勢窮力乏，必獲惡。'),
+(10, 5, '朱雋，其道盧植也。玄德曰：「天公將軍。」劉焉然其說，隨即引兵攻擊賊寨，火燄張天，急引兵追襲張梁、張。');
 
 DROP TABLE IF EXISTS `#__testflower_roses`;
 CREATE TABLE `#__testflower_roses` (

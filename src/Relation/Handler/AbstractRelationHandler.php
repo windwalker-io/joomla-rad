@@ -10,6 +10,7 @@ namespace Windwalker\Relation\Handler;
 
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
+use Windwalker\Model\Helper\QueryHelper;
 use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
 
@@ -107,6 +108,30 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 
 		$this->tableName = $this->table->getTableName();
 		$this->db = $table->getDbo();
+	}
+
+	/**
+	 * Get value from parent relative field.
+	 *
+	 * @return  mixed
+	 */
+	public function getParentFieldValue()
+	{
+		return $this->parent->{$this->field};
+	}
+
+	/**
+	 * Set value to parent relative field.
+	 *
+	 * @param   mixed  $value  The value to set.
+	 *
+	 * @return  static
+	 */
+	public function setParentFieldValue($value)
+	{
+		$this->parent->{$this->field} = $value;
+
+		return $this;
 	}
 
 	/**
@@ -290,6 +315,32 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 		}
 
 		return $dataset;
+	}
+
+	/**
+	 * Build query for load operation.
+	 *
+	 * @param   \JDatabaseQuery  $query  The query object to handle.
+	 *
+	 * @return  \JDatabaseQuery  Return handled query object.
+	 */
+	public function buildLoadQuery(\JDatabaseQuery $query = null)
+	{
+		$conditions = array();
+
+		foreach ($this->fks as $field => $foreign)
+		{
+			$conditions[$foreign] = $this->parent->$field;
+		}
+
+		$query = $query ? : $this->db->getQuery(true);
+
+		QueryHelper::buildWheres($query, $conditions);
+
+		$query->select('*')
+			->from($this->tableName);
+
+		return $query;
 	}
 
 	/**

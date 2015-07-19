@@ -9,6 +9,7 @@
 namespace Windwalker\Relation;
 
 use Windwalker\Relation\Handler\OneToManyRelation;
+use Windwalker\Relation\Handler\OneToOneRelation;
 use Windwalker\Relation\Handler\RelationHandlerInterface;
 use Windwalker\Table\Table;
 
@@ -50,6 +51,18 @@ class Relation implements RelationHandlerInterface
 		$this->parent = $parent;
 	}
 
+	/**
+	 * Add one to many relation configurations.
+	 *
+	 * @param string  $field     Field of parent table to store children.
+	 * @param \JTable $table     The Table object of this relation child.
+	 * @param array   $fks       Foreign key mapping.
+	 * @param string  $onUpdate  The action of ON UPDATE operation.
+	 * @param string  $onDelete  The action of ON DELETE operation.
+	 * @param array   $options   Some options to configure this relation.
+	 *
+	 * @return  static
+	 */
 	public function addOneToMany($field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
 		$options = array())
 	{
@@ -63,6 +76,37 @@ class Relation implements RelationHandlerInterface
 		$relation->setParent($this->parent);
 
 		$this->relations[$field] = $relation;
+
+		return $this;
+	}
+
+	/**
+	 * Add one to many relation configurations.
+	 *
+	 * @param string  $field     Field of parent table to store children.
+	 * @param \JTable $table     The Table object of this relation child.
+	 * @param array   $fks       Foreign key mapping.
+	 * @param string  $onUpdate  The action of ON UPDATE operation.
+	 * @param string  $onDelete  The action of ON DELETE operation.
+	 * @param array   $options   Some options to configure this relation.
+	 *
+	 * @return  static
+	 */
+	public function addOneToOne($field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
+		$options = array())
+	{
+		if (!($table instanceof \JTable))
+		{
+			$table = $this->getTable($table, $this->prefix);
+		}
+
+		$relation = new OneToOneRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
+
+		$relation->setParent($this->parent);
+
+		$this->relations[$field] = $relation;
+
+		return $this;
 	}
 
 	/**

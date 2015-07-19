@@ -31,7 +31,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  StubTableLocation
 	 */
-	protected function createLocationTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
+	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
 	{
 		$location = new StubTableLocation(\JFactory::getDbo());
 
@@ -46,11 +46,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::load
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::load
 	 */
 	public function testLoad()
 	{
-		$location = $this->createLocationTable();
+		$location = $this->createTestTable();
 
 		$location->load(3);
 
@@ -69,11 +69,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::store
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
 	 */
 	public function testCreate()
 	{
-		$location = $this->createLocationTable();
+		$location = $this->createTestTable();
 
 		$sakura1 = new Data;
 		$sakura1->title = 'Sakura Create 1';
@@ -100,7 +100,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 
 		$location->store();
 
-		$location2 = $this->createLocationTable();
+		$location2 = $this->createTestTable();
 		$this->assertTrue($location2->load(array('title' => 'Location Create 1')));
 		$this->assertInstanceOf('Windwalker\Data\Data', $location2->sakuras[0]);
 		$this->assertInstanceOf('Windwalker\Data\Data', $location2->roses[1]);
@@ -116,12 +116,12 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::store
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
 	 */
 	public function testUpdate()
 	{
 		// Only update self
-		$location = $this->createLocationTable();
+		$location = $this->createTestTable();
 
 		$location->load(1);
 
@@ -129,14 +129,14 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 
 		$location->store();
 
-		$location2 = $this->createLocationTable();
+		$location2 = $this->createTestTable();
 		$location2->load(1);
 
 		$this->assertEquals(0, $location2->state);
 		$this->assertEquals($location->sakuras, $location2->sakuras);
 
 		// Update relations
-		$location = $this->createLocationTable();
+		$location = $this->createTestTable();
 
 		$location->load(1);
 
@@ -147,7 +147,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 
 		$location->store();
 
-		$location2 = $this->createLocationTable();
+		$location2 = $this->createTestTable();
 		$location2->load(1);
 
 		$this->assertEquals(2, $location2->state);
@@ -162,11 +162,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::store
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
 	 */
 	public function testUpdateNoAction()
 	{
-		$location = $this->createLocationTable(Action::NO_ACTION);
+		$location = $this->createTestTable(Action::NO_ACTION);
 
 		$location->load(2);
 
@@ -177,7 +177,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 
 		$location->store();
 
-		$location2 = $this->createLocationTable();
+		$location2 = $this->createTestTable();
 		$location2->load(2);
 
 		$this->assertEquals(2, $location2->state);
@@ -192,11 +192,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::store
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
 	 */
 	public function testUpdateSetNull()
 	{
-		$location = $this->createLocationTable(Action::SET_NULL);
+		$location = $this->createTestTable(Action::SET_NULL);
 
 		$location->load(5);
 
@@ -206,7 +206,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 
 		$location->store();
 
-		$location2 = $this->createLocationTable();
+		$location2 = $this->createTestTable();
 		$location2->load(7);
 
 		$this->assertEquals(7, $location2->id);
@@ -221,11 +221,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::delete
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::delete
 	 */
 	public function testDelete()
 	{
-		$location = $this->createLocationTable();
+		$location = $this->createTestTable();
 
 		$location->load(1);
 		$sakuraIds = $location->sakuras->id;
@@ -246,11 +246,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::delete
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::delete
 	 */
 	public function testDeleteNoAction()
 	{
-		$location = $this->createLocationTable(null, Action::NO_ACTION);
+		$location = $this->createTestTable(null, Action::NO_ACTION);
 
 		$location->load(2);
 		$sakuraIds = $location->sakuras->id;
@@ -274,11 +274,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @coveers  \Windwalker\Relation\OneToManyRelation::delete
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::delete
 	 */
 	public function testDeleteSetNull()
 	{
-		$location = $this->createLocationTable(null, Action::SET_NULL);
+		$location = $this->createTestTable(null, Action::SET_NULL);
 
 		$location->load(3);
 		$sakuraIds = $location->sakuras->id;

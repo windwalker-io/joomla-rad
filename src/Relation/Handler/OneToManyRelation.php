@@ -8,7 +8,6 @@
 
 namespace Windwalker\Relation\Handler;
 
-use Windwalker\Model\Helper\QueryHelper;
 use Windwalker\Relation\Action;
 
 /**
@@ -25,23 +24,9 @@ class OneToManyRelation extends AbstractRelationHandler
 	 */
 	public function load()
 	{
-		$conditions = array();
+		$items = $this->db->setQuery($this->buildLoadQuery())->loadObjectList();
 
-		foreach ($this->fks as $field => $foreign)
-		{
-			$conditions[$foreign] = $this->parent->$field;
-		}
-
-		$query = $this->db->getQuery(true);
-
-		QueryHelper::buildWheres($query, $conditions);
-
-		$query->select('*')
-			->from($this->tableName);
-
-		$items = $this->db->setQuery($query)->loadObjectList();
-
-		$this->parent->{$this->field} = $this->convertToDataSet($items);
+		$this->setParentFieldValue($this->convertToDataSet($items));
 	}
 
 	/**
@@ -58,7 +43,7 @@ class OneToManyRelation extends AbstractRelationHandler
 			return;
 		}
 
-		$items = $this->parent->{$this->field};
+		$items = $this->getParentFieldValue();
 
 		if (!is_array($items) && !($items instanceof \Traversable))
 		{
@@ -89,7 +74,7 @@ class OneToManyRelation extends AbstractRelationHandler
 			return;
 		}
 
-		$items = $this->parent->{$this->field};
+		$items = $this->getParentFieldValue();
 
 		if (!is_array($items) && !($items instanceof \Traversable))
 		{
