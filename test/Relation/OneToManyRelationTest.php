@@ -6,15 +6,15 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Windwalker\Test\Table;
+namespace Windwalker\Test\Relation;
 
 use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\Relation\Action;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
-use Windwalker\Test\Table\Stub\StubTableLocation;
-use Windwalker\Test\Table\Stub\StubTableRose;
-use Windwalker\Test\Table\Stub\StubTableSakura;
+use Windwalker\Test\Relation\Stub\StubTableLocation;
+use Windwalker\Test\Relation\Stub\StubTableRose;
+use Windwalker\Test\Relation\Stub\StubTableSakura;
 
 /**
  * The RelationHandlerTest class.

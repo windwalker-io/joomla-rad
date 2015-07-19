@@ -6,17 +6,16 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Windwalker\Test\Table\Stub;
+namespace Windwalker\Test\Relation\Stub;
 
-use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
 
 /**
- * The StubTableLocation class.
+ * The StubTableRose class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class StubTableLocation extends Table
+class StubTableRose extends Table
 {
 	/**
 	 * Class init.
@@ -25,16 +24,6 @@ class StubTableLocation extends Table
 	 */
 	public function __construct($db = null)
 	{
-		parent::__construct('#__testflower_locations', 'id', $db);
-	}
-
-	/**
-	 * configure
-	 *
-	 * @return  void
-	 */
-	protected function configure()
-	{
-
+		parent::__construct('#__testflower_roses', 'id', $db);
 	}
 }
