@@ -8,15 +8,14 @@
 
 namespace Windwalker\Test\Table\Stub;
 
-use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
 
 /**
- * The StubTableLocations class.
+ * The StubTableSakura class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class StubTableLocations extends Table
+class StubTableSakura extends Table
 {
 	/**
 	 * Class init.
@@ -25,16 +24,6 @@ class StubTableLocations extends Table
 	 */
 	public function __construct($db = null)
 	{
-		parent::__construct('#__testflower_locations', 'id', $db);
-	}
-
-	/**
-	 * configure
-	 *
-	 * @return  void
-	 */
-	protected function configure()
-	{
-
+		parent::__construct('#__testflower_sakuras', 'id', $db);
 	}
 }

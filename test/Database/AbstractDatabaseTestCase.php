@@ -8,6 +8,8 @@
 
 namespace Windwalker\Test\Database;
 
+use Windwalker\Helper\DatabaseHelper;
+use Windwalker\Joomla\DataMapper\DataMapper;
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
 
 /**
@@ -17,6 +19,19 @@ use Windwalker\Test\TestCase\AbstractBaseTestCase;
  */
 class AbstractDatabaseTestCase extends AbstractBaseTestCase
 {
+	const TABLE_LOCATIONS        = '#__testflower_locations';
+	const TABLE_LOCATION_DATA    = '#__testflower_location_data';
+	const TABLE_ROSES            = '#__testflower_roses';
+	const TABLE_SAKURAS          = '#__testflower_sakuras';
+	const TABLE_SAKURA_ROSE_MAPS = '#__testflower_sakura_rose_maps';
+
+	/**
+	 * Property mappers.
+	 *
+	 * @var  DataMapper[]
+	 */
+	protected $mappers = array();
+
 	/**
 	 * setUpBeforeClass
 	 *
@@ -27,7 +42,7 @@ class AbstractDatabaseTestCase extends AbstractBaseTestCase
 	{
 		$queries = file_get_contents(__DIR__ . '/fixtures/testflower.sql');
 
-		static::batchQuery($queries);
+		DatabaseHelper::batchQuery($queries);
 	}
 
 	/**
@@ -39,30 +54,6 @@ class AbstractDatabaseTestCase extends AbstractBaseTestCase
 	{
 		$queries = file_get_contents(__DIR__ . '/fixtures/drop_testflower.sql');
 
-		static::batchQuery($queries);
-	}
-
-	/**
-	 * batchQuery
-	 *
-	 * @param string $queries
-	 *
-	 * @return  void
-	 */
-	public static function batchQuery($queries)
-	{
-		$db = \JFactory::getDbo();
-
-		$queries = $db->splitSql($queries);
-
-		foreach ($queries as $query)
-		{
-			$query = trim($query);
-
-			if ($query)
-			{
-				$db->setQuery($query)->execute();
-			}
-		}
+		DatabaseHelper::batchQuery($queries);
 	}
 }

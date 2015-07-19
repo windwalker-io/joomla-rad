@@ -113,13 +113,28 @@ class Table extends \JTable
 			return $result;
 		}
 
-		if ($this->hasPrimaryKey())
+		$this->_relation->store();
+
+		return $result;
+	}
+
+	public function delete($pk = null)
+	{
+		if (get_called_class() == 'Windwalker\Table\Table')
 		{
-			$this->_relation->update();
+			return parent::delete($pk);
 		}
-		else
+
+		$table = clone $this;
+		$table->load($pk);
+
+		if (!$result = parent::delete($pk))
 		{
-			$this->_relation->create();
+			return $result;
 		}
+
+		$table->_relation->delete();
+
+		return $result;
 	}
 }

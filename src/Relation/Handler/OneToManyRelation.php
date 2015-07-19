@@ -9,6 +9,7 @@
 namespace Windwalker\Relation\Handler;
 
 use Windwalker\Model\Helper\QueryHelper;
+use Windwalker\Relation\Action;
 
 /**
  * The OneToManyRelation class.
@@ -40,58 +41,66 @@ class OneToManyRelation extends AbstractRelationHandler
 
 		$items = $this->db->setQuery($query)->loadObjectList();
 
-		$table = clone $this->table;
-		$table->reset();
-
-		$results = array();
-
-		foreach ($items as $item)
-		{
-			$itemTable = clone $table;
-			$itemTable->bind($item);
-
-			$results[] = $itemTable;
-		}
-
-		$this->parent->{$this->field} = $results;
+		$this->parent->{$this->field} = $this->convertToDataSet($items);
 	}
 
 	public function store()
 	{
+		if ($this->onUpdate == Action::NO_ACTION || $this->onUpdate == Action::RESTRICT)
+		{
+			return;
+		}
+
 		$items = $this->parent->{$this->field};
 
-		if ($items instanceof \Traversable)
+		if (!is_array($items) && !($items instanceof \Traversable))
 		{
-			$items = iterator_to_array($items);
+			throw new \InvalidArgumentException('Relation items should be array or iterator.');
 		}
-
-		if (!is_array($items))
-		{
-			throw new \InvalidArgumentException('Relation items should be array');
-		}
-
-		$table = clone $this->table;
-		$table->reset();
 
 		foreach ($items as $item)
 		{
-			if (!($item instanceof \JTable))
-			{
-				$itemTable = clone $table;
-				$itemTable->bind($item);
-			}
-			else
-			{
-				$itemTable = $table;
-			}
+			$itemTable = $this->convertToTable($item);
+			$itemTable = $this->handleUpdateRelations($itemTable);
 
 			$itemTable->check();
 			$itemTable->store(true);
 		}
 	}
 
+	/**
+	 * delete
+	 *
+	 * @return  void
+	 */
 	public function delete()
 	{
+		if ($this->onUpdate == Action::NO_ACTION || $this->onUpdate == Action::RESTRICT)
+		{
+			return;
+		}
 
+		$items = $this->parent->{$this->field};
+
+		if (!is_array($items) && !($items instanceof \Traversable))
+		{
+			throw new \InvalidArgumentException('Relation items should be array or iterator.');
+		}
+
+		foreach ($items as $item)
+		{
+			$itemTable = $this->convertToTable($item);
+			$itemTable = $this->handleDeleteRelations($itemTable);
+
+			if (empty($itemTable->_delete))
+			{
+				$itemTable->check();
+				$itemTable->store(true);
+			}
+			else
+			{
+				$itemTable->delete();
+			}
+		}
 	}
 }

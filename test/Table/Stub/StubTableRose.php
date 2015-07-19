@@ -11,11 +11,11 @@ namespace Windwalker\Test\Table\Stub;
 use Windwalker\Table\Table;
 
 /**
- * The StubTableSakuras class.
+ * The StubTableRose class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class StubTableSakuras extends Table
+class StubTableRose extends Table
 {
 	/**
 	 * Class init.
@@ -24,6 +24,6 @@ class StubTableSakuras extends Table
 	 */
 	public function __construct($db = null)
 	{
-		parent::__construct('#__testflower_sakuras', 'id', $db);
+		parent::__construct('#__testflower_roses', 'id', $db);
 	}
 }
