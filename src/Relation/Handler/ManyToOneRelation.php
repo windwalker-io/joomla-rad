@@ -29,7 +29,7 @@ class ManyToOneRelation extends AbstractRelationHandler
 	 * @param string  $onDelete  The action of ON DELETE operation.
 	 * @param array   $options   Some options to configure this relation.
 	 */
-	public function __construct($parent, $field, $table, $fks = array(), $onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION,
+	public function __construct($parent, $field = null, $table = null, $fks = array(), $onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION,
 		$options = array())
 	{
 		$onUpdate = $onUpdate ? : Action::NO_ACTION;

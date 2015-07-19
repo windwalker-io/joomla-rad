@@ -85,6 +85,13 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	protected $db;
 
 	/**
+	 * Property prefix.
+	 *
+	 * @var  string
+	 */
+	protected $prefix;
+
+	/**
 	 * Class init.
 	 *
 	 * @param Table   $parent    The parent table od this relation.
@@ -95,19 +102,18 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 * @param string  $onDelete  The action of ON DELETE operation.
 	 * @param array   $options   Some options to configure this relation.
 	 */
-	public function __construct($parent, $field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
+	public function __construct($parent, $field = null, $table = null, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
 		$options = array())
 	{
+		$this->targetTable($table, $fks);
+
 		$this->parent   = $parent;
-		$this->table    = $table;
 		$this->onUpdate = $onUpdate ? : Action::CASCADE;
 		$this->onDelete = $onDelete ? : Action::CASCADE;
 		$this->field    = $field;
-		$this->fks      = (array) $fks;
 		$this->options  = $options;
 
-		$this->tableName = $this->table->getTableName();
-		$this->db = $table->getDbo();
+		$this->db = $this->db ? : \JFactory::getDbo();
 	}
 
 	/**
@@ -344,6 +350,53 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
+	 * Method to get property Prefix
+	 *
+	 * @return  string
+	 */
+	public function getPrefix()
+	{
+		return $this->prefix;
+	}
+
+	/**
+	 * Method to set property prefix
+	 *
+	 * @param   string $prefix
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setPrefix($prefix)
+	{
+		$this->prefix = $prefix;
+
+		return $this;
+	}
+
+	/**
+	 * Get Table object.
+	 *
+	 * @param   string  $name    The table name.
+	 * @param   string  $prefix  The table class prefix.
+	 *
+	 * @return  \JTable
+	 */
+	protected function getTable($name, $prefix = null)
+	{
+		if (!is_string($name))
+		{
+			throw new \InvalidArgumentException('Table name should be string.');
+		}
+
+		if ($table = \JTable::getInstance($name, $prefix ? : $this->prefix))
+		{
+			return $table;
+		}
+
+		return new Table($name);
+	}
+
+	/**
 	 * Method to get property Parent
 	 *
 	 * @return  Table
@@ -360,9 +413,221 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 *
 	 * @return  static  Return self to support chaining.
 	 */
-	public function setParent($parent)
+	public function parent($parent)
 	{
 		$this->parent = $parent;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Table
+	 *
+	 * @return  \JTable
+	 */
+	public function getTarget()
+	{
+		return $this->table;
+	}
+
+	/**
+	 * Method to set property table
+	 *
+	 * @param   \JTable $table
+	 * @param   array   $fks
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function targetTable($table, $fks)
+	{
+		if (!$table)
+		{
+			return $this;
+		}
+
+		if (!($table instanceof \JTable))
+		{
+			$table = $this->getTable($table, $this->prefix);
+		}
+
+		$this->table = $table;
+		$this->foreignKeys($fks);
+
+		$this->tableName = $this->table->getTableName();
+		$this->db = $table->getDbo();
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property OnUpdate
+	 *
+	 * @return  string
+	 */
+	public function getOnUpdate()
+	{
+		return $this->onUpdate;
+	}
+
+	/**
+	 * Method to set property onUpdate
+	 *
+	 * @param   string $onUpdate
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function onUpdate($onUpdate)
+	{
+		$this->onUpdate = $onUpdate;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property OnDelete
+	 *
+	 * @return  string
+	 */
+	public function getOnDelete()
+	{
+		return $this->onDelete;
+	}
+
+	/**
+	 * Method to set property onDelete
+	 *
+	 * @param   string $onDelete
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function onDelete($onDelete)
+	{
+		$this->onDelete = $onDelete;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Field
+	 *
+	 * @return  mixed
+	 */
+	public function getField()
+	{
+		return $this->field;
+	}
+
+	/**
+	 * Method to set property field
+	 *
+	 * @param   mixed $field
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function field($field)
+	{
+		$this->field = $field;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Fks
+	 *
+	 * @return  array
+	 */
+	public function getForeignKeys()
+	{
+		return $this->fks;
+	}
+
+	/**
+	 * Method to set property fks
+	 *
+	 * @param   array $fks
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function foreignKeys($fks)
+	{
+		if (!is_array($fks))
+		{
+			throw new \InvalidArgumentException('Argument $fks should be array');
+		}
+
+		$this->fks = $fks;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Options
+	 *
+	 * @return  array
+	 */
+	public function getOptions()
+	{
+		return $this->options;
+	}
+
+	/**
+	 * Method to set property options
+	 *
+	 * @param   array $options
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setOptions($options)
+	{
+		$this->options = $options;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property TableName
+	 *
+	 * @return  string
+	 */
+	public function getTableName()
+	{
+		return $this->tableName;
+	}
+
+	/**
+	 * Method to set property tableName
+	 *
+	 * @param   string $tableName
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setTableName($tableName)
+	{
+		$this->tableName = $tableName;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Db
+	 *
+	 * @return  \JDatabaseDriver
+	 */
+	public function getDb()
+	{
+		return $this->db;
+	}
+
+	/**
+	 * Method to set property db
+	 *
+	 * @param   \JDatabaseDriver $db
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setDb($db)
+	{
+		$this->db = $db;
 
 		return $this;
 	}

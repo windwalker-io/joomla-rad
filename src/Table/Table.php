@@ -42,7 +42,7 @@ class Table extends \JTable
 		parent::__construct($table, $key, $db);
 
 		// Prepare Relation handler
-		$this->_relation = new Relation($this);
+		$this->_relation = new Relation($this, $this->getPrefix());
 
 		$this->configure();
 	}
@@ -214,5 +214,28 @@ class Table extends \JTable
 		$prefix = $prefix ? : $tablePrefix;
 
 		return JTable::getInstance($name, $prefix);
+	}
+
+	/**
+	 * getPrefix
+	 *
+	 * @return  string
+	 */
+	public function getPrefix()
+	{
+		$ref = new \ReflectionClass($this);
+
+		$className = explode('Table', $ref->getShortName());
+
+		if (count($className) >= 2)
+		{
+			$tablePrefix = $className[0] . 'Table';
+		}
+		else
+		{
+			$tablePrefix = 'JTable';
+		}
+
+		return $tablePrefix;
 	}
 }
