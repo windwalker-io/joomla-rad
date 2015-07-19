@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla34b project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -23,9 +23,9 @@ abstract class DataMapperContainer
 	protected static $instances = array();
 
 	/**
-	 * getInstance
+	 * Get a DataMapper instance and cache it.
 	 *
-	 * @param string $table
+	 * @param  string  $table  The table name of this DataMapper.
 	 *
 	 * @return  DataMapper
 	 */
@@ -40,10 +40,10 @@ abstract class DataMapperContainer
 	}
 
 	/**
-	 * setInstance
+	 * Set a DataMapper instance into container.
 	 *
-	 * @param string     $table
-	 * @param DataMapper $mapper
+	 * @param   string      $table   The table name of this DataMapper.
+	 * @param   DataMapper  $mapper  The DataMapper instance to set.
 	 *
 	 * @return  void
 	 */
@@ -53,9 +53,9 @@ abstract class DataMapperContainer
 	}
 
 	/**
-	 * removeInstance
+	 * Remove a DataMapper from container.
 	 *
-	 * @param string $table
+	 * @param   string  $table  The DataMapper name to remove.
 	 *
 	 * @return  void
 	 */

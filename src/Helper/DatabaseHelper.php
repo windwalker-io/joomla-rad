@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla34b project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -32,9 +32,9 @@ class DatabaseHelper extends AbstractFacade
 	/**
 	 * Execute a query.
 	 *
-	 * @param string|\JDatabaseQuery $query
+	 * @param   string|\JDatabaseQuery  $query  Execute a query instantly.
 	 *
-	 * @return  mixed
+	 * @return  mixed  A database cursor resource on success, boolean false on failure.
 	 */
 	public static function query($query)
 	{
@@ -44,9 +44,9 @@ class DatabaseHelper extends AbstractFacade
 	/**
 	 * Batch execute queries.
 	 *
-	 * @param string $queries
+	 * @param   string  $queries  Multiple queries to execute.
 	 *
-	 * @return  boolean[]
+	 * @return  boolean[]  All results.
 	 */
 	public static function batchQuery($queries)
 	{
@@ -70,11 +70,11 @@ class DatabaseHelper extends AbstractFacade
 	}
 
 	/**
-	 * loadAll
+	 * Set query to DatabaseDriver.
 	 *
-	 * @param string|\JDatabaseQuery $query
+	 * @param   string|\JDatabaseQuery  $query  The query object or string.
 	 *
-	 * @return  \JDatabaseDriver
+	 * @return  \JDatabaseDriver  Return DatabaseDriver to do something.
 	 */
 	public static function setQuery($query)
 	{

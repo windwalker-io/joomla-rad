@@ -118,6 +118,15 @@ class Table extends \JTable
 		return $result;
 	}
 
+	/**
+	 * Method to delete a row from the database table by primary key value.
+	 *
+	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @throws  \UnexpectedValueException
+	 */
 	public function delete($pk = null)
 	{
 		if (get_called_class() == 'Windwalker\Table\Table')
@@ -136,5 +145,22 @@ class Table extends \JTable
 		$table->_relation->delete();
 
 		return $result;
+	}
+
+	/**
+	 * Magic method to get property and avoid errors.
+	 *
+	 * @param   string  $name  The property name to get.
+	 *
+	 * @return  mixed  Value of this property.
+	 */
+	public function __get($name)
+	{
+		if (property_exists($this, $name))
+		{
+			return $this->$name;
+		}
+
+		return null;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla341c project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -13,7 +13,7 @@ use Windwalker\Relation\Handler\RelationHandlerInterface;
 use Windwalker\Table\Table;
 
 /**
- * The Relation class.
+ * The Relation handler object. This is a composite object to combine multiple relation handlers.
  * 
  * @since  {DEPLOY_VERSION}
  */
@@ -65,6 +65,11 @@ class Relation implements RelationHandlerInterface
 		$this->relations[$field] = $relation;
 	}
 
+	/**
+	 * Load all relative children data.
+	 *
+	 * @return  void
+	 */
 	public function load()
 	{
 		foreach ($this->relations as $relation)
@@ -73,6 +78,13 @@ class Relation implements RelationHandlerInterface
 		}
 	}
 
+	/**
+	 * Store all relative children data.
+	 *
+	 * The onUpdate option will work in this method.
+	 *
+	 * @return  void
+	 */
 	public function store()
 	{
 		foreach ($this->relations as $relation)
@@ -81,6 +93,13 @@ class Relation implements RelationHandlerInterface
 		}
 	}
 
+	/**
+	 * Delete all relative children data.
+	 *
+	 * The onDelete option will work in this method.
+	 *
+	 * @return  void
+	 */
 	public function delete()
 	{
 		foreach ($this->relations as $relation)
@@ -90,10 +109,10 @@ class Relation implements RelationHandlerInterface
 	}
 
 	/**
-	 * getTable
+	 * Get Table object.
 	 *
-	 * @param string $table
-	 * @param string $prefix
+	 * @param   string  $table   The table name.
+	 * @param   string  $prefix  The table class prefix.
 	 *
 	 * @return  \JTable
 	 */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla341c project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -19,7 +19,7 @@ use Windwalker\Relation\Action;
 class OneToManyRelation extends AbstractRelationHandler
 {
 	/**
-	 * load
+	 * Load all relative children data.
 	 *
 	 * @return  void
 	 */
@@ -44,6 +44,13 @@ class OneToManyRelation extends AbstractRelationHandler
 		$this->parent->{$this->field} = $this->convertToDataSet($items);
 	}
 
+	/**
+	 * Store all relative children data.
+	 *
+	 * The onUpdate option will work in this method.
+	 *
+	 * @return  void
+	 */
 	public function store()
 	{
 		if ($this->onUpdate == Action::NO_ACTION || $this->onUpdate == Action::RESTRICT)
@@ -69,7 +76,9 @@ class OneToManyRelation extends AbstractRelationHandler
 	}
 
 	/**
-	 * delete
+	 * Delete all relative children data.
+	 *
+	 * The onDelete option will work in this method.
 	 *
 	 * @return  void
 	 */

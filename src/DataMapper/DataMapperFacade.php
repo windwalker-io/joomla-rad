@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla34b project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -35,12 +35,12 @@ use Windwalker\Data\DataSet;
 abstract class DataMapperFacade
 {
 	/**
-	 * __callStatic
+	 * Call the DataMapper methods.
 	 *
-	 * @param string $name
-	 * @param array  $args
+	 * @param   string  $name  Method name to call.
+	 * @param   array   $args  The arguments of this method.
 	 *
-	 * @return  mixed
+	 * @return  mixed  Return value of the target method.
 	 */
 	public static function __callStatic($name, $args)
 	{

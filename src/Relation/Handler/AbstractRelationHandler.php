@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla341c project.
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -86,13 +86,13 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Class init.
 	 *
-	 * @param Table   $parent
-	 * @param string  $field
-	 * @param \JTable $table
-	 * @param array   $fks
-	 * @param string  $onUpdate
-	 * @param string  $onDelete
-	 * @param array   $options
+	 * @param Table   $parent    The parent table od this relation.
+	 * @param string  $field     Field of parent table to store children.
+	 * @param \JTable $table     The Table object of this relation child.
+	 * @param array   $fks       Foreign key mapping.
+	 * @param string  $onUpdate  The action of ON UPDATE operation.
+	 * @param string  $onDelete  The action of ON DELETE operation.
+	 * @param array   $options   Some options to configure this relation.
 	 */
 	public function __construct($parent, $field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
 		$options = array())
@@ -110,11 +110,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * handleRelations
+	 * Handle update relation and set matched value to child table.
 	 *
-	 * @param \JTable $itemTable
+	 * @param   \JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  \JTable
+	 * @return  \JTable  Return table if you need.
 	 */
 	public function handleUpdateRelations(\JTable $itemTable)
 	{
@@ -136,11 +136,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * handleDeleteRelations
+	 * Handle delete relation, if is CASCADE, mark child table to delete. If is SET NULL, set all children fields to NULL.
 	 *
-	 * @param \JTable $itemTable
+	 * @param   \JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  \JTable
+	 * @return  \JTable  Return table if you need.
 	 */
 	public function handleDeleteRelations(\JTable $itemTable)
 	{
@@ -159,11 +159,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * syncParentFields
+	 * Sync parent fields value to child table.
 	 *
-	 * @param \JTable $itemTable
+	 * @param   \JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  \JTable
+	 * @return  \JTable  Return table if you need.
 	 */
 	protected function syncParentFields(\JTable $itemTable)
 	{
@@ -176,12 +176,12 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * setRelativeFields
+	 * Set value to all relative children fields.
 	 *
-	 * @param \JTable $itemTable
-	 * @param mixed   $value
+	 * @param   \JTable  $itemTable  The child table to be handled.
+	 * @param   mixed    $value      The value we want to set to child, default is NULL.
 	 *
-	 * @return  \JTable
+	 * @return  \JTable  Return table if you need.
 	 */
 	protected function setRelativeFields(\JTable $itemTable, $value = null)
 	{
@@ -194,11 +194,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * changed
+	 * Is fields changed. If any field changed, means we have to do something to children.
 	 *
-	 * @param \JTable $itemTable
+	 * @param   \JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  boolean
+	 * @return  boolean  Something changed of not.
 	 */
 	public function changed($itemTable)
 	{
@@ -219,11 +219,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * convertToTable
+	 * Convert all data type to Table object.
 	 *
-	 * @param  mixed  $item
+	 * @param   mixed  $item  The data to be converted.
 	 *
-	 * @return  \JTable
+	 * @return  \JTable  Return Converted Table object.
 	 */
 	public function convertToTable($item)
 	{
@@ -253,11 +253,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * convertToData
+	 * Convert all data type to Windwalker Data object.
 	 *
-	 * @param   mixed  $item
+	 * @param   mixed  $item  The data to be converted.
 	 *
-	 * @return  Data
+	 * @return  Data  Return Converted Data object.
 	 */
 	public function convertToData($item)
 	{
@@ -274,11 +274,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
-	 * convertToDataSet
+	 * Convert all data set to Windwalker DataSet object.
 	 *
-	 * @param   object[]  $items
+	 * @param   object[]  $items  The data set to be converted.
 	 *
-	 * @return  DataSet
+	 * @return  DataSet  Return Converted DataSet object.
 	 */
 	public function convertToDataSet($items)
 	{

@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla341c project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
@@ -9,7 +9,7 @@
 namespace Windwalker\Relation;
 
 /**
- * The Action class.
+ * The Action of Foreign Key operations.
  * 
  * @since  {DEPLOY_VERSION}
  */
