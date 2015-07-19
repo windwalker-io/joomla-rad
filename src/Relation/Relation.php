@@ -8,6 +8,7 @@
 
 namespace Windwalker\Relation;
 
+use Windwalker\Relation\Handler\ManyToOneRelation;
 use Windwalker\Relation\Handler\OneToManyRelation;
 use Windwalker\Relation\Handler\OneToOneRelation;
 use Windwalker\Relation\Handler\RelationHandlerInterface;
@@ -72,6 +73,35 @@ class Relation implements RelationHandlerInterface
 		}
 
 		$relation = new OneToManyRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
+
+		$relation->setParent($this->parent);
+
+		$this->relations[$field] = $relation;
+
+		return $this;
+	}
+
+	/**
+	 * Add one to many relation configurations.
+	 *
+	 * @param string  $field     Field of parent table to store children.
+	 * @param \JTable $table     The Table object of this relation child.
+	 * @param array   $fks       Foreign key mapping.
+	 * @param string  $onUpdate  The action of ON UPDATE operation.
+	 * @param string  $onDelete  The action of ON DELETE operation.
+	 * @param array   $options   Some options to configure this relation.
+	 *
+	 * @return  static
+	 */
+	public function addManyToOne($field, $table, $fks = array(), $onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION,
+		$options = array())
+	{
+		if (!($table instanceof \JTable))
+		{
+			$table = $this->getTable($table, $this->prefix);
+		}
+
+		$relation = new ManyToOneRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
 
 		$relation->setParent($this->parent);
 

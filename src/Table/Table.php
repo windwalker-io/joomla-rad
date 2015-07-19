@@ -129,11 +129,6 @@ class Table extends \JTable
 	 */
 	public function delete($pk = null)
 	{
-		if (get_called_class() == 'Windwalker\Table\Table')
-		{
-			return parent::delete($pk);
-		}
-
 		$table = clone $this;
 		$table->load($pk);
 
@@ -162,6 +157,19 @@ class Table extends \JTable
 		}
 
 		return null;
+	}
+
+	/**
+	 * Get the columns from database table.
+	 *
+	 * @return  mixed  An array of the field names, or false if an error occurs.
+	 *
+	 * @since   11.1
+	 * @throws  \UnexpectedValueException
+	 */
+	public function getFields()
+	{
+		return TableHelper::getFields($this);
 	}
 
 	/**

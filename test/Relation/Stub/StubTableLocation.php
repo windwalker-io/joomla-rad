@@ -10,6 +10,7 @@ namespace Windwalker\Test\Relation\Stub;
 
 use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
+use Windwalker\Test\Database\AbstractDatabaseTestCase;
 
 /**
  * The StubTableLocation class.
@@ -35,6 +36,6 @@ class StubTableLocation extends Table
 	 */
 	protected function configure()
 	{
-
+		$this->_relation->addOneToOne('data', new Table(AbstractDatabaseTestCase::TABLE_LOCATION_DATA), array('id' => 'location_id'));
 	}
 }

@@ -11,6 +11,7 @@ namespace Windwalker\Test\Relation;
 use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\Relation\Action;
+use Windwalker\Table\Table;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\Relation\Stub\StubTableLocation;
 use Windwalker\Test\Relation\Stub\StubTableRose;
@@ -33,7 +34,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
 	{
-		$location = new StubTableLocation(\JFactory::getDbo());
+		$location = new Table(static::TABLE_LOCATIONS, 'id', \JFactory::getDbo());
 
 		$location->_relation->addOneToMany('sakuras', new StubTableSakura, array('id' => 'location'), $onUpdate, $onDelete);
 		$location->_relation->addOneToMany('roses', new StubTableRose, array('id' => 'location'), $onUpdate, $onDelete);

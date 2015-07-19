@@ -17,7 +17,7 @@ use Windwalker\Test\TestCase\AbstractBaseTestCase;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class AbstractDatabaseTestCase extends AbstractBaseTestCase
+abstract class AbstractDatabaseTestCase extends AbstractBaseTestCase
 {
 	const TABLE_LOCATIONS        = '#__testflower_locations';
 	const TABLE_LOCATION_DATA    = '#__testflower_location_data';
