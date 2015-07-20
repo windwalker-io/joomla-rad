@@ -23,6 +23,20 @@ use Windwalker\Test\Application\TestApplication;
 class ModalHelperTest extends \PHPUnit_Framework_TestCase
 {
 	/**
+	 * Original loaded array
+	 *
+	 * @var  boolean[]
+	 */
+	protected $originalLoaded;
+
+	/**
+	 * Property reflectedLoaded.
+	 *
+	 * @var \ReflectionProperty
+	 */
+	protected $reflectedLoaded;
+
+	/**
 	 * Test instance.
 	 *
 	 * @var \Windwalker\Helper\ModalHelper
@@ -37,6 +51,11 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
+		$this->reflectedLoaded = new \ReflectionProperty('JHtmlBootstrap', 'loaded');
+
+		$this->reflectedLoaded->setAccessible(true);
+
+		$this->originalLoaded = $this->reflectedLoaded->getValue();
 	}
 
 	/**
@@ -47,6 +66,9 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function tearDown()
 	{
+		$this->reflectedLoaded->setValue($this->originalLoaded);
+
+		$this->reflectedLoaded->setAccessible(false);
 	}
 	
 	/**
@@ -58,21 +80,14 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testModal()
 	{
+		// Reset Loaded
+		$this->reflectedLoaded->setValue($this->originalLoaded);
+
 		// Execute method
 		ModalHelper::modal('tag');
 
-		$bootstrap = new \ReflectionClass('JHtmlBootstrap');
-
-		// Load protected property
-		$loadedProp = $bootstrap->getProperty('loaded');
-
-		$loadedProp->setAccessible(true);
-
-		// Get value from protected property '$loaded'
-		$loaded = $loadedProp->getValue('JHtmlBootstrap');
-
 		// Test if JHtmlBootstrap::modal did executed
-		$this->assertArrayHasKey('JHtmlBootstrap::modal', $loaded);
+		$this->assertArrayHasKey('JHtmlBootstrap::modal', $this->reflectedLoaded->getValue());
 	}
 
 	/**
@@ -130,15 +145,8 @@ HTML;
 	 */
 	public function testRenderModal()
 	{
-		$bootstrap = new \ReflectionClass('JHtmlBootstrap');
-
-		// Load protected property
-		$loadedProp = $bootstrap->getProperty('loaded');
-
-		$loadedProp->setAccessible(true);
-
-		// Get value from protected property '$loaded'
-		$loaded = $loadedProp->getValue('JHtmlBootstrap');
+		// Reset Loaded
+		$this->reflectedLoaded->setValue($this->originalLoaded);
 
 		$selector = 'test-selector';
 		$option = array(
@@ -167,8 +175,7 @@ HTML;
 		$this->assertEquals($expected, ModalHelper::renderModal($selector, $option['content'], $option));
 
 		// Test if JHtmlBootstrap::modal did executed
-		$this->assertArrayHasKey('JHtmlBootstrap::modal', $loaded);
-		show($loaded);
+		$this->assertArrayHasKey('JHtmlBootstrap::modal', $this->reflectedLoaded->getValue());
 	}
 
 	/**
