@@ -12,9 +12,7 @@ use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\Relation\Action;
 use Windwalker\Relation\Handler\ManyToManyRelation;
-use Windwalker\Table\Table;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
-use Windwalker\Test\Relation\Stub\StubTableLocation;
 use Windwalker\Test\Relation\Stub\StubTableRose;
 use Windwalker\Test\Relation\Stub\StubTableSakura;
 

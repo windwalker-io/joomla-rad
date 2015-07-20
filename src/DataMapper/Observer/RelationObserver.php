@@ -11,7 +11,9 @@ namespace Windwalker\DataMapper\Observer;
 use JObservableInterface;
 use JObserverInterface;
 use Windwalker\Data\DataSet;
+use Windwalker\DI\Container;
 use Windwalker\Relation\Handler\AbstractRelationHandler;
+use Windwalker\Relation\Relation;
 use Windwalker\Table\Table;
 use Windwalker\Utilities\ArrayHelper;
 
@@ -64,6 +66,18 @@ class RelationObserver extends AbstractDataMapperObserver
 		$this->parentTable = $relation->getParent();
 
 		$this->parentTable->_relation = $relation;
+
+		// Pass global relation configuration into parent.
+		$relations = Container::getInstance()->get('relation.container')->getRelation($this->mapper->getTable());
+
+		/** @var Relation $relations */
+		foreach ($relations->getRelations() as $relation)
+		{
+			/** @var AbstractRelationHandler $relation */
+			$relation->setParent($this->parentTable);
+
+			$this->parentTable->_relation->setRelation($relation->getField(), $relation);
+		}
 	}
 
 	/**

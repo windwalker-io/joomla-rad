@@ -730,4 +730,18 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 
 		return $this;
 	}
+
+	/**
+	 * Method to set property parent
+	 *
+	 * @param   Table $parent
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setParent($parent)
+	{
+		$this->parent = $parent;
+
+		return $this;
+	}
 }

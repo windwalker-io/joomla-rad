@@ -17,7 +17,7 @@ use Windwalker\Test\Database\AbstractDatabaseTestCase;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class LocationDataMapper extends AbstractObservableDataMapper
+class StubLocationDataMapper extends AbstractObservableDataMapper
 {
 	/**
 	 * Constructor.

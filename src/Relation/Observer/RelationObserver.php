@@ -10,6 +10,9 @@ namespace Windwalker\Relation\Observer;
 
 use JObservableInterface;
 use JObserverInterface;
+use Windwalker\DI\Container;
+use Windwalker\Relation\Handler\AbstractRelationHandler;
+use Windwalker\Relation\Relation;
 use Windwalker\Table\Table;
 
 /**
@@ -41,6 +44,31 @@ class RelationObserver extends \JTableObserver
 		$observer = new static($observableObject);
 
 		return $observer;
+	}
+
+	/**
+	 * Pass Relation object to Parent Table.
+	 *
+	 * @return  void
+	 */
+	public function onAfterConstruction()
+	{
+		if (!($this->table instanceof Table))
+		{
+			return;
+		}
+
+		// Pass global relation configuration into parent.
+		$relations = Container::getInstance()->get('relation.container')->getRelation($this->table->getTableName());
+
+		/** @var Relation $relations */
+		foreach ($relations->getRelations() as $relation)
+		{
+			/** @var AbstractRelationHandler $relation */
+			$relation->setParent($this->table);
+
+			$this->table->_relation->setRelation($relation->getField(), $relation);
+		}
 	}
 
 	/**

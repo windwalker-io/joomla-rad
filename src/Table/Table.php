@@ -154,50 +154,6 @@ class Table extends \JTable
 	}
 
 	/**
-	 * Get table.
-	 *
-	 * @param string $name
-	 * @param string $prefix
-	 *
-	 * @return  Table
-	 */
-	public function getTable($name = null, $prefix = null)
-	{
-		if (!$name && !$prefix)
-		{
-			$table = clone $this;
-			$table->reset();
-
-			foreach ($table->_tbl_keys as $key)
-			{
-				$table->$key = null;
-			}
-
-			return $table;
-		}
-
-		$ref = new \ReflectionClass($this);
-
-		$className = explode('Table', $ref->getShortName());
-
-		if (count($className) >= 2)
-		{
-			$tablePrefix = $className[0] . 'Table';
-			$tableName = $className[1];
-		}
-		else
-		{
-			$tablePrefix = 'JTable';
-			$tableName = $className[0];
-		}
-
-		$name = $name ? : $tableName;
-		$prefix = $prefix ? : $tablePrefix;
-
-		return JTable::getInstance($name, $prefix);
-	}
-
-	/**
 	 * getPrefix
 	 *
 	 * @return  string

@@ -50,7 +50,7 @@ class Relation implements RelationHandlerInterface
 	 * @param Table  $parent
 	 * @param string $prefix
 	 */
-	public function __construct(Table $parent, $prefix = 'JTable')
+	public function __construct(Table $parent = null, $prefix = 'JTable')
 	{
 		$this->parent = $parent;
 	}
@@ -211,6 +211,21 @@ class Relation implements RelationHandlerInterface
 		}
 
 		return $this->relations[$field];
+	}
+
+	/**
+	 * setRelation
+	 *
+	 * @param string                   $field
+	 * @param RelationHandlerInterface $relation
+	 *
+	 * @return  static
+	 */
+	public function setRelation($field, RelationHandlerInterface $relation)
+	{
+		$this->relations[$field] = $relation;
+
+		return $this;
 	}
 
 	/**

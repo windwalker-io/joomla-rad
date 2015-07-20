@@ -8,12 +8,9 @@
 
 namespace Windwalker\Test\Relation;
 
-use Windwalker\Data\Data;
-use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\Relation\Action;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\Relation\Stub\StubTableLocation;
-use Windwalker\Test\Relation\Stub\StubTableRose;
 use Windwalker\Test\Relation\Stub\StubTableSakura;
 
 /**

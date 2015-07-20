@@ -10,10 +10,12 @@ namespace Windwalker\Test\DataMapper;
 
 use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapperFacade;
+use Windwalker\DI\Container;
 use Windwalker\Relation\Action;
-use Windwalker\Table\Table;
+use Windwalker\Relation\Relation;
+use Windwalker\Relation\RelationContainer;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
-use Windwalker\Test\DataMapper\Stub\LocationDataMapper;
+use Windwalker\Test\DataMapper\Stub\StubLocationDataMapper;
 use Windwalker\Test\Relation\Stub\StubTableRose;
 use Windwalker\Test\Relation\Stub\StubTableSakura;
 
@@ -31,11 +33,11 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 * @param string $onDelete
 	 * @param bool   $flush
 	 *
-	 * @return LocationDataMapper
+	 * @return StubLocationDataMapper
 	 */
 	protected function createTestMapper($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE, $flush = false)
 	{
-		$location = new LocationDataMapper;
+		$location = new StubLocationDataMapper;
 
 		$location->relation->addOneToMany('sakuras', new StubTableSakura, array('id' => 'location'), $onUpdate, $onDelete, array('flush' => $flush));
 		$location->relation->addOneToMany('roses', new StubTableRose, array('id' => 'location'), $onUpdate, $onDelete, array('flush' => $flush));
@@ -66,6 +68,39 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 		$this->assertInstanceOf('Windwalker\Data\DataSet', $roses);
 		$this->assertEquals(array(11, 12, 13, 14, 15), $sakuras->id);
 		$this->assertEquals(array(11, 12, 13, 14, 15), $roses->id);
+	}
+
+	/**
+	 * testGlobalRelationConfig
+	 *
+	 * @return  void
+	 */
+	public function testGlobalRelationConfig()
+	{
+		/** @var RelationContainer $relations */
+		$relations = Container::getInstance()->get('relation.container');
+
+		$relation = $relations->getRelation(static::TABLE_LOCATIONS);
+
+		$relation->addOneToMany('sakuras', new StubTableSakura, array('id' => 'location'));
+		$relation->addOneToMany('roses', new StubTableRose, array('id' => 'location'));
+
+		$mapper = new StubLocationDataMapper;
+
+		$dataset = $mapper->find(3);
+
+		$data = $dataset[0];
+
+		$sakuras = $data->sakuras;
+		$roses = $data->roses;
+
+		$this->assertInstanceOf('Windwalker\Data\Data', $sakuras[0]);
+		$this->assertInstanceOf('Windwalker\Data\DataSet', $sakuras);
+		$this->assertInstanceOf('Windwalker\Data\DataSet', $roses);
+		$this->assertEquals(array(11, 12, 13, 14, 15), $sakuras->id);
+		$this->assertEquals(array(11, 12, 13, 14, 15), $roses->id);
+
+		$relations->setRelation(static::TABLE_LOCATIONS, new Relation);
 	}
 
 	/**
