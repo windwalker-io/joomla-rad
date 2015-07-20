@@ -48,6 +48,12 @@ class OneToOneRelation extends AbstractRelationHandler
 		$itemTable = $this->convertToTable($item);
 		$itemTable = $this->handleUpdateRelations($itemTable);
 
+		if ($this->flush)
+		{
+			$this->deleteAllRelatives();
+			$itemTable = $this->clearPrimaryKeys($itemTable);
+		}
+
 		$itemTable->check();
 		$itemTable->store(true);
 	}

@@ -134,33 +134,50 @@ class ManyToManyRelation extends AbstractRelationHandler
 				$originMap = false;
 			}
 
-			// If action is CASCADE or SET NULL, delete origin map.
-			// If CASCADE, we will create new map later.
-			if ($this->onUpdate == Action::CASCADE || $this->onUpdate == Action::SET_NULL)
+			// If flush set true, delete all maps then re-create new.
+			if ($this->flush)
 			{
-				// Delete old same item
 				$query = $this->db->getQuery(true)
 					->delete($mapTableName);
 
-				$query = QueryHelper::buildWheres($query, (array) $map);
+				foreach ($this->mapFks as $field => $foreign)
+				{
+					$query->where($query->format('%n = %q', $foreign, $this->parent->$field));
+				}
 
 				$this->db->setQuery($query)->execute();
 			}
-
-			// If parent changed and action is SET NULL, delete all old maps by temp
-			if ($this->onUpdate == Action::SET_NULL && $this->changed($originMap))
+			// If not flush, we see actions to decide what should we do.
+			else
 			{
-				foreach ($this->mapTemps as $mapTemp)
+				// If action is CASCADE or SET NULL, delete origin map.
+				// If CASCADE, we will create new map later.
+				if ($this->onUpdate == Action::CASCADE || $this->onUpdate == Action::SET_NULL)
 				{
+					// Delete old same item
 					$query = $this->db->getQuery(true)
 						->delete($mapTableName);
 
-					$query = QueryHelper::buildWheres($query, $mapTemp->dump());
+					$query = QueryHelper::buildWheres($query, (array) $map);
 
 					$this->db->setQuery($query)->execute();
 				}
 
-				continue;
+				// If parent changed and action is SET NULL, delete all old maps by temp
+				if ($this->onUpdate == Action::SET_NULL && $this->changed($originMap))
+				{
+					foreach ($this->mapTemps as $mapTemp)
+					{
+						$query = $this->db->getQuery(true)
+							->delete($mapTableName);
+
+						$query = QueryHelper::buildWheres($query, $mapTemp->dump());
+
+						$this->db->setQuery($query)->execute();
+					}
+
+					continue;
+				}
 			}
 
 			// If action is CASCADE, create a new map.

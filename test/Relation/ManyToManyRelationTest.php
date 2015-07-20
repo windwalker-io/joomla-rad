@@ -32,7 +32,7 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  StubTableSakura
 	 */
-	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
+	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE, $flush = false)
 	{
 		$location = new StubTableSakura(\JFactory::getDbo());
 
@@ -40,7 +40,8 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 			->mappingTable(static::TABLE_SAKURA_ROSE_MAPS, array('id' => 'sakura_id'))
 			->targetTable(new StubTableRose, array('rose_id' => 'id'))
 			->onUpdate($onUpdate)
-			->onDelete($onDelete);
+			->onDelete($onDelete)
+			->flush($flush);
 
 		return $location;
 	}
@@ -261,5 +262,30 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 		$this->assertTrue(DataMapperFacade::findOne(static::TABLE_SAKURAS, 12)->isNull());
 		$this->assertEquals(array(), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 12))->rose_id);
 		$this->assertTrue(DataMapperFacade::find(static::TABLE_ROSES, array('id' => array(25, 15, 8, 16, 24)))->notNull());
+	}
+
+	/**
+	 * testUpdateFlush
+	 *
+	 * @return  void
+	 *
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
+	 */
+	public function testUpdateFlush()
+	{
+		$sakura = $this->createTestTable(Action::CASCADE, Action::CASCADE, true);
+
+		$sakura->load(15);
+
+		$sakura->state = 7;
+
+		$sakura->store();
+
+		$sakura2 = $this->createTestTable(Action::CASCADE, Action::CASCADE, true);
+
+		$sakura2->load(15);
+
+		$this->assertEquals(7, $sakura2->state);
+		$this->assertNotEquals($sakura->roses->id, $sakura2->roses->id);
 	}
 }

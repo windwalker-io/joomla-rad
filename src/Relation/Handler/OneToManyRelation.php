@@ -50,10 +50,20 @@ class OneToManyRelation extends AbstractRelationHandler
 			throw new \InvalidArgumentException('Relation items should be array or iterator.');
 		}
 
+		if ($this->flush)
+		{
+			$this->deleteAllRelatives();
+		}
+
 		foreach ($items as $item)
 		{
 			$itemTable = $this->convertToTable($item);
 			$itemTable = $this->handleUpdateRelations($itemTable);
+
+			if ($this->flush)
+			{
+				$itemTable = $this->clearPrimaryKeys($itemTable);
+			}
 
 			$itemTable->check();
 			$itemTable->store(true);

@@ -8,6 +8,7 @@
 
 namespace Windwalker\Relation;
 
+use Windwalker\Relation\Handler\AbstractRelationHandler;
 use Windwalker\Relation\Handler\ManyToManyRelation;
 use Windwalker\Relation\Handler\ManyToOneRelation;
 use Windwalker\Relation\Handler\OneToManyRelation;
@@ -193,6 +194,47 @@ class Relation implements RelationHandlerInterface
 		{
 			$relation->delete();
 		}
+	}
+
+	/**
+	 * getRelation
+	 *
+	 * @param string $field
+	 *
+	 * @return  AbstractRelationHandler
+	 */
+	public function getRelation($field)
+	{
+		if (empty($this->relations[$field]))
+		{
+			return null;
+		}
+
+		return $this->relations[$field];
+	}
+
+	/**
+	 * Method to get property Relations
+	 *
+	 * @return  Handler\RelationHandlerInterface[]
+	 */
+	public function getRelations()
+	{
+		return $this->relations;
+	}
+
+	/**
+	 * Method to set property relations
+	 *
+	 * @param   Handler\RelationHandlerInterface[] $relations
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setRelations($relations)
+	{
+		$this->relations = $relations;
+
+		return $this;
 	}
 
 	/**

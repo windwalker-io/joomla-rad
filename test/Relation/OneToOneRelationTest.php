@@ -30,11 +30,14 @@ class OneToOneRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  StubTableLocation
 	 */
-	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
+	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE, $flush = false)
 	{
 		$location = new StubTableLocation(\JFactory::getDbo());
 
-		$location->_relation->addOneToOne('data', new Table(static::TABLE_LOCATION_DATA), array('id' => 'location_id'), $onUpdate, $onDelete);
+		$location->_relation->getRelation('data')
+			->onUpdate($onUpdate)
+			->onDelete($onDelete)
+			->flush($flush);
 
 		return $location;
 	}
@@ -246,5 +249,30 @@ class OneToOneRelationTest extends AbstractDatabaseTestCase
 		$this->assertEquals(10, $dataId);
 		$this->assertTrue(DataMapperFacade::findOne(static::TABLE_LOCATIONS, 5)->isNull());
 		$this->assertNull(DataMapperFacade::findOne(static::TABLE_LOCATION_DATA, $dataId)->location_id);
+	}
+
+	/**
+	 * testUpdateFlush
+	 *
+	 * @return  void
+	 *
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
+	 */
+	public function testUpdateFlush()
+	{
+		$location = $this->createTestTable(Action::CASCADE, Action::CASCADE, true);
+
+		$location->load(1);
+
+		$location->state = 7;
+
+		$location->store();
+
+		$location2 = $this->createTestTable(Action::CASCADE, Action::CASCADE, true);
+
+		$location2->load(1);
+
+		$this->assertEquals(7, $location2->state);
+		$this->assertEquals(12, $location2->data->id);
 	}
 }

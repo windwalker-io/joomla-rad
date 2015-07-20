@@ -29,15 +29,16 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 *
 	 * @param string $onUpdate
 	 * @param string $onDelete
+	 * @param bool   $flush
 	 *
-	 * @return  Table
+	 * @return Table
 	 */
-	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
+	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE, $flush = false)
 	{
 		$location = new Table(static::TABLE_LOCATIONS, 'id', \JFactory::getDbo());
 
-		$location->_relation->addOneToMany('sakuras', new StubTableSakura, array('id' => 'location'), $onUpdate, $onDelete);
-		$location->_relation->addOneToMany('roses', new StubTableRose, array('id' => 'location'), $onUpdate, $onDelete);
+		$location->_relation->addOneToMany('sakuras', new StubTableSakura, array('id' => 'location'), $onUpdate, $onDelete, array('flush' => $flush));
+		$location->_relation->addOneToMany('roses', new StubTableRose, array('id' => 'location'), $onUpdate, $onDelete, array('flush' => $flush));
 
 		return $location;
 	}
@@ -299,5 +300,30 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 
 		$this->assertEquals(array(0, 0, 0, 0, 0), $sakuras->location);
 		$this->assertEquals(array(0, 0, 0, 0, 0), $roses->location);
+	}
+
+	/**
+	 * testUpdateFlush
+	 *
+	 * @return  void
+	 *
+	 * @covers  \Windwalker\Relation\Handler\OneToManyRelation::store
+	 */
+	public function testUpdateFlush()
+	{
+		$location = $this->createTestTable(Action::CASCADE, Action::CASCADE, true);
+
+		$location->load(4);
+
+		$location->state = 7;
+
+		$location->store();
+
+		$location2 = $this->createTestTable(Action::CASCADE, Action::CASCADE, true);
+
+		$location2->load(4);
+
+		$this->assertEquals(7, $location2->state);
+		$this->assertEquals(array(28, 29, 30, 31, 32), $location2->roses->id);
 	}
 }

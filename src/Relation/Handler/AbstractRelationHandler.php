@@ -92,6 +92,13 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	protected $prefix;
 
 	/**
+	 * Property flush.
+	 *
+	 * @var  boolean
+	 */
+	protected $flush = false;
+
+	/**
 	 * Class init.
 	 *
 	 * @param Table   $parent    The parent table od this relation.
@@ -112,6 +119,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 		$this->onDelete = $onDelete ? : Action::CASCADE;
 		$this->field    = $field;
 		$this->options  = $options;
+		$this->flush    = $this->getOption('flush', $this->flush);
 
 		$this->db = $this->db ? : \JFactory::getDbo();
 	}
@@ -136,6 +144,27 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	public function setParentFieldValue($value)
 	{
 		$this->parent->{$this->field} = $value;
+
+		return $this;
+	}
+
+	/**
+	 * deleteAllRelatives
+	 *
+	 * @return  static
+	 */
+	public function deleteAllRelatives()
+	{
+		$query = $this->db->getQuery(true);
+
+		foreach ($this->fks as $field => $foreign)
+		{
+			$query->where($query->format('%n = %q', $foreign, $this->parent->$field));
+		}
+
+		$query->delete($this->table->getTableName());
+
+		$this->db->setQuery($query)->execute();
 
 		return $this;
 	}
@@ -321,6 +350,23 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 		}
 
 		return $dataset;
+	}
+
+	/**
+	 * clearPrimaryKeys
+	 *
+	 * @param \JTable $itemTable
+	 *
+	 * @return  \JTable
+	 */
+	public function clearPrimaryKeys(\JTable $itemTable)
+	{
+		foreach ($itemTable->getKeyName(true) as $key)
+		{
+			$itemTable->$key = null;
+		}
+
+		return $itemTable;
 	}
 
 	/**
@@ -561,6 +607,39 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	}
 
 	/**
+	 * getOption
+	 *
+	 * @param string $name
+	 * @param mixed  $default
+	 *
+	 * @return  mixed
+	 */
+	public function getOption($name, $default = null)
+	{
+		if (empty($this->options[$name]))
+		{
+			return $default;
+		}
+
+		return $this->options[$name];
+	}
+
+	/**
+	 * setOption
+	 *
+	 * @param string $name
+	 * @param mixed  $value
+	 *
+	 * @return  static
+	 */
+	public function setOption($name, $value)
+	{
+		$this->options[$name] = $value;
+
+		return $this;
+	}
+
+	/**
 	 * Method to get property Options
 	 *
 	 * @return  array
@@ -628,6 +707,30 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	public function setDb($db)
 	{
 		$this->db = $db;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Flush
+	 *
+	 * @return  boolean
+	 */
+	public function getFlush()
+	{
+		return $this->flush;
+	}
+
+	/**
+	 * Method to set property flush
+	 *
+	 * @param   boolean $flush
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function flush($flush)
+	{
+		$this->flush = $flush;
 
 		return $this;
 	}
