@@ -37,10 +37,6 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$app        = new TestApplication;
-		$app->input = new \JInput;
-
-		TestContainerHelper::setApplication($app);
 	}
 
 	/**
@@ -69,13 +65,14 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 
 		// Load protected property
 		$loadedProp = $bootstrap->getProperty('loaded');
+
 		$loadedProp->setAccessible(true);
 
 		// Get value from protected property '$loaded'
 		$loaded = $loadedProp->getValue('JHtmlBootstrap');
 
 		// Test if JHtmlBootstrap::modal did executed
-		$this->assertEquals(true, isset($loaded['JHtmlBootstrap::modal']));
+		$this->assertArrayHasKey('JHtmlBootstrap::modal', $loaded);
 	}
 
 	/**
@@ -99,7 +96,8 @@ class ModalHelperTest extends \PHPUnit_Framework_TestCase
 		$expected = <<<HTML
 <a data-toggle="modal" data-target="#{$selector}" id="{$selector}_link" class="cursor-pointer">
 	<i class="" title="{$title}"></i>
-{$title}</a>
+	{$title}
+</a>
 HTML;
 
 		$this->assertEquals($expected, ModalHelper::modalLink($title, $selector));
@@ -116,7 +114,8 @@ HTML;
 		$expected = <<<HTML
 <{$tag} data-toggle="modal" data-target="#{$selector}" id="{$id}" class="{$class} cursor-pointer" onclick="{$onclick}">
 	<i class="{$icon}" title="{$title}"></i>
-{$title}</{$tag}>
+	{$title}
+</{$tag}>
 HTML;
 
 		$this->assertEquals($expected, ModalHelper::modalLink($title, $selector, $option));
@@ -135,6 +134,7 @@ HTML;
 
 		// Load protected property
 		$loadedProp = $bootstrap->getProperty('loaded');
+
 		$loadedProp->setAccessible(true);
 
 		// Get value from protected property '$loaded'
@@ -167,7 +167,8 @@ HTML;
 		$this->assertEquals($expected, ModalHelper::renderModal($selector, $option['content'], $option));
 
 		// Test if JHtmlBootstrap::modal did executed
-		$this->assertEquals(true, isset($loaded['JHtmlBootstrap::modal']));
+		$this->assertArrayHasKey('JHtmlBootstrap::modal', $loaded);
+		show($loaded);
 	}
 
 	/**
@@ -181,7 +182,7 @@ HTML;
 	{
 		$id = 'stubQuickaddForm';
 
-		$pathToQuickaddForm = 'libraries/windwalker/test/Helper/stubQuickaddForm.xml';
+		$pathToQuickaddForm = 'libraries/windwalker/test/Helper/stub/stubQuickaddForm.xml';
 
 		$expectedForm = "
 <div class=\"control-group\" id=\"{$id}_title-wrap\">

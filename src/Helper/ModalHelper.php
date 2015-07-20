@@ -56,7 +56,8 @@ class ModalHelper
 		$button = <<<HTML
 <{$tag} data-toggle="modal" data-target="#$selector"{$id}{$class}{$onclick}>
 	<i class="{$icon}" title="$title"></i>
-$title</{$tag}>
+	$title
+</{$tag}>
 HTML;
 
 		return $button;
