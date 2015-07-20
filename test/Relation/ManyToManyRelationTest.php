@@ -30,7 +30,7 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 * @param string $onUpdate
 	 * @param string $onDelete
 	 *
-	 * @return  StubTableLocation
+	 * @return  StubTableSakura
 	 */
 	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
 	{
@@ -206,7 +206,17 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testDelete()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable();
+
+		$sakura->load(6);
+
+		$this->assertEquals(array(12, 16, 4, 2, 18, 19), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 6))->rose_id);
+
+		$sakura->delete();
+
+		$this->assertTrue(DataMapperFacade::findOne(static::TABLE_SAKURAS, 6)->isNull());
+		$this->assertEquals(array(), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 6))->rose_id);
+		$this->assertTrue(DataMapperFacade::find(static::TABLE_ROSES, array('id' => array(12, 16, 4, 2, 18, 19)))->isNull());
 	}
 
 	/**
@@ -218,7 +228,17 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testDeleteNoAction()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable(null, Action::NO_ACTION);
+
+		$sakura->load(7);
+
+		$this->assertEquals(array(11, 1, 14), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 7))->rose_id);
+
+		$sakura->delete();
+
+		$this->assertTrue(DataMapperFacade::findOne(static::TABLE_SAKURAS, 7)->isNull());
+		$this->assertEquals(array(11, 1, 14), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 7))->rose_id);
+		$this->assertTrue(DataMapperFacade::find(static::TABLE_ROSES, array('id' => array(11, 1, 14)))->notNull());
 	}
 
 	/**
@@ -230,6 +250,16 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testDeleteSetNull()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable(null, Action::SET_NULL);
+
+		$sakura->load(12);
+
+		$this->assertEquals(array(25, 15, 8, 16, 24), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 12))->rose_id);
+
+		$sakura->delete();
+
+		$this->assertTrue(DataMapperFacade::findOne(static::TABLE_SAKURAS, 12)->isNull());
+		$this->assertEquals(array(), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 12))->rose_id);
+		$this->assertTrue(DataMapperFacade::find(static::TABLE_ROSES, array('id' => array(25, 15, 8, 16, 24)))->notNull());
 	}
 }

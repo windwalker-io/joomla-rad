@@ -8,6 +8,7 @@
 
 namespace Windwalker\Relation\Handler;
 
+use Windwalker\Data\DataSet;
 use Windwalker\Model\Helper\QueryHelper;
 use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
@@ -32,6 +33,13 @@ class ManyToManyRelation extends AbstractRelationHandler
 	 * @var  array
 	 */
 	protected $mapFks;
+
+	/**
+	 * Property mapTemps.
+	 *
+	 * @var  DataSet
+	 */
+	protected $mapTemps = array();
 
 	/**
 	 * Class init.
@@ -62,6 +70,8 @@ class ManyToManyRelation extends AbstractRelationHandler
 	public function load()
 	{
 		$maps = $this->db->setQuery($this->buildMapQuery())->loadObjectList();
+
+		$this->mapTemps = new DataSet($maps);
 
 		$items = $maps ? $this->db->setQuery($this->buildTargetQuery($maps))->loadObjectList() : array();
 
@@ -98,16 +108,19 @@ class ManyToManyRelation extends AbstractRelationHandler
 
 			$map = new \stdClass;
 
+			// Prepare parent table and map table mapping
 			foreach ($this->mapFks as $field => $foreign)
 			{
 				$map->$foreign = $this->parent->$field;
 			}
 
+			// Prepare map table and target table mapping
 			foreach ($this->fks as $field => $foreign)
 			{
 				$map->$field = $itemTable->$foreign;
 			}
 
+			// If map not empty, get the origin map from database.
 			if ((array) $map)
 			{
 				$query = $this->db->getQuery(true)
@@ -121,7 +134,8 @@ class ManyToManyRelation extends AbstractRelationHandler
 				$originMap = false;
 			}
 
-			// If is CASCADE or SET NULL, delete map.
+			// If action is CASCADE or SET NULL, delete origin map.
+			// If CASCADE, we will create new map later.
 			if ($this->onUpdate == Action::CASCADE || $this->onUpdate == Action::SET_NULL)
 			{
 				// Delete old same item
@@ -133,12 +147,23 @@ class ManyToManyRelation extends AbstractRelationHandler
 				$this->db->setQuery($query)->execute();
 			}
 
+			// If parent changed and action is SET NULL, delete all old maps by temp
 			if ($this->onUpdate == Action::SET_NULL && $this->changed($originMap))
 			{
+				foreach ($this->mapTemps as $mapTemp)
+				{
+					$query = $this->db->getQuery(true)
+						->delete($mapTableName);
+
+					$query = QueryHelper::buildWheres($query, $mapTemp->dump());
+
+					$this->db->setQuery($query)->execute();
+				}
+
 				continue;
 			}
 
-			// If is cascade, create a new map
+			// If action is CASCADE, create a new map.
 			if ($this->onUpdate == Action::CASCADE)
 			{
 				$this->db->insertObject($mapTableName, $map);
@@ -155,7 +180,48 @@ class ManyToManyRelation extends AbstractRelationHandler
 	 */
 	public function delete()
 	{
+		if ($this->onUpdate == Action::NO_ACTION || $this->onUpdate == Action::RESTRICT)
+		{
+			return;
+		}
 
+		$items = $this->getParentFieldValue();
+
+		if (!is_array($items) && !($items instanceof \Traversable))
+		{
+			throw new \InvalidArgumentException('Relation items should be array or iterator.');
+		}
+
+		foreach ($items as $item)
+		{
+			$itemTable = $this->convertToTable($item);
+
+			if ($this->onDelete == Action::CASCADE)
+			{
+				$itemTable->delete();
+			}
+
+			$mapTableName = $this->map->getTableName();
+
+			$map = new \stdClass;
+
+			// Prepare parent table and map table mapping
+			foreach ($this->mapFks as $field => $foreign)
+			{
+				$map->$foreign = $this->parent->$field;
+			}
+
+			// If action is SET NULL, delete all old maps by temp
+			if ($this->onDelete == Action::SET_NULL || $this->onDelete == Action::CASCADE)
+			{
+				$query = $this->db->getQuery(true)
+					->delete($mapTableName);
+
+				$query = QueryHelper::buildWheres($query, (array) $map);
+
+				$this->db->setQuery($query)->execute();
+			}
+		}
 	}
 
 	/**

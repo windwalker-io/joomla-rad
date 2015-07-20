@@ -29,7 +29,7 @@ class ManyRoOneRelationTest extends AbstractDatabaseTestCase
 	 * @param string $onUpdate
 	 * @param string $onDelete
 	 *
-	 * @return  StubTableLocation
+	 * @return  StubTableSakura
 	 */
 	protected function createTestTable($onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION)
 	{

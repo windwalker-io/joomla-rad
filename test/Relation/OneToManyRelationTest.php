@@ -30,7 +30,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 	 * @param string $onUpdate
 	 * @param string $onDelete
 	 *
-	 * @return  StubTableLocation
+	 * @return  Table
 	 */
 	protected function createTestTable($onUpdate = Action::CASCADE, $onDelete = Action::CASCADE)
 	{
