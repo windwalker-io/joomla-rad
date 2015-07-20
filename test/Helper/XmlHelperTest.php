@@ -20,6 +20,11 @@ class XmlHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Method test of get()
 	 *
+	 * @param \SimpleXMLElement $element
+	 * @param string            $attr
+	 * @param string            $value
+	 * @param string            $expected
+	 *
 	 * @return  void
 	 *
 	 * @dataProvider elementProvider
@@ -35,6 +40,9 @@ class XmlHelperTest extends \PHPUnit_Framework_TestCase
 
 	/**
 	 * testBoolForTrue
+	 *
+	 * @param \SimpleXMLElement $element
+	 * @param string            $attr
 	 *
 	 * @return  void
 	 *
@@ -52,6 +60,10 @@ class XmlHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * testBoolForFalse
 	 *
+	 * @param \SimpleXMLElement $element
+	 * @param string            $attr
+	 * @param string            $expected
+	 *
 	 * @return  void
 	 *
 	 * @dataProvider elementForFalseProvider
@@ -68,6 +80,9 @@ class XmlHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * testGetFalse
 	 *
+	 * @param \SimpleXMLElement $element
+	 * @param string            $attr
+	 *
 	 * @return  void
 	 *
 	 * @dataProvider elementForTrueProvider
@@ -82,20 +97,19 @@ class XmlHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * testAttributes
+	 * testGetAttributes
 	 *
 	 * @return  void
 	 *
 	 * @covers \Windwalker\Helper\XmlHelper::getAttributes
 	 */
-	public function testAttributes()
+	public function testGetAttributes()
 	{
 		$document = '<xml>
 					   <nikon type="camera" price="40000" store="20" color="black">D850</nikon>
 					</xml>';
 
 		$element = new \SimpleXMLElement($document);
-
 
 		$getAttributes = XmlHelper::getAttributes($element->nikon);
 
