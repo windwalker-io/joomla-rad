@@ -238,6 +238,30 @@ class Relation implements RelationHandlerInterface
 	}
 
 	/**
+	 * Method to get property Parent
+	 *
+	 * @return  Table
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * Method to set property parent
+	 *
+	 * @param   Table $parent
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setParent($parent)
+	{
+		$this->parent = $parent;
+
+		return $this;
+	}
+
+	/**
 	 * Get Table object.
 	 *
 	 * @param   string  $table   The table name.
