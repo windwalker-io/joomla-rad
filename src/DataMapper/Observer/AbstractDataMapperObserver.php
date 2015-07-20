@@ -9,10 +9,10 @@
 namespace Windwalker\DataMapper\Observer;
 
 use Joomla\Registry\Registry;
-use Windwalker\DataMapper\Observer\AbstractObservableDataMapper;
+use Windwalker\DataMapper\AbstractObservableDataMapper;
 
 /**
- * The AbstractDataMapperObserver class.
+ * An observer for ObservableDataMapper
  * 
  * @since  {DEPLOY_VERSION}
  */

@@ -71,6 +71,6 @@ class ManyToOneRelation extends AbstractRelationHandler
 	 */
 	public function delete()
 	{
-		// Many to one relation do not support store now.
+		// Many to one relation do not support delete now.
 	}
 }

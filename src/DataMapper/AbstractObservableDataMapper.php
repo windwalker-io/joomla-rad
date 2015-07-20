@@ -6,19 +6,19 @@
  * @license    GNU General Public License version 2 or later;
  */
 
-namespace Windwalker\DataMapper\Observer;
+namespace Windwalker\DataMapper;
 
 use JObserverInterface;
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 use Windwalker\DataMapper\Adapter\DatabaseAdapterInterface;
-use Windwalker\DataMapper\DataMapper;
+use Windwalker\DataMapper\Observer\RelationObserver;
 use Windwalker\Joomla\Database\JoomlaAdapter;
 use Windwalker\Relation\Relation;
 use Windwalker\Table\Table;
 
 /**
- * The AbstractObserverableDataMapper class.
+ * An observable DataMapper, we can add many observers to this object and trigger them when CRUD.
  *
  * @property-read  Relation  $relation  The Relation object.
  * 
@@ -423,7 +423,7 @@ class AbstractObservableDataMapper extends DataMapper implements \JObservableInt
 	}
 
 	/**
-	 * __get
+	 * Magic method to get protected property.
 	 *
 	 * @param string $name
 	 *

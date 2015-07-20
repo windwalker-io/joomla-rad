@@ -16,7 +16,7 @@ use Windwalker\Table\Table;
 use Windwalker\Utilities\ArrayHelper;
 
 /**
- * The RelationObserver class.
+ * An observer to help DataMapper handle relations.
  * 
  * @since  {DEPLOY_VERSION}
  */
@@ -54,7 +54,7 @@ class RelationObserver extends AbstractDataMapperObserver
 	}
 
 	/**
-	 * onAfterConstruction
+	 * Pass Relation object to Parent Table.
 	 *
 	 * @return  void
 	 */

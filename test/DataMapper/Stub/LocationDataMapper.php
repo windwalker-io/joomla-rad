@@ -9,7 +9,7 @@
 namespace Windwalker\Test\DataMapper\Stub;
 
 use Windwalker\DataMapper\Adapter\DatabaseAdapterInterface;
-use Windwalker\DataMapper\Observer\AbstractObservableDataMapper;
+use Windwalker\DataMapper\AbstractObservableDataMapper;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 
 /**
