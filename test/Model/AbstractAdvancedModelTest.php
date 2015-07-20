@@ -116,7 +116,7 @@ class AbstractAdvancedModelTest extends \PHPUnit_Framework_TestCase
 		$db = \JFactory::getDbo();
 		$sqls = file_get_contents(__DIR__ . '/sql/install.advanced-model.sql');
 
-		foreach (explode(';', $sqls) as $sql)
+		foreach ($db->splitSql($sqls) as $sql)
 		{
 			$sql = trim($sql);
 
