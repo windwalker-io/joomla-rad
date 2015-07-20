@@ -29,9 +29,6 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 		TestHelper::setValue('JUri', 'base', array());
 
 		\JFactory::getConfig()->set('live_site', 'http://php.localhost/flower/sakura');
-
-		$_SERVER['HTTP_HOST'] = 'php.localhost';
-		$_SERVER['REQUEST_URI'] = '/flower/sakura';
 	}
 
 	/**
@@ -43,9 +40,6 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 		TestHelper::setValue('Juri', 'base', array());
-
-		unset($_SERVER['HTTP_HOST']);
-		unset($_SERVER['REQUEST_URI']);
 
 		\JFactory::getConfig()->set('live_site', null);
 	}
