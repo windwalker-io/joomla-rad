@@ -87,7 +87,7 @@ class AbstractAdvancedModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetParams()
 	{
-		$model = new StubModelAdvanced();
+		$model = new StubModelAdvanced;
 
 		// Test case #1: Make sure initial params is null
 		$this->assertNull(TestHelper::getValue($model, 'params'));
@@ -157,7 +157,7 @@ class AbstractAdvancedModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetCategoryWithAssignedProperty()
 	{
-		$model = new StubModelAdvanced();
+		$model = new StubModelAdvanced;
 
 		$category = new Data(array('id' => 30001, 'title' => 'foobar'));
 
