@@ -262,20 +262,16 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 */
 	public function changed($itemTable)
 	{
-		$changed = false;
-
 		// If any key changed, set all fields as NULL.
 		foreach ($this->fks as $field => $foreign)
 		{
 			if ($itemTable->$foreign != $this->parent->$field)
 			{
-				$changed = true;
-
-				break;
+				return true;
 			}
 		}
 
-		return $changed;
+		return false;
 	}
 
 	/**

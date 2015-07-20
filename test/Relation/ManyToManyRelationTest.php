@@ -11,6 +11,7 @@ namespace Windwalker\Test\Relation;
 use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\Relation\Action;
+use Windwalker\Relation\Handler\ManyToManyRelation;
 use Windwalker\Table\Table;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\Relation\Stub\StubTableLocation;
@@ -287,5 +288,74 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 
 		$this->assertEquals(7, $sakura2->state);
 		$this->assertNotEquals($sakura->roses->id, $sakura2->roses->id);
+	}
+
+	/**
+	 * testBuildMapQuery
+	 *
+	 * @return  void
+	 */
+	public function testBuildMapQuery()
+	{
+		$sakura = $this->createTestTable();
+
+		$sakura->load(17);
+		$sakura->state = 5;
+
+		/** @var ManyToManyRelation $relation */
+		$relation = $sakura->_relation->getRelation('roses');
+
+		$relation->mappingTableForeignKeys(array('id' => 'sakura_id', 'state' => 'rose_id'));
+
+		$sql = <<<SQL
+SELECT *
+FROM #__testflower_sakura_rose_maps
+WHERE `sakura_id` = '17' AND `rose_id` = '5'
+SQL;
+
+		$this->assertStringDataEquals($sql, (string) $relation->buildMapQuery());
+	}
+
+	/**
+	 * testBuildTargetQuery
+	 *
+	 * @return  void
+	 */
+	public function testBuildTargetQuery()
+	{
+		$sakura = $this->createTestTable();
+
+		$sakura->load(17);
+		$sakura->state = 5;
+
+		/** @var ManyToManyRelation $relation */
+		$relation = $sakura->_relation->getRelation('roses');
+		$relation->foreignKeys(array('id' => 'sakura_id', 'state' => 'rose_id'));
+
+		$mapping = array(
+			(object) array(
+				'id' => 1,
+				'state' => 2
+			),
+			(object) array(
+				'id' => 3,
+				'state' => 4
+			),
+			(object) array(
+				'id' => 5,
+				'state' => 6
+			),
+		);
+
+		$sql = <<<SQL
+SELECT *
+FROM #__testflower_roses
+WHERE
+(`sakura_id` = '1' AND `rose_id` = '2') OR
+(`sakura_id` = '3' AND `rose_id` = '4') OR
+(`sakura_id` = '5' AND `rose_id` = '6')
+SQL;
+
+		$this->assertStringDataEquals($sql, (string) $relation->buildTargetQuery($mapping));
 	}
 }
