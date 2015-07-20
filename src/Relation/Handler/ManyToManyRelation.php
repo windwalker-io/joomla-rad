@@ -63,7 +63,7 @@ class ManyToManyRelation extends AbstractRelationHandler
 	{
 		$maps = $this->db->setQuery($this->buildMapQuery())->loadObjectList();
 
-		$items = $this->db->setQuery($this->buildTargetQuery($maps))->loadObjectList();
+		$items = $maps ? $this->db->setQuery($this->buildTargetQuery($maps))->loadObjectList() : array();
 
 		$this->setParentFieldValue($this->convertToDataSet($items));
 	}
@@ -77,7 +77,73 @@ class ManyToManyRelation extends AbstractRelationHandler
 	 */
 	public function store()
 	{
+		if ($this->onUpdate == Action::NO_ACTION || $this->onUpdate == Action::RESTRICT)
+		{
+			return;
+		}
 
+		$items = $this->getParentFieldValue();
+
+		if (!is_array($items) && !($items instanceof \Traversable))
+		{
+			throw new \InvalidArgumentException('Relation items should be array or iterator.');
+		}
+
+		foreach ($items as $item)
+		{
+			$itemTable = $this->convertToTable($item);
+			$itemTable->check();
+			$itemTable->store(true);
+			$mapTableName = $this->map->getTableName();
+
+			$map = new \stdClass;
+
+			foreach ($this->mapFks as $field => $foreign)
+			{
+				$map->$foreign = $this->parent->$field;
+			}
+
+			foreach ($this->fks as $field => $foreign)
+			{
+				$map->$field = $itemTable->$foreign;
+			}
+
+			if ((array) $map)
+			{
+				$query = $this->db->getQuery(true)
+					->select('*')
+					->from($mapTableName);
+
+				$originMap = $this->db->setQuery(QueryHelper::buildWheres($query, (array) $map))->loadObject();
+			}
+			else
+			{
+				$originMap = false;
+			}
+
+			// If is CASCADE or SET NULL, delete map.
+			if ($this->onUpdate == Action::CASCADE || $this->onUpdate == Action::SET_NULL)
+			{
+				// Delete old same item
+				$query = $this->db->getQuery(true)
+					->delete($mapTableName);
+
+				$query = QueryHelper::buildWheres($query, (array) $map);
+
+				$this->db->setQuery($query)->execute();
+			}
+
+			if ($this->onUpdate == Action::SET_NULL && $this->changed($originMap))
+			{
+				continue;
+			}
+
+			// If is cascade, create a new map
+			if ($this->onUpdate == Action::CASCADE)
+			{
+				$this->db->insertObject($mapTableName, $map);
+			}
+		}
 	}
 
 	/**
@@ -121,9 +187,10 @@ class ManyToManyRelation extends AbstractRelationHandler
 	/**
 	 * Build query for load operation.
 	 *
-	 * @param   \JDatabaseQuery  $query  The query object to handle.
+	 * @param   \stdClass[]     $mapping  The mapping data.
+	 * @param   \JDatabaseQuery $query    The query object to handle.
 	 *
-	 * @return  \JDatabaseQuery  Return handled query object.
+	 * @return  \JDatabaseQuery Return handled query object.
 	 */
 	public function buildTargetQuery($mapping, \JDatabaseQuery $query = null)
 	{
@@ -149,6 +216,32 @@ class ManyToManyRelation extends AbstractRelationHandler
 			->where($conditions);
 
 		return $query;
+	}
+
+	/**
+	 * Is fields changed. If any field changed, means we have to do something to children.
+	 *
+	 * @param   \JTable  $map  The child table to be handled.
+	 *
+	 * @return  boolean  Something changed of not.
+	 */
+	public function changed($map)
+	{
+		if (!$map)
+		{
+			return true;
+		}
+
+		// If any key changed, set all fields as NULL.
+		foreach ($this->mapFks as $field => $foreign)
+		{
+			if ($map->$foreign != $this->parent->$field)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

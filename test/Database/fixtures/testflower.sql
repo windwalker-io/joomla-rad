@@ -119,7 +119,6 @@ INSERT INTO `#__testflower_sakura_rose_maps` (`sakura_id`, `rose_id`) VALUES
 (2, 3),
 (3, 16),
 (3, 25),
-(3, 25),
 (4, 21),
 (4, 24),
 (4, 4),

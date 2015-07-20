@@ -72,7 +72,30 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testCreate()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable();
+
+		$sakura->title = 'Sakura X';
+		$sakura->state = 5;
+
+		$rose1 = new Data;
+		$rose1->title = 'Rose Y';
+		$rose1->state = 1;
+
+		$rose2 = new Data;
+		$rose2->title = 'Rose Z';
+		$rose2->state = 2;
+
+		$sakura->roses = array($rose1, $rose2);
+
+		$sakura->store();
+
+		$sakura2 = $this->createTestTable();
+
+		$sakura2->load(array('title' => 'Sakura X'));
+
+		$this->assertEquals(26, $sakura2->id);
+
+		$this->assertEquals(array(26, 27), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 26))->rose_id);
 	}
 
 	/**
@@ -84,7 +107,35 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testUpdate()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable();
+
+		$sakura->load(2);
+
+		// Rose 3
+		$sakura->roses = array($sakura->roses[0]);
+
+		$sakura->state = 5;
+
+		$sakura->store();
+
+		// Make sure we only have one rose_id = 3, that means old map will be delete and create new one.
+		$this->assertEquals(array(4, 19, 12, 22, 23, 25, 3), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 2))->rose_id);
+		$this->assertEquals(5, DataMapperFacade::findOne(static::TABLE_SAKURAS, 2)->state);
+
+		$rose = new Data;
+		$rose->title = 'Rose U';
+		$rose->state = 2;
+
+		$sakura->roses[] = $rose;
+
+		$sakura->roses[0]->state = 7;
+
+		$sakura->store();
+
+		// Create a new map
+		$this->assertEquals(array(4, 19, 12, 22, 23, 25, 3, 28), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 2))->rose_id);
+		$this->assertEquals('Rose U', DataMapperFacade::findOne(static::TABLE_ROSES, array('id' => 28))->title);
+		$this->assertEquals(7, DataMapperFacade::findOne(static::TABLE_ROSES, array('id' => 3))->state);
 	}
 
 	/**
@@ -96,7 +147,32 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testUpdateNoAction()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable(Action::NO_ACTION);
+		$expect = $this->createTestTable(Action::NO_ACTION);
+
+		$sakura->load(3);
+		$expect->load(3);
+
+		$sakura->state = 4;
+
+		$rose = new Data;
+		$rose->title = 'Rose V';
+		$rose->state = 2;
+
+		$sakura->roses[] = $rose;
+
+		$sakura->roses[0]->state = 7;
+		$sakura->roses[1]->state = 7;
+
+		$sakura->store();
+
+		$sakura2 = $this->createTestTable(Action::NO_ACTION);
+
+		$sakura2->load(3);
+
+		$this->assertEquals($expect->roses, $sakura2->roses);
+		$this->assertEquals(array(16, 25), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 3))->rose_id);
+		$this->assertEquals(4, DataMapperFacade::findOne(static::TABLE_SAKURAS, 3)->state);
 	}
 
 	/**
@@ -108,7 +184,17 @@ class ManyToManyRelationTest extends AbstractDatabaseTestCase
 	 */
 	public function testUpdateSetNull()
 	{
-		$this->markTestIncomplete();
+		$sakura = $this->createTestTable(Action::SET_NULL);
+
+		$sakura->load(4);
+
+		$this->assertEquals(array(21, 24, 4, 1), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 4))->rose_id);
+
+		$sakura->id = null;
+
+		$sakura->store();
+
+		$this->assertEquals(array(), DataMapperFacade::find(static::TABLE_SAKURA_ROSE_MAPS, array('sakura_id' => 4 ))->rose_id);
 	}
 
 	/**
