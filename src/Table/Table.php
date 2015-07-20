@@ -10,6 +10,7 @@ namespace Windwalker\Table;
 
 use JTable;
 use Windwalker\DI\Container;
+use Windwalker\Relation\Observer\RelationObserver;
 use Windwalker\Relation\Relation;
 
 /**
@@ -44,7 +45,11 @@ class Table extends \JTable
 		// Prepare Relation handler
 		$this->_relation = new Relation($this, $this->getPrefix());
 
+		RelationObserver::createObserver($this);
+
 		$this->configure();
+
+		$this->_observers->update('onAfterConstruction', array());
 	}
 
 	/**
@@ -77,14 +82,7 @@ class Table extends \JTable
 	 */
 	public function load($keys = null, $reset = true)
 	{
-		if (!($result = parent::load($keys, $reset)))
-		{
-			return $result;
-		}
-
-		$this->_relation->load();
-
-		return $result;
+		return parent::load($keys, $reset);
 	}
 
 	/**
@@ -108,14 +106,7 @@ class Table extends \JTable
 			}
 		}
 
-		if (!$result = parent::store($updateNulls))
-		{
-			return $result;
-		}
-
-		$this->_relation->store();
-
-		return $result;
+		return parent::store($updateNulls);
 	}
 
 	/**
@@ -129,17 +120,7 @@ class Table extends \JTable
 	 */
 	public function delete($pk = null)
 	{
-		$table = clone $this;
-		$table->load($pk);
-
-		if (!$result = parent::delete($pk))
-		{
-			return $result;
-		}
-
-		$table->_relation->delete();
-
-		return $result;
+		return parent::delete($pk);
 	}
 
 	/**
