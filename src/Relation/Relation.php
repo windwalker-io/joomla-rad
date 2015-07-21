@@ -65,9 +65,9 @@ class Relation implements RelationHandlerInterface
 	 * @param string  $onDelete  The action of ON DELETE operation.
 	 * @param array   $options   Some options to configure this relation.
 	 *
-	 * @return  static
+	 * @return  OneToManyRelation
 	 */
-	public function addOneToMany($field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
+	public function addOneToMany($field, $table = null, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
 		$options = array())
 	{
 		$relation = new OneToManyRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
@@ -115,9 +115,9 @@ class Relation implements RelationHandlerInterface
 	 * @param string  $onDelete  The action of ON DELETE operation.
 	 * @param array   $options   Some options to configure this relation.
 	 *
-	 * @return  static
+	 * @return  ManyToOneRelation
 	 */
-	public function addManyToOne($field, $table, $fks = array(), $onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION,
+	public function addManyToOne($field, $table = null, $fks = array(), $onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION,
 		$options = array())
 	{
 		$relation = new ManyToOneRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
@@ -139,9 +139,9 @@ class Relation implements RelationHandlerInterface
 	 * @param string  $onDelete  The action of ON DELETE operation.
 	 * @param array   $options   Some options to configure this relation.
 	 *
-	 * @return  static
+	 * @return  OneToOneRelation
 	 */
-	public function addOneToOne($field, $table, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
+	public function addOneToOne($field, $table = null, $fks = array(), $onUpdate = Action::CASCADE, $onDelete = Action::CASCADE,
 		$options = array())
 	{
 		$relation = new OneToOneRelation($this->parent, $field, $table, $fks, $onUpdate, $onDelete, $options);
