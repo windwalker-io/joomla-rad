@@ -9,7 +9,7 @@
 namespace Windwalker\Test\DataMapper\Stub;
 
 use Windwalker\DataMapper\Adapter\DatabaseAdapterInterface;
-use Windwalker\DataMapper\AbstractObservableDataMapper;
+use Windwalker\DataMapper\ObservableDataMapper;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 
 /**
@@ -17,7 +17,7 @@ use Windwalker\Test\Database\AbstractDatabaseTestCase;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class StubLocationDataMapper extends AbstractObservableDataMapper
+class StubLocationDataMapper extends ObservableDataMapper
 {
 	/**
 	 * Constructor.

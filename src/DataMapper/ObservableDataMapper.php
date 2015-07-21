@@ -24,7 +24,7 @@ use Windwalker\Table\Table;
  * 
  * @since  {DEPLOY_VERSION}
  */
-class AbstractObservableDataMapper extends DataMapper implements \JObservableInterface
+class ObservableDataMapper extends DataMapper implements \JObservableInterface
 {
 	/**
 	 * Property observers.

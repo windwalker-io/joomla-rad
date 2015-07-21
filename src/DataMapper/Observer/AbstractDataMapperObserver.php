@@ -9,7 +9,7 @@
 namespace Windwalker\DataMapper\Observer;
 
 use Joomla\Registry\Registry;
-use Windwalker\DataMapper\AbstractObservableDataMapper;
+use Windwalker\DataMapper\ObservableDataMapper;
 
 /**
  * An observer for ObservableDataMapper
@@ -21,7 +21,7 @@ abstract class AbstractDataMapperObserver implements \JObserverInterface
 	/**
 	 * Property mapper.
 	 *
-	 * @var  AbstractObservableDataMapper
+	 * @var  ObservableDataMapper
 	 */
 	protected $mapper;
 
@@ -35,10 +35,10 @@ abstract class AbstractDataMapperObserver implements \JObserverInterface
 	/**
 	 * Class init.
 	 *
-	 * @param AbstractObservableDataMapper $mapper
+	 * @param ObservableDataMapper $mapper
 	 * @param array                        $params
 	 */
-	public function __construct(AbstractObservableDataMapper $mapper, $params = array())
+	public function __construct(ObservableDataMapper $mapper, $params = array())
 	{
 		$mapper->attachObserver($this);
 		$this->mapper = $mapper;
