@@ -185,10 +185,10 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	public function isHomeDataProvider()
 	{
 		return array(
-			array(true, '/flower/sakura', 'should be home.'),
-			array(true, '/flower/sakura/index.php', 'should be home.'),
-			array(false, '/flower/sakura/bloom.html', 'should not be home.'),
-			array(false, '/flower/sakura/beautiful', 'should not be home.'),
+			array(true, $_SERVER['REQUEST_URI'], 'should be home.'),
+			array(true, $_SERVER['REQUEST_URI'] . '/index.php', 'should be home.'),
+			array(false, $_SERVER['REQUEST_URI'] . '/bloom.html', 'should not be home.'),
+			array(false, $_SERVER['REQUEST_URI'] . '/beautiful', 'should not be home.'),
 		);
 	}
 
@@ -265,18 +265,20 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function pathDataProvider()
 	{
+		$uriBase = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
 		return array(
 			// Not path
 			array('', null),
 
 			// Root relative path
-			array('http://php.localhost/flower/sakura/bloom.html', '/flower/sakura/bloom.html'),
+			array($uriBase . '/bloom.html', '/flower/sakura/bloom.html'),
 
 			// Base relative path
-			array('http://php.localhost/flower/sakura/bloom.html', 'bloom.html'),
+			array($uriBase . '/bloom.html', 'bloom.html'),
 
 			// Full URL
-			array('http://php.localhost/flower/sakura/bloom.html', 'http://php.localhost/flower/sakura/bloom.html'),
+			array($uriBase . '/bloom.html', 'http://php.localhost/flower/sakura/bloom.html'),
 		);
 	}
 }
