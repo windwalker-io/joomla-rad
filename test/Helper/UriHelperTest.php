@@ -278,7 +278,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 			array($uriBase . '/bloom.html', 'bloom.html'),
 
 			// Full URL
-			array($uriBase . '/bloom.html', 'http://php.localhost/flower/sakura/bloom.html'),
+			array($uriBase . '/bloom.html', 'http://rad.windwalker.io/flower/sakura/bloom.html'),
 		);
 	}
 }
