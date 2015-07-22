@@ -265,20 +265,26 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function pathDataProvider()
 	{
-		$uriBase = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		$uriBase = 'http://' . $_SERVER['HTTP_HOST'];
+		$uriBaseTravis = $uriBase;
+
+		if (getenv('TRAVIS') !== false)
+		{
+			$uriBaseTravis .= '/home/travis/.phpenv/versions/' . substr(PHP_VERSION, 0, 3) . '/bin';
+		}
 
 		return array(
 			// Not path
 			array('', null),
 
 			// Root relative path
-			array($uriBase . '/bloom.html', '/flower/sakura/bloom.html'),
+			array($uriBaseTravis . $_SERVER['REQUEST_URI'] . '/bloom.html', '/flower/sakura/bloom.html'),
 
 			// Base relative path
-			array($uriBase . '/bloom.html', 'bloom.html'),
+			array($uriBaseTravis . '/bloom.html', 'bloom.html'),
 
 			// Full URL
-			array($uriBase . '/bloom.html', 'http://rad.windwalker.io/flower/sakura/bloom.html'),
+			array($uriBase . $_SERVER['REQUEST_URI'] . '/bloom.html', 'http://rad.windwalker.io/flower/sakura/bloom.html'),
 		);
 	}
 }
