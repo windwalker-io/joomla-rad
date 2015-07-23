@@ -28,7 +28,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	{
 		TestHelper::setValue('JUri', 'base', array());
 
-		\JFactory::getConfig()->set('live_site', 'http://php.localhost/flower/sakura');
+		\JFactory::getConfig()->set('live_site', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	}
 
 	/**
@@ -40,6 +40,8 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 		TestHelper::setValue('Juri', 'base', array());
+
+		TestHelper::setValue('JUri', 'root', array());
 
 		\JFactory::getConfig()->set('live_site', null);
 	}
@@ -265,26 +267,20 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function pathDataProvider()
 	{
-		$uriBase = 'http://' . $_SERVER['HTTP_HOST'];
-		$uriBaseTravis = $uriBase;
-
-		if (getenv('TRAVIS') !== false)
-		{
-			$uriBaseTravis .= '/home/travis/.phpenv/versions/' . substr(PHP_VERSION, 0, 3) . '/bin';
-		}
+		$expected = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '/bloom.html';
 
 		return array(
 			// Not path
 			array('', null),
 
 			// Root relative path
-			array($uriBaseTravis . $_SERVER['REQUEST_URI'] . '/bloom.html', '/flower/sakura/bloom.html'),
+			array($expected, '/flower/sakura/bloom.html'),
 
 			// Base relative path
-			array($uriBaseTravis . '/bloom.html', 'bloom.html'),
+			array($expected, 'bloom.html'),
 
 			// Full URL
-			array($uriBase . $_SERVER['REQUEST_URI'] . '/bloom.html', 'http://rad.windwalker.io/flower/sakura/bloom.html'),
+			array($expected, 'http://rad.windwalker.io/flower/sakura/bloom.html'),
 		);
 	}
 }
