@@ -77,21 +77,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	public function __construct($config = array(), JoomlaContainer $container = null, Registry $state = null, \JDatabaseDriver $db = null)
 	{
-		$this->prefix = !empty($config['prefix']) ? $config['prefix'] : $this->prefix;
-
-		// Guess the option from the class name (Option)Model(View).
-		if (empty($this->prefix))
-		{
-			$r = null;
-
-			if (!preg_match('/(.*)Model/i', get_class($this), $r))
-			{
-				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
-			}
-
-			$this->prefix = strtolower($r[1]);
-		}
-
+		$this->prefix = $this->getPrefix($config);
 		$this->option = 'com_' . $this->prefix;
 
 		// Guess name
@@ -118,6 +104,35 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 			// Protected method to auto-populate the model state.
 			$this->populateState();
 		}
+	}
+
+	/**
+	 * getPrefix
+	 *
+	 * @param   array  $config  An array of configuration options (name, state, dbo, table_path, ignore_request).
+	 *
+	 * @return  string
+	 *
+	 * @throws \Exception
+	 */
+	public function getPrefix($config = array())
+	{
+		$this->prefix = !empty($config['prefix']) ? $config['prefix'] : $this->prefix;
+
+		// Guess the option from the class name (Option)Model(View).
+		if (empty($this->prefix))
+		{
+			$r = null;
+
+			if (!preg_match('/(.*)Model/i', get_class($this), $r))
+			{
+				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
+			}
+
+			$this->prefix = strtolower($r[1]);
+		}
+
+		return $this->prefix;
 	}
 
 	/**

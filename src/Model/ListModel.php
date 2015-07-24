@@ -112,6 +112,9 @@ class ListModel extends FormModel
 			$this->filterFields[] = '*';
 		}
 
+		$this->prefix = $this->getPrefix($config);
+		$this->option = 'com_' . $this->prefix;
+
 		// Guess name for container
 		$this->name = $this->name ? : JArrayHelper::getValue($config, 'name', $this->getName());
 
