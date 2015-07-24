@@ -327,7 +327,7 @@ class ModuleManager
 		});
 
 		// Windwalker
-		$this->addModule('windwalker', function(Module $module, AssetHelper $asset, $noConflict = true)
+		$this->addModule('windwalker', function(Module $module, AssetHelper $asset)
 		{
 			if ($module->inited())
 			{
