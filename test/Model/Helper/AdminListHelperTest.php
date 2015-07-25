@@ -96,7 +96,6 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 					'baz' => 'baz_val'
 				),
 			)
-
 		);
 	}
 
@@ -106,13 +105,65 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Model\Helper\AdminListHelper::handleSearches
-	 * @TODO   Implement testHandleSearches().
+	 *
+	 * @param array $searches
+	 * @param array $filterFields
+	 * @param array $searchFields
+	 * @param array $expected
+	 *
+	 * @dataProvider handleSearchesProvider
 	 */
-	public function testHandleSearches()
+	public function testHandleSearches($searches, $filterFields, $searchFields, $expected)
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$this->assertEquals($expected, AdminListHelper::handleSearches($searches, $filterFields, $searchFields));
+	}
+
+	/*
+	 * handleSearchesProvider
+	 *
+	 * @return array
+	 */
+	public function handleSearchesProvider() {
+		return array(
+
+			// Search with specific field name
+			array(
+				// searches
+				array(
+					'field' => 'item.title',
+					'index' => 'foo',
+				),
+				// filterFields
+				array('item.id', 'item.title', 'item.alias', 'category.title'),
+				// searchFields
+				array(
+					'item.title', 'category.title'
+				),
+				// Expected
+				array(
+					'item.title' => 'foo',
+				),
+			),
+
+			// Search all field
+			array(
+				// searches
+				array(
+					'field' => '*',
+					'index' => 'foo',
+				),
+				// filterFields
+				array('item.id', 'item.title', 'item.alias', 'category.title'),
+				// searchFields
+				array(
+					'item.title', 'category.title'
+				),
+				// Expected
+				array(
+					'item.title' => 'foo',
+					'category.title' => 'foo'
+				),
+			),
 		);
 	}
 
