@@ -72,12 +72,15 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	{
 		return array(
 			array(
+				// filters
 				array(
 					'foo' => 'foo_val',
 					'bar' => 'bar_val',
 					'baz' => 'baz_val'
 				),
+				// filterFields
 				array('foo', 'bar', 'baz'),
+				// expected
 				array(
 					'foo' => 'foo_val',
 					'bar' => 'bar_val',
@@ -85,12 +88,15 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 				),
 			),
 			array(
+				// filters
 				array(
 					'foo' => 'foo_val',
 					'bar' => 'bar_val',
 					'baz' => 'baz_val'
 				),
+				// filterFields
 				array('foo', 'baz'),
+				// expected
 				array(
 					'foo' => 'foo_val',
 					'baz' => 'baz_val'
@@ -173,13 +179,83 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Model\Helper\AdminListHelper::handleFullordering
-	 * @TODO   Implement testHandleFullordering().
+	 *
+	 * @dataProvider handleFullorderingProvider
 	 */
-	public function testHandleFullordering()
+	public function testHandleFullordering($value, $orderConfig, $filterFields, $expected)
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$this->assertEquals($expected, AdminListHelper::handleFullordering($value, $orderConfig, $filterFields));
+	}
+
+	/*
+	 * handleFullorderingProvider
+	 *
+	 * @return array
+	 */
+	public function handleFullorderingProvider() {
+		return array(
+
+			// Ordering with input value
+			array(
+				// value
+				'item.state DESC',
+				// orderConfig
+				array(
+					'ordering'  => 'item.catid, item.ordering',
+					'direction' => 'ASC'
+				),
+				// filterFields
+				array(
+					'item.id', 'item.catid', 'item.ordering', 'item.state'
+				),
+				// Expected
+				array(
+					'ordering'  => 'item.state',
+					'direction' => 'DESC'
+				),
+			),
+
+			// Ordering with no input value
+			array(
+				// value
+				'',
+				// orderConfig
+				array(
+					'ordering'  => 'item.catid, item.ordering',
+					'direction' => 'ASC'
+				),
+				// filterFields
+				array(
+					'item.id', 'item.catid', 'item.ordering', 'item.state'
+				),
+				// Expected
+				array(
+					'ordering'  => 'item.catid, item.ordering',
+					'direction' => 'ASC'
+				),
+			),
+
+			// Ordering with input value field invalid()
+			array(
+				// value
+				'item.state DESC',
+				// orderConfig
+				array(
+					'ordering'  => 'item.catid, item.ordering',
+					'direction' => 'ASC'
+				),
+				// filterFields
+				array(
+					'item.id', 'item.catid', 'item.ordering'
+				),
+				// Expected
+				array(
+					'ordering'  => 'item.catid, item.ordering',
+					'direction' => 'ASC'
+				),
+			),
+
 		);
 	}
+
 }
