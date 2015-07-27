@@ -153,15 +153,16 @@ MODAL;
 
 		foreach ($fieldset as $field)
 		{
-			$content .= "
-<div class=\"control-group\" id=\"{$field->id}-wrap\">
-	<div class=\"control-label\">
+			$content .= <<<HTML
+<div class="control-group" id="{$field->id}-wrap">
+	<div class="control-label">
 		{$field->label}
 	</div>
-	<div class=\"controls\">
+	<div class="controls">
 		{$field->input}
 	</div>
-</div>";
+</div>
+HTML;
 		}
 
 		return $content;
