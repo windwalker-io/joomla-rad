@@ -19,33 +19,28 @@ use Windwalker\Test\TestHelper;
 class TableHelperTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return void
+	 * This method is called before the first test of this test class is run.
 	 */
-	protected function setUp()
+	public static function setUpBeforeClass()
 	{
+		$db = \JFactory::getDbo();
 		$sqls = file_get_contents(__DIR__ . '/sql/install.sql');
 
-		foreach (explode(';', $sqls) as $sql)
+		foreach ($db->splitSql($sqls) as $sql)
 		{
 			$sql = trim($sql);
 
 			if (!empty($sql))
 			{
-				\JFactory::getDbo()->setQuery($sql)->execute();
+				$db->setQuery($sql)->execute();
 			}
 		}
 	}
 
 	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 *
-	 * @return void
+	 * This method is called after the last test of this test class is run.
 	 */
-	protected function tearDown()
+	public static function tearDownAfterClass()
 	{
 		$sql = file_get_contents(__DIR__ . '/sql/uninstall.sql');
 
