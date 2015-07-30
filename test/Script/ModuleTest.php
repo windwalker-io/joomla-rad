@@ -331,6 +331,20 @@ class ModuleTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Method to test getHandler().
+	 *
+	 * @return void
+	 *
+	 * @expectedException  \InvalidArgumentException
+	 *
+	 * @covers Windwalker\Script\Module::setHandler
+	 */
+	public function testSetHandlerException()
+	{
+		$this->instance->setHandler('wrong closure');
+	}
+
+	/**
 	 * Method to test getManager().
 	 *
 	 * @return void

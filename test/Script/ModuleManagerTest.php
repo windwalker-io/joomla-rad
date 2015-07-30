@@ -12,7 +12,6 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\AssetHelper;
 use Windwalker\Script\Module;
 use Windwalker\Script\ModuleManager;
-use Windwalker\Script\ScriptManager;
 use Windwalker\Test\DI\TestContainerHelper;
 use Windwalker\Test\TestHelper;
 
