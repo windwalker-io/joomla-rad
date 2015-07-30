@@ -26,13 +26,6 @@ abstract class AbstractDatabaseTestCase extends AbstractBaseTestCase
 	const TABLE_SAKURA_ROSE_MAPS = '#__testflower_sakura_rose_maps';
 
 	/**
-	 * Property mappers.
-	 *
-	 * @var  DataMapper[]
-	 */
-	protected $mappers = array();
-
-	/**
 	 * setUpBeforeClass
 	 *
 	 * @throws \LogicException
