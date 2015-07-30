@@ -8,234 +8,35 @@
 
 namespace Windwalker\Script;
 
-use Windwalker\DI\Container;
+use Windwalker\Facade\AbstractProxyFacade;
 use Windwalker\Helper\AssetHelper;
 
 /**
  * An Asset Manager class help us manage script dependency.
  *
+ * @see \Windwalker\Script\ModuleManager
+ *
+ * @method  static  ModuleManager  getInstance()
+ * @method  static  Module         getModule($name)
+ * @method  static  ModuleManager  addModule($name, $module)
+ * @method  static  AssetHelper    getHelper($option = null)
+ * @method  static  boolean        load($name)
+ * @method  static  boolean        getModules()
+ * @method  static  ModuleManager  setModules($modules)
+ * @method  static  boolean        getLegacy()
+ * @method  static  ModuleManager  setLegacy($legacy)
+ *
  * @since 2.0
  */
-class ScriptManager
+class ScriptManager extends AbstractProxyFacade
 {
 	/**
-	 * THe asset helpers storage.
+	 * The DI key to get data from container.
 	 *
-	 * @var  AssetHelper[]
+	 * @return  string
 	 */
-	protected static $assetHelpers = array();
-
-	/**
-	 * The module initialised.
-	 *
-	 * @var  boolean[]
-	 */
-	protected static $initialised = array();
-
-	/**
-	 * Modules handler storage.
-	 *
-	 * @var  callable[]
-	 */
-	protected static $modules = array();
-
-	/**
-	 * Load RequireJS.
-	 *
-	 * @return  void
-	 */
-	public static function requireJS()
+	public static function getDIKey()
 	{
-		if (!empty(static::$initialised['requirejs']))
-		{
-			return;
-		}
-
-		$asset = static::getHelper();
-
-		$asset->addJs('require.js');
-
-		static::$initialised['requirejs'] = true;
-	}
-
-	/**
-	 * Load underscore.
-	 *
-	 * @param boolean $noConflict Enable underscore no conflict mode.
-	 *
-	 * @return  void
-	 */
-	public static function underscore($noConflict = true)
-	{
-		if (!empty(static::$initialised['underscore']))
-		{
-			return;
-		}
-
-		$asset = static::getHelper();
-
-		$asset->addJs('underscore.js');
-
-		if ($noConflict)
-		{
-			$asset->internalJS(';var underscore = _.noConflict();');
-		}
-
-		static::$initialised['underscore'] = true;
-	}
-
-	/**
-	 * Include Backbone. Note this library may not support old IE browser.
-	 *
-	 * Please see: http://backbonejs.org/
-	 *
-	 * @param   boolean $noConflict
-	 *
-	 * @return  void
-	 */
-	public static function backbone($noConflict = false)
-	{
-		if (!empty(static::$initialised['backbone']))
-		{
-			return;
-		}
-
-		// Dependency
-		\JHtmlJquery::framework(true);
-		static::underscore();
-
-		$asset = static::getHelper();
-
-		$asset->addJs('backbone.js');
-
-		if ($noConflict)
-		{
-			$asset->internalJS(';var backbone = Backbone.noConflict();');
-		}
-
-		static::$initialised['backbone'] = true;
-	}
-
-	/**
-	 * Load Windwalker script.
-	 *
-	 * @return  void
-	 */
-	public static function windwalker()
-	{
-		if (!empty(static::$initialised['windwalker']))
-		{
-			return;
-		}
-
-		static::getHelper()->windwalker();
-
-		static::$initialised['windwalker'] = true;
-	}
-
-	/**
-	 * Set Module and callback.
-	 *
-	 * @param string   $name
-	 * @param callable $handler
-	 *
-	 * @return  void
-	 */
-	public static function setModule($name, $handler)
-	{
-		$name = strtolower($name);
-
-		static::$modules[$name] = $handler;
-	}
-
-	/**
-	 * load
-	 *
-	 * @param string $name Module name.
-	 *
-	 * @return  boolean
-	 */
-	public static function load($name)
-	{
-		$name = strtolower($name);
-
-		if (empty(static::$modules[$name]))
-		{
-			$app = Container::getInstance()->get('app');
-
-			$app->enqueueMessage(sprintf('Asset module: %s not found.', $name));
-
-			return false;
-		}
-
-		if (! is_callable(static::$modules[$name]))
-		{
-			$app = Container::getInstance()->get('app');
-
-			$app->enqueueMessage(sprintf('Asset module: %s is not callable.', $name));
-
-			return false;
-		}
-
-		if (!empty(static::$initialised[$name]))
-		{
-			return true;
-		}
-
-		call_user_func_array(static::$modules[$name], array($name, static::getHelper()));
-
-		static::$initialised[$name] = true;
-
-		return true;
-	}
-
-	/**
-	 * Magic method to call modules.
-	 *
-	 * @param string $name
-	 * @param array  $args
-	 *
-	 * @return  boolean
-	 */
-	public static function __callStatic($name, $args = array())
-	{
-		if (strpos($name, 'load') === 0)
-		{
-			$name = substr($name, 4);
-		}
-		else
-		{
-			return false;
-		}
-
-		return static::load(strtolower($name));
-	}
-
-	/**
-	 * Get AssetHelper by option name.
-	 *
-	 * @param   string $option Option name.
-	 *
-	 * @return  AssetHelper
-	 */
-	public static function getHelper($option = 'windwalker')
-	{
-		if (!empty(static::$assetHelpers[$option]))
-		{
-			return static::$assetHelpers[$option];
-		}
-
-		$container = Container::getInstance($option);
-
-		if ($container->exists('helper.asset'))
-		{
-			$asset = $container->get('helper.asset');
-		}
-		else
-		{
-			$asset = new AssetHelper($option);
-		}
-
-		return static::$assetHelpers[$option] = $asset;
+		return 'script.manager';
 	}
 }
