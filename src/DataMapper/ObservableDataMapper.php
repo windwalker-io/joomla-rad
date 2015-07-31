@@ -431,7 +431,7 @@ class ObservableDataMapper extends DataMapper implements \JObservableInterface
 	 */
 	public function __get($name)
 	{
-		if ($name = 'relation')
+		if ($name === 'relation')
 		{
 			return $this->$name;
 		}
