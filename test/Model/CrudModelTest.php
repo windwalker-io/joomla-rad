@@ -47,6 +47,7 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 			}
 		}
 	}
+
 	/**
 	 * tearDownAfterClass
 	 *
@@ -67,7 +68,7 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	public function getConstructContainer()
 	{
 		// The 'testKeyName' will be return by StubTableCrudModel
-		$input = new \JInput(array('testKeyName' => 'foo'));
+		$input = new \JInput(array('id' => 'foo'));
 
 		$container = $this->getMockBuilder('Windwalker\DI\Container')
 			->disableOriginalConstructor()
@@ -149,14 +150,28 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Model\CrudModel::getItem
-	 * @TODO   Implement testGetItem().
 	 */
 	public function testGetItem()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$crudModel = new CrudModel(
+			array(
+				'name' => 'CrudModel',
+				'prefix' => 'Stub',
+				'ignore_request' => true
+			),
+			$this->getConstructContainer()
 		);
+
+		$expected = (object) array(
+			'id' => '1',
+    		'foo' => 'bad',
+    		'type' => 'fruit',
+    		'params' => Array(
+				'name' => 'apple'
+			)
+		);
+
+		$this->assertEquals($expected, $crudModel->getItem(1));
 	}
 
 	/**
