@@ -22,4 +22,10 @@ class StubTableCrudModel extends Table
 	{
 		parent::__construct('#__test_table');
 	}
+
+	public function getKeyName($multiple = false)
+	{
+		return 'testKeyName';
+	}
+
 }

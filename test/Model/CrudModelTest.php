@@ -8,6 +8,7 @@
 
 namespace Windwalker\Test\Model;
 
+use Windwalker\DI\Container;
 use Windwalker\Model\CrudModel;
 use Windwalker\Test\TestHelper;
 
@@ -57,6 +58,29 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 
 		\JFactory::getDbo()->setQuery($sql)->execute();
 	}
+
+	/**
+	 * getConstructContainer
+	 *
+	 * @return  \PHPUnit_Framework_MockObject_MockObject
+	 */
+	public function getConstructContainer()
+	{
+		// The 'testKeyName' will be return by StubTableCrudModel
+		$input = new \JInput(array('testKeyName' => 'foo'));
+
+		$container = $this->getMockBuilder('Windwalker\DI\Container')
+			->disableOriginalConstructor()
+			->setMethods(array('get'))
+			->getMock();
+
+		$container->expects($this->any())
+			->method('get')
+			->with('input')
+			->will($this->returnValue($input));
+
+		return $container;
+	}
 	
 	/**
 	 * Method to test __construct().
@@ -67,11 +91,17 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__construct()
 	{
+		$testState = new \JRegistry;
+
+		$testState->set('CrudModel.id', 'id');
+
 		$crudModel = new CrudModel(
 			array(
 				'name' => 'CrudModel',
 				'prefix' => 'Stub'
-			)
+			),
+			$this->getConstructContainer(),
+			$testState
 		);
 
 		$this->assertEquals('onContentAfterDelete', TestHelper::getValue($crudModel, 'eventAfterDelete'));
@@ -79,6 +109,38 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('onContentAfterSave', TestHelper::getValue($crudModel, 'eventAfterSave'));
 		$this->assertEquals('onContentAfterSave', TestHelper::getValue($crudModel, 'eventBeforeSave'));
 		$this->assertEquals('onContentAfterSave', TestHelper::getValue($crudModel, 'eventChangeState'));
+
+		// Test if PopulateState() was being executed
+		// 'foo' is being set in getConstructContainer()
+		$this->assertEquals('foo', TestHelper::getValue($crudModel, 'state')->get('CrudModel.id'));
+		$this->assertEquals(\JComponentHelper::getParams('com_stub'), TestHelper::getValue($crudModel, 'state')->get('params'));
+	}
+
+	/**
+	 * Method to test __construct() with 'ignore_request' set to true
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Model\CrudModel::__construct
+	 */
+	public function test__constructWithIgnoreRequest()
+	{
+		$testState = new \JRegistry;
+
+		$testState->set('CrudModel.id', 'id');
+
+		$crudModel = new CrudModel(
+			array(
+				'name' => 'CrudModel',
+				'prefix' => 'Stub',
+				'ignore_request' => true
+			),
+			$this->getConstructContainer(),
+			$testState
+		);
+
+		// Since we ignore the request input get from our stub container, the 'CrudModel.id' will remain unchanged
+		$this->assertEquals('id', TestHelper::getValue($crudModel, 'state')->get('CrudModel.id'));
 	}
 
 	/**
