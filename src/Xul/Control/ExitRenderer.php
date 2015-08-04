@@ -8,7 +8,7 @@
 
 namespace Windwalker\Xul\Control;
 
-use Windwalker\String\String;
+use Windwalker\String\StringHelper;
 use Windwalker\Xul\AbstractXulRenderer;
 use Windwalker\Xul\XulEngine;
 
