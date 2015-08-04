@@ -35,7 +35,7 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public static function setUpBeforeClass()
 	{
-		$db = \JFactory::getDbo();
+		$db   = \JFactory::getDbo();
 		$sqls = file_get_contents(__DIR__ . '/sql/install.crudmodel.sql');
 
 		foreach ($db->splitSql($sqls) as $sql)
@@ -82,7 +82,51 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 
 		return $container;
 	}
-	
+
+	/**
+	 * getContainerForSave
+	 *
+	 * @return  \PHPUnit_Framework_MockObject_MockObject
+	 */
+	public function getContainerForSave()
+	{
+		$container = $this->getMockBuilder('Windwalker\DI\Container')
+			->disableOriginalConstructor()
+			->setMethods(array('get'))
+			->getMock();
+
+		$dispatcher = $this->getMockBuilder('\JEventDispatcher')
+			->setMethods(array('trigger'))
+			->getMock();
+
+		$dispatcher->expects($this->any())
+			->method('trigger')
+			->will($this->returnValue(array('true')));
+
+		$container->expects($this->at(0))
+			->method('get')
+			->with('event.dispatcher')
+			->will($this->returnValue($dispatcher));
+
+		// From call point 1~3, CrudModel::cleanCache() is being call
+		$container->expects($this->at(1))
+			->method('get')
+			->with('joomla.config')
+			->will($this->returnValue(new \JRegistry));
+
+		$container->expects($this->at(2))
+			->method('get')
+			->with('event.dispatcher')
+			->will($this->returnValue($dispatcher));
+
+		$container->expects($this->at(3))
+			->method('get')
+			->with('input')
+			->will($this->returnValue(new \JInput));
+
+		return $container;
+	}
+
 	/**
 	 * Method to test __construct().
 	 *
@@ -98,7 +142,7 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 
 		$crudModel = new CrudModel(
 			array(
-				'name' => 'CrudModel',
+				'name'   => 'CrudModel',
 				'prefix' => 'Stub'
 			),
 			$this->getConstructContainer(),
@@ -132,8 +176,8 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 
 		$crudModel = new CrudModel(
 			array(
-				'name' => 'CrudModel',
-				'prefix' => 'Stub',
+				'name'           => 'CrudModel',
+				'prefix'         => 'Stub',
 				'ignore_request' => true
 			),
 			$this->getConstructContainer(),
@@ -155,18 +199,18 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	{
 		$crudModel = new CrudModel(
 			array(
-				'name' => 'CrudModel',
-				'prefix' => 'Stub',
+				'name'           => 'CrudModel',
+				'prefix'         => 'Stub',
 				'ignore_request' => true
 			),
 			$this->getConstructContainer()
 		);
 
 		$expected = (object) array(
-			'id' => '1',
-    		'foo' => 'bad',
-    		'type' => 'fruit',
-    		'params' => Array(
+			'id'     => '1',
+			'foo'    => 'bad',
+			'type'   => 'fruit',
+			'params' => Array(
 				'name' => 'apple'
 			)
 		);
@@ -180,30 +224,30 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Model\CrudModel::save
-	 * @TODO   Implement testSave().
 	 */
 	public function testSave()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$crudModel = new CrudModel(
+			array(
+				'name'           => 'CrudModel',
+				'prefix'         => 'Stub',
+				'ignore_request' => true
+			),
+			$this->getContainerForSave()
 		);
-	}
 
-	/**
-	 * Method to test postSaveHook().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::postSaveHook
-	 * @TODO   Implement testPostSaveHook().
-	 */
-	public function testPostSaveHook()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$toSave = array(
+			'id'     => '1',
+			'foo'    => 'badBoy',
+			'type'   => 'fruit',
+			'params' => Array(
+				'name' => 'apple'
+			)
 		);
+
+		$crudModel->save($toSave);
+
+		$this->assertEquals((object) $toSave, $crudModel->getItem(1));
 	}
 
 	/**
@@ -238,371 +282,4 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 		);
 	}
 
-	/**
-	 * Method to test getForm().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getForm
-	 * @TODO   Implement testGetForm().
-	 */
-	public function testGetForm()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test validate().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::validate
-	 * @TODO   Implement testValidate().
-	 */
-	public function testValidate()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getParams().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getParams
-	 * @TODO   Implement testGetParams().
-	 */
-	public function testGetParams()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getCategory().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getCategory
-	 * @TODO   Implement testGetCategory().
-	 */
-	public function testGetCategory()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getName().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getName
-	 * @TODO   Implement testGetName().
-	 */
-	public function testGetName()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getTable().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getTable
-	 * @TODO   Implement testGetTable().
-	 */
-	public function testGetTable()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test registerTablePaths().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::registerTablePaths
-	 * @TODO   Implement testRegisterTablePaths().
-	 */
-	public function testRegisterTablePaths()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test setName().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::setName
-	 * @TODO   Implement testSetName().
-	 */
-	public function testSetName()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test setOption().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::setOption
-	 * @TODO   Implement testSetOption().
-	 */
-	public function testSetOption()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test addTablePath().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::addTablePath
-	 * @TODO   Implement testAddTablePath().
-	 */
-	public function testAddTablePath()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getContainer().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getContainer
-	 * @TODO   Implement testGetContainer().
-	 */
-	public function testGetContainer()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test setContainer().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::setContainer
-	 * @TODO   Implement testSetContainer().
-	 */
-	public function testSetContainer()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test get().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::get
-	 * @TODO   Implement testGet().
-	 */
-	public function testGet()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test set().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::set
-	 * @TODO   Implement testSet().
-	 */
-	public function testSet()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test reset().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::reset
-	 * @TODO   Implement testReset().
-	 */
-	public function testReset()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test offsetExists().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::offsetExists
-	 * @TODO   Implement testOffsetExists().
-	 */
-	public function testOffsetExists()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test offsetGet().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::offsetGet
-	 * @TODO   Implement testOffsetGet().
-	 */
-	public function testOffsetGet()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test offsetSet().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::offsetSet
-	 * @TODO   Implement testOffsetSet().
-	 */
-	public function testOffsetSet()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test offsetUnset().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::offsetUnset
-	 * @TODO   Implement testOffsetUnset().
-	 */
-	public function testOffsetUnset()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getDb().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getDb
-	 * @TODO   Implement testGetDb().
-	 */
-	public function testGetDb()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test setDb().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::setDb
-	 * @TODO   Implement testSetDb().
-	 */
-	public function testSetDb()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test getState().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::getState
-	 * @TODO   Implement testGetState().
-	 */
-	public function testGetState()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
-
-	/**
-	 * Method to test setState().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Model\CrudModel::setState
-	 * @TODO   Implement testSetState().
-	 */
-	public function testSetState()
-	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
-	}
 }
