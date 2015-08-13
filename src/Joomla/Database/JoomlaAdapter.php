@@ -18,6 +18,13 @@ use Windwalker\Data\DataSet;
 class JoomlaAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 {
 	/**
+	 * Property db.
+	 *
+	 * @var  \JDatabaseDriver
+	 */
+	protected $db;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param \JDatabaseDriver $db          Database adapter.
@@ -209,5 +216,29 @@ class JoomlaAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	public function transactionRollback($asSavePoint = false)
 	{
 		$this->db->transactionRollback($asSavePoint);
+	}
+
+	/**
+	 * Method to get property Db
+	 *
+	 * @return  \JDatabaseDriver
+	 */
+	public function getDb()
+	{
+		return $this->db;
+	}
+
+	/**
+	 * Method to set property db
+	 *
+	 * @param   \JDatabaseDriver $db
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setDb($db)
+	{
+		$this->db = $db;
+
+		return $this;
 	}
 }
