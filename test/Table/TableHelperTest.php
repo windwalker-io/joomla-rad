@@ -9,6 +9,7 @@
 namespace Windwalker\Test\Table;
 
 use Windwalker\Table\TableHelper;
+use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\TestHelper;
 
 /**
@@ -16,35 +17,26 @@ use Windwalker\Test\TestHelper;
  *
  * @since {DEPLOY_VERSION}
  */
-class TableHelperTest extends \PHPUnit_Framework_TestCase
+class TableHelperTest extends AbstractDatabaseTestCase
 {
 	/**
-	 * This method is called before the first test of this test class is run.
+	 * Install test sql when setUp.
+	 *
+	 * @return  string
 	 */
-	public static function setUpBeforeClass()
+	public static function getInstallSql()
 	{
-		$db = \JFactory::getDbo();
-		$sqls = file_get_contents(__DIR__ . '/sql/install.sql');
-
-		foreach ($db->splitSql($sqls) as $sql)
-		{
-			$sql = trim($sql);
-
-			if (!empty($sql))
-			{
-				$db->setQuery($sql)->execute();
-			}
-		}
+		return __DIR__ . '/sql/install.sql';
 	}
 
 	/**
-	 * This method is called after the last test of this test class is run.
+	 * Uninstall test sql when tearDown.
+	 *
+	 * @return  string
 	 */
-	public static function tearDownAfterClass()
+	public static function getUninstallSql()
 	{
-		$sql = file_get_contents(__DIR__ . '/sql/uninstall.sql');
-
-		\JFactory::getDbo()->setQuery($sql)->execute();
+		return __DIR__ . '/sql/uninstall.sql';
 	}
 	
 	/**
