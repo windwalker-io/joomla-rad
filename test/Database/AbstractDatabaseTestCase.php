@@ -33,7 +33,7 @@ abstract class AbstractDatabaseTestCase extends AbstractBaseTestCase
 	 */
 	public static function setUpBeforeClass()
 	{
-		$queries = file_get_contents(__DIR__ . '/fixtures/testflower.sql');
+		$queries = file_get_contents(static::getInstallSql());
 
 		DatabaseHelper::batchQuery($queries);
 	}
@@ -45,8 +45,28 @@ abstract class AbstractDatabaseTestCase extends AbstractBaseTestCase
 	 */
 	public static function tearDownAfterClass()
 	{
-		$queries = file_get_contents(__DIR__ . '/fixtures/drop_testflower.sql');
+		$queries = file_get_contents(static::getUninstallSql());
 
 		DatabaseHelper::batchQuery($queries);
+	}
+
+	/**
+	 * Install test sql when setUp.
+	 *
+	 * @return  string
+	 */
+	public static function getInstallSql()
+	{
+		return __DIR__ . '/fixtures/testflower.sql';
+	}
+
+	/**
+	 * Uninstall test sql when tearDown.
+	 *
+	 * @return  string
+	 */
+	public static function getUninstallSql()
+	{
+		return __DIR__ . '/fixtures/drop_testflower.sql';
 	}
 }
