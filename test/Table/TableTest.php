@@ -64,7 +64,14 @@ class TableTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame(\JFactory::getDbo(), $table->getDbo());
 
 		$tableName = '#__test_table2';
-		$db = $this->getMockBuilder('JDatabaseDriver')->disableOriginalConstructor();
+		$db = $this->getMockBuilder('JDatabaseDriver')
+			->disableOriginalConstructor()->getMock();
+
+		// Just return something to make getFields() no crash.
+		$db->expects($this->once())
+			->method('getTableColumns')
+			->willReturn(array('#__test_table2' => true));
+
 		$table = new Table($tableName, 'pk', $db);
 
 		$this->assertEquals($tableName, TestHelper::getValue($table, '_tbl'));
