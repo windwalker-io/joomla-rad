@@ -18,13 +18,6 @@ use Windwalker\Model\Helper\AdminListHelper;
 class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * Test instance.
-	 *
-	 * @var \Windwalker\Model\Helper\AdminListHelper
-	 */
-	protected $instance;
-
-	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 *
@@ -99,6 +92,22 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 				// expected
 				array(
 					'foo' => 'foo_val',
+					'baz' => 'baz_val'
+				),
+			),
+
+			// Test if filter has value ''
+			array(
+				// filters
+				array(
+					'foo' => '',
+					'bar' => 'bar_val',
+					'baz' => 'baz_val'
+				),
+				// filterFields
+				array('foo', 'baz'),
+				// expected
+				array(
 					'baz' => 'baz_val'
 				),
 			)
