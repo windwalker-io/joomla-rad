@@ -224,6 +224,43 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 				),
 			),
 
+			// Test with multiple input values
+			array(
+				// value
+				'item.state DESC, item.id DESC',
+				// orderConfig
+				array(
+					'ordering'  => 'item.catid, item.ordering',
+					'direction' => 'ASC'
+				),
+				// filterFields
+				array(
+					'item.id'
+				),
+				// Expected
+				array(
+					'ordering'  => 'item.id',
+					'direction' => 'DESC'
+				),
+			),
+
+			// Test when orderConfig is null
+			array(
+				// value
+				'item.id DESC',
+				// orderConfig
+				null,
+				// filterFields
+				array(
+					'item.id', 'item.catid', 'item.ordering', 'item.state'
+				),
+				// Expected
+				array(
+					'ordering'  => 'item.id',
+					'direction' => 'DESC'
+				),
+			),
+
 			// Ordering with no input value
 			array(
 				// value
