@@ -11,6 +11,8 @@ namespace Windwalker\Model;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\Registry\Registry;
+use Windwalker\Cache\Cache;
+use Windwalker\Cache\Storage\RuntimeStorage;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 
@@ -66,6 +68,13 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	protected $container;
 
 	/**
+	 * Property cache.
+	 *
+	 * @var  Cache
+	 */
+	protected $cache;
+
+	/**
 	 * Constructor
 	 *
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
@@ -90,6 +99,8 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 		$this->eventCleanCache = $this->eventCleanCache ? : ArrayHelper::getValue($config, 'event_clean_cache', 'onContentCleanCache');
 
 		$this->container = $container ? : $this->getContainer();
+
+		$this->resetCache();
 
 		parent::__construct($state, $db);
 
@@ -440,6 +451,113 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 		$this->state = $this->loadState();
 
 		return $this;
+	}
+
+	/**
+	 * Method to get a store id based on the model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param   string  $id  An identifier string to generate the store id.
+	 *
+	 * @return  string  A store id.
+	 *
+	 * @since   2.1
+	 */
+	protected function getStoreId($id = '')
+	{
+		// Add the list state to the store id.
+		$id .= ':' . json_encode($this->state->toArray());
+
+		return md5($this->context . ':' . $id);
+	}
+
+	/**
+	 * Get cached data.
+	 *
+	 * @param   string  $id  the cache id prefix.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	protected function getCache($id = null)
+	{
+		return $this->cache->get($this->getStoreId($id));
+	}
+
+	/**
+	 * Set data to cache.
+	 *
+	 * @param   string  $id    The cache id prefix.
+	 * @param   mixed   $data  The data to store.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	protected function setCache($id = null, $data = null)
+	{
+		$this->cache->set($this->getStoreId($id), $data);
+
+		return $data;
+	}
+
+	/**
+	 * Is this cache exists.
+	 *
+	 * @param   string  $id  The cache id prefix.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   2.1
+	 */
+	protected function hasCache($id = null)
+	{
+		return $this->cache->exists($this->getStoreId($id));
+	}
+
+	/**
+	 * Reset all cache.
+	 *
+	 * @return  static
+	 *
+	 * @since   2.1
+	 */
+	public function resetCache()
+	{
+		$this->cache = new Cache(new RuntimeStorage);
+
+		return $this;
+	}
+
+	/**
+	 * Get runtime cache object.
+	 *
+	 * @return  Cache
+	 *
+	 * @since   2.1
+	 */
+	public function getCacheObject()
+	{
+		return $this->cache;
+	}
+
+	/**
+	 * Fetch data from cache by a callback.
+	 *
+	 * @param string   $id      The store id prefix.
+	 * @param callable $closure The callback to get data.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	protected function fetch($id, $closure)
+	{
+		return $this->cache->call($this->getStoreId($id), $closure);
 	}
 
 	/**
