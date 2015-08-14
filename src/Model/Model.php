@@ -31,6 +31,13 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	protected $name = null;
 
 	/**
+	 * Property cache.
+	 *
+	 * @var  Cache
+	 */
+	protected $cache;
+
+	/**
 	 * Component prefix.
 	 *
 	 * @var  string
@@ -66,13 +73,6 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 * @var Container
 	 */
 	protected $container;
-
-	/**
-	 * Property cache.
-	 *
-	 * @var  Cache
-	 */
-	protected $cache;
 
 	/**
 	 * Constructor
