@@ -48,14 +48,17 @@ class ModalHelper
 	public static function modalLink($title, $selector, $option = array())
 	{
 		$tag     = JArrayHelper::getValue($option, 'tag', 'a');
-		$id      = isset($option['id']) ? " id=\"{$option['id']}\"" : "id=\"{$selector}_link\"";
-		$class   = isset($option['class']) ? " class=\"{$option['class']} cursor-pointer\"" : 'class="cursor-pointer"';
+		$id      = isset($option['id']) ? " id=\"{$option['id']}\"" : " id=\"{$selector}_link\"";
+		$class   = isset($option['class']) ? " class=\"{$option['class']} cursor-pointer\"" : ' class="cursor-pointer"';
 		$onclick = isset($option['onclick']) ? " onclick=\"{$option['onclick']}\"" : '';
 		$icon    = JArrayHelper::getValue($option, 'icon', '');
 
-		$button = "<{$tag} data-toggle=\"modal\" data-target=\"#$selector\"{$id}{$class}{$onclick}>
-               <i class=\"{$icon}\" title=\"$title\"></i>
-                $title</{$tag}>";
+		$button = <<<HTML
+<{$tag} data-toggle="modal" data-target="#$selector"{$id}{$class}{$onclick}>
+	<i class="{$icon}" title="$title"></i>
+	$title
+</{$tag}>
+HTML;
 
 		return $button;
 	}
@@ -129,6 +132,7 @@ MODAL;
 		try
 		{
 			$form = new JForm($id . '.quickaddform', array('control' => $id));
+
 			$form->loadFile(JPATH_ROOT . '/' . $path);
 		}
 		catch (\Exception $e)
@@ -149,15 +153,16 @@ MODAL;
 
 		foreach ($fieldset as $field)
 		{
-			$content .= "
-<div class=\"control-group\" id=\"{$field->id}-wrap\">
-	<div class=\"control-label\">
+			$content .= <<<HTML
+<div class="control-group" id="{$field->id}-wrap">
+	<div class="control-label">
 		{$field->label}
 	</div>
-	<div class=\"controls\">
+	<div class="controls">
 		{$field->input}
 	</div>
-</div>";
+</div>
+HTML;
 		}
 
 		return $content;
