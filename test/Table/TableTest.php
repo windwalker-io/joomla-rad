@@ -56,7 +56,7 @@ class TableTest extends AbstractDatabaseTestCase
 		$this->assertSame(\JFactory::getDbo(), $table->getDbo());
 
 		$tableName = '#__test_table2';
-		$db = $this->getMockBuilder('JDatabaseDriver')
+		$db = $this->getMockBuilder(get_class(\JFactory::getDbo()))
 			->disableOriginalConstructor()->getMock();
 
 		// Just return something to make getFields() no crash.
