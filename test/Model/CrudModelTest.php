@@ -225,7 +225,7 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @covers Windwalker\Model\CrudModel::save
 	 */
-	public function testSave()
+	public function testSaveWithId()
 	{
 		$crudModel = new CrudModel(
 			array(
@@ -236,7 +236,7 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 			$this->getContainerForSave()
 		);
 
-		$toSave = array(
+		$toSaveWithId = array(
 			'id'     => '1',
 			'foo'    => 'badBoy',
 			'type'   => 'fruit',
@@ -245,9 +245,44 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 			)
 		);
 
-		$crudModel->save($toSave);
+		$crudModel->save($toSaveWithId);
 
-		$this->assertEquals((object) $toSave, $crudModel->getItem(1));
+		$this->assertEquals((object) $toSaveWithId, $crudModel->getItem(1));
+	}
+
+	/**
+	 * Method to test save().
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Model\CrudModel::save
+	 */
+	public function testSaveWithoutId()
+	{
+		$crudModel = new CrudModel(
+			array(
+				'name'           => 'CrudModel',
+				'prefix'         => 'Stub',
+				'ignore_request' => true
+			),
+			$this->getContainerForSave()
+		);
+
+		$toSaveWithoutId = array(
+			'foo'    => 'badGirl',
+			'type'   => 'badGirlType',
+			'params' => Array(
+				'name' => 'badGirlName'
+			)
+		);
+
+		$crudModel->save($toSaveWithoutId);
+
+		$item = $crudModel->getItem();
+
+		$this->assertEquals($toSaveWithoutId['foo'], $item->foo);
+		$this->assertEquals($toSaveWithoutId['type'], $item->type);
+		$this->assertEquals($toSaveWithoutId['params'], $item->params);
 	}
 
 	/**
@@ -256,14 +291,36 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Model\CrudModel::updateState
-	 * @TODO   Implement testUpdateState().
 	 */
 	public function testUpdateState()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$crudModel = new CrudModel(
+			array(
+				'name'           => 'CrudModel',
+				'prefix'         => 'Stub',
+				'ignore_request' => true
+			),
+			$this->getContainerForSave()
 		);
+
+		$originalData = $crudModel->getItem(1);
+
+		$toUpdate = array(
+			'foo'    => 'Star Wars',
+			'type'   => 'Soldier',
+		);
+
+		// Execute method
+		$crudModel->updateState($originalData->id, $toUpdate);
+
+		$result = $crudModel->getItem($originalData->id);
+
+		// Test changed fields
+		$this->assertEquals($toUpdate['foo'], $result->foo);
+		$this->assertEquals($toUpdate['type'], $result->type);
+
+		// Test unchanged fields
+		$this->assertEquals($originalData->params, $result->params);
 	}
 
 	/**
@@ -272,14 +329,31 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Model\CrudModel::delete
-	 * @TODO   Implement testDelete().
 	 */
 	public function testDelete()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
+		$crudModel = new CrudModel(
+			array(
+				'name'           => 'CrudModel',
+				'prefix'         => 'Stub',
+				'ignore_request' => true
+			),
+			$this->getContainerForSave()
 		);
+
+		$id = 1;
+		$originalData = $crudModel->getItem($id);
+
+		// Execute method
+		$crudModel->delete($id);
+
+		// $id is pass by reference which will be cast into array
+		$result = $crudModel->getItem($id[0]);
+
+		$this->assertNull($result->id);
+		$this->assertNull($result->foo);
+		$this->assertNull($result->type);
+		$this->assertEmpty($result->params);
 	}
 
 }
