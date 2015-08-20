@@ -61,7 +61,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 
 		$expected = 30;
 
-		$result = $theClosure(5, 6);
+		$result = $theClosure($arg1, $arg2);
 
 		$this->assertSame($expected, $result);
 	}
