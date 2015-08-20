@@ -8,6 +8,8 @@
 
 namespace Windwalker\Test\Model\Filter;
 
+use Windwalker\Test\Model\Stub\StubAbstractFilterHelper;
+
 /**
  * Test class of \Windwalker\Model\Filter\AbstractFilterHelper
  *
@@ -30,7 +32,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->instance = $this->getMockForAbstractClass('Windwalker\Model\Filter\AbstractFilterHelper');
+		$this->instance = new StubAbstractFilterHelper;
 	}
 
 	/**
@@ -52,10 +54,16 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__construct()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$theClosure = $this->readAttribute($this->instance, 'defaultHandler');
+
+		$arg1 = 5;
+		$arg2 = 6;
+
+		$expected = 30;
+
+		$result = $theClosure(5, 6);
+
+		$this->assertSame($expected, $result);
 	}
 
 	/**
@@ -67,17 +75,25 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSetHandler()
 	{
-		$handler = function ($arg1, $arg2, $arg5){
-			return array($arg1, $arg2, $arg5);
+		$handler = function ($arg){
+			return $arg;
 		};
 
-		$name = 'myHandler';
+		$name = 'winterHandler';
 
-		$setHandler = $this->instance->setHandler($name, $handler);
+		$theHandler = $this->instance->setHandler($name, $handler);
 
-		$getHandler = $this->getObjectAttribute($setHandler, 'handler');
+		$getHandler = $this->getObjectAttribute($theHandler, 'handler');
 
 		$this->assertArrayHasKey($name, $getHandler);
+
+		$theClosure = $this->readAttribute($theHandler, 'handler');
+
+		$expected = 'cold';
+
+		$result = $theClosure[$name]($expected);
+
+		$this->assertSame($expected, $result);
 	}
 
 	/**
@@ -89,13 +105,23 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSetDefaultHandler()
 	{
-		$defaultHandler = function ($arg1, $arg2, $arg5){
-			return array($arg1, $arg2, $arg5);
+		$handler = function ($arg1, $arg2){
+			return $arg1 + $arg2;
 		};
 
-		$setDefaultHandler = $this->instance->setDefaultHandler($defaultHandler);
+		$theDefaultHandler = $this->instance->setDefaultHandler($handler);
 
-		$this->assertObjectHasAttribute('defaultHandler', $setDefaultHandler);
+		$this->assertObjectHasAttribute('defaultHandler', $theDefaultHandler);
 
+		$theClosure = $this->readAttribute($theDefaultHandler, 'defaultHandler');
+
+		$arg1 = 25;
+		$arg2 = 14;
+
+		$expected = 39;
+
+		$result = $theClosure($arg1, $arg2);
+
+		$this->assertSame($expected, $result);
 	}
 }
