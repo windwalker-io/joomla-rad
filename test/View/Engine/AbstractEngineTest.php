@@ -207,7 +207,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	{
 		$engine = new StubEngine;
 
-		$this->assertSame(TestHelper::getValue($engine, 'layout'), $engine->getLayout());
+		$this->assertEquals(TestHelper::getValue($engine, 'layout'), $engine->getLayout());
 	}
 
 	/**
