@@ -8,7 +8,6 @@
 
 namespace Windwalker\Test\View\Engine\Stub;
 
-use Windwalker\Data\Data;
 use Windwalker\View\Engine\AbstractEngine;
 
 /**
@@ -28,8 +27,6 @@ class StubEngine extends AbstractEngine
 	 */
 	protected function execute($templateFile, $data = null)
 	{
-		$data = new Data($data);
-
-		return $templateFile . ($data->foo ? ' ' . $data->foo : '');
+		return $templateFile . ($data ? json_encode($data) : '');
 	}
 }

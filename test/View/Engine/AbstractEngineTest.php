@@ -64,9 +64,10 @@ class AbstractEngineTest extends AbstractBaseTestCase
 
 		$engine->setPaths($paths);
 
-		$result = $engine->render('default');
+		$result = $engine->render('default', array('foo' => 'bar'));
+		$expected = realpath(__DIR__ . '/tmpl/default.php') . '{"foo":"bar"}';
 
-		$this->assertEquals(realpath(__DIR__ . '/tmpl/default.php'), $result);
+		$this->assertEquals($expected, $result);
 	}
 
 	/**
@@ -86,9 +87,10 @@ class AbstractEngineTest extends AbstractBaseTestCase
 		$engine->setLayout('default');
 		$engine->setPaths($paths);
 
-		$result = $engine->loadTemplate('foo');
+		$result = $engine->loadTemplate('foo', array('bar' => 'foo'));
+		$expected = realpath(__DIR__ . '/tmpl/default_foo.php') . '{"bar":"foo"}';
 
-		$this->assertEquals(realpath(__DIR__ . '/tmpl/default_foo.php'), $result);
+		$this->assertEquals($expected, $result);
 	}
 
 	/**
