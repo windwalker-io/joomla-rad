@@ -9,13 +9,14 @@
 namespace Windwalker\Test\Model\Filter;
 
 use \Windwalker\Model\Filter\FilterHelper;
+use \Windwalker\Test\TestCase\AbstractBaseTestCase;
 
 /**
  * Test class of \Windwalker\Model\Filter\FilterHelper
  *
  * @since {DEPLOY_VERSION}
  */
-class FilterHelperTest extends \PHPUnit_Framework_TestCase
+class FilterHelperTest extends AbstractBaseTestCase
 {
 	/**
 	 * Test instance.
@@ -48,7 +49,7 @@ class FilterHelperTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Method to test execute().
 	 *
-	 * @param array $fields
+	 * @param array $filters
 	 * @param array $expected
 	 *
 	 * @return void
@@ -56,18 +57,43 @@ class FilterHelperTest extends \PHPUnit_Framework_TestCase
 	 * @dataProvider fieldsProvider
 	 * @covers Windwalker\Model\Filter\FilterHelper::execute
 	 */
-	public function testExecute($fields, $expected)
+	public function testExecute($filters, $expected)
 	{
 		$db = \JFactory::getDbo();
 		$query = $db->getQuery(true);
 
-		$query = $this->instance->execute($query, $fields);
+		$query->select('*')->from('table');
 
-		$readWhere = $this->readAttribute($query, 'where');
+		$query = $this->instance->execute($query, $filters);
 
-		$readElements = $this->readAttribute($readWhere, 'elements');
+		$this->assertStringSafeEquals($expected, (string) $query);
+	}
 
-		$this->assertSame($expected, $readElements);
+	/**
+	 * testHandler
+	 *
+	 * @param  callback $handler
+	 * @param  array    $filter
+	 * @param  string   $key
+	 * @param  string   $expected
+	 *
+	 * @return  void
+	 *
+	 * @dataProvider handlerProvider
+	 * @covers Windwalker\Model\Filter\FilterHelper::execute
+	 */
+	public function testHandler($handler, $filter, $key, $expected)
+	{
+		$db = \JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select('*')->from('table');
+
+		$this->instance->setHandler($key, $handler);
+
+		$query = $this->instance->execute($query, $filter);
+
+		$this->assertStringSafeEquals($expected, (string) $query);
 	}
 
 	/**
@@ -80,15 +106,56 @@ class FilterHelperTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array(
 				array('id' => '1', 'name' => 'apple'),
-				array("`id` = '1'", "`name` = 'apple'"),
+				"SELECT *\nFROM table\nWHERE `id` = '1' AND `name` = 'apple'",
 			),
 			array(
 				array('number' => '2', 'name' => 'book'),
-				array("`number` = '2'", "`name` = 'book'"),
+				"SELECT *\nFROM table\nWHERE `number` = '2' AND `name` = 'book'",
 			),
 			array(
 				array('name' => 'car', 'id' => '3'),
-				array("`name` = 'car'", "`id` = '3'"),
+				"SELECT *\nFROM table\nWHERE `name` = 'car' AND `id` = '3'",
+			),
+		);
+	}
+
+	/**
+	 * handlerProvider
+	 *
+	 * @return  array
+	 */
+	public function handlerProvider()
+	{
+		$handler1 = function($query, $field, $value){
+			$query->where($field . ' != ' . $value);
+		};
+
+		$handler2 = function($query, $field, $value){
+			$query->where($query->quoteName($field) . ' >= ' . $query->quoteName($value));
+		};
+
+		$handler3 = function($query, $field, $value){
+			$query->where($field . ' <= ' . $value);
+		};
+
+		return array(
+			array(
+				$handler1,
+				array('id' => '1'),
+				'id',
+				"SELECT *\nFROM table\nWHERE id != 1",
+			),
+			array(
+				$handler2,
+				array('name' => 'apple'),
+				'name',
+				"SELECT *\nFROM table\nWHERE `name` >= `apple`",
+			),
+			array(
+				$handler3,
+				array('number' => '287578'),
+				'number',
+				"SELECT *\nFROM table\nWHERE number <= 287578"
 			),
 		);
 	}
