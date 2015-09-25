@@ -10,7 +10,7 @@ namespace GeneratorBundle\Action\Test;
 
 use GeneratorBundle\Action\AbstractAction;
 use Muse\Filesystem\Folder;
-use Windwalker\String\String;
+use Windwalker\String\StringHelper;
 
 /**
  * The GenClassAction class.
@@ -28,7 +28,7 @@ class GenClassAction extends AbstractAction
 	{
 		$tmpl = file_get_contents(GENERATOR_BUNDLE_PATH . '/Template/test/testClass.php');
 
-		$file = String::parseVariable($tmpl, $this->replace);
+		$file = StringHelper::parseVariable($tmpl, $this->replace);
 
 		Folder::create(dirname($this->config['replace.test.class.file']));
 

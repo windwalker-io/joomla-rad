@@ -15,9 +15,7 @@ use Muse\Controller\AbstractTaskController;
 use Muse\IO\IOInterface;
 use Windwalker\Console\Prompter\ValidatePrompter;
 use Windwalker\DI\Container;
-use Windwalker\Helper\PathHelper;
-use Windwalker\Helper\ReflectionHelper;
-use Windwalker\String\String;
+use Windwalker\String\StringHelper;
 use Windwalker\String\StringNormalise;
 
 /**
@@ -131,7 +129,7 @@ class GenController extends AbstractTaskController
 			$config['replace.origin.method'] = $method->getName();
 			$config['replace.test.method'] = ucfirst($method->getName());
 
-			$methodCodes[] = String::parseVariable($methodTmpl, $config->get('replace'));
+			$methodCodes[] = StringHelper::parseVariable($methodTmpl, $config->get('replace'));
 		}
 
 		$config['replace.test.methods'] = implode("", $methodCodes);

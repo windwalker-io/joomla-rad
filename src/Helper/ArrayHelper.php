@@ -9,7 +9,6 @@
 namespace Windwalker\Helper;
 
 use Windwalker\String\Utf8String;
-use \Windwalker\Utilities\ArrayHelper as WindwalkerArrayHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -19,67 +18,16 @@ defined('_JEXEC') or die;
  *
  * @since 2.0
  */
-class ArrayHelper
+class ArrayHelper extends \Windwalker\Utilities\ArrayHelper
 {
 	/**
-	 * Get data from array or object by path.
-	 *
-	 * Example: `ArrayHelper::getByPath($array, 'foo.bar.yoo')` equals to $array['foo']['bar']['yoo'].
-	 *
-	 * @param mixed $data      An array or object to get value.
-	 * @param mixed $arguments The arguments path.
-	 *
-	 * @return  mixed Found value, null if not exists.
-	 */
-	public static function getByPath($data, $arguments)
-	{
-		if (empty($arguments))
-		{
-			return null;
-		}
-
-		if (is_array($arguments))
-		{
-			$args = $arguments;
-		}
-		elseif (is_string($arguments))
-		{
-			$args = explode('.', $arguments);
-		}
-		else
-		{
-			return null;
-		}
-
-		$dataTmp = $data;
-
-		foreach ($args as $arg)
-		{
-			if (is_object($dataTmp) && !empty($dataTmp->$arg))
-			{
-				$dataTmp = $dataTmp->$arg;
-			}
-			elseif (is_array($dataTmp) && !empty($dataTmp[$arg]))
-			{
-				$dataTmp = $dataTmp[$arg];
-			}
-			else
-			{
-				return null;
-			}
-		}
-
-		return $dataTmp;
-	}
-
-	/**
-	 * Pivot a two-dimensional matrix array.
+	 * Transpose a two-dimensional matrix array.
 	 *
 	 * @param  array $array An array with two level.
 	 *
 	 * @return array An pivoted array.
 	 */
-	public static function pivot($array)
+	public static function transpose($array)
 	{
 		$array = (array) $array;
 		$new   = array();
@@ -97,53 +45,7 @@ class ArrayHelper
 	}
 
 	/**
-	 * Pivot Array, separate by key. Same as AKHelperArray::pivot().
-	 * From:
-	 *         [value] => Array
-	 *             (
-	 *                 [0] => aaa
-	 *                 [1] => bbb
-	 *             )
-	 *         [text] => Array
-	 *             (
-	 *                 [0] => aaa
-	 *                 [1] => bbb
-	 *             )
-	 *  To:
-	 *         [0] => Array
-	 *             (
-	 *                 [value] => aaa
-	 *                 [text] => aaa
-	 *             )
-	 *         [1] => Array
-	 *             (
-	 *                 [value] => bbb
-	 *                 [text] => bbb
-	 *             )
-	 *
-	 * @param   array $array An array with two level.
-	 *
-	 * @return  array An pivoted array.
-	 */
-	public static function pivotByKey($array)
-	{
-		$array = (array) $array;
-		$new   = array();
-		$keys  = array_keys($array);
-
-		foreach ($keys as $k => $val)
-		{
-			foreach ((array) $array[$val] as $k2 => $v2)
-			{
-				$new[$k2][$val] = $v2;
-			}
-		}
-
-		return $new;
-	}
-
-	/**
-	 * Same as AKHelperArray::pivot().
+	 * Same as ArrayHelper::pivot().
 	 * From:
 	 *          [0] => Array
 	 *             (
@@ -289,241 +191,5 @@ class ArrayHelper
 		}
 
 		return $array;
-	}
-
-	/**
-	 * Query a two-dimensional array values to get second level array.
-	 *
-	 * @param   array    $array    An array to query.
-	 * @param   mixed    $queries  Query strings, may contain Comparison Operators: '>', '>=', '<', '<='.
-	 *                             Example:
-	 *                             array(
-	 *                                 'id'         => 6,   // Get all elements where id=6
-	 *                                 '>published' => 0    // Get all elements where published>0
-	 *                             );
-	 * @param   boolean  $strict   Use strict to compare equals.
-	 * @param   boolean  $keepKey  Keep origin array keys.
-	 *
-	 * @return  array  An new two-dimensional array queried.
-	 *
-	 * @since   2.0
-	 */
-	public static function query($array, $queries = array(), $strict = false, $keepKey = false)
-	{
-		$results = array();
-		$queries = (array) $queries;
-
-		// Visit Array
-		foreach ((array) $array as $k => $v)
-		{
-			$data = (array) $v;
-
-			// Visit Query Rules
-			foreach ($queries as $key => $val)
-			{
-				/*
-				 * Key: is query key
-				 * Val: is query value
-				 * Data: is array element
-				 */
-				$value = null;
-
-				if (substr($key, -2) == '>=')
-				{
-					if (static::getByPath($data, trim(substr($key, 0, -2))) >= $val)
-					{
-						$value = $v;
-					}
-				}
-				elseif (substr($key, -2) == '<=')
-				{
-					if (static::getByPath($data, trim(substr($key, 0, -2))) <= $val)
-					{
-						$value = $v;
-					}
-				}
-				elseif (substr($key, -1) == '>')
-				{
-					if (static::getByPath($data, trim(substr($key, 0, -1))) > $val)
-					{
-						$value = $v;
-					}
-				}
-				elseif (substr($key, -1) == '<')
-				{
-					if (static::getByPath($data, trim(substr($key, 0, -1))) < $val)
-					{
-						$value = $v;
-					}
-				}
-				else
-				{
-					if ($strict)
-					{
-						if (static::getByPath($data, $key) === $val)
-						{
-							$value = $v;
-						}
-					}
-					else
-					{
-						// Workaround for PHP 5.4 object compare bug, see: https://bugs.php.net/bug.php?id=62976
-						$compare1 = is_object(static::getByPath($data, $key)) ? get_object_vars(static::getByPath($data, $key)) : static::getByPath($data, $key);
-						$compare2 = is_object($val) ? get_object_vars($val) : $val;
-
-						if ($compare1 == $compare2)
-						{
-							$value = $v;
-						}
-					}
-				}
-
-				// Set Query results
-				if ($value)
-				{
-					if ($keepKey)
-					{
-						$results[$k] = $value;
-					}
-					else
-					{
-						$results[] = $value;
-					}
-				}
-			}
-		}
-
-		return $results;
-	}
-
-	/**
-	 * Set a value into array or object.
-	 *
-	 * @param   mixed  &$array An array to set value.
-	 * @param   string $key    Array key to store this value.
-	 * @param   mixed  $value  Value which to set into array or object.
-	 *
-	 * @return  mixed Result array or object.
-	 */
-	public static function setValue(&$array, $key, $value)
-	{
-		if (is_array($array))
-		{
-			$array[$key] = $value;
-		}
-		elseif (is_object($array))
-		{
-			$array->$key = $value;
-		}
-
-		return $array;
-	}
-
-	/**
-	 * A function similar to JArrayHelper::getValue(), but support object.
-	 *
-	 * @param   mixed  &$array   An array or object to getValue.
-	 * @param   string $key      Array key to get value.
-	 * @param   mixed  $default  Default value if key not exists.
-	 *
-	 * @return  mixed    The value.
-	 */
-	public static function getValue(&$array, $key, $default = null)
-	{
-		if (is_array($array))
-		{
-			return WindwalkerArrayHelper::getValue($array, $key, $default);
-		}
-
-		// If not Array, we do not detect it for warning not Object
-		$result = null;
-
-		if (isset($array->$key))
-		{
-			$result = $array->$key;
-		}
-
-		if (is_null($result))
-		{
-			$result = $default;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Convert an Array or Object keys to new name by an array index.
-	 *
-	 * @param   mixed $origin Array or Object to convert.
-	 * @param   mixed $map    Array or Object index for convert.
-	 *
-	 * @return  mixed Mapped array or object.
-	 */
-	public static function mapKey($origin, $map = array())
-	{
-		$result = is_array($origin) ? array() : new \stdClass;
-
-		foreach ((array) $origin as $key => $val)
-		{
-			$newKey = self::getValue($map, $key);
-
-			if ($newKey)
-			{
-				self::setValue($result, $newKey, $val);
-			}
-			else
-			{
-				self::setValue($result, $key, $val);
-			}
-		}
-
-		return $result;
-	}
-
-	/**
-	 * array_merge_recursive does indeed merge arrays, but it converts values with duplicate
-	 * keys to arrays rather than overwriting the value in the first array with the duplicate
-	 * value in the second array, as array_merge does. I.e., with array_merge_recursive,
-	 * this happens (documented behavior):
-	 *
-	 * array_merge_recursive(array('key' => 'org value'), array('key' => 'new value'));
-	 *     => array('key' => array('org value', 'new value'));
-	 *
-	 * array_merge_recursive_distinct does not change the datatypes of the values in the arrays.
-	 * Matching keys' values in the second array overwrite those in the first array, as is the
-	 * case with array_merge, i.e.:
-	 *
-	 * array_merge_recursive_distinct(array('key' => 'org value'), array('key' => 'new value'));
-	 *     => array('key' => array('new value'));
-	 *
-	 * Parameters are passed by reference, though only for performance reasons. They're not
-	 * altered by this function.
-	 *
-	 * @param  array    &$array1   Array to be merge.
-	 * @param  array    &$array2   Array to be merge.
-	 * @param  boolean  $recursive Recursive merge, default is true.
-	 *
-	 * @return array Merged array.
-	 *
-	 * @author Daniel <daniel (at) danielsmedegaardbuus (dot) dk>
-	 * @author Gabriel Sobrinho <gabriel (dot) sobrinho (at) gmail (dot) com>
-	 */
-	public static function merge(array &$array1, array &$array2, $recursive = true)
-	{
-		$merged = $array1;
-
-		foreach ($array2 as $key => &$value)
-		{
-			if ($recursive && is_array($value) && isset($merged[$key]) && is_array($merged[$key]))
-			{
-				$merged[$key] = static::merge($merged [$key], $value);
-			}
-			else
-			{
-				$merged[$key] = $value;
-			}
-		}
-
-		return $merged;
 	}
 }

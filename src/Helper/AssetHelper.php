@@ -119,8 +119,8 @@ class AssetHelper implements ContainerAwareInterface
 			return $this;
 		}
 
-		$type  = \JArrayHelper::getValue($attribs, 'type');
-		$media = \JArrayHelper::getValue($attribs, 'media');
+		$type  = ArrayHelper::getValue($attribs, 'type');
+		$media = ArrayHelper::getValue($attribs, 'media');
 
 		unset($attribs['type']);
 		unset($attribs['media']);
@@ -159,9 +159,9 @@ class AssetHelper implements ContainerAwareInterface
 			return $this;
 		}
 
-		$type  = \JArrayHelper::getValue($attribs, 'type');
-		$defer = \JArrayHelper::getValue($attribs, 'defer');
-		$async = \JArrayHelper::getValue($attribs, 'async');
+		$type  = ArrayHelper::getValue($attribs, 'type');
+		$defer = ArrayHelper::getValue($attribs, 'defer');
+		$async = ArrayHelper::getValue($attribs, 'async');
 
 		unset($attribs['type']);
 		unset($attribs['media']);

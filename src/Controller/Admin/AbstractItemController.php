@@ -8,6 +8,8 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Windwalker\Helper\ArrayHelper;
+
 /**
  * The Controller to handle single item.
  *
@@ -41,10 +43,10 @@ abstract class AbstractItemController extends AbstractAdminController
 		parent::__construct($input, $app, $config);
 
 		// Guess the item view as the context.
-		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item', $this->getName());
+		$this->viewItem = $this->viewItem ? : ArrayHelper::getValue($config, 'view_item', $this->getName());
 
 		// Guess the list view as the plural of the item view.
-		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list');
+		$this->viewList = $this->viewList ? : ArrayHelper::getValue($config, 'view_list');
 
 		if (empty($this->viewList))
 		{

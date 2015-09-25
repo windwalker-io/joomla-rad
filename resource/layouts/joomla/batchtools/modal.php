@@ -1,4 +1,12 @@
 <?php
+/**
+ * Part of Windwalker project.
+ *
+ * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ */
+
+use Windwalker\Helper\ArrayHelper;
 
 defined('JPATH_BASE') or die;
 
@@ -6,7 +14,7 @@ $data = $displayData['view'];
 
 $textPrefix = $data->view->option ? : 'LIB_WINDWALKER';
 
-$task = JArrayHelper::getValue($displayData, 'task_prefix', '');
+$task = ArrayHelper::getValue($displayData, 'task_prefix', '');
 ?>
 
 <div class="modal hide fade" id="batchModal">

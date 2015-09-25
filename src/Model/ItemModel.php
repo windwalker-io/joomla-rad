@@ -8,6 +8,8 @@
 
 namespace Windwalker\Model;
 
+use Joomla\Utilities\ArrayHelper;
+
 /**
  * The model for single item.
  *
@@ -52,7 +54,7 @@ class ItemModel extends AbstractAdvancedModel
 
 		// Convert to the JObject before adding other data.
 		$properties = $table->getProperties(1);
-		$item = \JArrayHelper::toObject($properties, 'stdClass');
+		$item = ArrayHelper::toObject($properties, 'stdClass');
 
 		if (property_exists($item, 'params'))
 		{

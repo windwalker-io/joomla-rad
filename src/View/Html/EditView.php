@@ -9,6 +9,7 @@
 namespace Windwalker\View\Html;
 
 use Windwalker\DI\Container;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
 
 /**
@@ -32,7 +33,7 @@ class EditView extends ItemHtmlView
 
 		if (!$this->toolbarConfig)
 		{
-			$this->toolbarConfig = \JArrayHelper::getValue($config, 'toolbar', array());
+			$this->toolbarConfig = ArrayHelper::getValue($config, 'toolbar', array());
 		}
 	}
 

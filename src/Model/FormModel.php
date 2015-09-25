@@ -8,6 +8,7 @@
 
 namespace Windwalker\Model;
 
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Exception\ValidateFailException;
 
 /**
@@ -62,7 +63,7 @@ abstract class FormModel extends AbstractAdvancedModel
 	protected function loadForm($name, $source = null, $options = array(), $clear = false, $xpath = null)
 	{
 		// Handle the optional arguments.
-		$options['control'] = \JArrayHelper::getValue($options, 'control', false);
+		$options['control'] = ArrayHelper::getValue($options, 'control', false);
 
 		// Create a signature hash.
 		$hash = sha1($source . serialize($options));

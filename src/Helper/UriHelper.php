@@ -73,8 +73,8 @@ class UriHelper
 
 			$file = pathinfo($path);
 
-			$filesize = filesize($path) + \JArrayHelper::getValue($option, 'size_offset', 0);
-			ini_set('memory_limit', \JArrayHelper::getValue($option, 'memory_limit', '1540M'));
+			$filesize = filesize($path) + ArrayHelper::getValue($option, 'size_offset', 0);
+			ini_set('memory_limit', ArrayHelper::getValue($option, 'memory_limit', '1540M'));
 
 			// Set Header
 			header('Content-Type: application/octet-stream');

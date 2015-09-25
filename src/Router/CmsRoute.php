@@ -8,6 +8,8 @@
 
 namespace Windwalker\Router;
 
+use Windwalker\Helper\ArrayHelper;
+
 /**
  * Route class to handle single route pattern.
  *
@@ -201,9 +203,9 @@ class CmsRoute
 		{
 			foreach ($items as $item)
 			{
-				$option = \JArrayHelper::getValue($item->query, 'option');
-				$view   = \JArrayHelper::getValue($item->query, 'view');
-				$id     = \JArrayHelper::getValue($item->query, 'id');
+				$option = ArrayHelper::getValue($item->query, 'option');
+				$view   = ArrayHelper::getValue($item->query, 'view');
+				$id     = ArrayHelper::getValue($item->query, 'id');
 
 				if ($option == $data['option'] && $view == $data['view'] && $id == $data['id'])
 				{
@@ -219,8 +221,8 @@ class CmsRoute
 		{
 			foreach ($items as $item)
 			{
-				$option = \JArrayHelper::getValue($item->query, 'option');
-				$view   = \JArrayHelper::getValue($item->query, 'view');
+				$option = ArrayHelper::getValue($item->query, 'option');
+				$view   = ArrayHelper::getValue($item->query, 'view');
 
 				if ($option == $data['option'] && $view == $data['view'])
 				{
@@ -238,7 +240,7 @@ class CmsRoute
 		{
 			foreach ($items as $item)
 			{
-				$option = \JArrayHelper::getValue($item->query, 'option');
+				$option = ArrayHelper::getValue($item->query, 'option');
 
 				if ($option == $data['option'])
 				{
