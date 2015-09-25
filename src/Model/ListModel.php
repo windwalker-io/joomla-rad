@@ -93,6 +93,27 @@ class ListModel extends FormModel
 	protected $selectType = null;
 
 	/**
+	 * Property queryHelper.
+	 *
+	 * @var  QueryHelper
+	 */
+	protected $queryHelper;
+
+	/**
+	 * Property filterHelper.
+	 *
+	 * @var  FilterHelper
+	 */
+	protected $filterHelper;
+
+	/**
+	 * Property searchHelper.
+	 *
+	 * @var  SearchHelper
+	 */
+	protected $searchHelper;
+
+	/**
 	 * Constructor
 	 *
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
@@ -120,7 +141,7 @@ class ListModel extends FormModel
 
 		$this->container = $container ? : $this->getContainer();
 
-		$this->container->registerServiceProvider(new GridProvider($this->name));
+		$this->container->registerServiceProvider(new GridProvider($this->name, $this));
 
 		$this->configureTables();
 
@@ -695,7 +716,7 @@ class ListModel extends FormModel
 	{
 		$filters = $filters ? : $this->state->get('filter', array());
 
-		$filterHelper = $this->container->get('model.' . strtolower($this->name) . '.filter', Container::FORCE_NEW);
+		$filterHelper = $this->getFilterHelper();
 
 		$this->configureFilters($filterHelper);
 
@@ -739,7 +760,7 @@ class ListModel extends FormModel
 	{
 		$searches = $searches ? : $this->state->get('search', array());
 
-		$searchHelper = $this->container->get('model.' . strtolower($this->name) . '.search', Container::FORCE_NEW);
+		$searchHelper = $this->getSearchHelper();
 
 		$this->configureSearches($searchHelper);
 
@@ -916,7 +937,7 @@ class ListModel extends FormModel
 	 */
 	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT')
 	{
-		$queryHelper = $this->getContainer()->get('model.' . $this->name . '.helper.query');
+		$queryHelper = $this->getQueryHelper();
 
 		$queryHelper->addTable($alias, $table, $condition, $joinType);
 
@@ -932,9 +953,96 @@ class ListModel extends FormModel
 	 */
 	public function removeTable($alias)
 	{
-		$queryHelper = $this->getContainer()->get('model.' . $this->name . '.helper.query');
+		$queryHelper = $this->getQueryHelper();
 
 		$queryHelper->removeTable($alias);
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property QueryHelper
+	 *
+	 * @return  QueryHelper
+	 */
+	public function getQueryHelper()
+	{
+		if (!$this->queryHelper)
+		{
+			$this->queryHelper = new QueryHelper;
+		}
+
+		return $this->queryHelper;
+	}
+
+	/**
+	 * Method to set property queryHelper
+	 *
+	 * @param   QueryHelper $queryHelper
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setQueryHelper(QueryHelper $queryHelper)
+	{
+		$this->queryHelper = $queryHelper;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property FilterHelper
+	 *
+	 * @return  FilterHelper
+	 */
+	public function getFilterHelper()
+	{
+		if (!$this->filterHelper)
+		{
+			$this->filterHelper = new FilterHelper;
+		}
+
+		return $this->filterHelper;
+	}
+
+	/**
+	 * Method to set property filterHelper
+	 *
+	 * @param   FilterHelper $filterHelper
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setFilterHelper($filterHelper)
+	{
+		$this->filterHelper = $filterHelper;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property SearchHelper
+	 *
+	 * @return  SearchHelper
+	 */
+	public function getSearchHelper()
+	{
+		if (!$this->searchHelper)
+		{
+			$this->searchHelper = new SearchHelper;
+		}
+
+		return $this->searchHelper;
+	}
+
+	/**
+	 * Method to set property searchHelper
+	 *
+	 * @param   SearchHelper $searchHelper
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setSearchHelper($searchHelper)
+	{
+		$this->searchHelper = $searchHelper;
 
 		return $this;
 	}

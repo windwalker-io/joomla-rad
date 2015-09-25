@@ -13,11 +13,14 @@ use Joomla\DI\ServiceProviderInterface;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\Filter\SearchHelper;
 use Windwalker\Model\Helper\QueryHelper;
+use Windwalker\Model\ListModel;
 
 /**
- * Class FilterProvider
+ * Class GridProvider
  *
- * @since 1.0
+ * @since 2.0
+ *
+ * @deprecated  3.0  Decouple container from ListModel.
  */
 class GridProvider implements ServiceProviderInterface
 {
@@ -29,13 +32,22 @@ class GridProvider implements ServiceProviderInterface
 	protected $name = null;
 
 	/**
+	 * Inject ListModel to make this class backward compatible.
+	 *
+	 * @var  ListModel
+	 */
+	private $model;
+
+	/**
 	 * Constructor
 	 *
-	 * @param string $name
+	 * @param string    $name
+	 * @param ListModel $model
 	 */
-	public function __construct($name)
+	public function __construct($name, ListModel $model = null)
 	{
 		$this->name = strtolower($name);
+		$this->model = $model;
 	}
 
 	/**
@@ -47,30 +59,53 @@ class GridProvider implements ServiceProviderInterface
 	 */
 	public function register(Container $container)
 	{
+		$model = $this->model;
+
 		// QueryHelper
 		$container->share(
 			'model.' . $this->name . '.helper.query',
-			function($container)
+			function($container) use ($model)
 			{
-				return new QueryHelper;
+				if ($model instanceof ListModel)
+				{
+					return $model->getQueryHelper();
+				}
+				else
+				{
+					return new QueryHelper;
+				}
 			}
 		);
 
 		// Filter
 		$container->share(
 			'model.' . $this->name . '.filter',
-			function($container)
+			function($container) use ($model)
 			{
-				return new FilterHelper;
+				if ($model instanceof ListModel)
+				{
+					return $model->getFilterHelper();
+				}
+				else
+				{
+					return new FilterHelper;
+				}
 			}
 		)->alias('model.' . $this->name . '.helper.filter', 'model.' . $this->name . '.filter');
 
 		// Search
 		$container->share(
 			'model.' . $this->name . '.search',
-			function($container)
+			function($container) use ($model)
 			{
-				return new SearchHelper;
+				if ($model instanceof ListModel)
+				{
+					return $model->getSearchHelper();
+				}
+				else
+				{
+					return new SearchHelper;
+				}
 			}
 		)->alias('model.' . $this->name . '.helper.search', 'model.' . $this->name . '.search');
 	}
