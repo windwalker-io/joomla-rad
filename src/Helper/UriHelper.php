@@ -19,6 +19,32 @@ use Windwalker\String\Utf8String;
 class UriHelper
 {
 	/**
+	 * Property isTest to determine if test mode is on or not.
+	 *
+	 * @var  bool
+	 */
+	protected static $isTest = false;
+
+	/**
+	 * Property headerBuffer for test purpose.
+	 *
+	 * @var  array
+	 */
+	public static $headerBuffer = array();
+
+	/**
+	 * Setter of property $isTest.
+	 *
+	 * @param   boolean $isTest
+	 *
+	 * @return  void
+	 */
+	public static function setTestMode($isTest)
+	{
+		self::$isTest = (bool) $isTest;
+	}
+
+	/**
 	 * A base encode & decode function, will auto convert white space to plus to avoid errors.
 	 *
 	 * @param   string $action 'encode' OR 'decode'
@@ -55,10 +81,14 @@ class UriHelper
 	 * @param   boolean $stream   Use stream or redirect to download.
 	 * @param   array   $option   Some download options.
 	 *
-	 * @return  void
+	 * @return  string
 	 */
 	public static function download($path, $absolute = false, $stream = false, $option = array())
 	{
+		$test = self::$isTest;
+
+		static::$headerBuffer = array();
+
 		if ($stream)
 		{
 			if (!$absolute)
@@ -68,23 +98,23 @@ class UriHelper
 
 			if (!is_file($path))
 			{
-				die();
+				return $test ? : die;
 			}
 
 			$file = pathinfo($path);
 
-			$filesize = filesize($path) + \JArrayHelper::getValue($option, 'size_offset', 0);
-			ini_set('memory_limit', \JArrayHelper::getValue($option, 'memory_limit', '1540M'));
+			$filesize = filesize($path) + ArrayHelper::getValue($option, 'size_offset', 0);
+			ini_set('memory_limit', ArrayHelper::getValue($option, 'memory_limit', '1540M'));
 
 			// Set Header
-			header('Content-Type: application/octet-stream');
-			header('Cache-Control: no-store, no-cache, must-revalidate');
-			header('Cache-Control: pre-check=0, post-check=0, max-age=0');
-			header('Content-Transfer-Encoding: binary');
-			header('Content-Encoding: none');
-			header('Content-type: application/force-download');
-			header('Content-length: ' . $filesize);
-			header('Content-Disposition: attachment; filename="' . $file['basename'] . '"');
+			static::header('Content-Type: application/octet-stream');
+			static::header('Cache-Control: no-store, no-cache, must-revalidate');
+			static::header('Cache-Control: pre-check=0, post-check=0, max-age=0');
+			static::header('Content-Transfer-Encoding: binary');
+			static::header('Content-Encoding: none');
+			static::header('Content-type: application/force-download');
+			static::header('Content-length: ' . $filesize);
+			static::header('Content-Disposition: attachment; filename="' . $file['basename'] . '"');
 
 			$handle    = fopen($path, 'rb');
 			$chunksize = 1 * (1024 * 1024);
@@ -94,13 +124,13 @@ class UriHelper
 			{
 				$buffer = fread($handle, $chunksize);
 				echo $buffer;
-				ob_flush();
-				flush();
+				$test or ob_flush();
+				$test or flush();
 			}
 
 			fclose($handle);
 
-			jexit();
+			$test or jexit();
 		}
 		else
 		{
@@ -111,8 +141,22 @@ class UriHelper
 
 			// Redirect it.
 			$app = Container::getInstance()->get('app');
-			$app->redirect($path);
+			$test or $app->redirect($path);
+
+			return $path;
 		}
+	}
+
+	/**
+	 * header
+	 *
+	 * @param string $data
+	 *
+	 * @return  void
+	 */
+	protected static function header($data)
+	{
+		self::$isTest ? (static::$headerBuffer[] = $data) : header($data);
 	}
 
 	/**
@@ -130,7 +174,7 @@ class UriHelper
 
 		return $uri;
 	}
-	
+
 	/**
 	 * Give a relative path, return path with host.
 	 *
@@ -146,14 +190,14 @@ class UriHelper
 		}
 
 		// Build path
-		$uri = new \JURI($path);
+		$uri = new \JUri($path);
 
 		if ($uri->getHost())
 		{
 			return $path;
 		}
 
-		$uri->parse(\JURI::root());
+		$uri->parse(\JUri::root());
 		$root_path = $uri->getPath();
 
 		if (strpos($path, $root_path) === 0)
@@ -168,7 +212,7 @@ class UriHelper
 
 		return $uri->toString();
 	}
-	
+
 	/**
 	 * Is home page?
 	 *
