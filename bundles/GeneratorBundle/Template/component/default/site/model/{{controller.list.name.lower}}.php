@@ -146,12 +146,12 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 
 		// Order
 		// =====================================================================================
-		$orderCol = $params->get('orderby', 'a.ordering');
+		$orderCol = $params->get('orderby', '{{controller.item.name.lower}}.ordering');
 		$this->state->set('list.ordering', $orderCol);
 
 		// Order Dir
 		// =====================================================================================
-		$listOrder = $params->get('order_dir', 'asc');
+		$listOrder = $params->get('order_dir', 'ASC');
 		$this->state->set('list.direction', $listOrder);
 
 		// Limitstart
