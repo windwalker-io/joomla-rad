@@ -54,6 +54,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test__construct()
 	{
+		/** @var \Closure $theClosure */
 		$theClosure = $this->readAttribute($this->instance, 'defaultHandler');
 
 		$arg1 = 5;
@@ -113,6 +114,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertObjectHasAttribute('defaultHandler', $theDefaultHandler);
 
+		/** @var \Closure $theClosure */
 		$theClosure = $this->readAttribute($theDefaultHandler, 'defaultHandler');
 
 		$arg1 = 25;
