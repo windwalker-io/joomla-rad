@@ -151,7 +151,7 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testSetName()
 	{
-		$html = new HtmlElement('div', '', array('id' => 'test-id', 'class' => 'test-class'));
+		$html = new HtmlElement('div', null, array('id' => 'test-id', 'class' => 'test-class'));
 		$html->setName('input');
 
 		$this->assertEquals('<input id="test-id" class="test-class" />', DomHelper::minify($html));
@@ -245,21 +245,21 @@ class HtmlElementTest extends \PHPUnit_Framework_TestCase
 				. HtmlBuilder::create('option', 'GIRL', array('value' => 2)),
 				array('id' => 'test-id', 'class' => 'test-class'),
 				'<select id="test-id" class="test-class">
-					<option value="1" selected>BOY</option>
+					<option value="1" selected="selected">BOY</option>
 					<option value="2">GIRL</option>
 				</select>'
 			),
 			// single tag without content
 			array(
 				'img',
-				'',
+				null,
 				array('id' => 'test-id', 'class' => 'test-class', 'src' => 'http://placehold.it/100x100'),
 				'<img id="test-id" class="test-class" src="http://placehold.it/100x100" />'
 			),
 			// br tag
 			array(
 				'br',
-				'',
+				null,
 				array(),
 				'<br />'
 			),

@@ -12,23 +12,9 @@ namespace Windwalker\Html;
  * Html Elements collection.
  *
  * @since 2.0
+ *
+ * @deprecated  3.0 Use \Windwalker\Dom\HtmlElements instead.
  */
-class HtmlElements extends \ArrayObject
+class HtmlElements extends \Windwalker\Dom\HtmlElements
 {
-	/**
-	 * Convert all elements to string.
-	 *
-	 * @return  string
-	 */
-	public function __toString()
-	{
-		$return = '';
-
-		foreach ($this as $element)
-		{
-			$return .= (string) $element;
-		}
-
-		return $return;
-	}
 }

@@ -4,30 +4,31 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f8828e7474df8100016f740fb6e0accb",
+    "hash": "bd06be4bb57b4943c7f82a7e76ecc319",
+    "content-hash": "1589f967b693c22a740bc3d3420f7fd5",
     "packages": [
         {
             "name": "asika/muse",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/asika32764/muse.git",
-                "reference": "3ebd7f193c029182a5f2c24c232c3c20cd6bea66"
+                "reference": "fa7ebdc53062aa4dd0ee6a78987d9fb5517f20c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asika32764/muse/zipball/3ebd7f193c029182a5f2c24c232c3c20cd6bea66",
-                "reference": "3ebd7f193c029182a5f2c24c232c3c20cd6bea66",
+                "url": "https://api.github.com/repos/asika32764/muse/zipball/fa7ebdc53062aa4dd0ee6a78987d9fb5517f20c0",
+                "reference": "fa7ebdc53062aa4dd0ee6a78987d9fb5517f20c0",
                 "shasum": ""
             },
             "require": {
-                "windwalker/filesystem": "~2.0@stable",
-                "windwalker/registry": "~2.0@stable",
-                "windwalker/utilities": "~2.0@stable"
+                "windwalker/filesystem": "~2.0",
+                "windwalker/registry": "~2.0",
+                "windwalker/utilities": "~2.0"
             },
             "require-dev": {
-                "windwalker/console": "~2.0@stable",
-                "windwalker/database": "~2.0@stable"
+                "windwalker/console": "~2.0",
+                "windwalker/database": "~2.0"
             },
             "type": "framework",
             "autoload": {
@@ -55,20 +56,20 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2015-01-12 03:40:13"
+            "time": "2015-08-23 12:56:50"
         },
         {
             "name": "filp/whoops",
-            "version": "1.1.6",
+            "version": "1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "37b5e653c99cbb9113108d7dc59a0ddc306acc46"
+                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/37b5e653c99cbb9113108d7dc59a0ddc306acc46",
-                "reference": "37b5e653c99cbb9113108d7dc59a0ddc306acc46",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/72538eeb70bbfb11964412a3d098d109efd012f7",
+                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7",
                 "shasum": ""
             },
             "require": {
@@ -113,38 +114,38 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2015-05-29 15:12:07"
+            "time": "2015-06-29 05:42:04"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.7.0",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "4a29a5248aed4fb45f626a7bbbd330291492f5c3"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "34c8a4b51e751e7ea869b8262f883d008a2b81b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/4a29a5248aed4fb45f626a7bbbd330291492f5c3",
-                "reference": "4a29a5248aed4fb45f626a7bbbd330291492f5c3",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/34c8a4b51e751e7ea869b8262f883d008a2b81b8",
+                "reference": "34c8a4b51e751e7ea869b8262f883d008a2b81b8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -162,20 +163,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-05-02 15:21:08"
+            "time": "2016-01-13 10:28:07"
         },
         {
             "name": "windwalker/cache",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-cache.git",
-                "reference": "ac3a937539932b1a841c10f2ad7795f81e10e262"
+                "reference": "b1255aeb78a843ddda536b000a60f7cd6df33654"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-cache/zipball/ac3a937539932b1a841c10f2ad7795f81e10e262",
-                "reference": "ac3a937539932b1a841c10f2ad7795f81e10e262",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-cache/zipball/b1255aeb78a843ddda536b000a60f7cd6df33654",
+                "reference": "b1255aeb78a843ddda536b000a60f7cd6df33654",
                 "shasum": ""
             },
             "require": {
@@ -187,7 +188,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -206,20 +207,20 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2015-02-24 02:32:05"
+            "time": "2015-09-07 05:06:04"
         },
         {
             "name": "windwalker/compare",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-compare.git",
-                "reference": "feaea38398036506a0d84738189dc3fcb7b82274"
+                "reference": "6bb1e02f1964e192273f799e1a56103b60a889d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-compare/zipball/feaea38398036506a0d84738189dc3fcb7b82274",
-                "reference": "feaea38398036506a0d84738189dc3fcb7b82274",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-compare/zipball/6bb1e02f1964e192273f799e1a56103b60a889d6",
+                "reference": "6bb1e02f1964e192273f799e1a56103b60a889d6",
                 "shasum": ""
             },
             "require": {
@@ -231,7 +232,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -250,20 +251,20 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2014-12-16 15:28:13"
+            "time": "2015-08-11 07:10:07"
         },
         {
             "name": "windwalker/console",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-console.git",
-                "reference": "338be1de20017a951cefe47cb91480bcd236a5e5"
+                "reference": "8d390b1ead1ad663387cc7114e775ad28108cdce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-console/zipball/338be1de20017a951cefe47cb91480bcd236a5e5",
-                "reference": "338be1de20017a951cefe47cb91480bcd236a5e5",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-console/zipball/8d390b1ead1ad663387cc7114e775ad28108cdce",
+                "reference": "8d390b1ead1ad663387cc7114e775ad28108cdce",
                 "shasum": ""
             },
             "require": {
@@ -277,7 +278,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -296,20 +297,20 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2015-04-04 06:49:58"
+            "time": "2015-08-21 14:56:15"
         },
         {
             "name": "windwalker/data",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-data.git",
-                "reference": "83c51cf3186720e146774bcf39b76ef1a2c5e18f"
+                "reference": "d812df5796cfe62a88cfec26cb35d509d45c47e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-data/zipball/83c51cf3186720e146774bcf39b76ef1a2c5e18f",
-                "reference": "83c51cf3186720e146774bcf39b76ef1a2c5e18f",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-data/zipball/d812df5796cfe62a88cfec26cb35d509d45c47e7",
+                "reference": "d812df5796cfe62a88cfec26cb35d509d45c47e7",
                 "shasum": ""
             },
             "require": {
@@ -321,7 +322,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -340,20 +341,20 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2015-04-04 07:29:34"
+            "time": "2015-08-16 13:51:01"
         },
         {
             "name": "windwalker/datamapper",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-datamapper.git",
-                "reference": "6e87f0db2063497246ad486f4cca95af5e207703"
+                "reference": "aa19559689709432b474c72d5d809365d2e09393"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-datamapper/zipball/6e87f0db2063497246ad486f4cca95af5e207703",
-                "reference": "6e87f0db2063497246ad486f4cca95af5e207703",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-datamapper/zipball/aa19559689709432b474c72d5d809365d2e09393",
+                "reference": "aa19559689709432b474c72d5d809365d2e09393",
                 "shasum": ""
             },
             "require": {
@@ -363,16 +364,18 @@
             "require-dev": {
                 "windwalker/compare": "~2.0",
                 "windwalker/database": "~2.0",
+                "windwalker/event": "~2.0",
                 "windwalker/test": "~2.0"
             },
             "suggest": {
                 "windwalker/compare": "Install 2.* if you want to use Compare object.",
-                "windwalker/database": "Install 2.* if you want Windwalker Database."
+                "windwalker/database": "Install 2.* if you want Windwalker Database.",
+                "windwalker/event": "Install 2.* if you want to use hooks."
             },
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -391,20 +394,20 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2015-02-17 05:43:57"
+            "time": "2016-01-07 04:49:34"
         },
         {
-            "name": "windwalker/filesystem",
-            "version": "2.0.8",
+            "name": "windwalker/dom",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ventoviro/windwalker-filesystem.git",
-                "reference": "75caea343ca84c834d204cb097ee5221b32caa90"
+                "url": "https://github.com/ventoviro/windwalker-dom.git",
+                "reference": "872281917f00084e6088060106e383ed15d7eeb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-filesystem/zipball/75caea343ca84c834d204cb097ee5221b32caa90",
-                "reference": "75caea343ca84c834d204cb097ee5221b32caa90",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-dom/zipball/872281917f00084e6088060106e383ed15d7eeb1",
+                "reference": "872281917f00084e6088060106e383ed15d7eeb1",
                 "shasum": ""
             },
             "require": {
@@ -416,7 +419,51 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Dom\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Dom package",
+            "homepage": "https://github.com/ventoviro/windwalker-dom",
+            "keywords": [
+                "filesystem",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2016-01-06 11:35:43"
+        },
+        {
+            "name": "windwalker/filesystem",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-filesystem.git",
+                "reference": "2670bfd5c14cc5adf6b1b0aadfa476b6a0211607"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-filesystem/zipball/2670bfd5c14cc5adf6b1b0aadfa476b6a0211607",
+                "reference": "2670bfd5c14cc5adf6b1b0aadfa476b6a0211607",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -435,20 +482,65 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2015-01-03 09:33:14"
+            "time": "2015-08-11 08:56:05"
         },
         {
-            "name": "windwalker/io",
-            "version": "2.0.8",
+            "name": "windwalker/html",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ventoviro/windwalker-io.git",
-                "reference": "b575f50574db9283f66ecd9c7ec5d7f07c918472"
+                "url": "https://github.com/ventoviro/windwalker-html.git",
+                "reference": "54d8307ff7ea4755b1e4689ec0d97d42472936d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-io/zipball/b575f50574db9283f66ecd9c7ec5d7f07c918472",
-                "reference": "b575f50574db9283f66ecd9c7ec5d7f07c918472",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-html/zipball/54d8307ff7ea4755b1e4689ec0d97d42472936d8",
+                "reference": "54d8307ff7ea4755b1e4689ec0d97d42472936d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10",
+                "windwalker/dom": "~2.0"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Html\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Html package",
+            "homepage": "https://github.com/ventoviro/windwalker-html",
+            "keywords": [
+                "framework",
+                "html",
+                "windwalker"
+            ],
+            "time": "2016-01-06 11:34:45"
+        },
+        {
+            "name": "windwalker/io",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-io.git",
+                "reference": "f3e871f213dc97f6ae0c311d3963dbba941c8f65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-io/zipball/f3e871f213dc97f6ae0c311d3963dbba941c8f65",
+                "reference": "f3e871f213dc97f6ae0c311d3963dbba941c8f65",
                 "shasum": ""
             },
             "require": {
@@ -464,7 +556,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -483,20 +575,20 @@
                 "io",
                 "windwalker"
             ],
-            "time": "2015-02-23 14:58:08"
+            "time": "2016-01-06 08:05:01"
         },
         {
             "name": "windwalker/registry",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-registry.git",
-                "reference": "799e2eaae73c66e939aaeb759addd64493ebe643"
+                "reference": "4e586405163f85d27f7da3564d1ec39a9cb74fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-registry/zipball/799e2eaae73c66e939aaeb759addd64493ebe643",
-                "reference": "799e2eaae73c66e939aaeb759addd64493ebe643",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-registry/zipball/4e586405163f85d27f7da3564d1ec39a9cb74fe5",
+                "reference": "4e586405163f85d27f7da3564d1ec39a9cb74fe5",
                 "shasum": ""
             },
             "require": {
@@ -512,7 +604,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -531,20 +623,20 @@
                 "registry",
                 "windwalker"
             ],
-            "time": "2015-03-13 08:29:16"
+            "time": "2015-09-07 03:21:18"
         },
         {
             "name": "windwalker/router",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-router.git",
-                "reference": "1e315cf34bfc07f58ce3b44dec6768bc9a070b45"
+                "reference": "da16c6fcfa909068824feb966db1ef55fe0c7d1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-router/zipball/1e315cf34bfc07f58ce3b44dec6768bc9a070b45",
-                "reference": "1e315cf34bfc07f58ce3b44dec6768bc9a070b45",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-router/zipball/da16c6fcfa909068824feb966db1ef55fe0c7d1e",
+                "reference": "da16c6fcfa909068824feb966db1ef55fe0c7d1e",
                 "shasum": ""
             },
             "require": {
@@ -557,7 +649,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -576,20 +668,20 @@
                 "router",
                 "windwalker"
             ],
-            "time": "2014-12-16 15:28:13"
+            "time": "2015-08-16 10:11:20"
         },
         {
             "name": "windwalker/string",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-string.git",
-                "reference": "e0986ab54778fa7c09b3060a767c66dd2c2d41cc"
+                "reference": "24e598fe89216745a0a01b5af9b58be24bdaa4f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-string/zipball/e0986ab54778fa7c09b3060a767c66dd2c2d41cc",
-                "reference": "e0986ab54778fa7c09b3060a767c66dd2c2d41cc",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-string/zipball/24e598fe89216745a0a01b5af9b58be24bdaa4f7",
+                "reference": "24e598fe89216745a0a01b5af9b58be24bdaa4f7",
                 "shasum": ""
             },
             "require": {
@@ -605,7 +697,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -624,20 +716,20 @@
                 "string",
                 "windwalker"
             ],
-            "time": "2015-04-04 04:24:54"
+            "time": "2015-09-07 04:40:00"
         },
         {
             "name": "windwalker/utilities",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-utilities.git",
-                "reference": "1209ec7130da654bfe591422215eea2ae02e06e8"
+                "reference": "a5e34d7131f8a9222df6e2121d81aca89747ebd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-utilities/zipball/1209ec7130da654bfe591422215eea2ae02e06e8",
-                "reference": "1209ec7130da654bfe591422215eea2ae02e06e8",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-utilities/zipball/a5e34d7131f8a9222df6e2121d81aca89747ebd9",
+                "reference": "a5e34d7131f8a9222df6e2121d81aca89747ebd9",
                 "shasum": ""
             },
             "require": {
@@ -650,7 +742,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -672,22 +764,22 @@
                 "utilities",
                 "windwalker"
             ],
-            "time": "2015-04-04 04:54:16"
+            "time": "2015-10-01 07:16:34"
         }
     ],
     "packages-dev": [
         {
             "name": "windwalker/environment",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-environment.git",
-                "reference": "391d893f1d2d26059f7dda7418af4846faf4316c"
+                "reference": "d6f8a096df7406e8df9ac1dffa8460b957587ffd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-environment/zipball/391d893f1d2d26059f7dda7418af4846faf4316c",
-                "reference": "391d893f1d2d26059f7dda7418af4846faf4316c",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-environment/zipball/d6f8a096df7406e8df9ac1dffa8460b957587ffd",
+                "reference": "d6f8a096df7406e8df9ac1dffa8460b957587ffd",
                 "shasum": ""
             },
             "require": {
@@ -699,7 +791,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -718,20 +810,20 @@
                 "framework",
                 "windwalker"
             ],
-            "time": "2015-01-03 10:06:51"
+            "time": "2015-08-11 08:56:05"
         },
         {
             "name": "windwalker/test",
-            "version": "2.0.8",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ventoviro/windwalker-test.git",
-                "reference": "91ee54a1bc926e7d169f06d4030c10b6d9dffd34"
+                "reference": "d1704eb01155d41c4da12756dcc0ffbbe9fcfd2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker-test/zipball/91ee54a1bc926e7d169f06d4030c10b6d9dffd34",
-                "reference": "91ee54a1bc926e7d169f06d4030c10b6d9dffd34",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-test/zipball/d1704eb01155d41c4da12756dcc0ffbbe9fcfd2f",
+                "reference": "d1704eb01155d41c4da12756dcc0ffbbe9fcfd2f",
                 "shasum": ""
             },
             "require": {
@@ -741,7 +833,7 @@
             "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -760,21 +852,12 @@
                 "test",
                 "windwalker"
             ],
-            "time": "2014-12-16 15:28:13"
+            "time": "2015-08-21 14:56:15"
         }
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": {
-        "windwalker/compare": 0,
-        "windwalker/cache": 0,
-        "windwalker/data": 0,
-        "windwalker/datamapper": 0,
-        "windwalker/router": 0,
-        "windwalker/filesystem": 0,
-        "windwalker/console": 0,
-        "asika/muse": 0
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

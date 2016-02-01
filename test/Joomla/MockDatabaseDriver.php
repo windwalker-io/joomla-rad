@@ -26,6 +26,13 @@ class MockDatabaseDriver extends \JDatabaseDriver
 	public $executed = array();
 
 	/**
+	 * Property lastQuery.
+	 *
+	 * @var  string
+	 */
+	public $lastQuery;
+
+	/**
 	 * mark
 	 *
 	 * @param string $method
@@ -57,6 +64,8 @@ class MockDatabaseDriver extends \JDatabaseDriver
 	public function __construct()
 	{
 		parent::__construct(array());
+
+		$this->name = \JFactory::getConfig()->get('driver', 'mysqli');
 	}
 
 	/**
@@ -471,6 +480,8 @@ class MockDatabaseDriver extends \JDatabaseDriver
 	public function execute()
 	{
 		$this->mark(__FUNCTION__);
+
+		$this->lastQuery = (string) $this->getQuery();
 
 		return true;
 	}

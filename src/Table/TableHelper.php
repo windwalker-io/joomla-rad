@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla330 project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
@@ -35,6 +35,13 @@ class TableHelper
 	 * @var  string
 	 */
 	protected $pkName = null;
+
+	/**
+	 * Property fields.
+	 *
+	 * @var  array
+	 */
+	protected static $fields = array();
 
 	/**
 	 * Class init.
@@ -128,5 +135,31 @@ class TableHelper
 		$this->db = $db;
 
 		return $this;
+	}
+
+	/**
+	 * Get Fields.
+	 *
+	 * @param  \JTable  $table
+	 *
+	 * @return  array
+	 */
+	public static function getFields(\JTable $table)
+	{
+		if (empty(static::$fields[$table->getTableName()]))
+		{
+			// Lookup the fields for this table only once.
+			$name   = $table->getTableName();
+			$fields = $table->getDbo()->getTableColumns($name, false);
+
+			if (empty($fields))
+			{
+				throw new \UnexpectedValueException(sprintf('No columns found for %s table', $name));
+			}
+
+			static::$fields[$table->getTableName()] = $fields;
+		}
+
+		return static::$fields[$table->getTableName()];
 	}
 }
