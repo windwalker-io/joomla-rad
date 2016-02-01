@@ -22,6 +22,13 @@ use Windwalker\String\Utf8String;
 class LanguageHelper extends AbstractFacade
 {
 	/**
+	 * Property The DI key.
+	 *
+	 * @var  string
+	 */
+	protected static $_key = 'language';
+
+	/**
 	 * An API key for Google translate.
 	 *
 	 * @var string
@@ -173,15 +180,5 @@ class LanguageHelper extends AbstractFacade
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, false, false)
 			|| $lang->load($ext, JPATH_BASE, null, true)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, true);
-	}
-
-	/**
-	 * The DI key to get data from container.
-	 *
-	 * @return  string
-	 */
-	public static function getDIKey()
-	{
-		return 'language';
 	}
 }

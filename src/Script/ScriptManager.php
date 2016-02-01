@@ -31,12 +31,9 @@ use Windwalker\Helper\AssetHelper;
 class ScriptManager extends AbstractProxyFacade
 {
 	/**
-	 * The DI key to get data from container.
+	 * Property The DI key.
 	 *
-	 * @return  string
+	 * @var  string
 	 */
-	public static function getDIKey()
-	{
-		return 'script.manager';
-	}
+	protected static $_key = 'script.manager';
 }

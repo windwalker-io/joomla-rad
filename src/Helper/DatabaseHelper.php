@@ -21,21 +21,18 @@ use Windwalker\Model\Helper\QueryHelper;
 class DatabaseHelper extends AbstractFacade
 {
 	/**
+	 * Property The DI key.
+	 *
+	 * @var  string
+	 */
+	protected static $_key = 'db';
+
+	/**
 	 * Property columnCache.
 	 *
 	 * @var  array
 	 */
 	protected static $columnCache;
-
-	/**
-	 * The DI key to get data from container.
-	 *
-	 * @return  string
-	 */
-	public static function getDIKey()
-	{
-		return 'db';
-	}
 
 	/**
 	 * Execute a query.

@@ -15,21 +15,21 @@ use Windwalker\DI\Container;
  * 
  * @since  {DEPLOY_VERSION}
  */
-abstract class AbstractFacade implements FacadeInterface
+abstract class AbstractFacade
 {
 	/**
 	 * Property key.
 	 *
 	 * @var  string
 	 */
-	protected static $key;
+	protected static $_key;
 
 	/**
 	 * Property child.
 	 *
 	 * @var  string
 	 */
-	protected static $child;
+	protected static $_child;
 
 	/**
 	 * getInstance
@@ -52,7 +52,7 @@ abstract class AbstractFacade implements FacadeInterface
 	 */
 	public static function getContainer($child = null)
 	{
-		return Container::getInstance($child ? : static::$child);
+		return Container::getInstance($child ? : static::$_child);
 	}
 
 	/**
@@ -64,7 +64,17 @@ abstract class AbstractFacade implements FacadeInterface
 	 */
 	public static function setDIKey($key)
 	{
-		static::$key = $key;
+		static::$_key = $key;
+	}
+
+	/**
+	 * Method to get property Key
+	 *
+	 * @return  string
+	 */
+	public static function getDIKey()
+	{
+		return static::$_key;
 	}
 
 	/**
@@ -74,7 +84,7 @@ abstract class AbstractFacade implements FacadeInterface
 	 */
 	public static function getChildName()
 	{
-		return static::$child;
+		return static::$_child;
 	}
 
 	/**
@@ -86,6 +96,6 @@ abstract class AbstractFacade implements FacadeInterface
 	 */
 	public static function setChildName($child)
 	{
-		static::$child = $child;
+		static::$_child = $child;
 	}
 }
