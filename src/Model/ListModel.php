@@ -112,6 +112,9 @@ class ListModel extends FormModel
 			$this->filterFields[] = '*';
 		}
 
+		$this->prefix = $this->getPrefix($config);
+		$this->option = 'com_' . $this->prefix;
+
 		// Guess name for container
 		$this->name = $this->name ? : JArrayHelper::getValue($config, 'name', $this->getName());
 
@@ -221,10 +224,10 @@ class ListModel extends FormModel
 		$this->prepareGetQuery($query);
 
 		// Build filter query
-		$this->processFilters($query, $this->state->get('filter', array()));
+		$this->processFilters($query, (array) $this->state->get('filter', array()));
 
 		// Build search query
-		$this->processSearches($query, $this->state->get('search', array()));
+		$this->processSearches($query, (array) $this->state->get('search', array()));
 
 		// Ordering
 		$this->processOrdering($query);

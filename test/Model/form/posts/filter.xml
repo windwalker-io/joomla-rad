@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="search">
+		<field name="field"
+			type="hidden"
+			default="*"
+			label="JSEARCH_FILTER_LABEL"
+			labelclass="pull-left"
+			class="input-small"
+			>
+			<option value="*">JALL</option>
+			<option value="post.title">JGLOBAL_TITLE</option>
+			<option value="post.category_title">JCATEGORY</option>
+		</field>
+
+		<field
+			name="index"
+			type="text"
+			label="JSEARCH_FILTER_LABEL"
+			hint="JSEARCH_FILTER"
+			/>
+	</fields>
+
+	<!-- Filter -->
+	<fields name="filter">
+		<field
+			name="post.type"
+			type="list"
+			default=""
+			label="JTYPE"
+			description="JFIELD_TYPE_DESC"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option>JGLOBAL_USE_GLOBAL</option>
+			<option value="article">Article</option>
+			<option value="promote">Promote</option>
+			<option value="commercial">Commercial</option>
+			<option value="other">Other</option>
+		</field>
+
+		<field
+			name="post.category_id"
+			type="list"
+			default=""
+			label="JCATEGORY"
+			description="JFIELD_CATEGORY_DESC"
+			onchange="this.form.submit();"
+			>
+			<option></option>
+			<option>JGLOBAL_USE_GLOBAL</option>
+			<option value="travel">Travel</option>
+			<option value="programming">Programming</option>
+			<option value="food">Food</option>
+			<option value="model">Model</option>
+		</field>
+
+		<field
+			name="post.create_at"
+			type="calendar"
+			default=""
+			label="COM_CONTENT_FIELD_CREATED_LABEL"
+			description="COM_CONTENT_FIELD_CREATED_DESC"
+			onchange="this.form.submit();"
+			/>
+
+		<field
+			name="post.modified_at"
+			type="calendar"
+			default=""
+			label="JGLOBAL_FIELD_MODIFIED_LABEL"
+			description="COM_CONTENT_FIELD_MODIFIED_DESC"
+			onchange="this.form.submit();"
+			/>
+	</fields>
+
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			default="post.id DESC"
+			label="COM_CONTENT_LIST_FULL_ORDERING"
+			description="COM_CONTENT_LIST_FULL_ORDERING_DESC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="post.category_id ASC">JGRID_HEADING_ORDERING_ASC</option>
+			<option value="post.category_id DESC">JGRID_HEADING_ORDERING_DESC</option>
+			<option value="post.type ASC">JTYPE_ASC</option>
+			<option value="post.type DESC">JTYPE_DESC</option>
+			<option value="post.create_at ASC">JDATE_ASC</option>
+			<option value="post.create_at DESC">JDATE_DESC</option>
+			<option value="post.modified_at ASC">JMDATE_ASC</option>
+			<option value="post.modified_at DESC">JMDATE_DESC</option>
+			<option value="post.id ASC">JGRID_HEADING_ID_ASC</option>
+			<option value="post.id DESC">JGRID_HEADING_ID_DESC</option>
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			class="inputbox input-mini"
+			default="25"
+			label="COM_CONTENT_LIST_LIMIT"
+			description="COM_CONTENT_LIST_LIMIT_DESC"
+			onchange="this.form.submit();"
+			/>
+	</fields>
+</form>

@@ -167,7 +167,7 @@ class LanguageHelper extends AbstractFacade
 	 */
 	public static function loadLanguage($ext, $client = 'site')
 	{
-		$lang = Container::getInstance()->get(static::$key);
+		$lang = Container::getInstance()->get(static::getDIKey());
 
 		return $lang->load($ext, JPATH_BASE, null, false, false)
 			|| $lang->load($ext, PathHelper::get($ext, $client), null, false, false)

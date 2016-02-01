@@ -50,7 +50,7 @@ class HtmlElementsTest extends \PHPUnit_Framework_TestCase
 				'<option>foo</option><option>bar</option><rdf:metaData><rdf:name>Tim</rdf:name></rdf:metaData>'
 			),
 			array(
-				new HtmlElement('img', '', array('src' => 'http://placehold.it/100x100')),
+				new HtmlElement('img', null, array('src' => 'http://placehold.it/100x100')),
 				new HtmlElement('input'),
 				new HtmlElement('div', 'Hello world'),
 				'<img src="http://placehold.it/100x100" /><input /><div>Hello world</div>'

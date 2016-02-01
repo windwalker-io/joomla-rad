@@ -10,6 +10,8 @@ namespace Windwalker\Table;
 
 use JTable;
 use Windwalker\DI\Container;
+use Windwalker\Relation\Observer\RelationObserver;
+use Windwalker\Relation\Relation;
 
 /**
  * Windwalker active record Table.
@@ -18,6 +20,13 @@ use Windwalker\DI\Container;
  */
 class Table extends \JTable
 {
+	/**
+	 * Property _relation.
+	 *
+	 * @var  Relation
+	 */
+	public $_relation;
+
 	/**
 	 * Object constructor to set table and key fields.  In most cases this will
 	 * be overridden by child classes to explicitly set the table and key fields
@@ -32,6 +41,48 @@ class Table extends \JTable
 		$db = $db ?: Container::getInstance()->get('db');
 
 		parent::__construct($table, $key, $db);
+
+		// Prepare Relation handler
+		$this->_relation = new Relation($this, $this->getPrefix());
+
+		RelationObserver::createObserver($this);
+
+		$this->configure();
+
+		$this->_observers->update('onAfterConstruction', array());
+	}
+
+	/**
+	 * Configure this table.
+	 *
+	 * This method will run after \Windwalker\Table\Table::__construct().
+	 *
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	protected function configure()
+	{
+		// Do some stuff
+	}
+
+	/**
+	 * Method to load a row from the database by primary key and bind the fields
+	 * to the JTable instance properties.
+	 *
+	 * @param   mixed    $keys   An optional primary key value to load the row by, or an array of fields to match.  If not
+	 *                           set the instance property value is used.
+	 * @param   boolean  $reset  True to reset the default values before loading the new row.
+	 *
+	 * @return  boolean  True if successful. False if row not found.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @throws  \RuntimeException
+	 * @throws  \UnexpectedValueException
+	 */
+	public function load($keys = null, $reset = true)
+	{
+		return parent::load($keys, $reset);
 	}
 
 	/**
@@ -56,5 +107,72 @@ class Table extends \JTable
 		}
 
 		return parent::store($updateNulls);
+	}
+
+	/**
+	 * Method to delete a row from the database table by primary key value.
+	 *
+	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @throws  \UnexpectedValueException
+	 */
+	public function delete($pk = null)
+	{
+		return parent::delete($pk);
+	}
+
+	/**
+	 * Magic method to get property and avoid errors.
+	 *
+	 * @param   string  $name  The property name to get.
+	 *
+	 * @return  mixed  Value of this property.
+	 */
+	public function __get($name)
+	{
+		if (property_exists($this, $name))
+		{
+			return $this->$name;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Get the columns from database table.
+	 *
+	 * @return  mixed  An array of the field names, or false if an error occurs.
+	 *
+	 * @since   11.1
+	 * @throws  \UnexpectedValueException
+	 */
+	public function getFields()
+	{
+		return TableHelper::getFields($this);
+	}
+
+	/**
+	 * getPrefix
+	 *
+	 * @return  string
+	 */
+	public function getPrefix()
+	{
+		$ref = new \ReflectionClass($this);
+
+		$className = explode('Table', $ref->getShortName());
+
+		if (count($className) >= 2)
+		{
+			$tablePrefix = $className[0] . 'Table';
+		}
+		else
+		{
+			$tablePrefix = 'JTable';
+		}
+
+		return $tablePrefix;
 	}
 }

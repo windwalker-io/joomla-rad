@@ -75,6 +75,16 @@ class TestApplication extends \JApplicationCms
 	}
 
 	/**
+	 * clearUserState
+	 *
+	 * @return  void
+	 */
+	public function clearUserState()
+	{
+		$this->userState = new \JRegistry;
+	}
+
+	/**
 	 * Allows the application to load a custom or default session.
 	 *
 	 * The logic and options for creating this object are adequately generic for default cases
