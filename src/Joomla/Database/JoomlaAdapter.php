@@ -9,13 +9,14 @@
 namespace Windwalker\Joomla\Database;
 
 use Windwalker\Data\DataSet;
+use Windwalker\DataMapper\Adapter\AbstractDatabaseAdapter;
 
 /**
  * The DatabaseAdapter class.
  * 
  * @since  {DEPLOY_VERSION}
  */
-class JoomlaAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
+class JoomlaAdapter extends AbstractDatabaseAdapter
 {
 	/**
 	 * Property db.
@@ -49,7 +50,7 @@ class JoomlaAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 	 *
 	 * @return  mixed Found rows data set.
 	 */
-	public function find($table, $select = '*', array $conditions = array(), array $orders = array(), $start = 0, $limit = null)
+	public function find($table, $select = '*', array $conditions = array(), array $orders = array(), $start = 0, $limit = null, $options = array())
 	{
 		$query = $this->db->getQuery(true);
 
@@ -85,6 +86,16 @@ class JoomlaAdapter extends \Windwalker\DataMapper\Adapter\DatabaseAdapter
 
 		// Build query
 		$query->select($select);
+
+		if (isset($options['group']))
+		{
+			$query->group($options['group']);
+		}
+
+		if (isset($options['having']))
+		{
+			$query->having($options['having']);
+		}
 
 		return $this->db->setQuery($query, $start, $limit)->loadObjectList();
 	}

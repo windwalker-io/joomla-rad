@@ -202,7 +202,7 @@ class ItemModelTest extends AbstractDatabaseTestCase
 			'id' => null,
 			'foo' => null,
 			'type' => null,
-				'params' => array()
+			'params' => array()
 		);
 
 		$data[1][0] = 1;
