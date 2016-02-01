@@ -126,15 +126,18 @@ class SearchHelperTest extends AbstractBaseTestCase
 	 */
 	public function handlerProvider()
 	{
-		$handler1 = function($query, $field, $value){
+		$handler1 = function(\JDatabaseQuery $query, $field, $value)
+		{
 			$query->where($field . ' NOT LIKE ' . $value);
 		};
 
-		$handler2 = function($query, $field, $value){
+		$handler2 = function(\JDatabaseQuery $query, $field, $value)
+		{
 			$query->where($field . ' DO LIKE ' . $value);
 		};
 
-		$handler3 = function($query, $field, $value){
+		$handler3 = function(\JDatabaseQuery $query, $field, $value)
+		{
 			$query->where($field . ' IS LIKE ' . $value);
 		};
 
