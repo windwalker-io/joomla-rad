@@ -52,6 +52,6 @@ class ViewHtmlHelperTest extends AbstractDomTestCase
 </div>
 HTML;
 
-		$this->assertHtmlFormatEquals($html, $result);
+		$this->assertDomStringEqualsDomString($html, $result);
 	}
 }
