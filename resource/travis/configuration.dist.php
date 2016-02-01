@@ -3,7 +3,7 @@
 class JConfig
 {
 	// Database settings
-	public $dbtype   = 'pdomysql';
+	public $dbtype   = 'mysqli';
 	public $host     = 'localhost';
 	public $user     = 'root';
 	public $password = '';
