@@ -8,7 +8,6 @@
 
 namespace Windwalker\Model;
 
-use JArrayHelper;
 use JDatabaseQuery;
 use JPagination;
 use JPluginHelper;
@@ -17,6 +16,7 @@ use Joomla\DI\Container as JoomlaContainer;
 
 use JTable;
 use Windwalker\DI\Container;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
 use Windwalker\Model\Filter\FilterHelper;
@@ -117,11 +117,11 @@ class ListModel extends FormModel
 	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
 	{
 		// These need before parent constructor.
-		$this->orderCol = $this->orderCol ? : JArrayHelper::getValue($config, 'order_column', null);
+		$this->orderCol = $this->orderCol ? : ArrayHelper::getValue($config, 'order_column', null);
 
 		if (!$this->filterFields)
 		{
-			$this->filterFields = JArrayHelper::getValue($config, 'filter_fields', array());
+			$this->filterFields = ArrayHelper::getValue($config, 'filter_fields', array());
 
 			$this->filterFields[] = '*';
 		}
@@ -130,7 +130,7 @@ class ListModel extends FormModel
 		$this->option = 'com_' . $this->prefix;
 
 		// Guess name for container
-		$this->name = $this->name ? : JArrayHelper::getValue($config, 'name', $this->getName());
+		$this->name = $this->name ? : ArrayHelper::getValue($config, 'name', $this->getName());
 
 		$this->container = $container ? : $this->getContainer();
 
@@ -141,10 +141,10 @@ class ListModel extends FormModel
 		parent::__construct($config, $container, $state, $db);
 
 		// Guess the item view as the context.
-		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list', $this->getName());
+		$this->viewList = $this->viewList ? : ArrayHelper::getValue($config, 'view_list', $this->getName());
 
 		// Guess the list view as the plural of the item view.
-		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item');
+		$this->viewItem = $this->viewItem ? : ArrayHelper::getValue($config, 'view_item');
 
 		if (empty($this->viewItem))
 		{

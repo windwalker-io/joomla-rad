@@ -62,11 +62,10 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase
 		// Test null return
 		$this->assertEquals(null, ArrayHelper::getByPath($data, ''));
 		$this->assertEquals(null, ArrayHelper::getByPath($data, null));
-		$this->assertEquals(null, ArrayHelper::getByPath($data, array()));
-		$this->assertEquals(null, ArrayHelper::getByPath($data, new \stdClass));
 
 		// Test paths
 		$this->assertEquals(223, ArrayHelper::getByPath($data, 'Jones.Sakura'));
+		$this->assertEquals(223, ArrayHelper::getByPath($data, 'Jones..Sakura'));
 		$this->assertEquals(array('Taylor' => 323), ArrayHelper::getByPath($data, 'Arthur.Lancelot.Rose'));
 		$this->assertEquals(323, ArrayHelper::getByPath($data, 'Arthur.Lancelot.Rose.Taylor'));
 		$this->assertEquals('Julia', ArrayHelper::getByPath($data, 'Arthur.Lancelot.Jessica.Alice'));
@@ -245,7 +244,7 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Method to test pivot().
+	 * Method to test transpose().
 	 *
 	 * @param array $data
 	 * @param array $expected
@@ -253,11 +252,11 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @dataProvider pivotDataProvider
-	 * @covers       \Windwalker\Helper\ArrayHelper::pivot
+	 * @covers       \Windwalker\Helper\ArrayHelper::transpose
 	 */
-	public function testPivot($data, $expected)
+	public function testTranspose($data, $expected)
 	{
-		$this->assertEquals($expected, ArrayHelper::pivot($data));
+		$this->assertEquals($expected, ArrayHelper::transpose($data));
 	}
 
 	/**

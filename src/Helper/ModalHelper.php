@@ -8,7 +8,6 @@
 
 namespace Windwalker\Helper;
 
-use JArrayHelper;
 use JForm;
 use JHtml;
 use Windwalker\DI\Container;
@@ -47,11 +46,11 @@ class ModalHelper
 	 */
 	public static function modalLink($title, $selector, $option = array())
 	{
-		$tag     = JArrayHelper::getValue($option, 'tag', 'a');
+		$tag     = ArrayHelper::getValue($option, 'tag', 'a');
 		$id      = isset($option['id']) ? " id=\"{$option['id']}\"" : " id=\"{$selector}_link\"";
 		$class   = isset($option['class']) ? " class=\"{$option['class']} cursor-pointer\"" : ' class="cursor-pointer"';
 		$onclick = isset($option['onclick']) ? " onclick=\"{$option['onclick']}\"" : '';
-		$icon    = JArrayHelper::getValue($option, 'icon', '');
+		$icon    = ArrayHelper::getValue($option, 'icon', '');
 
 		$button = <<<HTML
 <{$tag} data-toggle="modal" data-target="#$selector"{$id}{$class}{$onclick}>

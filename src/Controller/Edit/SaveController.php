@@ -8,8 +8,8 @@
 
 namespace Windwalker\Controller\Edit;
 
-use JArrayHelper;
 use Windwalker\Controller\Admin\AbstractItemController;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Exception\ValidateFailException;
 
 /**
@@ -51,8 +51,8 @@ class SaveController extends AbstractItemController
 	{
 		parent::__construct($input, $app, $config);
 
-		$this->key    = $this->key ? : JArrayHelper::getValue($config, 'key');
-		$this->urlVar = $this->urlVar ? : JArrayHelper::getValue($config, 'urlVar');
+		$this->key    = $this->key ? : ArrayHelper::getValue($config, 'key');
+		$this->urlVar = $this->urlVar ? : ArrayHelper::getValue($config, 'urlVar');
 	}
 
 	/**

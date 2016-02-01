@@ -8,6 +8,8 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Windwalker\Helper\ArrayHelper;
+
 /**
  * A controller to handle list page operation.
  *
@@ -34,10 +36,10 @@ abstract class AbstractListController extends AbstractAdminController
 		parent::__construct($input, $app, $config);
 
 		// Guess the item view as the context.
-		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list', $this->getName());
+		$this->viewList = $this->viewList ? : ArrayHelper::getValue($config, 'view_list', $this->getName());
 
 		// Guess the list view as the plural of the item view.
-		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item');
+		$this->viewItem = $this->viewItem ? : ArrayHelper::getValue($config, 'view_item');
 
 		if (empty($this->viewItem))
 		{

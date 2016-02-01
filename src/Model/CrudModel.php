@@ -4,6 +4,7 @@ namespace Windwalker\Model;
 
 use Joomla\DI\Container as JoomlaContainer;
 use JTable;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * The basic Crud Model
@@ -73,14 +74,14 @@ class CrudModel extends FormModel
 	{
 		parent::__construct($config, $container, $state, $db);
 
-		$this->eventAfterDelete  = $this->eventAfterDelete  ? : \JArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
-		$this->eventBeforeDelete = $this->eventBeforeDelete ? : \JArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
-		$this->eventAfterSave    = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
-		$this->eventBeforeSave   = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
-		$this->eventChangeState  = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
+		$this->eventAfterDelete  = $this->eventAfterDelete  ? : ArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
+		$this->eventBeforeDelete = $this->eventBeforeDelete ? : ArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
+		$this->eventAfterSave    = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
+		$this->eventBeforeSave   = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
+		$this->eventChangeState  = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
 
 		// @TODO: Check is needed or not.
-		$this->textPrefix = $this->textPrefix ? : strtoupper(\JArrayHelper::getValue($config, 'text_prefix', $this->option));
+		$this->textPrefix = $this->textPrefix ? : strtoupper(ArrayHelper::getValue($config, 'text_prefix', $this->option));
 	}
 
 	/**
@@ -124,7 +125,7 @@ class CrudModel extends FormModel
 
 		// Convert to the JObject before adding other data.
 		$properties = $table->getProperties(1);
-		$item = \JArrayHelper::toObject($properties, 'stdClass');
+		$item = ArrayHelper::toObject($properties, 'stdClass');
 
 		if (property_exists($item, 'params'))
 		{
@@ -158,7 +159,7 @@ class CrudModel extends FormModel
 		}
 
 		$key = $table->getKeyName();
-		$pk  = \JArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
+		$pk  = ArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
 
 		$isNew = true;
 

@@ -10,6 +10,7 @@ namespace Windwalker\View\Html;
 
 use Joomla\DI\Container;
 use Windwalker\Data\Data;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
 use Windwalker\Registry\Registry;
 use Windwalker\View\Helper\ToolbarHelper;
@@ -47,9 +48,9 @@ class HtmlView extends AbstractHtmlView
 	{
 		parent::__construct($model, $container, $config, $paths);
 
-		$this->buttons = $this->buttons ? : \JArrayHelper::getValue($config, 'buttons', array());
+		$this->buttons = $this->buttons ? : ArrayHelper::getValue($config, 'buttons', array());
 
-		$this->toolbarConfig = $this->toolbarConfig ? : \JArrayHelper::getValue($config, 'toolbar', array());
+		$this->toolbarConfig = $this->toolbarConfig ? : ArrayHelper::getValue($config, 'toolbar', array());
 	}
 
 	/**

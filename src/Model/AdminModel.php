@@ -11,6 +11,7 @@ namespace Windwalker\Model;
 use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
 use JTable;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\DateHelper;
 use Windwalker\String\StringHelper;
 
@@ -42,7 +43,7 @@ abstract class AdminModel extends CrudModel
 
 		if (!$this->reorderConditions)
 		{
-			$this->reorderConditions = \JArrayHelper::getValue($config, 'reorder_conditions', array('catid'));
+			$this->reorderConditions = ArrayHelper::getValue($config, 'reorder_conditions', array('catid'));
 		}
 
 		// Guess the item view as the context.
