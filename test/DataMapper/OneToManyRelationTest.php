@@ -146,7 +146,7 @@ class OneToManyRelationTest extends AbstractDatabaseTestCase
 		$this->assertInstanceOf('Windwalker\Data\Data', $location2->roses[1]);
 		$this->assertEquals(array('Rose Create 1', 'Rose Create 2'), $location2->roses->title);
 
-		$locationData = DataMapperFacade::findOne(static::TABLE_LOCATIONS, null, 'id DESC');
+		$locationData = DataMapperFacade::findOne(static::TABLE_LOCATIONS, array(), 'id DESC');
 
 		$this->assertEquals('Location Create 1', $locationData->title);
 	}

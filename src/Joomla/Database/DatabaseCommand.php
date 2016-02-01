@@ -9,9 +9,12 @@
 namespace Windwalker\Joomla\Database;
 
 use JDatabaseDriver as DatabaseDriver;
+use Windwalker\Helper\DatabaseHelper;
 
 /**
  * Some Useful function for database operation.
+ *
+ * @deprecated  3.0  Use DatabaseHelper instead.
  */
 class DatabaseCommand
 {
@@ -60,7 +63,7 @@ class DatabaseCommand
 		$query = QueryHelper::buildWheres($query, $conditions);
 
 		// Build update values.
-		$fields = array_keys($this->getColumns($table));
+		$fields = array_keys(DatabaseHelper::getColumns($table));
 
 		$hasField = false;
 

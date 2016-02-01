@@ -11,6 +11,7 @@ namespace Windwalker\Test\Model;
 use Windwalker\DI\Container;
 use Windwalker\Model\ListModel;
 use Windwalker\Model\Provider\GridProvider;
+use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\Model\Stub\WindwalkerModelStubList;
 use Windwalker\Test\TestHelper;
 
@@ -19,8 +20,28 @@ use Windwalker\Test\TestHelper;
  *
  * @since {DEPLOY_VERSION}
  */
-class ListModelTest extends \PHPUnit_Framework_TestCase
+class ListModelTest extends AbstractDatabaseTestCase
 {
+	/**
+	 * Install test sql when setUp.
+	 *
+	 * @return  string
+	 */
+	public static function getInstallSql()
+	{
+		return __DIR__ . '/sql/install.listmodel.sql';
+	}
+
+	/**
+	 * Uninstall test sql when tearDown.
+	 *
+	 * @return  string
+	 */
+	public static function getUninstallSql()
+	{
+		return __DIR__ . '/sql/install.listmodel.sql';
+	}
+
 	/**
 	 * setUpBeforeClass
 	 *
@@ -28,18 +49,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public static function setUpBeforeClass()
 	{
-		$db = \JFactory::getDbo();
-		$sqls = file_get_contents(__DIR__ . '/sql/install.listmodel.sql');
-
-		foreach ($db->splitSql($sqls) as $sql)
-		{
-			$sql = trim($sql);
-
-			if (!empty($sql))
-			{
-				$db->setQuery($sql)->execute();
-			}
-		}
+		parent::setUpBeforeClass();
 
 		// Write filter.xml
 		$formPath = JPATH_BASE . '/components/com_stub/model/form/posts';
@@ -50,7 +60,6 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 		}
 
 		copy(__DIR__ . '/form/posts/filter.xml', $formPath . '/filter.xml');
-
 	}
 
 	/**
@@ -60,9 +69,7 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public static function tearDownAfterClass()
 	{
-		$sql = file_get_contents(__DIR__ . '/sql/uninstall.listmodel.sql');
-
-		\JFactory::getDbo()->setQuery($sql)->execute();
+		parent::tearDownAfterClass();
 
 		// Remove filter.xml
 		$formPath = JPATH_BASE . '/components/com_stub/model/form/posts';
@@ -148,12 +155,8 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 	{
 		$container = $this->getMockBuilder('Windwalker\DI\Container')
 			->disableOriginalConstructor()
-			->setMethods(array('registerServiceProvider', 'get'))
+			->setMethods(array('get'))
 			->getMock();
-
-		$container->expects($this->once())
-			->method('registerServiceProvider')
-			->with(new GridProvider($config['name']));
 
 		$config = $this->getMockBuilder('JConfig')
 			->disableOriginalConstructor()
@@ -165,12 +168,12 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 			->with('list_limit')
 			->will($this->returnValue(100));
 
-		$container->expects($this->at(1))
+		$container->expects($this->at(0))
 			->method('get')
 			->with('joomla.config')
 			->will($this->returnValue($config));
 
-		$container->expects($this->at(2))
+		$container->expects($this->at(1))
 			->method('get')
 			->with('app')
 			->will($this->returnValue(Container::getInstance()->get('app')));
@@ -531,39 +534,24 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 	{
 		$config = array(
 			'prefix' => 'foo',
-			'name' => 'bar',
+			'name'   => 'bar',
 		);
-		$listModel = new ListModel($config, $this->getAddTableContainer($config));
 
-		$listModel->addTable('alias', '#__foobar', 'foo=123', 'LEFT');
-	}
+		$listModel = new ListModel($config);
 
-	/**
-	 * getAddTableContainer
-	 *
-	 * @param array $config
-	 *
-	 * @return \PHPUnit_Framework_MockObject_MockObject
-	 */
-	public function getAddTableContainer(array $config = array())
-	{
-		$container = $this->getConstructContainer($config);
-
-		$queryHelper = $this->getMockBuilder('Windwalker\Model\Helper\QueryHelper')
-			->disableOriginalConstructor()
+		$mock = $this->getMockBuilder('\Windwalker\Model\Helper\QueryHelper')
 			->setMethods(array('addTable'))
 			->getMock();
 
-		$queryHelper->expects($this->once())
+		$mock->expects($this->once())
 			->method('addTable')
 			->with('alias', '#__foobar', 'foo=123', 'LEFT');
 
-		$container->expects($this->at(3))
-			->method('get')
-			->with('model.bar.helper.query')
-			->will($this->returnValue($queryHelper));
+		$listModel->setQueryHelper($mock);
 
-		return $container;
+		$listModel->removeTable('alias');
+
+		$listModel->addTable('alias', '#__foobar', 'foo=123', 'LEFT');
 	}
 
 	/**
@@ -579,37 +567,19 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 			'prefix' => 'foo',
 			'name' => 'bar',
 		);
-		$listModel = new ListModel($config, $this->getRemoveTableContainer($config));
+		$listModel = new ListModel($config);
 
-		$listModel->removeTable('alias');
-	}
-
-	/**
-	 * getRemoveTableContainer
-	 *
-	 * @param array $config
-	 *
-	 * @return \PHPUnit_Framework_MockObject_MockObject
-	 */
-	public function getRemoveTableContainer(array $config = array())
-	{
-		$container = $this->getConstructContainer($config);
-
-		$queryHelper = $this->getMockBuilder('Windwalker\Model\Helper\QueryHelper')
-			->disableOriginalConstructor()
+		$mock = $this->getMockBuilder('\Windwalker\Model\Helper\QueryHelper')
 			->setMethods(array('removeTable'))
 			->getMock();
 
-		$queryHelper->expects($this->once())
+		$listModel->setQueryHelper($mock);
+
+		$mock->expects($this->once())
 			->method('removeTable')
 			->with('alias');
 
-		$container->expects($this->at(3))
-			->method('get')
-			->with('model.bar.helper.query')
-			->will($this->returnValue($queryHelper));
-
-		return $container;
+		$listModel->removeTable('alias');
 	}
 
 	/**

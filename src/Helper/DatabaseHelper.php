@@ -9,6 +9,7 @@
 namespace Windwalker\Helper;
 
 use Windwalker\Facade\AbstractFacade;
+use Windwalker\Model\Helper\QueryHelper;
 
 /**
  * The DatabaseHelper class.
@@ -19,6 +20,13 @@ use Windwalker\Facade\AbstractFacade;
  */
 class DatabaseHelper extends AbstractFacade
 {
+	/**
+	 * Property columnCache.
+	 *
+	 * @var  array
+	 */
+	protected static $columnCache;
+
 	/**
 	 * The DI key to get data from container.
 	 *
@@ -81,6 +89,74 @@ class DatabaseHelper extends AbstractFacade
 		$db = static::getInstance();
 
 		return $db->setQuery($query);
+	}
+
+	/**
+	 * Get table columns.
+	 *
+	 * @param string $table Table name.
+	 *
+	 * @return  array Table columns with type.
+	 */
+	public static function getColumns($table)
+	{
+		if (empty(static::$columnCache[$table]))
+		{
+			$db = static::getInstance();
+
+			static::$columnCache[$table] = $db->getTableColumns($table);
+		}
+
+		return static::$columnCache[$table];
+	}
+
+	/**
+	 * Batch update some data.
+	 *
+	 * @param string $table      Table name.
+	 * @param string $data       Data you want to update.
+	 * @param mixed  $conditions Where conditions, you can use array or Compare object.
+	 *                           Example:
+	 *                           - `array('id' => 5)` => id = 5
+	 *                           - `new GteCompare('id', 20)` => 'id >= 20'
+	 *                           - `new Compare('id', '%Flower%', 'LIKE')` => 'id LIKE "%Flower%"'
+	 *
+	 * @return  boolean True if update success.
+	 */
+	public static function updateBatch($table, $data, $conditions = array())
+	{
+		$db = static::getInstance();
+
+		$query = $db->getQuery(true);
+
+		// Build conditions
+		$query = QueryHelper::buildWheres($query, $conditions);
+
+		// Build update values.
+		$fields = array_keys(static::getColumns($table));
+
+		$hasField = false;
+
+		foreach ((array) $data as $field => $value)
+		{
+			if (!in_array($field, $fields))
+			{
+				continue;
+			}
+
+			$query->set($query->format('%n = %q', $field, $value));
+
+			$hasField = true;
+		}
+
+		if (!$hasField)
+		{
+			return false;
+		}
+
+		$query->update($table);
+
+		return $db->setQuery($query)->execute();
 	}
 
 	/**
