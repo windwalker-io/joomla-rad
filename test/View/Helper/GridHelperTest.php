@@ -424,7 +424,11 @@ class GridHelperTest extends \PHPUnit_Framework_TestCase
 
 		$result = $grid->createdDate('l, d F Y, g:i:s A');
 
-		$this->assertSame('Thursday, 01 January 2015, 4:00:00 PM', $result);
+		// Expected Date
+		$date = new \JDate('2015-01-01 08:00:00');
+		$date->setTimezone(new \DateTimeZone(\JFactory::getConfig()->get('offset', 'UTC')));
+
+		$this->assertEquals($date->format('l, d F Y, g:i:s A', true), $result);
 	}
 
 	/**
@@ -449,14 +453,14 @@ class GridHelperTest extends \PHPUnit_Framework_TestCase
 		$grid->setItem($item, 1);
 		$result = $grid->language();
 
-		$this->assertSame('nippon', $result);
+		$this->assertEquals('nippon', $result);
 
 		$item->lang = '*';
 
 		$grid->setItem($item, 1);
 		$result = $grid->language();
 
-		$this->assertSame('All', $result);
+		$this->assertEquals('All', $result);
 	}
 
 	/**
@@ -472,11 +476,11 @@ class GridHelperTest extends \PHPUnit_Framework_TestCase
 
 		$result = $grid->booleanIcon(true);
 
-		$this->assertSame('<i class="icon-publish"></i>', $result);
+		$this->assertEquals('<i class="icon-publish"></i>', $result);
 
 		$result = $grid->booleanIcon(false);
 
-		$this->assertSame('<i class="icon-unpublish"></i>', $result);
+		$this->assertEquals('<i class="icon-unpublish"></i>', $result);
 	}
 
 	/**
@@ -516,6 +520,6 @@ class GridHelperTest extends \PHPUnit_Framework_TestCase
 
 		$result = $grid->escape('<strong>考えすぎると、人間は臆病になる。</strong>');
 
-		$this->assertSame('&lt;strong&gt;考えすぎると、人間は臆病になる。&lt;/strong&gt;', $result);
+		$this->assertEquals('&lt;strong&gt;考えすぎると、人間は臆病になる。&lt;/strong&gt;', $result);
 	}
 }
