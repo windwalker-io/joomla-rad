@@ -27,6 +27,12 @@ if (!defined('_JDEFINES'))
 
 define('WINDWALKER_CONSOLE', __DIR__);
 
+// Check installed
+if (is_dir(JPATH_ROOT . '/installation') || !is_file(JPATH_ROOT . '/configuration.php'))
+{
+	die('Please install Joomla first.');
+}
+
 // Get the framework.
 require_once JPATH_BASE . '/includes/framework.php';
 
@@ -51,3 +57,11 @@ require_once JPATH_CONFIGURATION . '/configuration.php';
 
 // System configuration.
 $config = new JConfig;
+
+$host = defined('WINDWALKER_TEST_HOST') ? WINDWALKER_TEST_HOST : 'rad.windwalker.io';
+$uri = defined('WINDWALKER_TEST_URI') ? WINDWALKER_TEST_URI : '/flower/sakura';
+
+$_SERVER['HTTP_HOST'] = $host;
+$_SERVER['REQUEST_URI'] = $uri;
+$_SERVER['SCRIPT_NAME'] = $uri;
+$_SERVER['PHP_SELF'] = $uri;

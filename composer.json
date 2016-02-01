@@ -10,14 +10,15 @@
         }
     ],
     "require": {
-        "windwalker/compare": "~2.0@stable",
-        "windwalker/cache": "~2.0@stable",
-        "windwalker/data": "~2.0@stable",
-        "windwalker/datamapper": "~2.0@stable",
-        "windwalker/router": "~2.0@stable",
-        "windwalker/filesystem": "~2.0@stable",
-        "windwalker/console": "~2.0@stable",
-        "asika/muse": "~1.0@stable",
+        "windwalker/compare": "~2.0",
+        "windwalker/cache": "~2.0",
+        "windwalker/data": "~2.0",
+        "windwalker/datamapper": "~2.0",
+        "windwalker/html": "~2.0",
+        "windwalker/router": "~2.0",
+        "windwalker/filesystem": "~2.0",
+        "windwalker/console": "~2.0",
+        "asika/muse": "~1.0",
         "symfony/yaml": "2.*",
         "filp/whoops": "1.*"
     },
