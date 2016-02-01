@@ -8,14 +8,15 @@
 
 namespace Windwalker\Test\View\Helper;
 
+use Windwalker\Dom\Test\AbstractDomTestCase;
 use Windwalker\View\Helper\ViewHtmlHelper;
 
 /**
- * Test class of \Windwalker\View\Helper\ToolbarHelper
+ * Test class of \Windwalker\View\Helper\ViewHtmlHelper
  *
  * @since {DEPLOY_VERSION}
  */
-class ViewHtmlHelperTest extends \PHPUnit_Framework_TestCase
+class ViewHtmlHelperTest extends AbstractDomTestCase
 {
 	/**
 	 * testShowInfo
@@ -28,26 +29,29 @@ class ViewHtmlHelperTest extends \PHPUnit_Framework_TestCase
 	{
 		$instance = new ViewHtmlHelper;
 
-		$item = new \stdClass();
+		$item = new \stdClass;
 
 		$item->pk = 1;
 		$item->title = 'itemFoo';
 
-		$key = 'title';
+		$key   = 'title';
 		$label = 'fooLabel';
-		$icon = 'barIcon';
-		$link = 'http://link.foo';
+		$icon  = 'barIcon';
+		$link  = 'http://link.foo';
 		$class = 'barClass';
 
 		$result = $instance->showInfo($item, $key, $label, $icon, $link, $class);
 
-		$this->assertRegExp('(class="title barClass")', $result);
+		$html = <<<HTML
+<div class="title barClass">
+	<span class="label">
+	<i class="icon-barIcon"></i>
+	fooLabel
+	</span>
+	<span class="value"><a href="http://link.foo" >itemFoo</a></span>
+</div>
+HTML;
 
-		$this->assertRegExp('(<span class="label">
-            <i class="icon-barIcon"><\/i>
-            fooLabel
-            <\/span>)', $result);
-
-		$this->assertRegExp('(<span class="value"><a href="http:\/\/link.foo" >itemFoo<\/a><\/span>)', $result);
+		$this->assertHtmlFormatEquals($html, $result);
 	}
 }
