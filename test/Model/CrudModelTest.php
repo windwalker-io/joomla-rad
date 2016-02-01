@@ -8,18 +8,16 @@
 
 namespace Windwalker\Test\Model;
 
-use Windwalker\DI\Container;
 use Windwalker\Model\CrudModel;
+use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\TestHelper;
-
-require_once(__DIR__ . '/Stub/Table/StubTableCrudModel.php');
 
 /**
  * Test class of \Windwalker\Model\CrudModel
  *
  * @since {DEPLOY_VERSION}
  */
-class CrudModelTest extends \PHPUnit_Framework_TestCase
+class CrudModelTest extends AbstractDatabaseTestCase
 {
 	/**
 	 * Test instance.
@@ -35,29 +33,29 @@ class CrudModelTest extends \PHPUnit_Framework_TestCase
 	 */
 	public static function setUpBeforeClass()
 	{
-		$db   = \JFactory::getDbo();
-		$sqls = file_get_contents(__DIR__ . '/sql/install.crudmodel.sql');
+		parent::setUpBeforeClass();
 
-		foreach ($db->splitSql($sqls) as $sql)
-		{
-			$sql = trim($sql);
-			if (!empty($sql))
-			{
-				$db->setQuery($sql)->execute();
-			}
-		}
+		\JTable::addIncludePath(__DIR__ . '/Stub/Table');
 	}
 
 	/**
-	 * tearDownAfterClass
+	 * getInstallSql
 	 *
-	 * @return  void
+	 * @return  string
 	 */
-	public static function tearDownAfterClass()
+	public static function getInstallSql()
 	{
-		$sql = file_get_contents(__DIR__ . '/sql/uninstall.crudmodel.sql');
+		return __DIR__ . '/sql/install.crudmodel.sql';
+	}
 
-		\JFactory::getDbo()->setQuery($sql)->execute();
+	/**
+	 * getUninstallSql
+	 *
+	 * @return  string
+	 */
+	public static function getUninstallSql()
+	{
+		return __DIR__ . '/sql/uninstall.crudmodel.sql';
 	}
 
 	/**
