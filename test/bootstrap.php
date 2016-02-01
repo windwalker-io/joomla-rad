@@ -27,6 +27,12 @@ if (!defined('_JDEFINES'))
 
 define('WINDWALKER_CONSOLE', __DIR__);
 
+// Check installed
+if (is_dir(JPATH_ROOT . '/installation') || !is_file(JPATH_ROOT . '/configuration.php'))
+{
+	die('Please install Joomla first.');
+}
+
 // Get the framework.
 require_once JPATH_BASE . '/includes/framework.php';
 
