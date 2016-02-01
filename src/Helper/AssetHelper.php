@@ -136,12 +136,11 @@ class AssetHelper implements ContainerAwareInterface
 	 * @param string $file    The css file name(with subfolder) to add.
 	 * @param string $name    The instance name, also means component subfolder name,
 	 *                        default is the name of this instance.
-	 * @param string $version The version of this asset(not used now).
 	 * @param array  $attribs The link attributes in html element.
 	 *
 	 * @return AssetHelper Return self to support chaining.
 	 */
-	public function addJS($file, $name = null, $version = null, $attribs = array())
+	public function addJS($file, $name = null, $attribs = array())
 	{
 		$doc = $this->getDoc();
 
@@ -159,17 +158,12 @@ class AssetHelper implements ContainerAwareInterface
 			return $this;
 		}
 
-		$type  = ArrayHelper::getValue($attribs, 'type');
+		$type  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
 		$defer = ArrayHelper::getValue($attribs, 'defer');
 		$async = ArrayHelper::getValue($attribs, 'async');
 
 		unset($attribs['type']);
 		unset($attribs['media']);
-
-		if ($this->mootools)
-		{
-			\JHtml::_('behavior.framework');
-		}
 
 		if ($this->jquery)
 		{
@@ -191,7 +185,7 @@ class AssetHelper implements ContainerAwareInterface
 	 */
 	public function internalCSS($content, $type = 'text/css')
 	{
-		$this->getDoc()->addStyleDeclaration("\n" . $content . "\n", $type);
+		$this->getDoc()->addStyleDeclaration(";\n" . $content . "\n", $type);
 
 		return $this;
 	}
@@ -206,7 +200,7 @@ class AssetHelper implements ContainerAwareInterface
 	 */
 	public function internalJS($content, $type = 'text/javascript')
 	{
-		$this->getDoc()->addScriptDeclaration("\n" . $content . "\n", $type);
+		$this->getDoc()->addScriptDeclaration(";\n;" . $content . "\n", $type);
 
 		return $this;
 	}
@@ -343,6 +337,13 @@ class AssetHelper implements ContainerAwareInterface
 		$name      = $name ? : $this->name;
 		$foundpath = '';
 		$sum       = '';
+
+		$uri = new \JUri($file);
+
+		if ($uri->getScheme())
+		{
+			return $file;
+		}
 
 		foreach (clone $this->paths as $path)
 		{

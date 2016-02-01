@@ -16,7 +16,7 @@ use Windwalker\Helper\AssetHelper;
  *
  * @since  {DEPLOY_VERSION}
  */
-class AbstractScriptManager
+abstract class AbstractScriptManager
 {
 	/**
 	 * Property inited.
