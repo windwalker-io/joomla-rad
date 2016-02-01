@@ -110,6 +110,8 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 		$filePath = __DIR__ . '/../../' . $fileName;
 		$testFilePath = __DIR__ . '/../../' . $testFileName;
 
+		$filePath = str_replace('\\', '/', $filePath);
+
 		// Read file on local
 		$oriFileContent = file_get_contents($filePath);
 
@@ -123,9 +125,13 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 
 			// Assert two file
 			$this->assertEquals($oriFileContent, $downloadFileContent);
-		}
 
-		// Remove temporary downloaded file.
-		unlink($testFilePath);
+			// Remove temporary downloaded file.
+			unlink($testFilePath);
+		}
+		else
+		{
+			$this->fail(sprintf('Download: %s fail', $filePath));
+		}
 	}
 }
