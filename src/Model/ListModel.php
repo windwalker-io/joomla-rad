@@ -37,13 +37,6 @@ defined('_JEXEC') or die;
 class ListModel extends FormModel
 {
 	/**
-	 * Internal memory based cache array of data.
-	 *
-	 * @var array
-	 */
-	protected $cache = array();
-
-	/**
 	 * Valid filter fields or ordering.
 	 *
 	 * @var array
@@ -171,7 +164,7 @@ class ListModel extends FormModel
 		static $lastStoreId;
 
 		// Compute the current store id.
-		$currentStoreId = $this->getStoreId();
+		$currentStoreId = $this->getStoreId('getItems');
 
 		// If the last store id is different from the current, refresh the query.
 		if ($lastStoreId != $currentStoreId || empty($this->query))
@@ -190,13 +183,9 @@ class ListModel extends FormModel
 	 */
 	public function getItems()
 	{
-		// Get a storage key.
-		$store = $this->getStoreId();
-
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store]))
+		if ($this->hasCache(__FUNCTION__))
 		{
-			return $this->cache[$store];
+			return $this->getCache(__FUNCTION__);
 		}
 
 		// Load the list items.
@@ -205,9 +194,7 @@ class ListModel extends FormModel
 		$items = $this->getList($query, $this->getStart(), $this->state->get('list.limit'));
 
 		// Add the items to the internal cache.
-		$this->cache[$store] = $items;
-
-		return $this->cache[$store];
+		return $this->setCache(__FUNCTION__, $items);
 	}
 
 	/**
@@ -224,10 +211,10 @@ class ListModel extends FormModel
 		$this->prepareGetQuery($query);
 
 		// Build filter query
-		$this->processFilters($query, $this->state->get('filter', array()));
+		$this->processFilters($query, (array) $this->state->get('filter', array()));
 
 		// Build search query
-		$this->processSearches($query, $this->state->get('search', array()));
+		$this->processSearches($query, (array) $this->state->get('search', array()));
 
 		// Ordering
 		$this->processOrdering($query);
@@ -302,23 +289,17 @@ class ListModel extends FormModel
 	 */
 	public function getPagination()
 	{
+		$self = $this;
+		$state = $this->state;
+
 		// Get a storage key.
-		$store = $this->getStoreId('getPagination');
-
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store]))
+		return $this->fetch(__FUNCTION__, function() use ($self, $state)
 		{
-			return $this->cache[$store];
-		}
+			// Create the pagination object.
+			$limit = (int) $state->get('list.limit') - (int) $state->get('list.links');
 
-		// Create the pagination object.
-		$limit = (int) $this->state->get('list.limit') - (int) $this->state->get('list.links');
-		$page  = new JPagination($this->getTotal(), $this->getStart(), $limit);
-
-		// Add the object to the internal cache.
-		$this->cache[$store] = $page;
-
-		return $this->cache[$store];
+			 return new JPagination($self->getTotal(), $self->getStart(), $limit);
+		});
 	}
 
 	/**
@@ -399,12 +380,9 @@ class ListModel extends FormModel
 	public function getTotal()
 	{
 		// Get a storage key.
-		$store = $this->getStoreId('getTotal');
-
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store]))
+		if ($this->hasCache(__FUNCTION__))
 		{
-			return $this->cache[$store];
+			return $this->getCache(__FUNCTION__);
 		}
 
 		// Load the total.
@@ -413,9 +391,7 @@ class ListModel extends FormModel
 		$total = (int) $this->getListCount($query);
 
 		// Add the total to the internal cache.
-		$this->cache[$store] = $total;
-
-		return $this->cache[$store];
+		return $this->setCache(__FUNCTION__, $total);
 	}
 
 	/**
@@ -425,12 +401,9 @@ class ListModel extends FormModel
 	 */
 	public function getStart()
 	{
-		$store = $this->getStoreId('getstart');
-
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store]))
+		if ($this->hasCache(__FUNCTION__))
 		{
-			return $this->cache[$store];
+			return $this->getCache(__FUNCTION__);
 		}
 
 		$start = $this->state->get('list.start');
@@ -443,9 +416,7 @@ class ListModel extends FormModel
 		}
 
 		// Add the total to the internal cache.
-		$this->cache[$store] = $start;
-
-		return $this->cache[$store];
+		return $this->setCache(__FUNCTION__, $start);
 	}
 
 	/**
@@ -871,6 +842,7 @@ class ListModel extends FormModel
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
+		/** @var \JApplicationCms $app */
 		$app       = $this->container->get('app');
 		$input     = $app->input;
 		$old_state = $app->getUserState($key);

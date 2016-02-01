@@ -44,7 +44,11 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 		// Write filter.xml
 		$formPath = JPATH_BASE . '/components/com_stub/model/form/posts';
 
-		mkdir($formPath, 0777, true);
+		if (!is_dir($formPath))
+		{
+			mkdir($formPath, 0777, true);
+		}
+
 		copy(__DIR__ . '/form/posts/filter.xml', $formPath . '/filter.xml');
 
 	}
@@ -246,21 +250,32 @@ class ListModelTest extends \PHPUnit_Framework_TestCase
 		$db = $listModel->getDb();
 		$query = $db->getQuery(true);
 
+		TestHelper::setValue($expected, 'app', null);
+
 		$query->select('*')
 			->from('#__test_table')
 			->where('`type` = "animal"');
 
 		$listModel->setListQuery($query);
-		$listModel->quickCleanCache();
-		$listModel->set('list.limit', 3);
 
-		$this->assertEquals($expected, $listModel->getPagination());
+		$listModel->set('list.limit', 3);
+		$listModel->quickCleanCache();
+		$pagination = $listModel->getPagination();
+
+		// There is something weird that we cannot compare JPagination::$app->input
+		// So we remove it and just compare other properties
+		TestHelper::setValue($pagination, 'app', null);
+
+		$this->assertEquals($expected, $pagination);
 
 		// Test cached result
 		$newData = (object) array('foo' => 'bar2', 'type' => 'exception');
 		$db->insertObject('#__test_table', $newData);
 
-		$this->assertEquals($expected, $listModel->getPagination());
+		$pagination = $listModel->getPagination();
+		TestHelper::setValue($pagination, 'app', null);
+
+		$this->assertEquals($expected, $pagination);
 
 		$db->setQuery(sprintf('DELETE FROM #__test_table WHERE id = %d', $db->insertid()))->execute();
 	}

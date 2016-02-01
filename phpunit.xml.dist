@@ -10,8 +10,8 @@
 	<php>
 		<ini name="error_reporting" value="32767" />
 
-		<server name="HTTP_HOST" value="rad.windwalker.io"/>
-		<server name="REQUEST_URI" value="/flower/sakura"/>
+		<const name="WINDWALKER_TEST_HOST" value="rad.windwalker.io" />
+		<const name="WINDWALKER_TEST_URI" value="/flower/sakura" />
 
 		<const name="WINDWALKER_TEST_CURL_HELPER" value="0" />
 		<const name="WINDWALKER_TEST_GOOGLE_TRANSLATE" value="0" />

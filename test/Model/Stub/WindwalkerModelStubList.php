@@ -67,7 +67,7 @@ class WindwalkerModelStubList extends ListModel
 	 */
 	public function quickCleanCache()
 	{
-		$this->cache = array();
+		$this->resetCache();
 	}
 
 	/**
@@ -79,9 +79,7 @@ class WindwalkerModelStubList extends ListModel
 	 */
 	public function deleteCache($id)
 	{
-		$store = $this->getStoreId($id);
-
-		unset($this->cache[$store]);
+		$this->setCache($id, null);
 	}
 
 	/**

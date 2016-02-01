@@ -302,4 +302,102 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertSame($db, $this->instance->getDb());
 	}
+
+	/**
+	 * testGetStoreId
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Model\Model::getStoreId
+	 */
+	public function testGetStoreId()
+	{
+		TestHelper::setValue($this->instance, 'context', 'com_test.item');
+
+		$this->assertEquals(
+			md5('com_test.item:' . 123 . ':' . json_encode($this->instance->getState()->toArray())),
+			TestHelper::invoke($this->instance, 'getStoreId', 123)
+		);
+	}
+
+	/**
+	 * getGetAndSetCache
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Model\Model::getCache
+	 * @covers Windwalker\Model\Model::setCache
+	 */
+	public function getGetAndSetCache()
+	{
+		$item = array('id' => 213);
+
+		TestHelper::invoke($this->instance, 'setCache', 'test.item', $item);
+
+		$this->assertEquals(
+			$item,
+			TestHelper::invoke($this->instance, 'getCache', 'test.item')
+		);
+	}
+
+	/**
+	 * testHasCache
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Model\Model::hasCache
+	 */
+	public function testHasCache()
+	{
+		$this->assertFalse(TestHelper::invoke($this->instance, 'hasCache', 'test.item'));
+
+		$item = array('id' => 213);
+
+		TestHelper::invoke($this->instance, 'setCache', 'test.item', $item);
+
+		$this->assertTrue(TestHelper::invoke($this->instance, 'hasCache', 'test.item'));
+	}
+
+	/**
+	 * testResetCache
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Model\Model::resetCache
+	 * @covers Windwalker\Model\Model::getCacheObject
+	 */
+	public function testResetCache()
+	{
+		$cache = $this->instance->getCacheObject();
+
+		$cache->set('test.item', 123);
+
+		$this->instance->resetCache();
+
+		$this->assertNotSame($cache, $this->instance->getCacheObject());
+
+		$this->assertNull($this->instance->getCacheObject()->get('test.item'));
+	}
+
+	/**
+	 * testFetch
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Model\Model::fetch
+	 */
+	public function testFetch()
+	{
+		$closure = function()
+		{
+			return array('id' => 213);
+		};
+
+		$item = TestHelper::invoke($this->instance, 'fetch', 'test.item', $closure);
+
+		$this->assertEquals(
+			$item,
+			TestHelper::invoke($this->instance, 'getCache', 'test.item')
+		);
+	}
 }
