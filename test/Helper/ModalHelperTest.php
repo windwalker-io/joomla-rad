@@ -8,19 +8,15 @@
 
 namespace Windwalker\Test\Helper;
 
+use Windwalker\Dom\Test\AbstractDomTestCase;
 use Windwalker\Helper\ModalHelper;
-use Windwalker\DI\Container;
-use Windwalker\Provider\SystemProvider;
-use Windwalker\Component\Component;
-use Windwalker\Test\DI\TestContainerHelper;
-use Windwalker\Test\Application\TestApplication;
 
 /**
  * Test class of \Windwalker\Helper\ModalHelper
  *
  * @since {DEPLOY_VERSION}
  */
-class ModalHelperTest extends \PHPUnit_Framework_TestCase
+class ModalHelperTest extends AbstractDomTestCase
 {
 	/**
 	 * Original loaded array
@@ -203,6 +199,6 @@ HTML;
 </div>
 HTML;
 
-		$this->assertEquals($expectedForm, ModalHelper::getQuickaddForm($id, $pathToQuickaddForm));
+		$this->assertStringSafeEquals($expectedForm, ModalHelper::getQuickaddForm($id, $pathToQuickaddForm));
 	}
 }

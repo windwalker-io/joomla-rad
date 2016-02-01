@@ -77,7 +77,7 @@ abstract class AdminListHelper
 		// Let's build search array.
 		foreach ($searches as $name => $value)
 		{
-			if (in_array($name, $filterFields)  && $value)
+			if (in_array($name, $filterFields) && $value)
 			{
 				$searchValue[$name] = $value;
 			}
