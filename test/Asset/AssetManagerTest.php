@@ -8,6 +8,11 @@
 
 namespace Windwalker\Test\Asset;
 
+use Windwalker\Asset\AssetManager;
+use Windwalker\Test\Joomla\MockHtmlDocument;
+use Windwalker\Test\TestHelper;
+use Windwalker\Utilities\Queue\PriorityQueue;
+
 /**
  * Test class of \Windwalker\Asset\AssetManager
  *
@@ -18,9 +23,45 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Test instance.
 	 *
-	 * @var \Windwalker\Asset\AssetManager
+	 * @var AssetManager
 	 */
 	protected $instance;
+
+	/**
+	 * Property doc.
+	 *
+	 * @var  MockHtmlDocument
+	 */
+	protected $doc;
+
+	/**
+	 * Property defaultPaths.
+	 *
+	 * @var  array
+	 */
+	protected $defaultPaths = array (
+		'administrator/components/{name}/asset/{type}',
+		'administrator/components/{name}/asset',
+		'media/{name}/{type}',
+		'media/{name}',
+		'media/windwalker/{type}',
+		'media/windwalker',
+		'libraries/windwalker/resource/asset/{type}',
+		'libraries/windwalker/resource/asset',
+		'libraries/windwalker/assets',
+	);
+
+	/**
+	 * setUpBeforeClass
+	 *
+	 * @return  void
+	 */
+	public static function setUpBeforeClass()
+	{
+		TestHelper::setValue('JUri', 'base', array());
+
+		\JFactory::getConfig()->set('live_site', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+	}
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -30,7 +71,15 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		$this->instance = new \Windwalker\Asset\AssetManager;
+		$paths = new \SplPriorityQueue;
+		$paths->insert('libraries/windwalker/resource/asset/{type}', 800);
+		$paths->insert('libraries/windwalker/test/Asset/Stub/{type}', 500);
+		$paths->insert('media/jui/{type}', 300);
+		$paths->insert('media/{name}/{type}', 100);
+
+		$this->instance = new AssetManager('test', $paths);
+
+		$this->instance->setDoc($this->doc = new MockHtmlDocument);
 	}
 
 	/**
@@ -49,14 +98,28 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::__construct
-	 * @TODO   Implement test__construct().
 	 */
 	public function test__construct()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		// Create with no dependency
+		// -------------------------------------------------
+		$asset = new AssetManager;
+
+		$this->assertEquals('windwalker', $asset->getName());
+
+		// Test auto registered paths
+		$paths = $asset->getPaths()->toArray();
+
+		$this->assertEquals($this->defaultPaths, $paths);
+
+		// Create with dependencies
+		// -------------------------------------------------
+		$asset = new AssetManager('com_flower', array('foo/bar', 'yoo/baz'));
+
+		$this->assertEquals('com_flower', $asset->getName());
+		$paths = $asset->getPaths()->toArray();
+
+		$this->assertEquals(array('foo/bar', 'yoo/baz'), $paths);
 	}
 
 	/**
@@ -69,10 +132,11 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testAddCSS()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		show($this->instance->getPaths()->toArray());
+
+		$this->instance->addCSS('windwalker.css');
+
+		show($this->doc);die;
 	}
 
 	/**

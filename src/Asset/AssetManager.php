@@ -12,6 +12,7 @@ use Windwalker\DI\Container;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
  * The Asset Helper
@@ -79,17 +80,20 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param string             $name  The instance name.
-	 * @param \SplPriorityQueue  $paths Paths to scan assets.
+	 * @param string                   $name  The instance name.
+	 * @param \SplPriorityQueue|array  $paths Paths to scan assets.
 	 */
 	public function __construct($name = 'windwalker', $paths = null)
 	{
 		$this->name = $name;
 
 		// Setup dependencies.
-		$this->paths = $paths ? : new \SplPriorityQueue((array) $paths);
+		$this->paths = new PriorityQueue($paths);
 
-		$this->registerPaths(false);
+		if ($paths === null)
+		{
+			$this->registerPaths(false);
+		}
 	}
 
 	/**
@@ -556,7 +560,7 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Get scan paths.
 	 *
-	 * @return  \SplPriorityQueue
+	 * @return  PriorityQueue
 	 */
 	public function getPaths()
 	{
@@ -572,7 +576,7 @@ class AssetManager implements ContainerAwareInterface
 	 */
 	public function setPaths(\SplPriorityQueue $paths)
 	{
-		$this->paths = $paths;
+		$this->paths = new PriorityQueue($paths);
 
 		return $this;
 	}

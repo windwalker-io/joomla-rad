@@ -72,7 +72,7 @@ class SystemProviderTest extends \PHPUnit_Framework_TestCase
 		$this->assertSame(\JEventDispatcher::getInstance(), $container->get('event.dispatcher'));
 		$this->assertSame(\JEventDispatcher::getInstance(), $container->get('JEventDispatcher'));
 		$this->assertInstanceOf('SplPriorityQueue', $container->get('SplPriorityQueue'));
-		$this->assertInstanceOf('Windwalker\Helper\AssetHelper', $container->get('helper.asset'));
+		$this->assertInstanceOf('Windwalker\Asset\AssetManager', $container->get('helper.asset'));
 
 		// Test case #2: Test "$container->registerServiceProvider" parts
 		$container = $this->getMockBuilder('Windwalker\DI\Container')
