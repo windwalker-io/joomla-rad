@@ -9,13 +9,13 @@
 namespace Windwalker\Model;
 
 use JDatabaseQuery;
+use Joomla\String\Inflector;
 use JPagination;
 use JPluginHelper;
 
 use Joomla\DI\Container as JoomlaContainer;
 
 use JTable;
-use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
@@ -148,7 +148,7 @@ class ListModel extends FormModel
 
 		if (empty($this->viewItem))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewItem = $inflector->toSingular($this->viewList);
 		}
@@ -226,7 +226,7 @@ class ListModel extends FormModel
 	protected function getListQuery()
 	{
 		$query       = $this->db->getQuery(true);
-		$queryHelper = $this->container->get('model.' . $this->getName() . '.helper.query');
+		$queryHelper = $this->getQueryHelper();
 
 		// Prepare
 		$this->prepareGetQuery($query);
@@ -260,9 +260,7 @@ class ListModel extends FormModel
 
 		if (!$select)
 		{
-			$selectType = $this->selectType ? : QueryHelper::COLS_WITH_FIRST | QueryHelper::COLS_PREFIX_WITH_FIRST;
-
-			$select = $queryHelper->getSelectFields($selectType);
+			$select = $queryHelper->getSelectFields();
 		}
 
 		$query->select($select);

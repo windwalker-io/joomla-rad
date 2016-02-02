@@ -117,9 +117,9 @@ class QueryHelper
 
 		foreach ($this->tables as $alias => $table)
 		{
-			$columns = DatabaseHelper::getColumns($table);
+			$columns = DatabaseHelper::getColumns($table['name']);
 
-			foreach ($columns as $column)
+			foreach ($columns as $column => $type)
 			{
 				$prefix = $table['prefix'];
 
@@ -134,11 +134,11 @@ class QueryHelper
 
 				if ($prefix === true)
 				{
-					$fields[] = $this->db->quoteName("{$alias}.{$column} AS {$alias}_{$column}");
+					$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$alias}_{$column}");
 				}
 				else
 				{
-					$fields[] = $this->db->quoteName("{$alias}.{$column} AS {$column}");
+					$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$column}");
 				}
 			}
 

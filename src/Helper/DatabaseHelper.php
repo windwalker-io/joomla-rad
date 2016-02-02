@@ -8,6 +8,7 @@
 
 namespace Windwalker\Helper;
 
+use Windwalker\Debugger\Debugger;
 use Windwalker\Facade\AbstractFacade;
 use Windwalker\Model\Helper\QueryHelper;
 
@@ -32,7 +33,7 @@ class DatabaseHelper extends AbstractFacade
 	 *
 	 * @var  array
 	 */
-	protected static $columnCache;
+	protected static $columnCache = array();
 
 	/**
 	 * Execute a query.
