@@ -9,6 +9,7 @@
 namespace GeneratorBundle\Controller;
 
 use Muse\Controller\AbstractController;
+use Muse\Controller\AbstractTaskController;
 use Muse\IO\IOInterface;
 use GeneratorBundle\Prompter\ElementPrompter;
 use GeneratorBundle\Provider\GeneratorBundleProvider;
@@ -72,6 +73,20 @@ class GeneratorController extends AbstractController
 	 * @var  string
 	 */
 	protected $template = null;
+
+	/**
+	 * Property container.
+	 *
+	 * @var  Container
+	 */
+	protected $container = null;
+
+	/**
+	 * Property command.
+	 *
+	 * @var  Command
+	 */
+	protected $command = null;
 
 	/**
 	 * The mapper to find extension type.
@@ -159,6 +174,7 @@ class GeneratorController extends AbstractController
 			throw new \RuntimeException(sprintf('Action %s of %s not support.', $this->type, $this->getTask()));
 		}
 
+		/** @var AbstractTaskController $controller */
 		$controller = new $class($this->container, $this->io, new Registry($config));
 
 		$controller->execute();

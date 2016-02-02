@@ -15,9 +15,9 @@ defined('_JEXEC') or die;
 /**
  * Prepare data for this template.
  *
- * @var $container Windwalker\DI\Container
- * @var $data      Windwalker\Data\Data
- * @var $state     Joomla\Registry\Registry
+ * @var $container \Windwalker\DI\Container
+ * @var $data      \Windwalker\Data\Data
+ * @var $state     \Joomla\Registry\Registry
  * @var $user      \JUser
  */
 $container = $this->getContainer();

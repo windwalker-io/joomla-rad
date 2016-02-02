@@ -19,7 +19,7 @@ JHtmlDropdown::init();
 /**
  * Prepare data for this template.
  *
- * @var Windwalker\DI\Container $container
+ * @var \Windwalker\DI\Container $container
  */
 $container = $this->getContainer();
 ?>

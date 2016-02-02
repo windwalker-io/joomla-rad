@@ -16,8 +16,8 @@ JHtmlBehavior::formvalidation();
 /**
  * Prepare data for this template.
  *
- * @var $container Windwalker\DI\Container
- * @var $data      Windwalker\Data\Data
+ * @var $container \Windwalker\DI\Container
+ * @var $data      \Windwalker\Data\Data
  * @var $item      \stdClass
  */
 $container = $this->getContainer();

@@ -15,10 +15,10 @@ defined('_JEXEC') or die;
 /**
  * Prepare data for this template.
  *
- * @var $container Windwalker\DI\Container
- * @var $data      Windwalker\Data\Data
- * @var $item      Windwalker\Data\Data
- * @var $params    Joomla\Registry\Registry
+ * @var $container \Windwalker\DI\Container
+ * @var $data      \Windwalker\Data\Data
+ * @var $item      \Windwalker\Data\Data
+ * @var $params    \Joomla\Registry\Registry
  */
 $container = $this->getContainer();
 $params = $data->item->params;

@@ -17,8 +17,8 @@ JHtml::_('behavior.tooltip');
 /**
  * Prepare data for this template.
  *
- * @var Windwalker\DI\Container       $container
- * @var Windwalker\Helper\AssetHelper $asset
+ * @var \Windwalker\DI\Container        $container
+ * @var \Windwalker\Asset\AssetManager  $asset
  */
 $container = $this->getContainer();
 $input     = $container->get('input');

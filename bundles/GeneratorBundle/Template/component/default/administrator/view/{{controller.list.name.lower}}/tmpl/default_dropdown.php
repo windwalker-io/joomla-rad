@@ -14,9 +14,9 @@ defined('_JEXEC') or die;
 /**
  * Prepare data for this template.
  *
- * @var $data Windwalker\Data\Data
- * @var $grid Windwalker\View\Helper\GridHelper
- * @var $item Windwalker\Data\Data
+ * @var $data \Windwalker\Data\Data
+ * @var $grid \Windwalker\View\Helper\GridHelper
+ * @var $item \Windwalker\Data\Data
  */
 $grid = $data->grid;
 $item = $grid->current;
