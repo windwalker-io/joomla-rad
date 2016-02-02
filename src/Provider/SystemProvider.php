@@ -82,7 +82,7 @@ class SystemProvider extends ServiceProvider
 			'helper.asset',
 			function()
 			{
-				return new \Windwalker\Helper\AssetHelper;
+				return new \Windwalker\Asset\AssetManager;
 			}
 		);
 

@@ -10,7 +10,7 @@ namespace Windwalker\Script;
 
 use Windwalker\DI\Container;
 use Windwalker\Facade\AbstractProxyFacade;
-use Windwalker\Helper\AssetHelper;
+use Windwalker\Asset\AssetManager;
 
 /**
  * An Asset Manager class help us manage script dependency.
@@ -24,7 +24,7 @@ class ScriptManager extends AbstractProxyFacade
 	/**
 	 * THe asset helpers storage.
 	 *
-	 * @var  AssetHelper[]
+	 * @var  AssetManager[]
 	 */
 	protected static $assetHelpers = array();
 
@@ -219,7 +219,7 @@ class ScriptManager extends AbstractProxyFacade
 	 *
 	 * @param   string $option Option name.
 	 *
-	 * @return  AssetHelper
+	 * @return  AssetManager
 	 */
 	public static function getHelper($option = 'windwalker')
 	{
@@ -234,7 +234,7 @@ class ScriptManager extends AbstractProxyFacade
 		}
 		catch (\UnexpectedValueException $e)
 		{
-			$asset = new AssetHelper($option);
+			$asset = new AssetManager($option);
 		}
 
 		return static::$assetHelpers[$option] = $asset;

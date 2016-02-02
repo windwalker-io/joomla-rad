@@ -8,7 +8,7 @@
 
 namespace Windwalker\Xul\Control;
 
-use Windwalker\Helper\AssetHelper;
+use Windwalker\Asset\AssetManager;
 use Windwalker\Helper\XmlHelper;
 use Windwalker\Xul\AbstractXulRenderer;
 use Windwalker\Xul\XulEngine;
@@ -124,7 +124,7 @@ class AssetRenderer extends AbstractXulRenderer
 	{
 		$asset = $data->asset;
 
-		if ($asset instanceof AssetHelper)
+		if ($asset instanceof AssetManager)
 		{
 			$asset->addCss($file);
 		}
@@ -148,7 +148,7 @@ class AssetRenderer extends AbstractXulRenderer
 	{
 		$asset = $data->asset;
 
-		if ($asset instanceof AssetHelper)
+		if ($asset instanceof AssetManager)
 		{
 			$asset->addJs($file);
 		}

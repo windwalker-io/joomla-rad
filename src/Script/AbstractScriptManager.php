@@ -9,7 +9,7 @@
 namespace Windwalker\Script;
 
 use Windwalker\DI\Container;
-use Windwalker\Helper\AssetHelper;
+use Windwalker\Asset\AssetManager;
 
 /**
  * The AbstractScriptManager class.
@@ -28,7 +28,7 @@ abstract class AbstractScriptManager
 	/**
 	 * Property asset.
 	 *
-	 * @var  AssetHelper
+	 * @var  AssetManager
 	 */
 	protected static $assets;
 
@@ -73,7 +73,7 @@ abstract class AbstractScriptManager
 	 *
 	 * @param string $option
 	 *
-	 * @return AssetHelper
+	 * @return AssetManager
 	 */
 	public static function getAsset($option = 'windwalker')
 	{
@@ -90,7 +90,7 @@ abstract class AbstractScriptManager
 		}
 		else
 		{
-			$asset = new AssetHelper($option);
+			$asset = new AssetManager($option);
 		}
 
 		return static::$assets[$option] = $asset;
@@ -99,12 +99,12 @@ abstract class AbstractScriptManager
 	/**
 	 * Method to set property asset
 	 *
-	 * @param   string      $option
-	 * @param   AssetHelper $asset
+	 * @param   string       $option
+	 * @param   AssetManager $asset
 	 *
 	 * @return  void
 	 */
-	public static function setAsset($option, AssetHelper $asset)
+	public static function setAsset($option, AssetManager $asset)
 	{
 		static::$assets[$option] = $asset;
 	}

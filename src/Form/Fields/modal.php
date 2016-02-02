@@ -266,7 +266,7 @@ class JFormFieldModal extends JFormField
 		}
 
 		// Prepare Script & Styles
-		/** @var Windwalker\Helper\AssetHelper $asset */
+		/** @var \Windwalker\Asset\AssetManager $asset */
 		$asset = Container::getInstance($quickadd_handler)->get('helper.asset');
 		$asset->addJs('js/quickadd.js');
 
