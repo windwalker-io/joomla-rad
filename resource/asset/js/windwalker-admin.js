@@ -1,17 +1,16 @@
 /**
- * Windwalker JS
+ * Part of Windwalker project.
  *
- * Copyright 2013 Asikart.com
- * License GNU General Public License version 2 or later; see LICENSE.txt, see LICENSE.php
- *
- * Generator: AKHelper
- * Author: Asika
+ * @copyright  Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
+ * @license    GNU General Public License version 2 or later.
  */
 
+;(function($)
+{
+    "use strict";
 
-var WindWalker = {
-    
-} ;
+    window.Windwalker = {
 
+    }
 
-var Windwalker = WindWalker ;
+})(jQuery);
