@@ -25,6 +25,7 @@
 			show_root="true"
 			class="input-xlarge"
 			access="true"
+			quickadd="true"
 			/>
 
 		<field name="catid"
