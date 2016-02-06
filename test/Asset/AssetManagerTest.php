@@ -10,15 +10,15 @@ namespace Windwalker\Test\Asset;
 
 use Windwalker\Asset\AssetManager;
 use Windwalker\Test\Joomla\MockHtmlDocument;
+use Windwalker\Test\TestCase\AbstractBaseTestCase;
 use Windwalker\Test\TestHelper;
-use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
  * Test class of \Windwalker\Asset\AssetManager
  *
  * @since {DEPLOY_VERSION}
  */
-class AssetManagerTest extends \PHPUnit_Framework_TestCase
+class AssetManagerTest extends AbstractBaseTestCase
 {
 	/**
 	 * Test instance.
@@ -80,6 +80,8 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 		$this->instance = new AssetManager('test', $paths);
 
 		$this->instance->setDoc($this->doc = new MockHtmlDocument);
+
+		$this->doc->reset();
 	}
 
 	/**
@@ -128,15 +130,138 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::addCSS
-	 * @TODO   Implement testAddCSS().
 	 */
 	public function testAddCSS()
 	{
-		show($this->instance->getPaths()->toArray());
-
 		$this->instance->addCSS('windwalker.css');
 
-		show($this->doc);die;
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/resource/asset/css/windwalker.css';
+
+		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+
+		$this->instance->addCSS('stub.css');
+
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/css/stub.css';
+
+		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+
+		$this->instance->addCSS('chosen.css');
+
+		$expected = $_SERVER['REQUEST_URI'] . '/media/jui/css/chosen.css';
+
+		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+
+		$this->instance->addCSS('http://cdn.js/css.css');
+
+		$expected = 'http://cdn.js/css.css';
+
+		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+
+		$this->instance->isDebug(false);
+		$this->instance->setSumName('SUM_TEST');
+
+		$this->instance->addCSS('foo.css');
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/css/foo.min.css?windwalkersum';
+
+		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+	}
+
+	/**
+	 * Method to test addCSS().
+	 *
+	 * @param  boolean  $debug
+	 * @param  string   $file
+	 * @param  string   $expected
+	 *
+	 * @covers       Windwalker\Asset\AssetManager::addCSS
+	 *
+	 * @dataProvider addAssetMinProvider
+	 */
+	public function testAddCSSWithMin($debug, $file, $expected)
+	{
+		$this->instance->isDebug($debug);
+
+		$this->instance->addCSS($file . '.css');
+
+		$expected = str_replace('{type}', 'css', $expected);
+
+		$expected = $_SERVER['REQUEST_URI'] . '/' . $expected . '.css';
+
+		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+	}
+
+	/**
+	 * addAssetMinProvider
+	 *
+	 * @return  array
+	 */
+	public function addAssetMinProvider()
+	{
+		return array(
+			// Debug
+			array(
+				true,
+				'stub',
+				'libraries/windwalker/test/Asset/Stub/{type}/stub'
+			),
+			array(
+				true,
+				'stub.min',
+				'libraries/windwalker/test/Asset/Stub/{type}/stub'
+			),
+			array(
+				true,
+				'bar',
+				'libraries/windwalker/test/Asset/Stub/{type}/bar.min'
+			),
+			array(
+				true,
+				'bar.min',
+				'libraries/windwalker/test/Asset/Stub/{type}/bar.min'
+			),
+			array(
+				true,
+				'foo',
+				'libraries/windwalker/test/Asset/Stub/{type}/foo'
+			),
+			array(
+				true,
+				'foo.min',
+				'libraries/windwalker/test/Asset/Stub/{type}/foo'
+			),
+
+			// No debug
+			array(
+				false,
+				'stub',
+				'libraries/windwalker/test/Asset/Stub/{type}/stub'
+			),
+			array(
+				false,
+				'stub.min',
+				'libraries/windwalker/test/Asset/Stub/{type}/stub'
+			),
+			array(
+				false,
+				'bar',
+				'libraries/windwalker/test/Asset/Stub/{type}/bar.min'
+			),
+			array(
+				false,
+				'bar.min',
+				'libraries/windwalker/test/Asset/Stub/{type}/bar.min'
+			),
+			array(
+				false,
+				'foo',
+				'libraries/windwalker/test/Asset/Stub/{type}/foo.min'
+			),
+			array(
+				false,
+				'foo.min',
+				'libraries/windwalker/test/Asset/Stub/{type}/foo.min'
+			)
+		);
 	}
 
 	/**
@@ -145,14 +270,64 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::addJS
-	 * @TODO   Implement testAddJS().
 	 */
 	public function testAddJS()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$this->instance->addJS('windwalker.js');
+
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/resource/asset/js/windwalker.js';
+
+		$this->assertEquals($expected, $this->doc->getLastScript());
+
+		$this->instance->addJS('stub.js');
+
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/js/stub.js';
+
+		$this->assertEquals($expected, $this->doc->getLastScript());
+
+		$this->instance->addJS('chosen.jquery.js');
+
+		$expected = $_SERVER['REQUEST_URI'] . '/media/jui/js/chosen.jquery.js';
+
+		$this->assertEquals($expected, $this->doc->getLastScript());
+
+		$this->instance->addJS('http://cdn.js/js.js');
+
+		$expected = 'http://cdn.js/js.js';
+
+		$this->assertEquals($expected, $this->doc->getLastScript());
+
+		$this->instance->isDebug(false);
+		$this->instance->setSumName('SUM_TEST');
+
+		$this->instance->addJS('foo.js');
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/js/foo.min.js?windwalkersum';
+
+		$this->assertEquals($expected, $this->doc->getLastScript());
+	}
+
+	/**
+	 * Method to test addCSS().
+	 *
+	 * @param  boolean  $debug
+	 * @param  string   $file
+	 * @param  string   $expected
+	 *
+	 * @covers       Windwalker\Asset\AssetManager::addCSS
+	 *
+	 * @dataProvider addAssetMinProvider
+	 */
+	public function testAddJSWithMin($debug, $file, $expected)
+	{
+		$this->instance->isDebug($debug);
+
+		$this->instance->addJS($file . '.js');
+
+		$expected = str_replace('{type}', 'js', $expected);
+
+		$expected = $_SERVER['REQUEST_URI'] . '/' . $expected . '.js';
+
+		$this->assertEquals($expected, $this->doc->getLastScript());
 	}
 
 	/**
@@ -161,14 +336,13 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::internalCSS
-	 * @TODO   Implement testInternalCSS().
 	 */
 	public function testInternalCSS()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$this->instance->internalCSS('#foo {}');
+		$this->instance->internalCSS('#bar {}');
+
+		$this->assertStringSafeEquals("\n#foo {}\n\n#bar {}\n", $this->doc->_style['text/css']);
 	}
 
 	/**
@@ -177,14 +351,13 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::internalJS
-	 * @TODO   Implement testInternalJS().
 	 */
 	public function testInternalJS()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$this->instance->internalJS('var foo');
+		$this->instance->internalJS('var bar');
+
+		$this->assertStringDataEquals(";\nvar foo; ;\n\nvar bar;\n", $this->doc->_script['text/javascript']);
 	}
 
 	/**
@@ -289,9 +462,8 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::getMinName
-	 * @TODO   Implement testGetMinName().
 	 */
-	public function testGetMinName()
+	public function testGetMinFile()
 	{
 		// Remove the following lines when you implement this test.
 		$this->markTestIncomplete(
@@ -465,13 +637,10 @@ class AssetManagerTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Asset\AssetManager::__clone
-	 * @TODO   Implement test__clone().
 	 */
 	public function test__clone()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$asset = clone $this->instance;
+		$this->assertNotSame($this->readAttribute($asset, 'paths'), $this->readAttribute($this->instance, 'paths'));
 	}
 }

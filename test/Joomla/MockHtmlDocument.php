@@ -17,6 +17,9 @@ namespace Windwalker\Test\Joomla;
  */
 class MockHtmlDocument extends \JDocumentHTML
 {
+	const TYPE_ARRAY = 1;
+	const TYPE_KEY = 2;
+
 	/**
 	 * reset
 	 *
@@ -30,5 +33,43 @@ class MockHtmlDocument extends \JDocumentHTML
 		$this->_style = '';
 
 		return $this;
+	}
+
+	/**
+	 * getLastStylesheet
+	 *
+	 * @param int $type
+	 *
+	 * @return  string|array
+	 */
+	public function getLastStylesheet($type = self::TYPE_KEY)
+	{
+		if ($type == static::TYPE_KEY)
+		{
+			$keys = array_keys($this->_styleSheets);
+
+			return array_pop($keys);
+		}
+
+		return array_pop($this->_styleSheets);
+	}
+
+	/**
+	 * getLastScript
+	 *
+	 * @param int $type
+	 *
+	 * @return  string|array
+	 */
+	public function getLastScript($type = self::TYPE_KEY)
+	{
+		if ($type == static::TYPE_KEY)
+		{
+			$keys = array_keys($this->_scripts);
+
+			return array_pop($keys);
+		}
+
+		return array_pop($this->_styleSheets);
 	}
 }

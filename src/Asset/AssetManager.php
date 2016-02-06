@@ -12,6 +12,7 @@ use Windwalker\DI\Container;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\String\StringHelper;
 use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
@@ -78,6 +79,13 @@ class AssetManager implements ContainerAwareInterface
 	protected $jquery = false;
 
 	/**
+	 * Property debug.
+	 *
+	 * @var  boolean
+	 */
+	protected $debug = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param string                   $name  The instance name.
@@ -94,6 +102,8 @@ class AssetManager implements ContainerAwareInterface
 		{
 			$this->registerPaths(false);
 		}
+
+		$this->debug = JDEBUG;
 	}
 
 	/**
@@ -115,13 +125,27 @@ class AssetManager implements ContainerAwareInterface
 			return $this;
 		}
 
-		$filePath = $this->findFile($file, 'css', $name);
-
-		if (!$filePath)
+		// Use absolute URL
+		if (strpos($file, 'http') === 0 || strpos($file, '//') === 0)
 		{
-			$this->alert(sprintf('CSS file: %s not found.', $file));
+			$url = $file;
+			$sum = null;
+		}
+		// Find file from our site
+		else
+		{
+			$filePath = $this->findFile($file, 'css', $name);
 
-			return $this;
+			if (!$filePath)
+			{
+				$this->alert(sprintf('CSS file: %s not found.', $file));
+
+				return $this;
+			}
+
+			$sum = $filePath['sum'];
+
+			$url = \JUri::root(true) . '/' . $filePath['file'];
 		}
 
 		$type  = ArrayHelper::getValue($attribs, 'type');
@@ -130,7 +154,7 @@ class AssetManager implements ContainerAwareInterface
 		unset($attribs['type']);
 		unset($attribs['media']);
 
-		$doc->addStyleSheetVersion(\JUri::root(true) . '/' . $filePath['file'], $filePath['sum'], $type, $media, $attribs);
+		$doc->addStyleSheetVersion($url, $sum, $type, $media, $attribs);
 
 		return $this;
 	}
@@ -154,13 +178,27 @@ class AssetManager implements ContainerAwareInterface
 			return $this;
 		}
 
-		$filePath = $this->findFile($file, 'js', $name);
-
-		if (!$filePath)
+		// Use absolute URL
+		if (strpos($file, 'http') === 0 || strpos($file, '//') === 0)
 		{
-			$this->alert(sprintf('JS file: %s not found.', $file));
+			$url = $file;
+			$sum = null;
+		}
+		// Find file from our site
+		else
+		{
+			$filePath = $this->findFile($file, 'js', $name);
 
-			return $this;
+			if (!$filePath)
+			{
+				$this->alert(sprintf('JS file: %s not found.', $file));
+
+				return $this;
+			}
+
+			$sum = $filePath['sum'];
+
+			$url = \JUri::root(true) . '/' . $filePath['file'];
 		}
 
 		$type  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
@@ -175,7 +213,7 @@ class AssetManager implements ContainerAwareInterface
 			\JHtml::_('jquery.framework', $this->mootools);
 		}
 
-		$doc->addScriptVersion(\JUri::root(true) . '/' . $filePath['file'], $filePath['sum'], $type, $defer, $async);
+		$doc->addScriptVersion($url, $sum, $type, $defer, $async);
 
 		return $this;
 	}
@@ -190,7 +228,7 @@ class AssetManager implements ContainerAwareInterface
 	 */
 	public function internalCSS($content, $type = 'text/css')
 	{
-		$this->getDoc()->addStyleDeclaration(";\n" . $content . "\n", $type);
+		$this->getDoc()->addStyleDeclaration("\n" . $content . "\n", $type);
 
 		return $this;
 	}
@@ -205,7 +243,7 @@ class AssetManager implements ContainerAwareInterface
 	 */
 	public function internalJS($content, $type = 'text/javascript')
 	{
-		$this->getDoc()->addScriptDeclaration(";\n;" . $content . "\n", $type);
+		$this->getDoc()->addScriptDeclaration(";\n" . $content . ";\n", $type);
 
 		return $this;
 	}
@@ -357,10 +395,10 @@ class AssetManager implements ContainerAwareInterface
 			$path = trim($path, '/');
 
 			// Get compressed file
-			if (!JDEBUG && is_file(JPATH_ROOT . '/' . $path . '/' . ($minname = $this->getMinName($file))))
+			if ($foundFile = $this->getMinFile(JPATH_ROOT . '/' . $path, $file))
 			{
+				$file = $foundFile;
 				$foundpath = $path;
-				$file      = trim($minname, '/');
 
 				break;
 			}
@@ -383,7 +421,7 @@ class AssetManager implements ContainerAwareInterface
 		$foundpath = str_replace(array('/', '\\'), '/', $foundpath);
 
 		// Get SUM
-		if (!JDEBUG)
+		if (!$this->debug)
 		{
 			$sumfile = JPATH_ROOT . '/' . $foundpath . '/' . $file . '.sum';
 
@@ -419,21 +457,58 @@ class AssetManager implements ContainerAwareInterface
 	}
 
 	/**
-	 * Extract file name and add min after name.
+	 * getMinFile
 	 *
-	 * @param string $file The file name.
+	 * @param  string  $path
+	 * @param  string $file
 	 *
-	 * @return string
+	 * @return  string
 	 */
-	public function getMinName($file)
+	protected function getMinFile($path, $file)
 	{
-		$file = new \SplFileInfo($file);
-		$ext  = $file->getExtension();
-		$name = $file->getBasename('.' . $ext);
+		$ext = \JFile::getExt($file);
 
-		$name = $name . '.min.' . $ext;
+		if (StringHelper::endsWith($file, '.min.' . $ext))
+		{
+			$assetFile = substr($file, 0, -strlen('.min.' . $ext)) . '.' . $ext;
+			$assetMinFile = $file;
+		}
+		else
+		{
+			$assetMinFile = substr($file, 0, -strlen('.' . $ext)) . '.min.' . $ext;
+			$assetFile = $file;
+		}
 
-		return $file->getPath() . '/' . $name;
+		// Use uncompressed file first
+		if ($this->debug)
+		{
+			if (is_file($path . '/' . $assetFile))
+			{
+				return $assetFile;
+			}
+
+			if (is_file($path . '/' . $assetMinFile))
+			{
+				return $assetMinFile;
+			}
+		}
+
+		// Use min file first
+		else
+		{
+			if (is_file($path . '/' . $assetMinFile))
+			{
+				return $assetMinFile;
+			}
+
+			if (is_file($path . '/' . $assetFile))
+			{
+				return $assetFile;
+			}
+		}
+
+		// All file not found, fallback to default path.
+		return false;
 	}
 
 	/**
@@ -620,7 +695,7 @@ class AssetManager implements ContainerAwareInterface
 	 */
 	protected function alert($msg, $type = 'warning')
 	{
-		if (JDEBUG)
+		if ($this->debug)
 		{
 			$this->getContainer()->get('app')->enqueueMessage($msg, $type);
 		}
@@ -650,5 +725,24 @@ class AssetManager implements ContainerAwareInterface
 	public function __clone()
 	{
 		$this->paths = clone $this->paths;
+	}
+
+	/**
+	 * Method to get property Debug
+	 *
+	 * @param boolean $bool
+	 *
+	 * @return boolean|static
+	 */
+	public function isDebug($bool = null)
+	{
+		if ($bool !== null)
+		{
+			$this->debug = (bool) $bool;
+
+			return $this;
+		}
+
+		return $this->debug;
 	}
 }
