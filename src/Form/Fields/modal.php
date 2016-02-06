@@ -68,7 +68,6 @@ class JFormFieldModal extends JFormField
 	public function getInput()
 	{
 		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modal');
 		$this->setElement();
 		$this->setScript();
 

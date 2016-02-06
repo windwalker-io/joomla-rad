@@ -361,6 +361,38 @@ class AssetManagerTest extends AbstractBaseTestCase
 	}
 
 	/**
+	 * Method to test getJSObject().
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Asset\AssetManager::getJSObject
+	 */
+	public function testGetJSObject()
+	{
+		$options = array(
+			'string' => 'foo',
+			'int' => 123,
+			'float' => 1.3,
+			'array' => array(
+				'flower' => 'sakura'
+			),
+			'object' => (object) array(
+				'flower' => 'sakura'
+			),
+			'function_string' => 'function () {}',
+			'function' => '\\function () {}',
+		);
+
+		$expected = '{"string":"foo","int":123,"float":1.3,"array":{"flower":"sakura"},"object":{"flower":"sakura"},"function_string":"function () {}","function":function () {}}';
+
+		$this->assertEquals($expected, AssetManager::getJSObject($options));
+
+		$expected = '{string:"foo",int:123,float:1.3,array:{flower:"sakura"},object:{flower:"sakura"},function_string:"function () {}",function:function () {}}';
+
+		$this->assertEquals($expected, AssetManager::getJSObject($options, false));
+	}
+
+	/**
 	 * Method to test windwalker().
 	 *
 	 * @return void
