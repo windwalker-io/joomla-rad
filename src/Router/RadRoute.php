@@ -13,11 +13,9 @@ use Windwalker\Helper\ArrayHelper;
 /**
  * Route class to handle single route pattern.
  *
- * @since 2.0
- *
- * @deprecated  Use RadRoute instead.
+ * @since 2.1
  */
-class CmsRoute
+class RadRoute
 {
 	/**
 	 * Property name.
@@ -150,7 +148,8 @@ class CmsRoute
 	 */
 	public static function _($resource, $data = array(), $xhtml = true, $ssl = null)
 	{
-		$resource = explode('.', $resource, 2);
+		$resource = str_replace('.', ':', $resource);
+		$resource = explode(':', $resource, 2);
 
 		if (count($resource) == 2)
 		{
@@ -185,7 +184,7 @@ class CmsRoute
 
 		$items = $menu->getMenu();
 
-		$Itemid = null;
+		$Itemid = isset($data['Itemid']) ? $data['Itemid'] : null;
 
 		$data['view'] = isset($data['view']) ? $data['view'] : null;
 
@@ -211,6 +210,9 @@ class CmsRoute
 
 				if ($option == $data['option'] && $view == $data['view'] && $id == $data['id'])
 				{
+					$data['view'] = null;
+					$data['id'] = null;
+
 					$data['Itemid'] = $item->id;
 
 					return $data;
@@ -219,7 +221,7 @@ class CmsRoute
 		}
 
 		// Find option and view
-		if (!$Itemid && !empty($data['view']))
+		if (!empty($data['view']))
 		{
 			foreach ($items as $item)
 			{
@@ -228,7 +230,7 @@ class CmsRoute
 
 				if ($option == $data['option'] && $view == $data['view'])
 				{
-					unset($data['view']);
+					$data['view'] = null;
 
 					$data['Itemid'] = $item->id;
 

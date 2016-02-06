@@ -9,8 +9,8 @@
 // No direct access
 defined('_JEXEC') or die;
 
+use Windwalker\Router\Helper\RadRoutingHelper;
 use Windwalker\Router\RadRouter;
-use Windwalker\Router\Helper\RoutingHelper;
 
 /**
  * Routing class from com_content
@@ -43,7 +43,7 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 		$this->router = RadRouter::getInstance('{{extension.element.lower}}', $this->menu);
 
 		// Register routing config and inject Router object into it.
-		$this->router = RoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RoutingHelper::TYPE_JSON);
+		$this->router = RadRoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RadRoutingHelper::TYPE_JSON);
 
 		return $query;
 	}

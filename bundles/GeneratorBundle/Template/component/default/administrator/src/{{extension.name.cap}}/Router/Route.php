@@ -8,7 +8,7 @@
 
 namespace {{extension.name.cap}}\Router;
 
-use Windwalker\Router\CmsRoute;
+use Windwalker\Router\RadRoute;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class Route extends CmsRoute
+class Route extends RadRoute
 {
 	/**
 	 * Build by resource.
