@@ -52,7 +52,7 @@ abstract class CoreScript extends AbstractScriptManager
 
 		if (!static::inited(__METHOD__))
 		{
-			$asset->addCSS('core/underscore.string.min.js');
+			$asset->addJS('core/underscore.string.min.js');
 		}
 
 		if (!static::inited(__METHOD__, (bool) $noConflict) && $noConflict)
@@ -81,7 +81,7 @@ JS;
 	{
 		if (!static::inited(__METHOD__))
 		{
-			static::getAsset()->addJS('require.js');
+			static::getAsset()->addJS('core/require.js');
 		}
 	}
 
@@ -104,12 +104,12 @@ JS;
 			\JHtmlJquery::framework(true);
 			static::underscore();
 
-			$asset->addJs('backbone.js');
+			$asset->addJS('core/backbone.js');
 		}
 
 		if (!static::inited(__METHOD__, (bool) $noConflict) && $noConflict)
 		{
-			$asset->internalJS(';var backbone = Backbone.noConflict();');
+			$asset->internalJS('var backbone = Backbone.noConflict();');
 		}
 	}
 

@@ -9,42 +9,51 @@
 namespace Windwalker\Test\Script;
 
 use Windwalker\Script\CoreScript;
+use Windwalker\Test\Joomla\MockHtmlDocument;
+use Windwalker\Test\TestCase\AbstractBaseTestCase;
+use Windwalker\Test\TestHelper;
 
 /**
  * Test class of \Windwalker\Script\CoreScript
  *
  * @since {DEPLOY_VERSION}
  */
-class CoreScriptTest extends \PHPUnit_Framework_TestCase
+class CoreScriptTest extends AbstractBaseTestCase
 {
 	/**
 	 * Property doc.
 	 *
-	 * @var  \JDocumentHTML
+	 * @var  MockHtmlDocument
 	 */
 	protected $doc;
 
 	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
+	 * setUpBeforeClass
 	 *
-	 * @return void
+	 * @return  void
 	 */
-	protected function setUp()
+	public static function setUpBeforeClass()
 	{
-		$doc = \JFactory::getDocument();
+		TestHelper::setValue('JUri', 'base', array());
+
+		\JFactory::getConfig()->set('live_site', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	}
 
 	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
+	 * setUp
 	 *
-	 * @return void
+	 * @return  void
 	 */
-	protected function tearDown()
+	public function setUp()
 	{
+		CoreScript::getAsset()->setDoc($doc = new MockHtmlDocument);
+
+		$this->doc = $doc;
+
+		$doc->reset();
+		CoreScript::reset();
 	}
-	
+
 	/**
 	 * Method to test underscore().
 	 *
@@ -54,11 +63,34 @@ class CoreScriptTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testUnderscore()
 	{
-		CoreScript::underscore();
+		CoreScript::underscore(false);
 
-		$doc = \JFactory::getDocument();
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.js';
 
-		show($doc->_script, $doc->_scripts);
+		$this->assertEquals($url, $this->doc->getLastScript());
+
+		$js = <<<JS
+;
+_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };;
+JS;
+
+		$this->assertStringDataEquals($js, $this->doc->_script['text/javascript']);
+
+		CoreScript::underscore(true);
+
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.js';
+
+		$this->assertEquals($url, $this->doc->getLastScript());
+		$this->assertEquals(1, count($this->doc->_scripts));
+
+		$js = <<<JS
+;
+_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };;
+;
+var underscore = _.noConflict();;
+JS;
+
+		$this->assertStringDataEquals($js, $this->doc->_script['text/javascript']);
 	}
 
 	/**
@@ -67,14 +99,36 @@ class CoreScriptTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Script\CoreScript::underscoreString
-	 * @TODO   Implement testUnderscoreString().
 	 */
 	public function testUnderscoreString()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		CoreScript::underscoreString(false);
+
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.string.js';
+
+		$this->assertEquals($url, $this->doc->getLastScript());
+
+		$this->assertEmpty($this->doc->_script);
+
+		CoreScript::underscoreString(true);
+
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.string.js';
+
+		$this->assertEquals($url, $this->doc->getLastScript());
+		$this->assertEquals(1, count($this->doc->_scripts));
+
+		$js = <<<JS
+; (function(s) {
+	var us = function(underscore)
+	{
+		underscore.string = underscore.string || s;
+	};
+	us(window._ || (window._ = {}));
+	us(window.underscore || (window.underscore = {}));
+})(s);;
+JS;
+
+		$this->assertStringDataEquals($js, $this->doc->_script['text/javascript']);
 	}
 
 	/**
@@ -87,10 +141,11 @@ class CoreScriptTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testRequireJS()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		CoreScript::requireJS();
+
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/require.js';
+
+		$this->assertEquals($url, $this->doc->getLastScript());
 	}
 
 	/**
@@ -99,14 +154,49 @@ class CoreScriptTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @covers Windwalker\Script\CoreScript::backbone
-	 * @TODO   Implement testBackbone().
 	 */
 	public function testBackbone()
 	{
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-			'This test has not been implemented yet.'
-		);
+		$bakDoc = \JFactory::getDocument();
+
+		\JFactory::$document = $this->doc;
+
+		CoreScript::backbone(false);
+
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/backbone.js';
+
+		$this->assertEquals($url, $this->doc->getLastScript());
+
+		$this->assertEquals(5, count($this->doc->_scripts));
+
+		$js = <<<JS
+;
+_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };;
+;
+var underscore = _.noConflict();;
+JS;
+
+		$this->assertStringDataEquals($js, $this->doc->_script['text/javascript']);
+
+		CoreScript::backbone(true);
+
+		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/backbone.js';
+
+		$this->assertEquals($url, $this->doc->getLastScript());
+		$this->assertEquals(5, count($this->doc->_scripts));
+
+		$js = <<<JS
+;
+_.templateSettings = { interpolate: /\{\{(.+?)\}\}/g };;
+;
+var underscore = _.noConflict();;
+;
+var backbone = Backbone.noConflict();;
+JS;
+
+		$this->assertStringDataEquals($js, $this->doc->_script['text/javascript']);
+
+		\JFactory::$document = $bakDoc;
 	}
 
 	/**

@@ -120,4 +120,25 @@ abstract class AbstractScriptManager
 	{
 		return Container::getInstance($option);
 	}
+
+	/**
+	 * reset
+	 *
+	 * @param bool $all
+	 *
+	 * @return void
+	 */
+	public static function reset($all = false)
+	{
+		$class = get_called_class();
+
+		if ($all || $class == __CLASS__)
+		{
+			static::$inited = array();
+		}
+		else
+		{
+			static::$inited[$class] = array();
+		}
+	}
 }
