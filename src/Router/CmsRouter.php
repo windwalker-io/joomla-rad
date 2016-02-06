@@ -12,6 +12,8 @@ namespace Windwalker\Router;
  * The router for CMS.
  *
  * @since 2.0
+ *
+ * @deprecated  Use RadRouter instead.
  */
 class CmsRouter extends LegacyRouter
 {

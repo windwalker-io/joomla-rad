@@ -14,6 +14,8 @@ use Windwalker\Helper\ArrayHelper;
  * Route class to handle single route pattern.
  *
  * @since 2.0
+ *
+ * @deprecated  Use RadRoute instead.
  */
 class CmsRoute
 {

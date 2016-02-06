@@ -16,8 +16,10 @@ use JInput as Input;
  * Based on Joomla Router.
  *
  * @since 2.0
+ *
+ * @deprecated  Use RadRouter instead.
  */
-class LegacyRouter extends Router
+class LegacyRouter
 {
 	/**
 	 * Controller class name prefix for creating controller objects by name.
