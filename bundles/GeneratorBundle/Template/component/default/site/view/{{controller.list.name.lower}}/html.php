@@ -7,7 +7,6 @@
  */
 
 use {{extension.name.cap}}\Router\Route;
-use Joomla\Registry\Registry;
 use Windwalker\Data\Data;
 use Windwalker\Helper\DateHelper;
 use Windwalker\View\Html\ListHtmlView;
@@ -84,7 +83,7 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 				'alias' => $item->alias,
 				// 'catid' => $item->catid
 			);
-			$item->link = Route::_('{{extension.element.lower}}.{{controller.item.name.lower}}', $query);
+			$item->link = Route::_('{{controller.item.name.lower}}', $query);
 
 			// Publish Date
 			// =====================================================================================

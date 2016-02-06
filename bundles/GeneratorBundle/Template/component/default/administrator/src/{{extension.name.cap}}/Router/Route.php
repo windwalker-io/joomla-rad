@@ -8,7 +8,7 @@
 
 namespace {{extension.name.cap}}\Router;
 
-use Windwalker\Router\Route as WindwalkerRoute;
+use Windwalker\Router\CmsRoute;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0
  */
-class Route extends WindwalkerRoute
+class Route extends CmsRoute
 {
 	/**
 	 * Build by resource.
@@ -34,9 +34,9 @@ class Route extends WindwalkerRoute
 	 */
 	public static function _($resource, $data = array(), $xhtml = true, $ssl = null)
 	{
-		if (strpos($resource, '.') === false)
+		if (strpos($resource, ':') === false && strpos($resource, '.') === false)
 		{
-			$resource = '{{extension.element.lower}}.' . $resource;
+			$resource = '{{extension.element.lower}}:' . $resource;
 		}
 
 		return parent::_($resource, $data, $xhtml, $ssl);

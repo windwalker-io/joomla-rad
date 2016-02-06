@@ -9,7 +9,11 @@
 namespace Windwalker\Router\Helper;
 
 use Windwalker\Helper\PathHelper;
+use Windwalker\Registry\Registry;
 use Windwalker\Router\LegacyRouter;
+use Windwalker\Router\Route;
+use Windwalker\Router\Router;
+use Windwalker\Router\RouterInterface;
 
 /**
  * Routing helper.
@@ -18,6 +22,9 @@ use Windwalker\Router\LegacyRouter;
  */
 class RoutingHelper
 {
+	const TYPE_JSON = 'json';
+	const TYPE_YAML = 'yaml';
+
 	/**
 	 * Routing rules storage.
 	 *
@@ -36,10 +43,11 @@ class RoutingHelper
 	 * Get routing config.
 	 *
 	 * @param string $option The component option name.
+	 * @param string $type   The routing file type.
 	 *
 	 * @return  mixed
 	 */
-	public static function getRouting($option)
+	public static function getRouting($option, $type = self::TYPE_JSON)
 	{
 		if (self::$routing)
 		{
@@ -48,19 +56,24 @@ class RoutingHelper
 
 		$path = PathHelper::getSite($option);
 
-		return self::$routing = json_decode(file_get_contents($path . '/routing.json'));
+		$fileType = $type == static::TYPE_YAML ? 'yml' : $type;
+
+		$data = new Registry;
+		$data->loadFile($path . '/routing.' . $fileType, $type);
+
+		return self::$routing = $data->toArray();
 	}
 
 	/**
 	 * Register routing.
 	 *
-	 * @param Router $router Router object.
-	 * @param string $option The component option name.
+	 * @param Router  $router Router object.
+	 * @param string  $option The component option name.
+	 * @param string  $type   The routing file type.
 	 *
-	 * @throws \LogicException
-	 * @return  Router Registered router.
+	 * @return RouterInterface
 	 */
-	public static function registerRouting(LegacyRouter $router, $option)
+	public static function registerRouting(Router $router, $option, $type = self::TYPE_JSON)
 	{
 		// Don't register twice.
 		if (self::$registered)
@@ -69,19 +82,46 @@ class RoutingHelper
 		}
 
 		// Register routers.
-		$maps = static::getRouting($option);
+		$maps = static::getRouting($option, $type);
+
+		$default = array(
+			'pattern'  => null,
+			'view'     => null,
+			'task'     => null,
+			'layout'   => null,
+			'format'   => null,
+			'methods'  => null,
+			'requirements' => null,
+			'extra'   => null,
+			'buildHandler' => null,
+			'parseHandler' => null,
+		);
 
 		foreach ((array) $maps as $name => $map)
 		{
-			if (empty($map->pattern) || empty($map->view))
+			$map = array_merge($default, $map);
+
+			if (empty($map['pattern']))
 			{
-				// throw new \LogicException('Are you kidding me? no map, no run! Add pattern and view to: ' . $name);
+				throw new \LogicException('Are you kidding me? Add pattern to: ' . $name);
 			}
 
-			$buildHandler = !empty($map->buildHandler) ? $map->buildHandler : '';
-			$parseHandler = !empty($map->parseHandler) ? $map->parseHandler : '';
+			$variables = array(
+				'view'   => $map['view'],
+				'task'   => $map['task'],
+				'layout' => $map['layout'],
+				'format' => $map['format']
+			);
 
-			$router->register($name, $map->pattern, $map->view, $buildHandler, $parseHandler);
+			$allowMethods = (array) $map['methods'];
+
+			$options['requirements'] = (array) $map['requirements'];
+			$options['extra']        = (array) $map['extra'];
+
+			$options['extra']['buildHandler'] = !empty($map['buildHandler']) ? $map['buildHandler'] : '';
+			$options['extra']['parseHandler'] = !empty($map['parseHandler']) ? $map['parseHandler'] : '';
+
+			$router->addRoute(new Route($name, $map['pattern'], $variables, $allowMethods, $options));
 		}
 
 		return $router;

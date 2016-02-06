@@ -94,7 +94,7 @@ $user      = $container->get('user');
 				<!--Columns End-->
 
 			<!--Pagination-->
-			<?php if (($data->params->def('show_pagination', 1) == 1 || ($data->params->get('show_pagination') == 2)) && ($data->pagination->get('pages.total') > 1)) : ?>
+			<?php if ($data->params->get('show_pagination', 1) == 1 || ($data->params->get('show_pagination', 1) == 2 && $data->pagination->get('pages.total') > 1)) : ?>
 				<div class="pagination">
 					<?php if ($data->params->def('show_pagination_results', 1)) : ?>
 						<p class="counter">

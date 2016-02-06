@@ -56,7 +56,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<!-- ============================================================================= -->
 		<div class="info">
 			<div class="info-inner">
-				<?php echo ViewHtmlHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{extension.element.lower}}.{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
+				<?php echo ViewHtmlHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
 				<?php echo ViewHtmlHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
 				<?php echo ViewHtmlHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
 				<?php echo ViewHtmlHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>

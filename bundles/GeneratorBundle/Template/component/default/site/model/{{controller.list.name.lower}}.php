@@ -217,6 +217,8 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 			}
 		}
 
+		unset($filters['unpublished']);
+
 		// View Level
 		// =====================================================================================
 		if ($access = $this->state->get('filter.access') && in_array('{{controller.item.name.lower}}.access', $this->filterFields))

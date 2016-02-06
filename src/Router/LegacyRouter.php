@@ -17,7 +17,7 @@ use JInput as Input;
  *
  * @since 2.0
  */
-class LegacyRouter
+class LegacyRouter extends Router
 {
 	/**
 	 * Controller class name prefix for creating controller objects by name.
@@ -424,5 +424,19 @@ class LegacyRouter
 		$this->buildHandler[$name] = $handler;
 
 		return $this;
+	}
+
+	/**
+	 * match
+	 *
+	 * @param string $route
+	 *
+	 * @return  string
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+	public function match($route)
+	{
+		return $this->parseRoute($route);
 	}
 }

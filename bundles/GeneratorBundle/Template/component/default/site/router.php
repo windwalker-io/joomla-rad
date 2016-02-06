@@ -9,68 +9,103 @@
 // No direct access
 defined('_JEXEC') or die;
 
-use Windwalker\Router\CmsRouter;
+use Windwalker\Router\RadRouter;
 use Windwalker\Router\Helper\RoutingHelper;
 
-include_once JPATH_ADMINISTRATOR . '/components/{{extension.element.lower}}/src/init.php';
-
-// Prepare Router
-$router = CmsRouter::getInstance('{{extension.element.lower}}');
-
-// Register routing config and inject Router object into it.
-$router = RoutingHelper::registerRouting($router, '{{extension.element.lower}}');
-
 /**
- * {{extension.name.cap}}BuildRoute
+ * Routing class from com_content
  *
- * @param array &$query
- *
- * @return  array
+ * @since  1.0
  */
-function {{extension.name.cap}}BuildRoute(&$query)
+class {{extension.name.cap}}Router extends JComponentRouterBase
 {
-	$segments = array();
+	/**
+	 * Property router.
+	 *
+	 * @var  RadRouter
+	 */
+	protected $router;
 
-	$router = CmsRouter::getInstance('{{extension.element.lower}}');
-
-	// Find menu matches, and return matched Itemid.
-	$query = \Windwalker\Router\Route::build($query);
-
-	// If _resource exists, we use resource key to build route.
-	if (!empty($query['_resource']))
+	/**
+	 * Generic method to preprocess a URL
+	 *
+	 * @param   array $query An associative array of URL arguments
+	 *
+	 * @return  array  The URL arguments to use to assemble the subsequent URL.
+	 *
+	 * @since   1.0
+	 */
+	public function preprocess($query)
 	{
-		$segments = $router->build($query['_resource'], $query);
+		include_once JPATH_ADMINISTRATOR . '/components/{{extension.element.lower}}/src/init.php';
 
-		unset($query['_resource']);
-	}
-	else
-	{
-		$segments = $router->buildByRaw($query);
-	}
+		// Prepare Router
+		$this->router = RadRouter::getInstance('{{extension.element.lower}}', $this->menu);
 
-	return $segments;
-}
+		// Register routing config and inject Router object into it.
+		$this->router = RoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RoutingHelper::TYPE_JSON);
 
-/**
- * {{extension.name.cap}}ParseRoute
- *
- * @param array $segments
- *
- * @return  array
- */
-function {{extension.name.cap}}ParseRoute($segments)
-{
-	$router = CmsRouter::getInstance('{{extension.element.lower}}');
-
-	$segments = implode('/', $segments);
-
-	// OK, let's fetch view name.
-	$view = $router->getView(str_replace(':', '-', $segments));
-
-	if ($view)
-	{
-		return array('view' => $view);
+		return $query;
 	}
 
-	return array();
+	/**
+	 * Build method for URLs
+	 * This method is meant to transform the query parameters into a more human
+	 * readable form. It is only executed when SEF mode is switched on.
+	 *
+	 * @param   array &$query An array of URL arguments
+	 *
+	 * @return  array  The URL arguments to use to assemble the subsequent URL.
+	 *
+	 * @since   1.0
+	 */
+	public function build(&$query)
+	{
+		// Find menu matches, and return matched Itemid.
+		$query = \Windwalker\Router\CmsRoute::build($query);
+
+		// If _resource exists, we use resource key to build route.
+		if (!empty($query['_resource']))
+		{
+			$segments = $this->router->build($query['_resource'], $query);
+
+			$query = $this->router->getQueries();
+
+			unset($query['_resource']);
+		}
+		else
+		{
+			$segments = $this->router->buildByRaw($query);
+		}
+
+		if (!isset($query['option']))
+		{
+			$query['option'] = '{{extension.element.lower}}';
+		}
+
+		return (array) $segments;
+	}
+
+	/**
+	 * Parse method for URLs
+	 * This method is meant to transform the human readable URL back into
+	 * query parameters. It is only executed when SEF mode is switched on.
+	 *
+	 * @param   array &$segments The segments of the URL to parse.
+	 *
+	 * @return  array  The URL attributes to be used by the application.
+	 *
+	 * @since   1.0
+	 */
+	public function parse(&$segments)
+	{
+		$segments = implode('/', $segments);
+
+		// OK, let's fetch view name.
+		$matched = $this->router->match(str_replace(':', '-', $segments));
+
+		$vars = $matched->getVariables();
+
+		return $vars;
+	}
 }
