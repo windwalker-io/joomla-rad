@@ -10,6 +10,7 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\ModalHelper;
 use Windwalker\Helper\LanguageHelper;
+use Windwalker\Script\WindwalkerScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -98,11 +99,6 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 			return '';
 		}
 
-		// Prepare Script & Styles
-		/** @var \Windwalker\Asset\AssetManager $asset */
-		$asset = Container::getInstance($quickadd_handler)->get('helper.asset');
-		$asset->addJs('js/quickadd.js');
-
 		// Set AKQuickAddOption
 		$config['task']             = $this->view_item . '.ajax.legacyquickadd';
 		$config['quickadd_handler'] = $quickadd_handler;
@@ -115,21 +111,7 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 		$config['value_field']      = $value_field;
 		$config['joomla3']          = (JVERSION >= 3);
 
-		$config = HtmlHelper::getJSObject($config);
-
-		$script = <<<JS
-        window.addEvent('domready', function(){
-            var AKQuickAddOption = {$config} ;
-            AKQuickAdd.init('{$qid}', AKQuickAddOption);
-        });
-
-        jQuery(document).ready(function($) {
-            $('#{$this->id}').quickadd($config);
-        });
-JS;
-
-		JHtmlJquery::framework();
-		$asset->internalJS($script);
+		WindwalkerScript::quickadd('#' . $qid, $config);
 
 		// Load Language & Form
 		LanguageHelper::loadLanguage('com_' . $this->component, null);

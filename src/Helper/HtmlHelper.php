@@ -86,6 +86,8 @@ class HtmlHelper
 	 * @param   array  $array  The array to convert to JavaScript object notation
 	 *
 	 * @return  string  JavaScript object notation representation of the array
+	 *
+	 * @deprecated  Use AssetManager::getJsObject() instead.
 	 */
 	public static function getJSObject(array $array = array())
 	{

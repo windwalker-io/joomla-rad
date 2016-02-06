@@ -11,37 +11,181 @@
 
     var plugin = 'quickadd';
 
-    var defaultOptions = {};
+    var defaultOptions = {
+        task: 'quickAddAjax',
+        ajax: 1
+    };
 
+    /**
+     * Quick Add object.
+     *
+     * @param {jQuery} element
+     * @param {Object} options
+     *
+     * @constructor
+     */
     var QuickAdd = function(element, options)
     {
         this.element = element;
         this.control = element.parents('.controls');
-        this.inputs = this.control.find('.modal').find('input, select, textarea');
-        this.submitButton = this.control.find('.modal button[type=submit]');
+        this.select  = this.control.find('select');
+        this.inputs  = this.element.find('input, select, textarea');
+        this.submitButton = this.element.find('button[type=submit]');
 
-        this.options = $.extend(defaultOptions, options);
+        this.options = $.extend(true, {}, defaultOptions, options);
 
-        // Remove all required
+        this.options.option   = this.options.quickadd_handler;
+        this.options.formctrl = element.selector.substr(1);
+
+        // Remove all required and set default
         this.inputs.each(function(e)
         {
-            $(this).removeClass('required').removeAttr('required').removeAttr('aria-required');
+            var $input = $(this);
+
+            $input.removeClass('required')
+                .removeAttr('required')
+                .removeAttr('aria-required');
+
+            $input.attr('default', $input.val());
         });
 
         this.registerEvents();
     };
 
-    QuickAdd.prototype.registerEvents = function()
-    {
-        this.submitButton.click(function(event)
+    QuickAdd.prototype = {
+        /**
+         * Register Events.
+         */
+        registerEvents: function()
         {
-            event.preventDefault();
-            event.stopPropagation();
+            var self = this;
 
-            console.log('123'); 
-        });
+            this.submitButton.click(function(event)
+            {
+                event.preventDefault();
+                event.stopPropagation();
+
+                self.createItem($(this));
+            });
+        },
+
+        /**
+         * Create item ajax.
+         *
+         * @param  {jQuery}  $button
+         */
+        createItem: function($button)
+        {
+            var data = {};
+            var self = this;
+
+            $button.attr('disabled', true);
+
+            $.each(this.options, function(i)
+            {
+                data[i] = this;
+            });
+
+            $.each(this.inputs, function(i)
+            {
+                var $input = $(this);
+
+                data[$input.attr('name')] = $input.val();
+            });
+
+            $.ajax({
+                url: 'index.php',
+                data: data,
+                dataType: 'json',
+                mwthod: 'POST'
+            }).done(function(data, status, jqXHR)
+            {
+                if (data.Result)
+                {
+                    self.inputs.each(function(i)
+                    {
+                        var $input = $(this);
+
+                        $input.val($input.attr('default'));
+                    });
+
+                    // Hide Modal
+                    self.element.modal('hide');
+
+                    var optionText  = data.data[self.options.value_field];
+                    var optionValue = data.data[self.options.key_field];
+
+                    // Add new Option in Select
+                    if (self.select.length)
+                    {
+                        self.select.append(
+                            $('<option>', {
+                                text: optionText,
+                                value: optionValue
+                            })
+                        );
+
+                        self.select.val(optionValue);
+                    }
+
+                    // Add Title for Modal input
+                    var selectId  = '#' + self.options.formctrl.replace('_quickadd', '');
+                    var modalName = $(selectId + '_name');
+                    var modalId   = $(selectId + '_id');
+
+                    // Wait and highlight for chosen
+                    var chzn = self.control.find('.chzn-single span');
+
+                    if (chzn.length > 0)
+                    {
+                        setTimeout(function()
+                        {
+                            self.select.trigger("liszt:updated");
+                            $(chzn).effect('highlight');
+                        }, 500);
+                    }
+                    else
+                    {
+                        // Wait and highlight
+                        setTimeout(function()
+                        {
+                            $(self.select).effect('highlight');
+                        }, 500);
+                    }
+
+                    // Wait and highlight for modal
+                    if (modalName.length)
+                    {
+                        setTimeout(function()
+                        {
+                            modalName.attr('value', optionText);
+                            modalId.attr('value', optionValue);
+                            $(modalName).effect('highlight');
+                        }, 500);
+                    }
+                }
+                else
+                {
+                    alert(data.errorMsg);
+                }
+
+            }).fail(function(jqXHR, status, error)
+            {
+                alert(status);
+            }).always(function()
+            {
+                $button.attr('disabled', false);
+            });
+        }
     };
-    
+
+    /**
+     * Push to plugin.
+     *
+     * @param {Object} options
+     *
+     * @returns {*}
+     */
     $.fn[plugin] = function(options)
     {
         if (!$.data(this, "windwalker." + plugin))

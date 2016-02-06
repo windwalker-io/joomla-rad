@@ -10,6 +10,8 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
+use Windwalker\Script\JQueryScript;
+use Windwalker\Script\WindwalkerScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -92,7 +94,8 @@ class JFormFieldModal extends JFormField
 
 		if (!$disabled && !$readonly)
 		{
-			$html[] = '<a class="modal btn" title="' . JText::_('COM_' . strtoupper($this->component) . '_CHANGE_ITEM_BUTTON') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
+			WindwalkerScript::modal('.hasFieldModal');
+			$html[] = '<a class="hasFieldModal btn" title="' . JText::_('COM_' . strtoupper($this->component) . '_CHANGE_ITEM_BUTTON') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
 		}
 
 		$html[] = '</span>';
@@ -127,12 +130,15 @@ class JFormFieldModal extends JFormField
 	 */
 	public function setScript()
 	{
+		JQueryScript::ui(array('effect'));
+
 		// Build the script.
 		$script   = array();
 		$script[] = '    function jSelect' . ucfirst($this->component) . '_' . $this->id . '(id, title) {';
 		$script[] = '        document.id("' . $this->id . '_id").value = id;';
 		$script[] = '        document.id("' . $this->id . '_name").value = title;';
-		$script[] = '        SqueezeBox.close();';
+		$script[] = '        jQuery("#' . $this->id . '_name").delay(500).effect(\'highlight\');';
+		$script[] = '        Windwalker.Modal.hide();';
 		$script[] = '    }';
 
 		// Add the script to the document head.
@@ -265,11 +271,6 @@ class JFormFieldModal extends JFormField
 			return '';
 		}
 
-		// Prepare Script & Styles
-		/** @var \Windwalker\Asset\AssetManager $asset */
-		$asset = Container::getInstance($quickadd_handler)->get('helper.asset');
-		$asset->addJs('js/quickadd.js');
-
 		// Set AKQuickAddOption
 		$config['task']             = $task;
 		$config['quickadd_handler'] = $quickadd_handler;
@@ -281,16 +282,7 @@ class JFormFieldModal extends JFormField
 		$config['value_field']      = $value_field;
 		$config['joomla3']          = (JVERSION >= 3);
 
-		$config = HtmlHelper::getJSObject($config);
-
-		$script = <<<QA
-        window.addEvent('domready', function(){
-            var AKQuickAddOption = {$config} ;
-            AKQuickAdd.init('{$qid}', AKQuickAddOption);
-        });
-QA;
-
-		$asset->internalJS($script);
+		WindwalkerScript::quickadd('#' . $qid, $config);
 
 		// Load Language & Form
 		LanguageHelper::loadLanguage('com_' . $this->component, null);
@@ -304,8 +296,8 @@ QA;
 		$modal_title  = $button_title;
 		$button_class = 'btn btn-small btn-success delicious green light fltlft quickadd_buttons';
 
-		$footer = "<button class=\"btn delicious\" type=\"button\" onclick=\"$$('#{$qid} input', '#{$qid} select').set('value', '');AKQuickAdd.closeModal('{$qid}');\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
-		$footer .= "<button class=\"btn btn-primary delicious blue\" type=\"submit\" onclick=\"AKQuickAdd.submit('{$qid}', event);\">" . JText::_('JSUBMIT') . "</button>";
+		$footer = "<button class=\"btn delicious\" type=\"button\" onclick=\"$$('#{$qid} input', '#{$qid} select').set('value', '');\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
+		$footer .= "<button class=\"btn btn-primary delicious blue\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
 
 		$html .= ModalHelper::modalLink(JText::_($button_title), $qid, array('class' => $button_class, 'icon' => 'icon-new icon-white'));
 		$html .= ModalHelper::renderModal($qid, $content, array('title' => JText::_($modal_title), 'footer' => $footer));

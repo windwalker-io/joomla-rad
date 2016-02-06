@@ -745,4 +745,75 @@ class AssetManager implements ContainerAwareInterface
 
 		return $this->debug;
 	}
+
+	/**
+	 * Internal method to get a JavaScript object notation string from an array
+	 *
+	 * @param mixed $data
+	 * @param bool  $quoteKey
+	 *
+	 * @return string JavaScript object notation representation of the array
+	 */
+	public static function getJSObject($data, $quoteKey = true)
+	{
+		if ($data === null)
+		{
+			return 'null';
+		};
+
+		$output = '';
+
+		switch (gettype($data))
+		{
+			case 'boolean':
+				$output .= $data ? 'true' : 'false';
+				break;
+
+			case 'float':
+			case 'double':
+			case 'integer':
+				$output .= $data + 0;
+				break;
+
+			case 'array':
+				if (!ArrayHelper::isAssociative($data))
+				{
+					$child = array();
+
+					foreach ($data as $value)
+					{
+						$child[] = static::getJSObject($value, $quoteKey);
+					}
+
+					$output .= '[' . implode(',', $child) . ']';
+					break;
+				}
+
+			case 'object':
+				$array = is_object($data) ? get_object_vars($data) : $data;
+
+				$row = array();
+
+				foreach ($array as $key => $value)
+				{
+					$key = json_encode($key);
+
+					if (!$quoteKey)
+					{
+						$key = substr(substr($key, 0, -1), 1);
+					}
+
+					$row[] = $key . ':' . static::getJSObject($value, $quoteKey);
+				}
+
+				$output .= '{' . implode(',', $row) . '}';
+				break;
+
+			default:  // anything else is treated as a string
+				return strpos($data, '\\') === 0 ? substr($data, 1) : json_encode($data);
+				break;
+		}
+
+		return $output;
+	}
 }

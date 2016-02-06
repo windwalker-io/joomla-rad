@@ -10,6 +10,7 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
+use Windwalker\Script\WindwalkerScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -322,11 +323,6 @@ class JFormFieldItemlist extends JFormFieldList
 			return '';
 		}
 
-		// Prepare Script & Styles
-		/** @var \Windwalker\Asset\AssetManager $asset */
-		$asset = Container::getInstance($quickadd_handler)->get('helper.asset');
-		$asset->addJs('js/quickadd.js');
-
 		// Set AKQuickAddOption
 		$config['task']             = $task;
 		$config['quickadd_handler'] = $quickadd_handler;
@@ -338,16 +334,7 @@ class JFormFieldItemlist extends JFormFieldList
 		$config['value_field']      = $value_field;
 		$config['joomla3']          = (JVERSION >= 3);
 
-		$config = HtmlHelper::getJSObject($config);
-
-		$script = <<<QA
-        window.addEvent('domready', function(){
-            var AKQuickAddOption = {$config} ;
-            AKQuickAdd.init('{$qid}', AKQuickAddOption);
-        });
-QA;
-
-		$asset->internalJS($script);
+		WindwalkerScript::quickadd('#' . $qid, $config);
 
 		// Load Language & Form
 		LanguageHelper::loadLanguage('com_' . $this->component, null);
