@@ -93,13 +93,16 @@ abstract class FormModel extends AbstractAdvancedModel
 
 			\JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
 			\JForm::addFieldPath(JPATH_COMPONENT . '/models/fields');
+			\JForm::addRulePath(JPATH_COMPONENT . '/models/rules');
+
 			\JForm::addFormPath(JPATH_COMPONENT . '/model/form');
 			\JForm::addFieldPath(JPATH_COMPONENT . '/model/field');
+			\JForm::addRulePath(JPATH_COMPONENT . '/model/rule');
 
 			// Set Form paths for Windwalker
 			\JForm::addFormPath(JPATH_COMPONENT . '/model/form/' . strtolower($this->getName()));
-
-			// \JForm::addFieldPath(JPATH_COMPONENT . '/model/field/' . strtolower($this->getName()));
+			\JForm::addFieldPath(JPATH_COMPONENT . '/model/field/' . strtolower($this->getName()));
+			\JForm::addRulePath(JPATH_COMPONENT . '/model/rule/' . strtolower($this->getName()));
 
 			$formLoaded = true;
 		}

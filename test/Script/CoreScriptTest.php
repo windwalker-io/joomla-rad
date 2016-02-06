@@ -51,7 +51,7 @@ class CoreScriptTest extends AbstractBaseTestCase
 		$this->doc = $doc;
 
 		$doc->reset();
-		CoreScript::reset();
+		CoreScript::reset(true);
 	}
 
 	/**
@@ -160,6 +160,8 @@ JS;
 		$bakDoc = \JFactory::getDocument();
 
 		\JFactory::$document = $this->doc;
+
+		TestHelper::setValue('JHtmlJquery', 'loaded', array());
 
 		CoreScript::backbone(false);
 
