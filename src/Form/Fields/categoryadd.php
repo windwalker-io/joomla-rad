@@ -117,13 +117,18 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 
 		$config = HtmlHelper::getJSObject($config);
 
-		$script = <<<QA
+		$script = <<<JS
         window.addEvent('domready', function(){
             var AKQuickAddOption = {$config} ;
             AKQuickAdd.init('{$qid}', AKQuickAddOption);
         });
-QA;
 
+        jQuery(document).ready(function($) {
+            $('#{$this->id}').quickadd($config);
+        });
+JS;
+
+		JHtmlJquery::framework();
 		$asset->internalJS($script);
 
 		// Load Language & Form
