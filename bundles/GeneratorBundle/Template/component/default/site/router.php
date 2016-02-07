@@ -62,16 +62,18 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 	public function build(&$query)
 	{
 		// Find menu matches, and return matched Itemid.
-		$query = \Windwalker\Router\CmsRoute::build($query);
+		$query = \Windwalker\Router\RadRoute::build($query);
+
+		// Your custom build rules here
+		// ------------------------------------------------
+
+		// ------------------------------------------------
+		// End custom rules
 
 		// If _resource exists, we use resource key to build route.
 		if (!empty($query['_resource']))
 		{
-			$segments = $this->router->build($query['_resource'], $query);
-
-			$query = $this->router->getQueries();
-
-			unset($query['_resource']);
+			$segments = $this->router->generate($query['_resource'], $query);
 		}
 		else
 		{
@@ -99,13 +101,17 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 	 */
 	public function parse(&$segments)
 	{
-		$segments = implode('/', $segments);
+		// Your custom parse rules here
+		// ------------------------------------------------
+
+		// ------------------------------------------------
+		// End custom rules
+
+		$segs = implode('/', $segments);
 
 		// OK, let's fetch view name.
-		$matched = $this->router->match(str_replace(':', '-', $segments));
+		$matched = $this->router->match(str_replace(':', '-', $segs));
 
-		$vars = $matched->getVariables();
-
-		return $vars;
+		return $matched->getVariables();
 	}
 }

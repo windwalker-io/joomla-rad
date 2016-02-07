@@ -96,6 +96,27 @@ class RadRouter extends Router
 	 */
 	public function build($name, $queries = array(), $rootSlash = false)
 	{
+		$segments = parent::build($name, $queries, $rootSlash);
+
+		$uri = new Uri($segments);
+		$segments = $uri->getPath();
+
+		$this->queries = $uri->getQuery(true);
+
+		return explode('/', $segments);
+	}
+
+	/**
+	 * generate
+	 *
+	 * @param       $name
+	 * @param array $queries
+	 * @param bool  $rootSlash
+	 *
+	 * @return  string
+	 */
+	public function generate($name, &$queries = array(), $rootSlash = false)
+	{
 		if (!array_key_exists($name, $this->routes))
 		{
 			throw new \OutOfRangeException('Route: ' . $name . ' not found.');
@@ -108,24 +129,21 @@ class RadRouter extends Router
 		$segments = null;
 		$replace = false;
 
+		unset($queries['_resource']);
+
 		if (isset($extra['buildHandler']) && is_callable($extra['buildHandler']))
 		{
-			$segments = call_user_func_array($extra['buildHandler'], array($queries, &$replace, $this->menu));
+			$segments = call_user_func_array($extra['buildHandler'], array(&$queries, &$replace, $this->menu));
 		}
-
-		unset($queries['_resource']);
 
 		if (!$replace)
 		{
-			$segments = parent::build($name, $queries, $rootSlash);
+			$segments = $this->build($name, $queries, $rootSlash);
 		}
 
-		$uri = new Uri($segments);
-		$segments = $uri->getPath();
+		$queries = $this->getQueries();
 
-		$this->queries = $uri->getQuery(true);
-
-		return explode('/', $segments);
+		return $segments;
 	}
 
 	/**
@@ -175,7 +193,7 @@ class RadRouter extends Router
 			{
 				unset($queries['view']);
 
-				return $this->build($view, $map);
+				return $this->generate($view, $map);
 
 				break;
 			}
