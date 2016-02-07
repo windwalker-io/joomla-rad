@@ -12,6 +12,13 @@ defined('_JEXEC') or die;
 use Windwalker\Router\Helper\RadRoutingHelper;
 use Windwalker\Router\RadRouter;
 
+include_once JPATH_ADMINISTRATOR . '/components/{{extension.element.lower}}/src/init.php';
+
+if (!class_exists('Windwalker\Windwalker'))
+{
+	return;
+}
+
 /**
  * Routing class from com_content
  *
@@ -37,8 +44,6 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 	 */
 	public function preprocess($query)
 	{
-		include_once JPATH_ADMINISTRATOR . '/components/{{extension.element.lower}}/src/init.php';
-
 		// Prepare Router
 		$this->router = RadRouter::getInstance('{{extension.element.lower}}', $this->menu);
 

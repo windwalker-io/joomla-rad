@@ -11,4 +11,9 @@ defined('_JEXEC') or die;
 
 include_once JPATH_COMPONENT_ADMINISTRATOR . '/src/init.php';
 
+if (!class_exists('Windwalker\Windwalker'))
+{
+	return;
+}
+
 echo with(new {{extension.name.cap}}Component)->execute();
