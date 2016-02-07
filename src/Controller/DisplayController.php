@@ -9,6 +9,8 @@
 namespace Windwalker\Controller;
 
 use Windwalker\Model\Model;
+use Windwalker\Utilities\Queue\PriorityQueue;
+use Windwalker\View\AbstractView;
 use Windwalker\View\Html\AbstractHtmlView;
 
 defined('_JEXEC') or die('Restricted access');
@@ -273,19 +275,19 @@ class DisplayController extends Controller
 	}
 
 	/**
-	 * Get teplate path.
+	 * Get template path.
 	 *
-	 * @param \JView $view The view object.
+	 * @param string  $view  The view name.
 	 *
-	 * @return \SplPriorityQueue The queue object.
+	 * @return PriorityQueue The queue object.
 	 */
 	public function getTemplatePath($view)
 	{
 		// Register the layout paths for the view
 		$componentFolder = $this->getComponentPath();
-		$paths = new \SplPriorityQueue;
+		$paths = new PriorityQueue;
 
-		$view = $view ?: $this->defaultView;
+		$view = $view ? : $this->defaultView;
 
 		// Theme override path.
 		$paths->insert(JPATH_THEMES . '/' . $this->app->getTemplate() . '/html/' . $this->option . '/' . $view, 200);
@@ -299,7 +301,7 @@ class DisplayController extends Controller
 	/**
 	 * Assign Models Hook.
 	 *
-	 * @param \JView $view The view object.
+	 * @param AbstractView $view The view object.
 	 *
 	 * @return void
 	 */

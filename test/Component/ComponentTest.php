@@ -168,10 +168,13 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 		$controller = $this->getMock('Windwalker\Controller\Controller', array('doExecute', 'setComponentPath', 'setContainer', 'execute'));
 
 		$controller->expects($this->once())
-			->method('setComponentPath');
+			->method('setComponentPath')
+			->will($this->returnSelf());
+
 		$controller->expects($this->once())
 			->method('setContainer')
 			->will($this->returnSelf());
+
 		$controller->expects($this->once())
 			->method('execute')
 			->will($this->returnValue('foobar'));

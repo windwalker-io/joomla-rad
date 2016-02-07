@@ -15,6 +15,7 @@ use Joomla\DI\ContainerAwareInterface;
 use Windwalker\Bootstrap\Message;
 use Windwalker\DI\Container;
 use Windwalker\Helper\UriHelper;
+use Windwalker\Model\Model;
 
 /**
  * Class Controller
@@ -447,7 +448,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	 * @param   array   $config   Configuration array for model. Optional.
 	 * @param   boolean $forceNew Force get new model, or we get it from cache.
 	 *
-	 * @return  object  The model.
+	 * @return  Model  The model.
 	 */
 	public function getModel($name = null, $prefix = null, $config = array(), $forceNew = false)
 	{
