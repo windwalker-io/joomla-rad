@@ -174,7 +174,6 @@
 			type="text"
 			label="JGLOBAL_TITLE"
 			description="JFIELD_TITLE_DESC"
-			required="true"
 			size="50"
 			labelclass=""
 			class="input-xlarge"

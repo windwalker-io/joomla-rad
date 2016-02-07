@@ -16,6 +16,7 @@ JHtmlBehavior::formvalidation();
 /**
  * Prepare data for this template.
  *
+ * @var $this      \Windwalker\View\Engine\PhpEngine
  * @var $container \Windwalker\DI\Container
  * @var $data      \Windwalker\Data\Data
  * @var $item      \stdClass
@@ -29,7 +30,7 @@ $tabs = array(
 	'tab_basic',
 	'tab_advanced',
 	'tab_rules'
-)
+);
 ?>
 <!-- Validate Script -->
 <script type="text/javascript">
@@ -65,4 +66,3 @@ $tabs = array(
 		</div>
 	</form>
 </div>
-
