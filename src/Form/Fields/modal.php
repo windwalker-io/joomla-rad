@@ -293,10 +293,10 @@ class JFormFieldModal extends JFormField
 		$html         = '';
 		$button_title = $title;
 		$modal_title  = $button_title;
-		$button_class = 'btn btn-small btn-success delicious green light fltlft quickadd_buttons';
+		$button_class = 'btn btn-small btn-success quickadd_buttons';
 
-		$footer = "<button class=\"btn delicious\" type=\"button\" onclick=\"$$('#{$qid} input', '#{$qid} select').set('value', '');\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
-		$footer .= "<button class=\"btn btn-primary delicious blue\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
+		$footer = "<button class=\"btn\" type=\"button\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
+		$footer .= "<button class=\"btn btn-primary\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
 
 		$html .= ModalHelper::modalLink(JText::_($button_title), $qid, array('class' => $button_class, 'icon' => 'icon-new icon-white'));
 		$html .= ModalHelper::renderModal($qid, $content, array('title' => JText::_($modal_title), 'footer' => $footer));

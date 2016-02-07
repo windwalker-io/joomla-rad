@@ -123,10 +123,10 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 		$html         = '';
 		$button_title = $title;
 		$modal_title  = $button_title;
-		$button_class = 'btn btn-small btn-success delicious green light fltlft quickadd_button';
+		$button_class = 'btn btn-small btn-success quickadd_button';
 
-		$footer = "<button class=\"btn delicious\" type=\"button\" onclick=\"$$('#{$qid} input', '#{$qid} select').set('value', '');AKQuickAdd.closeModal('{$qid}');\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
-		$footer .= "<button class=\"btn btn-primary delicious blue\" type=\"submit\" onclick=\"AKQuickAdd.submit('{$qid}', event);\">" . JText::_('JSUBMIT') . "</button>";
+		$footer = "<button class=\"btn\" type=\"button\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
+		$footer .= "<button class=\"btn btn-primary\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
 
 		$html .= ModalHelper::modalLink(JText::_($button_title), $qid, array('class' => $button_class, 'icon' => 'icon-new icon-white'));
 		$html .= ModalHelper::renderModal($qid, $content, array('title' => JText::_($modal_title), 'footer' => $footer));

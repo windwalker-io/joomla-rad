@@ -28,7 +28,7 @@
     {
         this.element = element;
         this.control = element.parents('.controls');
-        this.select  = this.control.find('select');
+        this.select  = this.control.find('> select');
         this.inputs  = this.element.find('input, select, textarea');
         this.submitButton = this.element.find('button[type=submit]');
 
@@ -65,21 +65,33 @@
                 event.preventDefault();
                 event.stopPropagation();
 
-                self.createItem($(this));
+                self.createItem();
+            });
+
+            this.inputs.on('keydown', function(event)
+            {
+                if (event.keyCode == 13)
+                {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (event.ctrlKey || event.metaKey)
+                    {
+                        self.createItem();
+                    }
+                }
             });
         },
 
         /**
          * Create item ajax.
-         *
-         * @param  {jQuery}  $button
          */
-        createItem: function($button)
+        createItem: function()
         {
             var data = {};
             var self = this;
 
-            $button.attr('disabled', true);
+            this.submitButton.attr('disabled', true);
 
             $.each(this.options, function(i)
             {
@@ -134,7 +146,7 @@
                     var modalId   = $(selectId + '_id');
 
                     // Wait and highlight for chosen
-                    var chzn = self.control.find('.chzn-single span');
+                    var chzn = self.control.find('> .chzn-container .chzn-single span');
 
                     if (chzn.length > 0)
                     {
@@ -174,7 +186,7 @@
                 alert(status);
             }).always(function()
             {
-                $button.attr('disabled', false);
+                self.submitButton.attr('disabled', false);
             });
         }
     };

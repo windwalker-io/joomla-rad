@@ -126,7 +126,7 @@ MODAL;
 	 */
 	static public function getQuickaddForm($id, $path, $extension = null)
 	{
-		$content = '';
+		$content = '<div class="alert alert-info">' . \JText::_('LIB_WINDWALKER_QUICKADD_HOTKEY_DESC') . '</div>';
 
 		try
 		{

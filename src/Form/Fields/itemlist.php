@@ -175,9 +175,10 @@ class JFormFieldItemlist extends JFormFieldList
 		$table_name  = $this->element['table'] ? (string) $this->element['table'] : '#__' . $this->component . '_' . $this->view_list;
 		$select      = $this->element['select'];
 
+		/** @var JDatabaseDriver $db */
 		$container = Container::getInstance();
 		$db    = $container->get('db');
-		$q     = $db->getQuery(true);
+		$query = $db->getQuery(true);
 		$input = $container->get('input');
 
 		// Avoid self
@@ -191,20 +192,20 @@ class JFormFieldItemlist extends JFormFieldList
 		{
 			$table = JTable::getInstance(ucfirst($this->view_item), ucfirst($this->component) . 'Table');
 			$table->load($id);
-			$q->where("id != {$id}");
-			$q->where("lft < {$table->lft} OR rgt > {$table->rgt}");
+			$query->where("id != {$id}");
+			$query->where("lft < {$table->lft} OR rgt > {$table->rgt}");
 		}
 
 		if ($nested)
 		{
-			$q->where("( id != 1 AND `{$value_field}` != 'ROOT' )");
+			$query->where("( id != 1 AND `{$value_field}` != 'ROOT' )");
 		}
 
 		// Some filter
 		// ========================================================================
 		if ($published)
 		{
-			$q->where("{$this->published_field} >= 1");
+			$query->where("{$this->published_field} >= 1");
 		}
 
 		// Ordering
@@ -214,17 +215,17 @@ class JFormFieldItemlist extends JFormFieldList
 
 		if ($ordering != 'false')
 		{
-			$q->order($ordering);
+			$query->order($ordering);
 		}
 
 		// Query
 		// ========================================================================
 		$select = $select ? '*, ' . $select : '*';
 
-		$q->select($select)
+		$query->select($select)
 			->from($table_name);
 
-		$db->setQuery($q);
+		$db->setQuery($query);
 		$items = $db->loadObjectList();
 
 		$items = $items ? $items : array();
@@ -346,10 +347,10 @@ class JFormFieldItemlist extends JFormFieldList
 		$html         = '';
 		$button_title = $title;
 		$modal_title  = $button_title;
-		$button_class = 'btn btn-small btn-success delicious green light fltlft quickadd_button';
+		$button_class = 'btn btn-small btn-success quickadd_button';
 
-		$footer = "<button class=\"btn delicious\" type=\"button\" onclick=\"$$('#{$qid} input', '#{$qid} select').set('value', '');AKQuickAdd.closeModal('{$qid}');\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
-		$footer .= "<button class=\"btn btn-primary delicious blue\" type=\"submit\" onclick=\"AKQuickAdd.submit('{$qid}', event);\">" . JText::_('JSUBMIT') . "</button>";
+		$footer = "<button class=\"btn\" type=\"button\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
+		$footer .= "<button class=\"btn btn-primary\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
 
 		$html .= ModalHelper::modalLink(JText::_($button_title), $qid, array('class' => $button_class, 'icon' => 'icon-new icon-white'));
 		$html .= ModalHelper::renderModal($qid, $content, array('title' => JText::_($modal_title), 'footer' => $footer));
