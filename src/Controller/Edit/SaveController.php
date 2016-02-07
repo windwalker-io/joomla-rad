@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Windwalker\Bootstrap\Message;
 use Windwalker\Controller\Admin\AbstractItemController;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Exception\ValidateFailException;
@@ -41,6 +42,13 @@ class SaveController extends AbstractItemController
 	protected $useTransaction = false;
 
 	/**
+	 * Property formControl.
+	 *
+	 * @var  string
+	 */
+	protected $formControl = 'jform';
+
+	/**
 	 * Instantiate the controller.
 	 *
 	 * @param   \JInput          $input  The input object.
@@ -65,6 +73,8 @@ class SaveController extends AbstractItemController
 		$this->checkToken();
 
 		parent::prepareExecute();
+
+		$this->data = $this->input->post->get($this->formControl, array(), 'array');
 	}
 
 	/**
@@ -95,7 +105,7 @@ class SaveController extends AbstractItemController
 						? strtoupper($this->option)
 						: 'JLIB_APPLICATION') . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
 				),
-				'message'
+				Message::MESSAGE_GREEN
 			);
 		}
 
@@ -110,11 +120,11 @@ class SaveController extends AbstractItemController
 			{
 				if ($error instanceof \Exception)
 				{
-					$this->setMessage($error->getMessage(), 'warning');
+					$this->setMessage($error->getMessage(), Message::WARNING_YELLOW);
 				}
 				else
 				{
-					$this->setMessage($error, 'warning');
+					$this->setMessage($error, Message::WARNING_YELLOW);
 				}
 			}
 
@@ -122,7 +132,7 @@ class SaveController extends AbstractItemController
 			$this->app->setUserState($this->context . '.data', $this->data);
 
 			// Redirect back to the edit screen.
-			$this->redirectToItem($this->recordId, $this->urlVar);
+			$this->setRedirect($this->getFailRedirect());
 
 			return false;
 		}
@@ -137,7 +147,7 @@ class SaveController extends AbstractItemController
 				throw $e;
 			}
 
-			$this->redirectToItem($this->recordId, $this->urlVar, $e->getMessage(), 'error');
+			$this->setRedirect($this->getFailRedirect(), $e->getMessage(), Message::ERROR_RED);
 
 			return false;
 		}
@@ -217,9 +227,31 @@ class SaveController extends AbstractItemController
 			$this->app->setUserState($this->context . '.data', null);
 		}
 
-		$this->redirectToList();
+		$this->setRedirect($this->getSuccessRedirect());
 
 		return $return;
+	}
+
+	/**
+	 * Set redirect URL for action success.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getSuccessRedirect()
+	{
+		$this->input->set('layout', null);
+
+		return \JRoute::_($this->getRedirectListUrl(), false);
+	}
+
+	/**
+	 * Set redirect URL for action failure.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getFailRedirect()
+	{
+		return \JRoute::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
 	}
 
 	/**
@@ -290,5 +322,29 @@ class SaveController extends AbstractItemController
 	 */
 	protected function preSaveHook()
 	{
+	}
+
+	/**
+	 * Method to get property FormControl
+	 *
+	 * @return  string
+	 */
+	public function getFormControl()
+	{
+		return $this->formControl;
+	}
+
+	/**
+	 * Method to set property formControl
+	 *
+	 * @param   string $formControl
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setFormControl($formControl)
+	{
+		$this->formControl = $formControl;
+
+		return $this;
 	}
 }

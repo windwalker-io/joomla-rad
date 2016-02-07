@@ -42,9 +42,20 @@ class CancelController extends AbstractItemController
 		$this->releaseEditId($this->context, $this->recordId);
 		$this->app->setUserState($this->context . '.data', null);
 
-		$this->redirectToList();
+		$this->setRedirect($this->getSuccessRedirect());
 
 		return true;
+	}
 
+	/**
+	 * Set redirect URL for action success.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getSuccessRedirect()
+	{
+		$this->input->set('layout', null);
+
+		return \JRoute::_($this->getRedirectListUrl(), false);
 	}
 }

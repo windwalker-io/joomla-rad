@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Joomla\String\Inflector;
 use Windwalker\Helper\ArrayHelper;
 
 /**
@@ -43,7 +44,7 @@ abstract class AbstractListController extends AbstractAdminController
 
 		if (empty($this->viewItem))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewItem = $inflector->toSingular($this->viewList);
 		}
@@ -80,5 +81,25 @@ abstract class AbstractListController extends AbstractAdminController
 		}
 
 		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
+	 * Set redirect URL for action success.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getSuccessRedirect()
+	{
+		return \JRoute::_($this->getRedirectListUrl(), false);
+	}
+
+	/**
+	 * Set redirect URL for action failure.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getFailRedirect()
+	{
+		return \JRoute::_($this->getRedirectListUrl(), false);
 	}
 }

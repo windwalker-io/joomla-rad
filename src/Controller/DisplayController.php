@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller;
 
+use Windwalker\Model\Model;
 use Windwalker\View\Html\AbstractHtmlView;
 
 defined('_JEXEC') or die('Restricted access');
@@ -55,6 +56,13 @@ class DisplayController extends Controller
 	protected $format = 'html';
 
 	/**
+	 * Property subModels.
+	 *
+	 * @var  Model[]
+	 */
+	protected $subModels = array();
+
+	/**
 	 * Prepare execute hook.
 	 *
 	 * @throws \LogicException
@@ -85,9 +93,17 @@ class DisplayController extends Controller
 		}
 
 		// Push JDocument to View
-		$view->document = $document;
+		$view->getData()->set('document', $document);
 
 		$this->view = $view;
+
+		// Redirect to GET
+		if (strtoupper($this->input->getMethod()) == 'POST')
+		{
+			$this->redirect(\JUri::getInstance());
+
+			return;
+		}
 	}
 
 
@@ -99,9 +115,9 @@ class DisplayController extends Controller
 	protected function doExecute()
 	{
 		// Display the view
-		$conf = $this->container->get('joomla.config');
+		$config = $this->container->get('joomla.config');
 
-		if ($this->cachable && $this->format != 'feed' && $conf->get('caching') >= 1)
+		if ($this->cachable && $this->format != 'feed' && $config->get('caching') >= 1)
 		{
 			$option = $this->input->get('option');
 			$cache = \JFactory::getCache($option, 'view');
@@ -128,6 +144,12 @@ class DisplayController extends Controller
 			}
 
 			return $cache->get($this->view, 'render');
+		}
+
+		// Set sub models
+		foreach ($this->subModels as $subModel)
+		{
+			$this->view->setModel($subModel);
 		}
 
 		return  $this->view->render();

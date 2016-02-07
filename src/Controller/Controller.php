@@ -12,7 +12,9 @@ use JApplicationCms;
 use JInput;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
+use Windwalker\Bootstrap\Message;
 use Windwalker\DI\Container;
+use Windwalker\Helper\UriHelper;
 
 /**
  * Class Controller
@@ -77,6 +79,20 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	 * @var JoomlaContainer
 	 */
 	protected $container;
+
+	/**
+	 * Property redirect.
+	 *
+	 * @var  array
+	 */
+	protected $redirect;
+
+	/**
+	 * Are we allow return?
+	 *
+	 * @var  boolean
+	 */
+	protected $allowReturn = false;
 
 	/**
 	 * Instantiate the controller.
@@ -338,6 +354,89 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	{
 		// Check for request forgeries
 		\JSession::checkToken() or jexit(\JText::_('JInvalid_Token'));
+	}
+
+	/**
+	 * Set a URL for browser redirection.
+	 *
+	 * @param   string $url  URL to redirect to.
+	 * @param   string $msg  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string $type Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
+	 *
+	 * @return  void
+	 */
+	public function redirect($url = null, $msg = null, $type = Message::MESSAGE_GREEN)
+	{
+		if ($this->input->get('hmvc') || !$this->input->get('redirect', true))
+		{
+			return;
+		}
+
+		if ($this->input->get('return') && $this->allowReturn)
+		{
+			$url = UriHelper::base64('decode', $this->input->get('return'));
+		}
+
+		if (!$url && $redirect = $this->getRedirect(true))
+		{
+			list($url, $msg, $type) = $redirect;
+		}
+
+		if ($url)
+		{
+			$this->setMessage($msg, $type);
+
+			$this->app->redirect($url);
+		}
+	}
+
+	/**
+	 * setRedirect
+	 *
+	 * @param string $url
+	 * @param string $message
+	 * @param string $type
+	 *
+	 * @return  static
+	 */
+	public function setRedirect($url, $message = null, $type = Message::MESSAGE_GREEN)
+	{
+		$this->redirect = array(
+			'url'     => $url,
+			'message' => $message,
+			'type'    => $type
+		);
+
+		return $this;
+	}
+
+	/**
+	 * removeRedirect
+	 *
+	 * @return  static
+	 */
+	public function removeRedirect()
+	{
+		$this->redirect = null;
+
+		return $this;
+	}
+
+	/**
+	 * getRedirect
+	 *
+	 * @param bool $onlyValue
+	 *
+	 * @return  array
+	 */
+	public function getRedirect($onlyValue = false)
+	{
+		if (is_array($this->redirect) && $onlyValue)
+		{
+			return array_values($this->redirect);
+		}
+
+		return $this->redirect;
 	}
 
 	/**

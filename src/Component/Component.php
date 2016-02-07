@@ -174,10 +174,14 @@ class Component
 		$resolver   = $this->container->get('controller.resolver');
 		$controller = $resolver->getController($this->name, $task, $this->input);
 
-		$controller->setComponentPath($this->getPath('self'));
+		$controller->setComponentPath($this->getPath('self'))
+			->setContainer($this->container);
 
-		return $controller->setContainer($this->container)
-			->execute();
+		$result = $controller->execute();
+
+		$controller->redirect();
+
+		return $result;
 	}
 
 	/**

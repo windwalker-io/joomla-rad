@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Joomla\String\Inflector;
 use Windwalker\Helper\ArrayHelper;
 
 /**
@@ -50,7 +51,7 @@ abstract class AbstractItemController extends AbstractAdminController
 
 		if (empty($this->viewList))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewList = $inflector->toPlural($this->viewItem);
 		}
@@ -65,7 +66,6 @@ abstract class AbstractItemController extends AbstractAdminController
 	{
 		parent::prepareExecute();
 
-		$this->data     = $this->input->post->get('jform', array(), 'array');
 		$this->context  = sprintf('%s.edit.%s', $this->option, $this->name);
 
 		$this->recordId = $this->input->get($this->urlVar);
@@ -184,5 +184,25 @@ abstract class AbstractItemController extends AbstractAdminController
 			// No id for a new item.
 			return true;
 		}
+	}
+
+	/**
+	 * Set redirect URL for action success.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getSuccessRedirect()
+	{
+		return \JRoute::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
+	}
+
+	/**
+	 * Set redirect URL for action failure.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getFailRedirect()
+	{
+		return \JRoute::_($this->getRedirectListUrl(), false);
 	}
 }

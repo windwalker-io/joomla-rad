@@ -37,7 +37,7 @@ class CopyController extends AbstractBatchController
 	 */
 	protected function save($pk, $data)
 	{
-		if (!$this->allowAdd($data, $this->urlVar))
+		if (!$this->allowAdd($data))
 		{
 			return false;
 		}

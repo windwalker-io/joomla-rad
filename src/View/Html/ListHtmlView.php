@@ -63,5 +63,12 @@ class ListHtmlView extends HtmlView
 		{
 			$this->flash($errors);
 		}
+
+		foreach ($data->items as $item)
+		{
+			// B/C for old templates
+			$pkName = strtolower($this->viewItem) . '_id';
+			$item->$pkName = $item->id;
+		}
 	}
 }
