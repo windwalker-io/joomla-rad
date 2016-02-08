@@ -96,11 +96,11 @@ class DisplayView extends AbstractHtmlView
 		$getFileCallback = !$callback ? '' : "
             ,
             getFileCallback : function (files) {
-                window.parent.$callback(AKFinderSelected, window.elFinder, '$site_root');
+                window.parent.$callback(WindwalkerFinderSelected, window.elFinder, '$site_root');
             }";
 
 		$script = <<<SCRIPT
-		var AKFinderSelected ;
+		var WindwalkerFinderSelected ;
         var elFinder ;
 
 		// Init elFinder
@@ -121,10 +121,10 @@ class DisplayView extends AbstractHtmlView
 
                         if (selected.length)
                         {
-                            AKFinderSelected = [];
+                            WindwalkerFinderSelected = [];
 
                             jQuery.each(selected, function(i, e){
-                                    AKFinderSelected[i] = elfinderInstance.file(e);
+                                    WindwalkerFinderSelected[i] = elfinderInstance.file(e);
                             });
                         }
 
