@@ -43,6 +43,7 @@
 			label="{{extension.element.upper}}_IMAGES"
 			description="{{extension.element.upper}}_IMAGES_DESC"
 			preview="true"
+			root="images"
 			/>
 
 		<field name="url"

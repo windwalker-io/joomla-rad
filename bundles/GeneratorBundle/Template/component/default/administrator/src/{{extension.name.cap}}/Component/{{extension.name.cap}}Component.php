@@ -67,8 +67,10 @@ abstract class {{extension.name.cap}}Component extends Component
 	 */
 	protected function postExecute($result)
 	{
+		$doc = \JFactory::getDocument();
+
 		// Debug profiler
-		if (JDEBUG)
+		if (JDEBUG && $doc->getType() == 'html')
 		{
 			$result .= "<hr />" . ProfilerHelper::render('Windwalker', true);
 		}

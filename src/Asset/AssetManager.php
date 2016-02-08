@@ -259,6 +259,7 @@ class AssetManager implements ContainerAwareInterface
 
 		$admin = $app->isAdmin() ? '-admin' : '';
 
+		$this->jquery();
 		$this->addCSS('windwalker' . $admin . '.css');
 		$this->addJS('windwalker' . $admin . '.js');
 	}
