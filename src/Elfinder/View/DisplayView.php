@@ -170,12 +170,12 @@ SCRIPT;
 		$asset->bootstrap();
 
 		// ElFinder includes
-		$asset->addCss('js/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css');
+		$asset->addCss('jquery-ui/smoothness/jquery-ui-1.8.24.custom.css');
 		$asset->addCss('js/elfinder/css/elfinder.min.css');
 		$asset->addCss('js/elfinder/css/theme.css');
 
-		$asset->addJs('js/jquery-ui/js/jquery-ui.min.js');
-		$asset->addJs('js/elfinder/js/elfinder.min.js');
+		$asset->addJs('jquery/jquery-ui.min.js');
+		$asset->addJs('elfinder/js/elfinder.min.js');
 
 		if (is_file(WINDWALKER . '/asset/js/elfinder/js/i18n/elfinder.' . $lang_code . '.js'))
 		{
