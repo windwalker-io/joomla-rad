@@ -7,12 +7,13 @@
  */
 
 // No direct access
+defined('_JEXEC') or die;
+
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\XmlHelper;
+use Windwalker\Script\WindwalkerScript;
 use Windwalker\String\StringHelper;
-
-defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('text');
 
@@ -54,9 +55,9 @@ class JFormFieldFinder extends JFormFieldText
 	public function getInput()
 	{
 		// Load the modal behavior script.
-		JHtmlBehavior::modal('a.modal');
+		WindwalkerScript::modal('.hasFinderModal');
 
-		if (!self::$initialised)
+		if (!static::$initialised)
 		{
 			$this->setScript();
 		}
@@ -87,7 +88,7 @@ class JFormFieldFinder extends JFormFieldText
 		$html[] = '<input type="text" class="' . (!$disabled && !$readonly ? 'input-medium ' . $this->element['class'] : $this->element['class']) . '" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
 
 		if (!$disabled && !$readonly) :
-			$html[] = '<a class="modal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 920, y: 450}}">
+			$html[] = '<a class="hasFinderModal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1">
 							<i class="icon-picture"></i> ' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES')
 				. '</a>';
 		endif;
@@ -121,7 +122,7 @@ class JFormFieldFinder extends JFormFieldText
 		$clear_title = JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_SELECT_FILE');
 
 		if (!$disabled && !$readonly) :
-			$html .= '<a class="btn btn-danger delicious light red fltlft hasTooltip" title="' . JText::_('JLIB_FORM_BUTTON_CLEAR') . '"' . ' href="#" onclick="';
+			$html .= '<a class="btn btn-danger hasTooltip" title="' . JText::_('JLIB_FORM_BUTTON_CLEAR') . '"' . ' href="#" onclick="';
 			$html .= "AKFinderClear('{$this->id}', '{$clear_title}');";
 			$html .= 'return false;';
 			$html .= '">';
@@ -240,9 +241,9 @@ class JFormFieldFinder extends JFormFieldText
 	public function setScript()
 	{
 		// Build Select script.
-		$url_root = JURI::root();
+		$url_root = JUri::root();
 
-		$script = <<<SCRIPT
+		$script = <<<JS
         // Do Select
         var AKFinderSelect = function(id, selected, elFinder, root){
             if(selected.length < 1) return ;
@@ -278,7 +279,7 @@ class JFormFieldFinder extends JFormFieldText
             
             AKFinderRefreshPreview(id);
             setTimeout( function(){
-                SqueezeBox.close();
+                Windwalker.Modal.hide();
             } ,200);
         }
         
@@ -326,7 +327,7 @@ class JFormFieldFinder extends JFormFieldText
             AKFinderRefreshPreview(id);
             tip.setStyle("display", "block");
         }
-SCRIPT;
+JS;
 
 		// Add the script to the document head.
 		$asset = Container::getInstance()->get('helper.asset');
