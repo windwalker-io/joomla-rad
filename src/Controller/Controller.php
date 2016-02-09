@@ -323,6 +323,16 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
+	 * Method to get property Option
+	 *
+	 * @return  string
+	 */
+	public function getOption()
+	{
+		return $this->option;
+	}
+
+	/**
 	 * Get task name.
 	 *
 	 * @return  string

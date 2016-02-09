@@ -9,6 +9,7 @@
 namespace Windwalker\Test\Model\Helper;
 
 use Windwalker\Model\Helper\AdminListHelper;
+use Windwalker\Model\ListModel;
 
 /**
  * Test class of \Windwalker\Model\Helper\AdminListHelper
@@ -122,15 +123,14 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 * @covers Windwalker\Model\Helper\AdminListHelper::handleSearches
 	 *
 	 * @param array $searches
-	 * @param array $filterFields
 	 * @param array $searchFields
 	 * @param array $expected
 	 *
 	 * @dataProvider handleSearchesProvider
 	 */
-	public function testHandleSearches($searches, $filterFields, $searchFields, $expected)
+	public function testHandleSearches($searches, $searchFields, $expected)
 	{
-		$this->assertEquals($expected, AdminListHelper::handleSearches($searches, $filterFields, $searchFields));
+		$this->assertEquals($expected, AdminListHelper::handleSearches($searches, $searchFields));
 	}
 
 	/*
@@ -148,8 +148,6 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 					'field' => 'item.title',
 					'index' => 'foo',
 				),
-				// filterFields
-				array('item.id', 'item.title', 'item.alias', 'category.title'),
 				// searchFields
 				array(
 					'item.title', 'category.title'
@@ -167,8 +165,6 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 					'field' => '*',
 					'index' => 'foo',
 				),
-				// filterFields
-				array('item.id', 'item.title', 'item.alias', 'category.title'),
 				// searchFields
 				array(
 					'item.title', 'category.title'
@@ -193,10 +189,12 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testHandleFullordering($value, $orderConfig, $filterFields, $expected)
 	{
-		$this->assertEquals($expected, AdminListHelper::handleFullordering($value, $orderConfig, $filterFields));
+		$model = new ListModel(array('allow_fields' => $filterFields));
+
+		$this->assertEquals($expected, AdminListHelper::handleFullordering($value, $orderConfig, $model));
 	}
 
-	/*
+	/**
 	 * handleFullorderingProvider
 	 *
 	 * @return array

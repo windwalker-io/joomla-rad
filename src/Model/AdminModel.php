@@ -10,6 +10,7 @@ namespace Windwalker\Model;
 
 use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
+use Joomla\String\Inflector;
 use JTable;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\DateHelper;
@@ -20,7 +21,7 @@ use Windwalker\String\StringHelper;
  *
  * @since 2.0
  */
-abstract class AdminModel extends CrudModel
+class AdminModel extends CrudModel
 {
 	/**
 	 * The reorder conditions.
@@ -55,7 +56,7 @@ abstract class AdminModel extends CrudModel
 		// Guess the list view as the plural of the item view.
 		if (empty($this->viewList))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewList = $inflector->toPlural($this->viewItem);
 		}

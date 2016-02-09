@@ -19,7 +19,7 @@ use Windwalker\Model\Exception\ValidateFailException;
  * @see   JFormRule
  * @since 2.0
  */
-abstract class FormModel extends AbstractAdvancedModel
+abstract class AbstractFormModel extends AbstractAdvancedModel
 {
 	/**
 	 * Array of form objects.

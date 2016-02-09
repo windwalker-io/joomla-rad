@@ -187,8 +187,10 @@ HTML;
 
 		$pathToQuickaddForm = 'libraries/windwalker/test/Helper/stub/stubQuickaddForm.xml';
 
+		$text = \JText::_('LIB_WINDWALKER_QUICKADD_HOTKEY_DESC');
+
 		$expectedForm = <<<HTML
-<div class="control-group" id="{$id}_title-wrap">
+<div class="alert alert-info">$text</div><div class="control-group" id="{$id}_title-wrap">
 	<div class="control-label">
 		<label id="{$id}_title-lbl" for="{$id}_title" class="required">
 	stub_label<span class="star">&#160;*</span></label>

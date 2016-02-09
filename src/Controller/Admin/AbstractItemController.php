@@ -10,6 +10,7 @@ namespace Windwalker\Controller\Admin;
 
 use Joomla\String\Inflector;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\Helper\ContextHelper;
 
 /**
  * The Controller to handle single item.
@@ -64,9 +65,9 @@ abstract class AbstractItemController extends AbstractAdminController
 	 */
 	protected function prepareExecute()
 	{
-		parent::prepareExecute();
+		$this->context = ContextHelper::fromController($this, 'edit');
 
-		$this->context  = sprintf('%s.edit.%s', $this->option, $this->name);
+		parent::prepareExecute();
 
 		$this->recordId = $this->input->get($this->urlVar);
 

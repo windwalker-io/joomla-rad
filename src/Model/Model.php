@@ -15,6 +15,7 @@ use Windwalker\Cache\Cache;
 use Windwalker\Cache\Storage\RuntimeStorage;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\Helper\ContextHelper;
 use Windwalker\Joomla\Registry\DecoratingRegistry;
 
 /**
@@ -108,7 +109,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 		$this->state->loadArray($config);
 
 		// Guess the context as Option.ModelName.
-		$this->context = $this->context ? : strtolower($this->option . '.' . $this->getName());
+		$this->context = $this->context ? : ContextHelper::fromModel($this);
 
 		// Set the internal state marker - used to ignore setting state from the request
 		if (empty($config['ignore_request']))
@@ -654,5 +655,15 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 		$registry = new \Windwalker\Registry\Registry($state->toArray());
 
 		$this->state = new DecoratingRegistry($registry);
+	}
+
+	/**
+	 * Method to get property Option
+	 *
+	 * @return  string
+	 */
+	public function getOption()
+	{
+		return $this->option;
 	}
 }

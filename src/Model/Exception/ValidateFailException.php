@@ -27,7 +27,7 @@ class ValidateFailException extends \Exception
 	 *
 	 * @param array $errors The validate errors.
 	 */
-	public function __construct(array $errors)
+	public function __construct(array $errors = array())
 	{
 		$this->errors = $errors;
 

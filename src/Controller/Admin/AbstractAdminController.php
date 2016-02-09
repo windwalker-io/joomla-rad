@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Windwalker\Helper\ContextHelper;
 use Windwalker\Model\CrudModel;
 use Windwalker\Table\Table;
 
@@ -87,7 +88,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	{
 		parent::__construct($input, $app, $config);
 
-		$this->context    = $this->option . '.' . $this->task;
+		$this->context    = $this->context ? : ContextHelper::fromController($this);
 		$this->textPrefix = strtoupper($this->option);
 	}
 

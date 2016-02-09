@@ -99,6 +99,17 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	}
 
 	/**
+	 * The prepare getQuery hook
+	 *
+	 * @param JDatabaseQuery $query The db query object.
+	 *
+	 * @return  void
+	 */
+	protected function prepareGetQuery(\JDatabaseQuery $query)
+	{
+	}
+
+	/**
 	 * The post getQuery object.
 	 *
 	 * @param JDatabaseQuery $query The db query object.

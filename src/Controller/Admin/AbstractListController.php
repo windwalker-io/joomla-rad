@@ -59,8 +59,7 @@ abstract class AbstractListController extends AbstractAdminController
 	{
 		parent::prepareExecute();
 
-		$this->cid     = $this->input->get('cid', array(), 'array');
-		$this->context = $this->option . '.list.' . $this->context;
+		$this->cid = $this->input->get('cid', array(), 'array');
 	}
 
 	/**

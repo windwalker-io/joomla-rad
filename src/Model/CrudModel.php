@@ -11,7 +11,7 @@ use Windwalker\Helper\ArrayHelper;
  *
  * @since 2.0
  */
-class CrudModel extends FormModel
+class CrudModel extends AbstractFormModel
 {
 	/**
 	 * Item cache.
@@ -254,7 +254,7 @@ class CrudModel extends FormModel
 		$input = $container->get('input');
 
 		// Check the session for previously entered form data.
-		$data = $app->getUserState("{$this->option}.edit.{$this->getName()}.data", array());
+		$data = $app->getUserState($this->context . '.edit.data', array());
 
 		if (empty($data))
 		{

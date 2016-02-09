@@ -25,7 +25,7 @@ class AddController extends AbstractItemController
 	 */
 	protected function doExecute()
 	{
-		$context = "$this->option.edit.$this->context";
+		$context = $this->context;
 
 		// Access check.
 		if (!$this->allowAdd())
