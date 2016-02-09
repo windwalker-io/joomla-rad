@@ -31,6 +31,15 @@
 		<fieldset name="basic"
 			label="{{extension.element.upper}}_ITEM_SETTINGS">
 
+			<field name="layout_type"
+				type="componentlayout"
+				default="default"
+				extension="{{extension.element.lower}}"
+				view="{{controller.item.name.lower}}"
+				label="JFIELD_ALT_LAYOUT"
+				description="JGLOBAL_FIELD_LAYOUT_DESC"
+			/>
+
 			<field name="link_titles"
 				type="list"
 				description="JGLOBAL_LINKED_TITLES_DESC"

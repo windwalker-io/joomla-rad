@@ -46,7 +46,7 @@ class RadRoutingHelper
 	 *
 	 * @return  mixed
 	 */
-	public static function getRouting($option, $type = self::TYPE_JSON)
+	public static function getRouting($option, $type = self::TYPE_YAML)
 	{
 		if (self::$routing)
 		{

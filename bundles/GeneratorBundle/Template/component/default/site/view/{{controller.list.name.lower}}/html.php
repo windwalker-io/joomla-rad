@@ -8,7 +8,7 @@
 
 use {{extension.name.cap}}\Router\Route;
 use Windwalker\Data\Data;
-use Windwalker\Helper\DateHelper;
+use Windwalker\View\Helper\FrontViewHelper;
 use Windwalker\View\Html\ListHtmlView;
 
 // No direct access
@@ -72,57 +72,39 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 		foreach ($this->data->items as &$item)
 		{
 			$item = new Data($item);
-			$item->params = $item->params = new JRegistry($item->params);
+			$item->params = new JRegistry($item->params);
+
+			$item->text = $item->introtext;
 
 			// Link
 			// =====================================================================================
-			$query = array(
+			$item->link = Route::_('{{controller.item.name.lower}}', array(
 				'id'    => $item->id,
 				'alias' => $item->alias,
 				// 'catid' => $item->catid
-			);
-			$item->link = Route::_('{{controller.item.name.lower}}', $query);
+			));
 
 			// Publish Date
 			// =====================================================================================
-			$pup  = DateHelper::getDate($item->publish_up)->toUnix();
-			$pdw  = DateHelper::getDate($item->publish_down)->toUnix();
-			$now  = DateHelper::getDate('now')->toUnix();
-			$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix();
-
-			if (($now < $pup && $pup != $null) || ($now > $pdw && $pdw != $null))
-			{
-				$item->published = 0;
-			}
-
-			if ($item->modified == '0000-00-00 00:00:00')
-			{
-				$item->modified = '';
-			}
+			FrontViewHelper::checkPublishedDate($item);
 
 			// Plugins
 			// =====================================================================================
-			$item->event = new stdClass;
-
-			$dispatcher = $this->container->get('event.dispatcher');
-			$item->text = $item->introtext;
-
-			$params =& $this['params'];
-
-			$results = $dispatcher->trigger('onContentPrepare', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
-
-			$results = $dispatcher->trigger('onContentAfterTitle', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
-			$item->event->afterDisplayTitle = trim(implode("\n", $results));
-
-			$results = $dispatcher->trigger('onContentBeforeDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
-			$item->event->beforeDisplayContent = trim(implode("\n", $results));
-
-			$results = $dispatcher->trigger('onContentAfterDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
-			$item->event->afterDisplayContent = trim(implode("\n", $results));
+			FrontViewHelper::events($item, $this['params'], $this->context);
 		}
 
 		// Set title
 		// =====================================================================================
+		$this->configureTitle();
+	}
+
+	/**
+	 * configureTitle
+	 *
+	 * @return  void
+	 */
+	public function configureTitle()
+	{
 		$app = $this->container->get('app');
 		$active = $app->getMenu()->getActive();
 
@@ -135,6 +117,8 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 				// If not Active, set Title
 				$this->setTitle($this['category']->title);
 			}
+
+			// Otherwise use Menu title.
 		}
 		else
 		{

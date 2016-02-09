@@ -177,15 +177,15 @@
         <field name="orderby" type="list"
             description="JGLOBAL_ARTICLE_ORDER_DESC"
             label="JGLOBAL_ARTICLE_ORDER_LABEL"
-            default="a.created"
+            default="{{controller.item.name.lower}}.created"
         >
 
-            <option value="a.created ">{{extension.element.upper}}_CREATED</option>
-            <option value="a.publish_up">{{extension.element.upper}}_PUBLISH_UP</option>
-            <option value="a.publish_down">{{extension.element.upper}}_PUBLISHED_DOWN</option>
-            <option value="a.modified">{{extension.element.upper}}_MODIFIED</option>
-            <option value="a.title">JGLOBAL_TITLE</option>
-            <option value="a.ordering">JGLOBAL_ORDERING</option>
+            <option value="{{controller.item.name.lower}}.created ">{{extension.element.upper}}_CREATED</option>
+            <option value="{{controller.item.name.lower}}.publish_up">{{extension.element.upper}}_PUBLISH_UP</option>
+            <option value="{{controller.item.name.lower}}.publish_down">{{extension.element.upper}}_PUBLISHED_DOWN</option>
+            <option value="{{controller.item.name.lower}}.modified">{{extension.element.upper}}_MODIFIED</option>
+            <option value="{{controller.item.name.lower}}.title">JGLOBAL_TITLE</option>
+            <option value="{{controller.item.name.lower}}.ordering">JGLOBAL_ORDERING</option>
         </field>
 
         <field name="order_dir" type="list"

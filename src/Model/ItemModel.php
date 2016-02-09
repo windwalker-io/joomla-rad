@@ -56,6 +56,11 @@ class ItemModel extends AbstractAdvancedModel
 		$properties = $table->getProperties(1);
 		$item = ArrayHelper::toObject($properties, 'stdClass');
 
+		if (!$item)
+		{
+			return $item;
+		}
+
 		if (property_exists($item, 'params'))
 		{
 			$registry = new \JRegistry;
@@ -65,6 +70,19 @@ class ItemModel extends AbstractAdvancedModel
 			$item->params = $registry->toArray();
 		}
 
+		$this->postGetItem($item);
+
 		return $item;
+	}
+
+	/**
+	 * Method to get something after get item.
+	 *
+	 * @param   \stdClass  $item  The item object.
+	 *
+	 * @return  void
+	 */
+	protected function postGetItem($item)
+	{
 	}
 }

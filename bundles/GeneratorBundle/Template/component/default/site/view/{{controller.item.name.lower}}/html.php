@@ -10,7 +10,7 @@ use {{extension.name.cap}}\Router\Route;
 use Joomla\Registry\Registry;
 use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapper;
-use Windwalker\Helper\DateHelper;
+use Windwalker\View\Helper\FrontViewHelper;
 use Windwalker\View\Html\ItemHtmlView;
 
 // No direct access
@@ -72,8 +72,6 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 	 */
 	protected function prepareData()
 	{
-		$user = $this->container->get('user');
-
 		$this['category'] = $this->get('Category');
 		$this['params'] = $this->get('Params');
 
@@ -83,91 +81,32 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 		// Link
 		// =====================================================================================
-		$query = array(
+		$item->link = Route::_('{{extension.element.lower}}.{{controller.item.name.lower}}', array(
 			'id'    => $item->id,
 			'alias' => $item->alias,
 			// 'catid' => $item->catid
-		);
-		$item->link = Route::_('{{extension.element.lower}}.{{controller.item.name.lower}}', $query);
+		));
 
 		// Dsplay Data
 		// =====================================================================================
 		$item->created_user = with(new DataMapper('#__users'))->findOne($item->created_by)->name;
 		$item->cat_title = !empty($this->category) ? $this->category->title : null;
 
-		if ($item->modified == '0000-00-00 00:00:00')
-		{
-			$item->modified = '';
-		}
+		$item->text = $item->introtext . $item->fulltext;
 
 		// View Level
 		// =====================================================================================
-		if ($access = $state->get('filter.access'))
-		{
-			// If the access filter has been set, we already know this user can view.
-			$this['params']->set('access-view', true);
-		}
-		else
-		{
-			// If no access filter is set, the layout takes some responsibility for display of limited information.
-			$groups = $user->getAuthorisedViewLevels();
-
-			if (!$item->catid || empty($this->category->access))
-			{
-				$this['params']->set('access-view', in_array($item->access, $groups));
-			}
-			else
-			{
-				$this['params']->set('access-view', in_array($item->access, $groups) && in_array($this['category']->access, $groups));
-			}
-		}
+		FrontViewHelper::viewLevel($item, $this['category'], $state, $this['params']);
 
 		// Publish Date
 		// =====================================================================================
-		$pup  = DateHelper::getDate($item->publish_up)->toUnix();
-		$pdw  = DateHelper::getDate($item->publish_down)->toUnix();
-		$now  = DateHelper::getDate('now')->toUnix();
-		$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix();
-
-		if (($now < $pup && $pup != $null) || ($now > $pdw && $pdw != $null))
-		{
-			$item->published = 0;
-		}
-
-		$this->prepareEvents($item);
-
-		$this->configureParams($item);
-	}
-
-	/**
-	 * Prepare the content events.
-	 *
-	 * @param Data $item The item object.
-	 *
-	 * @return  void
-	 */
-	protected function prepareEvents($item)
-	{
-		$data = $this->getData();
+		FrontViewHelper::checkPublishedDate($item);
 
 		// Plugins
 		// =====================================================================================
-		$item->event = new stdClass;
+		FrontViewHelper::events($item, $this['params'], $this->context);
 
-		$dispatcher = $this->container->get('event.dispatcher');
-		JPluginHelper::importPlugin('content');
-
-		$item->text = $item->introtext . $item->fulltext;
-		$results = $dispatcher->trigger('onContentPrepare', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
-
-		$results = $dispatcher->trigger('onContentAfterTitle', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
-		$item->event->afterDisplayTitle = trim(implode("\n", $results));
-
-		$results = $dispatcher->trigger('onContentBeforeDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
-		$item->event->beforeDisplayContent = trim(implode("\n", $results));
-
-		$results = $dispatcher->trigger('onContentAfterDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
-		$item->event->afterDisplayContent = trim(implode("\n", $results));
+		$this->configureParams($item);
 	}
 
 	/**
@@ -219,7 +158,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 				// Check for alternative layouts (since we are not in a single-{{controller.item.name.lower}} menu item)
 				// Single-{{controller.item.name.lower}} menu item layout takes priority over alt layout for an {{controller.item.name.lower}}
-				if ($layout = $data->params->get('{{controller.item.name.lower}}_layout'))
+				if ($layout = $data->params->get('layout_type'))
 				{
 					$this->setLayout($layout);
 				}
@@ -236,7 +175,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 			// Check for alternative layouts (since we are not in a single-article menu item)
 			// Single-article menu item layout takes priority over alt layout for an article
-			if ($layout = $data->params->get('{{controller.item.name.lower}}_layout'))
+			if ($layout = $data->params->get('layout_type'))
 			{
 				$this->setLayout($layout);
 			}

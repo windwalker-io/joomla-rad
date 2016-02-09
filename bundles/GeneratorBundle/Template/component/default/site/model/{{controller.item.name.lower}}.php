@@ -61,14 +61,14 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends ItemModel
 	protected $viewList = '{{controller.list.name.lower}}';
 
 	/**
-	 * Method to get a single record.
+	 * Method to get something after get item.
 	 *
-	 * @param   integer  $pk  The id of the primary key.
+	 * @param   \stdClass $item The item object.
 	 *
-	 * @return  mixed    Object on success, false on failure.
+	 * @return  void
 	 */
-	public function getItem($pk = null)
+	protected function postGetItem($item)
 	{
-		return parent::getItem($pk);
+		parent::postGetItem($item);
 	}
 }

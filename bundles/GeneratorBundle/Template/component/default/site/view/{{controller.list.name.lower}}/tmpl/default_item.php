@@ -7,7 +7,7 @@
  */
 
 use {{extension.name.cap}}\Router\Route;
-use Windwalker\View\Helper\ViewHtmlHelper;
+use Windwalker\View\Helper\FrontViewHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -35,20 +35,22 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<!-- Heading -->
 		<!-- ============================================================================= -->
 		<div class="heading">
-			<h2><?php echo $params->get('link_titles_in_list', 1) ? JHtml::_('link', $item->link, $item->title) : $item->title ?></h2>
+			<h2>
+                <?php echo $params->get('link_titles_in_list', 1) ? JHtml::_('link', $item->link, $item->title) : $item->title ?>
+            </h2>
 		</div>
 		<!-- ============================================================================= -->
 		<!-- Heading -->
 
 		<!-- afterDisplayTitle -->
 		<!-- ============================================================================= -->
-		<?php echo $this->item->event->afterDisplayTitle; ?>
+		<?php echo $data->item->event->afterDisplayTitle; ?>
 		<!-- ============================================================================= -->
 		<!-- afterDisplayTitle -->
 
 		<!-- beforeDisplayContent -->
 		<!-- ============================================================================= -->
-		<?php echo $this->item->event->beforeDisplayContent; ?>
+		<?php echo $data->item->event->beforeDisplayContent; ?>
 		<!-- ============================================================================= -->
 		<!-- beforeDisplayContent -->
 
@@ -56,10 +58,10 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<!-- ============================================================================= -->
 		<div class="info">
 			<div class="info-inner">
-				<?php echo ViewHtmlHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
-				<?php echo ViewHtmlHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
-				<?php echo ViewHtmlHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
-				<?php echo ViewHtmlHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>
+				<?php echo FrontViewHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
+				<?php echo FrontViewHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
+				<?php echo FrontViewHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
+				<?php echo FrontViewHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>
 			</div>
 		</div>
 		<!-- ============================================================================= -->
@@ -72,19 +74,19 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<div class="content">
 			<div class="content-inner row-fluid">
 
-				<?php $text_span = 12; ?>
-
 				<?php if (!empty($item->images)): ?>
-					<?php $text_span = $text_span - 3; ?>
 					<div class="content-img thumbnail span3">
 						<?php echo JHtml::_('image', $item->images, $item->title); ?>
 					</div>
 				<?php endif; ?>
 
-				<div class="text span<?php echo $text_span; ?>">
+                <!-- Text -->
+                <!-- ============================================================================= -->
+				<div class="text span8">
 					<?php echo $item->text; ?>
 				</div>
-
+                <!-- ============================================================================= -->
+                <!-- Text -->
 			</div>
 		</div>
 		<!-- ============================================================================= -->
@@ -96,7 +98,9 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 			<div class="span12">
 				<p></p>
 				<p class="readmore">
-					<?php echo JHtml::_('link', $item->link, JText::_('{{extension.element.upper}}_READMORE'), array('class' => 'btn btn-small btn-primary')); ?>
+                    <a href="<?php echo $item->link; ?>" class="btn btn-small btn-primary">
+                        <?php echo JText::_('{{extension.element.upper}}_READMORE'); ?>
+                    </a>
 				</p>
 			</div>
 		</div>
@@ -105,7 +109,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 
 		<!-- afterDisplayContent -->
 		<!-- ============================================================================= -->
-		<?php echo $this->item->event->afterDisplayContent; ?>
+		<?php echo $data->item->event->afterDisplayContent; ?>
 		<!-- ============================================================================= -->
 		<!-- afterDisplayContent -->
 

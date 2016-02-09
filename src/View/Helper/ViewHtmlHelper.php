@@ -28,6 +28,8 @@ class ViewHtmlHelper
 	 * @param   string  $class Set class to this wrap.
 	 *
 	 * @return  string  Information HTML.
+	 *
+	 * @deprecated  3.0  Use FrontViewHelper::showInfo() instead.
 	 */
 	public static function showInfo($item, $key = null, $label = null, $icon = '', $link = null, $class = null)
 	{

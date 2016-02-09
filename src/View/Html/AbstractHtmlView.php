@@ -9,6 +9,7 @@
 namespace Windwalker\View\Html;
 
 use Windwalker\DI\Container;
+use Windwalker\Helper\ContextHelper;
 use Windwalker\Model\Model;
 use Windwalker\View\AbstractView;
 use Windwalker\View\Engine\EngineInterface;
@@ -57,6 +58,13 @@ abstract class AbstractHtmlView extends AbstractView
 	protected $engine = null;
 
 	/**
+	 * Property context.
+	 *
+	 * @var  string
+	 */
+	protected $context;
+
+	/**
 	 * Method to instantiate the view.
 	 *
 	 * @param Model             $model     The model object.
@@ -70,6 +78,8 @@ abstract class AbstractHtmlView extends AbstractView
 		{
 			$this->engine = $config['engine'];
 		}
+
+		$this->context = ContextHelper::fromView($this);
 
 		parent::__construct($model, $container, $config);
 

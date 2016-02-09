@@ -10,6 +10,7 @@ namespace Windwalker\Helper;
 
 use Windwalker\Controller\Controller;
 use Windwalker\Model\Model;
+use Windwalker\View\AbstractView;
 
 /**
  * The ContextHelper class.
@@ -36,7 +37,7 @@ abstract class ContextHelper
 	/**
 	 * fromModel
 	 *
-	 * @param  Model   $model
+	 * @param   Model   $model
 	 * @param   string  $suffix
 	 *
 	 * @return  string
@@ -48,5 +49,22 @@ abstract class ContextHelper
 		$suffix = $suffix ? '.' . trim($suffix, '.') : null;
 
 		return $model->getOption() . '.' . $model->getName() . $suffix;
+	}
+
+	/**
+	 * fromView
+	 *
+	 * @param AbstractView $view
+	 * @param string       $suffix
+	 *
+	 * @return  string
+	 *
+	 * @throws \Exception
+	 */
+	public static function fromView(AbstractView $view, $suffix = null)
+	{
+		$suffix = $suffix ? '.' . trim($suffix, '.') : null;
+
+		return $view->getOption() . '.' . $view->getName() . $suffix;
 	}
 }

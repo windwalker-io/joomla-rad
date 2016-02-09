@@ -7,7 +7,7 @@
  */
 
 use {{extension.name.cap}}\Router\Route;
-use Windwalker\View\Helper\ViewHtmlHelper;
+use Windwalker\View\Helper\FrontViewHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -57,10 +57,10 @@ $item = $data->item;
 					<!-- ============================================================================= -->
 					<div class="info">
 						<div class="info-inner">
-							<?php echo ViewHtmlHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{extension.element.lower}}.{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
-							<?php echo ViewHtmlHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
-							<?php echo ViewHtmlHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
-							<?php echo ViewHtmlHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>
+							<?php echo FrontViewHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{extension.element.lower}}.{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
+							<?php echo FrontViewHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
+							<?php echo FrontViewHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
+							<?php echo FrontViewHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>
 						</div>
 					</div>
 
@@ -80,9 +80,13 @@ $item = $data->item;
 									</div>
 								<?php endif; ?>
 
+                                <!-- Text -->
+                                <!-- ============================================================================= -->
 								<div class="text">
 									<?php echo $item->text; ?>
 								</div>
+                                <!-- ============================================================================= -->
+                                <!-- Text End -->
 							</div>
 
 						</div>

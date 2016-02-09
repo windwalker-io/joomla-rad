@@ -38,6 +38,7 @@
 				extension="{{extension.element.lower}}"
 				view="{{controller.list.name.lower}}"
 				label="JFIELD_ALT_LAYOUT"
+				description="JGLOBAL_FIELD_LAYOUT_DESC"
 				/>
 
 			<field name="show_category_title"

@@ -49,8 +49,7 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 		$this->router = RadRouter::getInstance('{{extension.element.lower}}', $this->menu);
 
 		// Register routing config and inject Router object into it.
-		$this->router = RadRoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RadRoutingHelper::TYPE_JSON);
-
+		$this->router = RadRoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RadRoutingHelper::TYPE_YAML);
 	}
 
 	/**
