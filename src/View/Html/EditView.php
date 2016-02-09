@@ -46,12 +46,11 @@ class EditView extends ItemHtmlView
 	{
 		parent::prepareRender();
 
-		$data        = $this->getData();
-		$data->form  = $this->get('Form');
+		$this['form'] = $this->get('Form');
 
-		if ($errors = $data->state->get('errors'))
+		if ($errors = $this['state']->get('errors'))
 		{
-			$this->flash($errors);
+			$this->addMessage($errors);
 		}
 
 		// Configure UI

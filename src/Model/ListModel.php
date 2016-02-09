@@ -36,17 +36,6 @@ defined('_JEXEC') or die;
 class ListModel extends AbstractFormModel
 {
 	/**
-	 * Valid filter fields or ordering.
-	 *
-	 * Override this property at component layer.
-	 *
-	 * @var array
-	 *
-	 * @deprecated  Use $this->allowFields instead.
-	 */
-	protected $filterFields = array();
-
-	/**
 	 * Only allow this fields to set in query.
 	 *
 	 * Override this property at component layer.
@@ -67,6 +56,17 @@ class ListModel extends AbstractFormModel
 	 * @since  2.1
 	 */
 	protected $fieldMapping = array();
+
+	/**
+	 * Valid filter fields or ordering.
+	 *
+	 * Override this property at component layer.
+	 *
+	 * @var array
+	 *
+	 * @deprecated  Use $this->allowFields instead.
+	 */
+	protected $filterFields = array();
 
 	/**
 	 * An internal cache for the last query used.
@@ -908,6 +908,11 @@ class ListModel extends AbstractFormModel
 		}
 
 		$ordering = implode(', ', $ordering);
+
+		if (!$ordering)
+		{
+			return;
+		}
 
 		$query->order($ordering . ' ' . $direction);
 	}

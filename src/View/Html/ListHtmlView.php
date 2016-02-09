@@ -8,6 +8,7 @@
 
 namespace Windwalker\View\Html;
 
+use Joomla\String\Inflector;
 use Windwalker\Model\Model;
 use Windwalker\DI\Container;
 
@@ -39,7 +40,7 @@ class ListHtmlView extends HtmlView
 		// Guess the list view as the plural of the item view.
 		if (empty($this->viewItem))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewItem = $inflector->toSingular($this->viewList);
 		}
@@ -54,17 +55,15 @@ class ListHtmlView extends HtmlView
 	{
 		parent::prepareRender();
 
-		$data             = $this->getData();
-		$data->items      = $this->get('Items');
-		$data->pagination = $this->get('Pagination');
-		$data->state      = $this->get('State');
+		$this['items']      = $this->get('Items');
+		$this['pagination'] = $this->get('Pagination');
 
-		if ($errors = $data->state->get('errors'))
+		if ($errors = $this['state']->get('errors'))
 		{
-			$this->flash($errors);
+			$this->addMessage($errors);
 		}
 
-		foreach ($data->items as $item)
+		foreach ($this['items'] as $item)
 		{
 			// B/C for old templates
 			$pkName = strtolower($this->viewItem) . '_id';

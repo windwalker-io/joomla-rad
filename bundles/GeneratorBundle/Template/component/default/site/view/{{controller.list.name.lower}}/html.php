@@ -64,14 +64,12 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 	 */
 	protected function prepareData()
 	{
-		$data = $this->getData();
-
-		$data->params   = $this->get('Params');
-		$data->category = $this->get('Category');
+		$this['params']   = $this->get('Params');
+		$this['category'] = $this->get('Category');
 
 		// Set Data
 		// =====================================================================================
-		foreach ($data->items as &$item)
+		foreach ($this->data->items as &$item)
 		{
 			$item = new Data($item);
 			$item->params = $item->params = new JRegistry($item->params);
@@ -87,10 +85,10 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 
 			// Publish Date
 			// =====================================================================================
-			$pup  = DateHelper::getDate($item->publish_up)->toUnix(true);
-			$pdw  = DateHelper::getDate($item->publish_down)->toUnix(true);
-			$now  = DateHelper::getDate('now')->toUnix(true);
-			$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix(true);
+			$pup  = DateHelper::getDate($item->publish_up)->toUnix();
+			$pdw  = DateHelper::getDate($item->publish_down)->toUnix();
+			$now  = DateHelper::getDate('now')->toUnix();
+			$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix();
 
 			if (($now < $pup && $pup != $null) || ($now > $pdw && $pdw != $null))
 			{
@@ -108,15 +106,18 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 
 			$dispatcher = $this->container->get('event.dispatcher');
 			$item->text = $item->introtext;
-			$results = $dispatcher->trigger('onContentPrepare', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
 
-			$results = $dispatcher->trigger('onContentAfterTitle', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
+			$params =& $this['params'];
+
+			$results = $dispatcher->trigger('onContentPrepare', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
+
+			$results = $dispatcher->trigger('onContentAfterTitle', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
 			$item->event->afterDisplayTitle = trim(implode("\n", $results));
 
-			$results = $dispatcher->trigger('onContentBeforeDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
+			$results = $dispatcher->trigger('onContentBeforeDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
 			$item->event->beforeDisplayContent = trim(implode("\n", $results));
 
-			$results = $dispatcher->trigger('onContentAfterDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$data->params, 0));
+			$results = $dispatcher->trigger('onContentAfterDisplay', array('{{extension.element.lower}}.{{controller.item.name.lower}}', &$item, &$params, 0));
 			$item->event->afterDisplayContent = trim(implode("\n", $results));
 		}
 
@@ -129,15 +130,15 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 		{
 			$currentLink = $active->link;
 
-			if (!strpos($currentLink, 'view={{controller.list.name.lower}}') || !(strpos($currentLink, 'id=' . (string) $data->category->id)))
+			if (!strpos($currentLink, 'view={{controller.list.name.lower}}') || !(strpos($currentLink, 'id=' . (string) $this['category']->id)))
 			{
 				// If not Active, set Title
-				$this->setTitle($data->category->title);
+				$this->setTitle($this['category']->title);
 			}
 		}
 		else
 		{
-			$this->setTitle($data->category->title);
+			$this->setTitle($this['category']->title);
 		}
 	}
 }

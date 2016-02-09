@@ -96,9 +96,9 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @param string $msgs The message list.
 	 * @param string $type The message type.
 	 *
-	 * @return AbstractHtmlView Return self to support chaining.
+	 * @return static Return self to support chaining.
 	 */
-	public function flash($msgs, $type = 'message')
+	public function addMessage($msgs, $type = 'message')
 	{
 		$app  = $this->getContainer()->get('app');
 		$msgs = (array) $msgs;
@@ -109,6 +109,21 @@ abstract class AbstractHtmlView extends AbstractView
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Alias for addMessage().
+	 *
+	 * @param string $msgs The message list.
+	 * @param string $type The message type.
+	 *
+	 * @return  static
+	 *
+	 * @deprecated  3.0  Use addMessage instead.
+	 */
+	public function flash($msgs, $type)
+	{
+		return $this->addMessage($msgs, $type);
 	}
 
 	/**

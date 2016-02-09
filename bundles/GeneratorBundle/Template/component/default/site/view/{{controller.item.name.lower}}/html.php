@@ -9,6 +9,7 @@
 use {{extension.name.cap}}\Router\Route;
 use Joomla\Registry\Registry;
 use Windwalker\Data\Data;
+use Windwalker\DataMapper\DataMapper;
 use Windwalker\Helper\DateHelper;
 use Windwalker\View\Html\ItemHtmlView;
 
@@ -71,14 +72,14 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 	 */
 	protected function prepareData()
 	{
-		$data = $this->getData();
 		$user = $this->container->get('user');
 
-		$data->category = $this->get('Category');
-		$data->params   = $this->get('Params');
+		$this['category'] = $this->get('Category');
+		$this['params'] = $this->get('Params');
 
 		// Prepare setting data
-		$item = $data->item = new Data($data->item);
+		$item = $this['item'] = new Data($this['item']);
+		$state = $this['state'];
 
 		// Link
 		// =====================================================================================
@@ -91,7 +92,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 		// Dsplay Data
 		// =====================================================================================
-		$item->created_user = JFactory::getUser($item->created_by)->get('name');
+		$item->created_user = with(new DataMapper('#__users'))->findOne($item->created_by)->name;
 		$item->cat_title = !empty($this->category) ? $this->category->title : null;
 
 		if ($item->modified == '0000-00-00 00:00:00')
@@ -101,33 +102,32 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 		// View Level
 		// =====================================================================================
-		if ($access = $data->state->get('filter.access'))
+		if ($access = $state->get('filter.access'))
 		{
 			// If the access filter has been set, we already know this user can view.
-			$data->params->set('access-view', true);
+			$this['params']->set('access-view', true);
 		}
 		else
 		{
 			// If no access filter is set, the layout takes some responsibility for display of limited information.
-			$user   = JFactory::getUser();
 			$groups = $user->getAuthorisedViewLevels();
 
 			if (!$item->catid || empty($this->category->access))
 			{
-				$data->params->set('access-view', in_array($item->access, $groups));
+				$this['params']->set('access-view', in_array($item->access, $groups));
 			}
 			else
 			{
-				$data->params->set('access-view', in_array($item->access, $groups) && in_array($this->category->access, $groups));
+				$this['params']->set('access-view', in_array($item->access, $groups) && in_array($this['category']->access, $groups));
 			}
 		}
 
 		// Publish Date
 		// =====================================================================================
-		$pup  = DateHelper::getDate($item->publish_up)->toUnix(true);
-		$pdw  = DateHelper::getDate($item->publish_down)->toUnix(true);
-		$now  = DateHelper::getDate('now')->toUnix(true);
-		$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix(true);
+		$pup  = DateHelper::getDate($item->publish_up)->toUnix();
+		$pdw  = DateHelper::getDate($item->publish_down)->toUnix();
+		$now  = DateHelper::getDate('now')->toUnix();
+		$null = DateHelper::getDate('0000-00-00 00:00:00')->toUnix();
 
 		if (($now < $pup && $pup != $null) || ($now > $pdw && $pdw != $null))
 		{

@@ -34,6 +34,26 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 	protected $router;
 
 	/**
+	 * Class constructor.
+	 *
+	 * @param   JApplicationCms $app  Application-object that the router should use
+	 * @param   JMenu           $menu Menu-object that the router should use
+	 *
+	 * @since   3.4
+	 */
+	public function __construct($app, $menu)
+	{
+		parent::__construct($app, $menu);
+
+		// Prepare Router
+		$this->router = RadRouter::getInstance('{{extension.element.lower}}', $this->menu);
+
+		// Register routing config and inject Router object into it.
+		$this->router = RadRoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RadRoutingHelper::TYPE_JSON);
+
+	}
+
+	/**
 	 * Generic method to preprocess a URL
 	 *
 	 * @param   array $query An associative array of URL arguments
@@ -44,12 +64,6 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 	 */
 	public function preprocess($query)
 	{
-		// Prepare Router
-		$this->router = RadRouter::getInstance('{{extension.element.lower}}', $this->menu);
-
-		// Register routing config and inject Router object into it.
-		$this->router = RadRoutingHelper::registerRouting($this->router, '{{extension.element.lower}}', RadRoutingHelper::TYPE_JSON);
-
 		return $query;
 	}
 

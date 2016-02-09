@@ -14,13 +14,14 @@ use Windwalker\Data\Data;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
+use Windwalker\String\StringNormalise;
 
 /**
  * The basic abstract view.
  *
  * @since 2.0
  */
-abstract class AbstractView implements \JView, ContainerAwareInterface
+abstract class AbstractView implements \JView, \ArrayAccess, ContainerAwareInterface
 {
 	/**
 	 * The model object.
@@ -268,15 +269,28 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 		// Does the method exist?
 		if (!method_exists($model, $method))
 		{
-			// $method = 'load' . ucfirst($cmd);
-
-			return null;
+			return $this->getData()->get($cmd, null);
 		}
 
 		// The method exists, let's call it and return what we get
 		$result = call_user_func_array(array($model, $method), $args);
 
 		return $result;
+	}
+
+	/**
+	 * Set value to data.
+	 *
+	 * @param string $name   The value name.
+	 * @param mixed  $value  The value to set into date.
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function set($name, $value)
+	{
+		$this->getData()->set($name, $value);
+
+		return $this;
 	}
 
 	/**
@@ -424,7 +438,7 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 			}
 
 			$lastPart  = substr($classname, $viewpos + 4);
-			$pathParts = explode(' ', \JStringNormalise::fromCamelCase($lastPart));
+			$pathParts = explode(' ', StringNormalise::fromCamelCase($lastPart));
 
 			if (!empty($pathParts[1]))
 			{
@@ -451,5 +465,65 @@ abstract class AbstractView implements \JView, ContainerAwareInterface
 		$this->name = $name;
 
 		return $this;
+	}
+
+	/**
+	 * Is a property exists or not.
+	 *
+	 * @param mixed $offset Offset key.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   2.1
+	 */
+	public function offsetExists($offset)
+	{
+		return $this->getData()->exists($offset);
+	}
+
+	/**
+	 * Get a property.
+	 *
+	 * @param mixed $offset Offset key.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  mixed The value to return.
+	 *
+	 * @since   2.1
+	 */
+	public function offsetGet($offset)
+	{
+		return $this->getData()->get($offset);
+	}
+
+	/**
+	 * Set a value to property.
+	 *
+	 * @param mixed $offset Offset key.
+	 * @param mixed $value  The value to set.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	public function offsetSet($offset, $value)
+	{
+		$this->getData()->set($offset, $value);
+	}
+
+	/**
+	 * Unset a property.
+	 *
+	 * @param mixed $offset Offset key to unset.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	public function offsetUnset($offset)
+	{
+		$this->getData()->set($offset, null);
 	}
 }

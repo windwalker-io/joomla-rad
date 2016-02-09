@@ -79,14 +79,13 @@ class GridView extends ListHtmlView
 	{
 		parent::prepareRender();
 
-		$data             = $this->getData();
-		$data->grid       = $this->getGridHelper($this->gridConfig);
-		$data->filterForm = $this->get('FilterForm');
-		$data->batchForm  = $this->get('BatchForm');
+		$this['grid']       = $this->getGridHelper($this->gridConfig);
+		$this['filterForm'] = $this->get('FilterForm');
+		$this['batchForm']  = $this->get('BatchForm');
 
-		if ($errors = $data->state->get('errors'))
+		if ($errors = $this['state']->get('errors'))
 		{
-			$this->flash($errors);
+			$this->addMessage($errors);
 		}
 
 		// We don't need toolbar in the modal window.
@@ -95,7 +94,7 @@ class GridView extends ListHtmlView
 			$this->addToolbar();
 			$this->addSubmenu();
 
-			$data->sidebar = \JHtmlSidebar::render();
+			$this['sidebar'] = \JHtmlSidebar::render();
 
 			$this->setTitle();
 		}
