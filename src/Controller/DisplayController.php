@@ -254,11 +254,7 @@ class DisplayController extends Controller
 
 		$viewKey = 'view.' . strtolower($name);
 
-		try
-		{
-			$view = $container->get($viewKey, $forceNew);
-		}
-		catch (\InvalidArgumentException $e)
+		if (!$container->exists($viewKey))
 		{
 			$container->share(
 				$viewKey,
@@ -267,11 +263,9 @@ class DisplayController extends Controller
 					return new $viewName($model, $container, $config, $paths);
 				}
 			);
-
-			$view = $container->get($viewKey);
 		}
 
-		return $view;
+		return $container->get($viewKey, $forceNew);
 	}
 
 	/**
