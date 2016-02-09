@@ -15,6 +15,7 @@ use Windwalker\Cache\Cache;
 use Windwalker\Cache\Storage\RuntimeStorage;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\Joomla\Registry\DecoratingRegistry;
 
 /**
  * Windwalker basic model class.
@@ -623,5 +624,35 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	public function offsetUnset($offset)
 	{
 		$this->state->set($offset, null);
+	}
+
+	/**
+	 * Load the model state.
+	 *
+	 * Will Convert to Windwalker Registry.
+	 *
+	 * @return  Registry  The state object.
+	 *
+	 * @since   2.1
+	 */
+	protected function loadState()
+	{
+		return new DecoratingRegistry(new \Windwalker\Registry\Registry);
+	}
+
+	/**
+	 * Set the model state.
+	 *
+	 * @param   Registry $state The state object.
+	 *
+	 * @return  void
+	 *
+	 * @since   12.1
+	 */
+	public function setState(Registry $state)
+	{
+		$registry = new \Windwalker\Registry\Registry($state->toArray());
+
+		$this->state = new DecoratingRegistry($registry);
 	}
 }

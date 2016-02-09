@@ -265,10 +265,10 @@ class ListModel extends FormModel
 		$this->prepareGetQuery($query);
 
 		// Build filter query
-		$this->processFilters($query, (array) $this->state->get('filter', array()));
+		$this->processFilters($query, ArrayHelper::flatten((array) $this->get('filter')));
 
 		// Build search query
-		$this->processSearches($query, (array) $this->state->get('search', array()));
+		$this->processSearches($query, ArrayHelper::flatten((array) $this->get('search')));
 
 		// Ordering
 		$this->processOrdering($query);
@@ -771,7 +771,9 @@ class ListModel extends FormModel
 	 */
 	protected function processFilters(JDatabaseQuery $query, $filters = array())
 	{
-		$filters = $filters ? : $this->state->get('filter', array());
+		$filters = $filters ? : $this->get('filter', array());
+
+		$filters = ArrayHelper::flatten($filters);
 
 		$filters = $this->filterDataFields($filters);
 		$filters = $this->mapDataFields($filters);
@@ -819,6 +821,8 @@ class ListModel extends FormModel
 	protected function processSearches(JDatabaseQuery $query, $searches = array())
 	{
 		$searches = $searches ? : $this->state->get('search', array());
+
+		$searches = ArrayHelper::flatten($searches);
 
 		$searches = $this->filterDataFields($searches);
 		$searches = $this->mapDataFields($searches);
