@@ -110,6 +110,29 @@ class Table extends \JTable
 	}
 
 	/**
+	 * Method to bind an associative array or object to the JTable instance.This
+	 * method only binds properties that are publicly accessible and optionally
+	 * takes an array of properties to ignore when binding.
+	 *
+	 * @param   mixed $src    An associative array or object to bind to the JTable instance.
+	 * @param   mixed $ignore An optional array or space separated list of properties to ignore while binding.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   11.1
+	 * @throws  \InvalidArgumentException
+	 */
+	public function bind($src, $ignore = array())
+	{
+		if ($this->_trackAssets && isset($src['rules']) && is_array($src['rules']))
+		{
+			$this->setRules(new \JAccessRules($src['rules']));
+		}
+
+		return parent::bind($src, $ignore);
+	}
+
+	/**
 	 * Method to delete a row from the database table by primary key value.
 	 *
 	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.
