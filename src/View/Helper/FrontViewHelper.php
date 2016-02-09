@@ -125,28 +125,84 @@ abstract class FrontViewHelper
 			return false;
 		}
 
-		$label = \JText::_($label);
 		$value = $item->$key;
-
-		if ($link)
-		{
-			$value = \JHtml::_('link', $link, $value);
-		}
 
 		$class = str_replace('_', '-', $key) . ' ' . $class;
 
-		$icon = $icon ? 'icon-' . $icon : '';
+		if ($link)
+		{
+			return static::showLink($label, $value, $link, $icon, $class);
+		}
+		else
+		{
+			return static::showLabel($label, $value, $icon, $class);
+		}
+	}
 
-		$info = <<<INFO
+	/**
+	 * showLink
+	 *
+	 * @param   string  $title Label title.
+	 * @param   string  $value Info value.
+	 * @param   string  $icon  Icon name for bootstrap icon.
+	 * @param   string  $link  Has link URL?
+	 * @param   string  $class Set class to this wrap.
+	 *
+	 * @return  string
+	 */
+	public static function showLink($title, $value, $link, $icon = null, $class = null)
+	{
+		$value = \JHtml::_('link', $link, $value);
+
+		return static::showLabel($title, $value, $icon, $class);
+	}
+
+	/**
+	 * showDate
+	 *
+	 * @param   string  $title   Label title.
+	 * @param   string  $value   Info value.
+	 * @param   string  $format  The format string.
+	 * @param   bool    $tz      The timezone.
+	 * @param   string  $class   Set class to this wrap.
+	 *
+	 * @return  string
+	 */
+	public static function showDate($title, $value, $format = null, $tz = true, $class = null)
+	{
+		$value = \JHtml::date($value, $format, $tz);
+
+		return static::showLabel($title, $value, 'calendar', $class);
+	}
+
+	/**
+	 * showLabel
+	 *
+	 * @param   string  $title Label title.
+	 * @param   string  $value Info value.
+	 * @param   string  $icon  Icon name for bootstrap icon.
+	 * @param   string  $class Set class to this wrap.
+	 *
+	 * @return  string
+	 */
+	public static function showLabel($title, $value, $icon = null, $class = null)
+	{
+		if ('' === (string) $value)
+		{
+			return '';
+		}
+
+		$icon = $icon ? 'icon-' . $icon : '';
+		$title = \JText::_($title);
+
+		return <<<INFO
 		<div class="{$class}">
             <span class="label">
             <i class="{$icon}"></i>
-            {$label}
+            {$title}
             </span>
             <span class="value">{$value}</span>
         </div>
 INFO;
-
-		return $info;
 	}
 }

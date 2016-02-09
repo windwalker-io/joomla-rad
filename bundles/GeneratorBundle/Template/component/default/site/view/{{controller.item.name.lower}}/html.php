@@ -72,6 +72,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 	 */
 	protected function prepareData()
 	{
+		/** @var {{extension.name.cap}}Model{{controller.item.name.cap}} */
 		$this['category'] = $this->get('Category');
 		$this['params'] = $this->get('Params');
 
@@ -89,7 +90,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 		// Dsplay Data
 		// =====================================================================================
-		$item->created_user = with(new DataMapper('#__users'))->findOne($item->created_by)->name;
+		$item->user_name = with(new DataMapper('#__users'))->findOne($item->created_by)->name;
 		$item->cat_title = !empty($this->category) ? $this->category->title : null;
 
 		$item->text = $item->introtext . $item->fulltext;

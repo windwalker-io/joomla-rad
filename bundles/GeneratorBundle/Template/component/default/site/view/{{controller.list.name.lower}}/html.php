@@ -64,6 +64,7 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 	 */
 	protected function prepareData()
 	{
+		/** @var {{extension.name.cap}}Model{{controller.list.name.cap}}*/
 		$this['params']   = $this->get('Params');
 		$this['category'] = $this->get('Category');
 

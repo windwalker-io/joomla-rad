@@ -86,6 +86,6 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends EditVie
 	 */
 	protected function prepareData()
 	{
-		parent::prepareData();
+		/** @var {{extension.name.cap}}Model{{controller.item.name.cap}} */
 	}
 }

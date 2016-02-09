@@ -81,7 +81,7 @@ abstract class AbstractAdvancedModel extends Model
 		$pk     = $pk ? : $this->state->get('category.id', $input->get('id'));
 		$mapper = new DataMapper('#__categories');
 
-		$data = $mapper->findOne(array('id' => $pk));
+		$data = $mapper->findOne($pk);
 		$data->params = new Registry($data->params);
 
 		return $data;

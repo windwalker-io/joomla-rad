@@ -252,7 +252,7 @@ class AdminModel extends CrudModel
 	 */
 	protected function prepareTable(\JTable $table)
 	{
-		$date = DateHelper::getDate();
+		$date = DateHelper::getDate('now');
 		$user = $this->container->get('user');
 
 		// Alias
@@ -274,15 +274,42 @@ class AdminModel extends CrudModel
 		}
 
 		// Created date
-		if (property_exists($table, 'created') && !$table->created)
+		if (property_exists($table, 'created'))
 		{
-			$table->created = $date->toSql();
+			if ($table->created)
+			{
+				$table->created = DateHelper::toServerTime($table->created);
+			}
+			else
+			{
+				$table->created = $date->toSql();
+			}
 		}
 
 		// Publish_up date
-		if (property_exists($table, 'publish_up') && !$table->publish_up)
+		if (property_exists($table, 'publish_up'))
 		{
-			$table->publish_up = $this->db->getNullDate();
+			if ($table->publish_up)
+			{
+				$table->publish_up = DateHelper::toServerTime($table->publish_up);
+			}
+			else
+			{
+				$table->publish_up = $this->db->getNullDate();
+			}
+		}
+
+		// Publish_down date
+		if (property_exists($table, 'publish_down'))
+		{
+			if ($table->publish_down)
+			{
+				$table->publish_down = DateHelper::toServerTime($table->publish_down);
+			}
+			else
+			{
+				$table->publish_down = $this->db->getNullDate();
+			}
 		}
 
 		// Modified date

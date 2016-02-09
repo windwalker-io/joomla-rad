@@ -17,6 +17,7 @@ use Joomla\DI\Container as JoomlaContainer;
 
 use JTable;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
 use Windwalker\Model\Filter\FilterHelper;

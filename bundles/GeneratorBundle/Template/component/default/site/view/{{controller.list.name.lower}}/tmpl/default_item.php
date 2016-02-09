@@ -58,10 +58,10 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<!-- ============================================================================= -->
 		<div class="info">
 			<div class="info-inner">
-				<?php echo FrontViewHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
-				<?php echo FrontViewHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
-				<?php echo FrontViewHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
-				<?php echo FrontViewHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>
+				<?php echo FrontViewHelper::showLink('jcategory', $item->category_title, Route::_('{{controller.list.name.lower}}', array('id' => $item->catid)), 'folder'); ?>
+				<?php echo FrontViewHelper::showDate('{{extension.element.lower}}_created', $item->created); ?>
+				<?php echo FrontViewHelper::showDate('{{extension.element.lower}}_modified', $item->modified); ?>
+				<?php echo FrontViewHelper::showLabel('{{extension.element.lower}}_created_by', $item->user_name, 'user'); ?>
 			</div>
 		</div>
 		<!-- ============================================================================= -->
