@@ -21,6 +21,42 @@ defined('_JEXEC') or die;
 class ArrayHelper extends \Windwalker\Utilities\ArrayHelper
 {
 	/**
+	 * Function to convert array empty string to NULL values
+	 *
+	 * @param   array  $array    The source array to convert
+	 *
+	 * @return  array The converted array
+	 *
+	 * @since   2.1
+	 */
+	public static function toNull($array)
+	{
+		if (!is_array($array) && !is_object(is_object($array)))
+		{
+			return $array;
+		}
+
+		if (is_object($array))
+		{
+			$array = get_object_vars($array);
+		}
+
+		foreach ($array as &$value)
+		{
+			if (is_array($value) || is_object($value))
+			{
+				$value = static::toNull($value);
+			}
+			elseif ($value === '')
+			{
+				$value = null;
+			}
+		}
+
+		return $array;
+	}
+
+	/**
 	 * Transpose a two-dimensional matrix array.
 	 *
 	 * @param  array $array An array with two level.

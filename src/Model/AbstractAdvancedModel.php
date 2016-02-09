@@ -10,7 +10,6 @@ namespace Windwalker\Model;
 
 use Windwalker\Registry\Registry;
 use Windwalker\Joomla\DataMapper\DataMapper;
-use Windwalker\System\ExtensionHelper;
 
 /**
  * Advanced Model.
@@ -60,17 +59,8 @@ abstract class AbstractAdvancedModel extends Model
 		}
 
 		$app = $this->getContainer()->get('app');
-		$comParams  = ExtensionHelper::getParams($this->option);
-		$menuParams = new Registry;
 
-		if ($menu = $app->getMenu()->getActive())
-		{
-			$menuParams->loadString($menu->params);
-		}
-
-		$menuParams->merge($comParams);
-
-		return $this->params = $menuParams;
+		return $app->getParams();
 	}
 
 	/**
