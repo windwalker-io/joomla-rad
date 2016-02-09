@@ -17,8 +17,9 @@ JHtml::_('behavior.tooltip');
 /**
  * Prepare data for this template.
  *
- * @var \Windwalker\DI\Container        $container
- * @var \Windwalker\Asset\AssetManager  $asset
+ * @var \Windwalker\DI\Container            $container
+ * @var \Windwalker\Asset\AssetManager      $asset
+ * @var \Windwalker\View\Helper\GridHelper  $grid
  */
 $container = $this->getContainer();
 $input     = $container->get('input');
@@ -29,9 +30,9 @@ $function = $input->get('function', 'jSelectArticle');
 ?>
 
 <div id="{{extension.name.lower}}" class="windwalker {{controller.list.name.lower}} tablelist row-fluid">
-	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+	<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
-		<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data)); ?>
+		<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data, 'function' => $function)); ?>
 
 		<table id="{{controller.item.name.lower}}List" class="adminlist table table-striped modal-list">
 			<thead>

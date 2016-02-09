@@ -21,6 +21,28 @@ defined('_JEXEC') or die;
 class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 {
 	/**
+	 * Only allow this fields to set in query.
+	 *
+	 * Override this property at component layer.
+	 *
+	 * @var  array
+	 *
+	 * @since  2.1
+	 */
+	protected $allowFields = array();
+
+	/**
+	 * Set field aliases to make correct query columns.
+	 *
+	 * Override this property at component layer.
+	 *
+	 * @var  array
+	 *
+	 * @since  2.1
+	 */
+	protected $fieldMapping = array();
+
+	/**
 	 * Component prefix.
 	 *
 	 * @var  string
@@ -69,15 +91,11 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 */
 	protected function configureTables()
 	{
-		$queryHelper = $this->getContainer()->get('model.{{controller.list.name.lower}}.helper.query', Container::FORCE_NEW);
-
-		$queryHelper->addTable('{{controller.item.name.lower}}', '#__{{extension.name.lower}}_{{controller.list.name.lower}}')
+		$this->addTable('{{controller.item.name.lower}}', '#__{{extension.name.lower}}_{{controller.list.name.lower}}')
 			->addTable('category',  '#__categories', '{{controller.item.name.lower}}.catid      = category.id')
 			->addTable('user',      '#__users',      '{{controller.item.name.lower}}.created_by = user.id')
 			->addTable('viewlevel', '#__viewlevels', '{{controller.item.name.lower}}.access     = viewlevel.id')
 			->addTable('lang',      '#__languages',  '{{controller.item.name.lower}}.language   = lang.lang_code');
-
-		$this->filterFields = array_merge($this->filterFields, $queryHelper->getFilterFields());
 	}
 
 	/**

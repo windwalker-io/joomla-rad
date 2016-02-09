@@ -337,10 +337,10 @@ JS
     	refreshPreview: function() {
             var value   = this.element.val();
             var imgExts = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
-            var ext     = value.split('.').getLast();
+            var ext     = value.split('.').pop();
 
             if (this.previewWrapper.length > 0) {
-                if (imgExts.contains(ext.toLowerCase())) {
+                if ($.inArray(imgExts, ext.toLowerCase())) {
                     this.previewImage.attr('src', urlRoot + value);
                     this.previewWrapper.css('display', '');
                     this.previewEmpty.css('display', 'none');

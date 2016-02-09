@@ -52,6 +52,12 @@ $filters = $data['view']->filterForm->getGroup('search');
 				onclick="jQuery('.js-stools-container-bar input, .js-stools-container-bar select, .js-stools-container-filters input').attr('value', '');">
 				<?php echo JText::_('JSEARCH_FILTER_CLEAR');?>
 			</button>
+            <?php if (!empty($data['modal']) || !empty($data['function'])): ?>
+                <button type="button" class="btn"
+                    onclick="if (window.parent) window.parent.<?php echo $this->escape($data['function']); ?>('','<?php echo $this->escape(addslashes(JText::_('JGLOBAL_SELECT_AN_OPTION'))); ?>');">
+                    <i class="icon-remove"></i>
+                </button>
+            <?php endif; ?>
 		</div>
 	<?php endif; ?>
 <?php endif;

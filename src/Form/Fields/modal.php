@@ -134,8 +134,8 @@ class JFormFieldModal extends JFormField
 		// Build the script.
 		$script   = array();
 		$script[] = '    function jSelect' . ucfirst($this->component) . '_' . $this->id . '(id, title) {';
-		$script[] = '        document.id("' . $this->id . '_id").value = id;';
-		$script[] = '        document.id("' . $this->id . '_name").value = title;';
+		$script[] = '        jQuery("#' . $this->id . '_id").val(id);';
+		$script[] = '        jQuery("#' . $this->id . '_name").val(title);';
 		$script[] = '        jQuery("#' . $this->id . '_name").delay(500).effect(\'highlight\');';
 		$script[] = '        Windwalker.Modal.hide();';
 		$script[] = '    }';

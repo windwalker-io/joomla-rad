@@ -24,24 +24,49 @@ use Windwalker\Model\Filter\SearchHelper;
 use Windwalker\Model\Helper\AdminListHelper;
 use Windwalker\Model\Helper\QueryHelper;
 use Windwalker\Model\Provider\GridProvider;
+use Windwalker\String\StringHelper;
 
 defined('_JEXEC') or die;
 
 /**
  * Model class for handling lists of items.
  *
- * @package     Joomla.Legacy
- * @subpackage  Model
- * @since       12.2
+ * @since  2.0
  */
 class ListModel extends FormModel
 {
 	/**
 	 * Valid filter fields or ordering.
 	 *
+	 * Override this property at component layer.
+	 *
 	 * @var array
+	 *
+	 * @deprecated  Use $this->allowFields instead.
 	 */
 	protected $filterFields = array();
+
+	/**
+	 * Only allow this fields to set in query.
+	 *
+	 * Override this property at component layer.
+	 *
+	 * @var  array
+	 *
+	 * @since  2.1
+	 */
+	protected $allowFields = array();
+
+	/**
+	 * Set field aliases to make correct query columns.
+	 *
+	 * Override this property at component layer.
+	 *
+	 * @var  array
+	 *
+	 * @since  2.1
+	 */
+	protected $fieldMapping = array();
 
 	/**
 	 * An internal cache for the last query used.
@@ -119,11 +144,19 @@ class ListModel extends FormModel
 		// These need before parent constructor.
 		$this->orderCol = $this->orderCol ? : ArrayHelper::getValue($config, 'order_column', null);
 
+		// This block should be remove after 3.0, use allowFields instead
 		if (!$this->filterFields)
 		{
 			$this->filterFields = ArrayHelper::getValue($config, 'filter_fields', array());
 
 			$this->filterFields[] = '*';
+		}
+
+		if (!$this->allowFields)
+		{
+			$this->allowFields = ArrayHelper::getValue($config, 'allow_fields', array());
+
+			$this->allowFields[] = '*';
 		}
 
 		$this->prefix = $this->getPrefix($config);
@@ -335,7 +368,7 @@ class ListModel extends FormModel
 	protected function getStoreId($id = '')
 	{
 		// Add the list state to the store id.
-		$id .= ':' . json_encode($this->filterFields);
+		$id .= ':' . json_encode($this->allowFields);
 		$id .= ':' . json_encode($this->state);
 
 		return md5($this->context . ':' . $id);
@@ -505,6 +538,66 @@ class ListModel extends FormModel
 	}
 
 	/**
+	 * Method to get property AllowFields and merge with auto-generated fields.
+	 *
+	 * @return  array
+	 */
+	public function getAllowFields()
+	{
+		if ($this->hasCache('allow.fields'))
+		{
+			return $this->getCache('allow.fields');
+		}
+
+		$queryHelper = $this->getQueryHelper();
+
+		// Add $this->filterFields to support B/C
+		$this->allowFields = array_merge($this->allowFields, $this->filterFields, $queryHelper->getFilterFields());
+
+		$this->filterFields = $this->allowFields;
+
+		return $this->setCache('allow.fields', $this->allowFields);
+	}
+
+	/**
+	 * Method to set property allowFields
+	 *
+	 * @param   array $allowFields
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setAllowFields($allowFields)
+	{
+		$this->allowFields = $allowFields;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property FieldAliases
+	 *
+	 * @return  array
+	 */
+	public function getFieldMapping()
+	{
+		return $this->fieldMapping;
+	}
+
+	/**
+	 * Method to set property fieldAliases
+	 *
+	 * @param   array $fieldMapping
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setFieldMapping($fieldMapping)
+	{
+		$this->fieldMapping = $fieldMapping;
+
+		return $this;
+	}
+
+	/**
 	 * Method to get the data that should be injected in the form.
 	 *
 	 * @return	mixed	The data for the form.
@@ -557,15 +650,13 @@ class ListModel extends FormModel
 			// Receive & set filters
 			if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array'))
 			{
-				$filters = AdminListHelper::handleFilters((array) $filters, $this->filterFields);
-
 				$this->state->set('filter', $filters);
 			}
 
 			// Receive & set searches
 			if ($searches = $app->getUserStateFromRequest($this->context . '.search', 'search', array(), 'array'))
 			{
-				$searches = AdminListHelper::handleSearches($searches, $this->filterFields, $this->getSearchFields());
+				$searches = AdminListHelper::handleSearches($searches, $this->getSearchFields());
 
 				$this->state->set('search', $searches);
 			}
@@ -586,18 +677,15 @@ class ListModel extends FormModel
 								'direction' => $direction
 							);
 
-							$orderConfig = AdminListHelper::handleFullordering($value, $orderConfig, $this->filterFields);
+							$orderConfig = AdminListHelper::handleFullordering($value, $orderConfig, $this);
 
 							$this->state->set('list.direction', $orderConfig['direction']);
 							$this->state->set('list.ordering',  $orderConfig['ordering']);
 							break;
 
-						case 'ordering':
-							if (!in_array($value, $this->filterFields))
-							{
-								$value = $ordering;
-							}
-							break;
+//						case 'ordering':
+//							$value = $this->filterField($value);
+//							break;
 
 						case 'direction':
 							if (!in_array(strtoupper($value), array('ASC', 'DESC', '')))
@@ -685,6 +773,9 @@ class ListModel extends FormModel
 	{
 		$filters = $filters ? : $this->state->get('filter', array());
 
+		$filters = $this->filterDataFields($filters);
+		$filters = $this->mapDataFields($filters);
+
 		$filterHelper = $this->getFilterHelper();
 
 		$this->configureFilters($filterHelper);
@@ -729,6 +820,9 @@ class ListModel extends FormModel
 	{
 		$searches = $searches ? : $this->state->get('search', array());
 
+		$searches = $this->filterDataFields($searches);
+		$searches = $this->mapDataFields($searches);
+
 		$searchHelper = $this->getSearchHelper();
 
 		$this->configureSearches($searchHelper);
@@ -772,7 +866,7 @@ class ListModel extends FormModel
 	 */
 	protected function processOrdering(JDatabaseQuery $query, $ordering = null, $direction = null)
 	{
-		$ordering  = $ordering  ? : $this->state->get('list.ordering'/* , $this->Viewitem . '.ordering'*/);
+		$ordering  = $ordering ? : $this->get('list.ordering');
 
 		// If no ordering set, ignore this function.
 		if (!$ordering)
@@ -780,25 +874,34 @@ class ListModel extends FormModel
 			return;
 		}
 
-		$direction = $direction ? : $this->state->get('list.direction', 'ASC');
+		$direction = $direction ? : $this->get('list.direction', 'ASC');
 		$ordering  = explode(',', $ordering);
 
 		// Add quote
-		$ordering = array_map(
-			function($value) use($query)
+		foreach ($ordering as $key => &$value)
+		{
+			// Remove extra spaces
+			preg_replace('/\s+/', ' ', trim($value));
+
+			$value = StringHelper::explode(' ', $value);
+
+			if (!$this->filterField($value[0]))
 			{
-				$value = explode(' ', trim($value));
+				unset($ordering[$key]);
 
-				// $value[1] is direction
-				if (isset($value[1]))
-				{
-					return $query->quoteName($value[0]) . ' ' . $value[1];
-				}
+				continue;
+			}
 
-				return $query->quoteName($value[0]);
-			},
-			$ordering
-		);
+			$value[0] = $this->mapField($value[0]);
+
+			// Ignore expression
+			if (!empty($value[0]) && $value[0][strlen($value[0]) - 1] != ')')
+			{
+				$value[0] = $query->quoteName($value[0]);
+			}
+
+			$value = implode(' ', $value);
+		}
 
 		$ordering = implode(', ', $ordering);
 
@@ -1013,6 +1116,147 @@ class ListModel extends FormModel
 	public function setSearchHelper($searchHelper)
 	{
 		$this->searchHelper = $searchHelper;
+
+		return $this;
+	}
+
+	/**
+	 * filterField
+	 *
+	 * @param string $field
+	 * @param mixed  $default
+	 *
+	 * @return  string
+	 *
+	 * @since  2.1
+	 */
+	public function filterField($field, $default = null)
+	{
+		if (in_array($field, $this->getAllowFields()))
+		{
+			return $field;
+		}
+
+		return $default;
+	}
+
+	/**
+	 * filterFields
+	 *
+	 * @param  array $data
+	 *
+	 * @return  array
+	 *
+	 * @since  2.1
+	 */
+	public function filterDataFields(array $data)
+	{
+		$allowFields = $this->getAllowFields();
+
+		$return = array();
+
+		foreach ($data as $field => $value)
+		{
+			if (in_array($field, $allowFields))
+			{
+				$return[$field] = $value;
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * mapField
+	 *
+	 * @param string $field
+	 * @param mixed  $default
+	 *
+	 * @return  string
+	 *
+	 * @since  2.1
+	 */
+	public function mapField($field, $default = null)
+	{
+		if (isset($this->fieldMapping[$field]))
+		{
+			return $this->fieldMapping[$field];
+		}
+
+		return ($default === null) ? $field : $default;
+	}
+
+	/**
+	 * mapDataFields
+	 *
+	 * @param array $data
+	 *
+	 * @return  array
+	 */
+	public function mapDataFields(array $data)
+	{
+		$return = array();
+
+		foreach ($data as $field => $value)
+		{
+			$return[$this->mapField($field)] = $value;
+		}
+
+		return $return;
+	}
+
+	/**
+	 * addFilter
+	 *
+	 * @param   string  $key
+	 * @param   mixed   $value
+	 *
+	 * @return  static
+	 *
+	 * @since  2.1
+	 */
+	public function addFilter($key, $value)
+	{
+		$this->set('filter.' . $key, $value);
+
+		return $this;
+	}
+
+	/**
+	 * addSearch
+	 *
+	 * @param   string  $key
+	 * @param   mixed   $value
+	 *
+	 * @return  static
+	 *
+	 * @since  2.1
+	 */
+	public function addSearch($key, $value)
+	{
+		$this->set('search.' . $key, $value);
+
+		return $this;
+	}
+
+	/**
+	 * setOrdering
+	 *
+	 * @param  string      $order
+	 * @param  bool|false  $direction
+	 *
+	 * @return  static
+	 *
+	 * @since  2.1
+	 */
+	public function setOrdering($order, $direction = false)
+	{
+		$this->set('list.ordering', $order);
+
+		if ($direction !== false)
+		{
+			$this->set('list.direction', $direction);
+		}
 
 		return $this;
 	}

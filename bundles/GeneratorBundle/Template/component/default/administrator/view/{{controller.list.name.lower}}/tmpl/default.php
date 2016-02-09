@@ -40,7 +40,15 @@ $container = $this->getContainer();
 
 			<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data)); ?>
 
-			<?php echo $this->loadTemplate('table'); ?>
+            <?php if (count($data->items)): ?>
+			    <?php echo $this->loadTemplate('table'); ?>
+            <?php else: ?>
+                <div class="well no-data-block" style="padding: 100px; text-align: center;">
+                    <p>
+                        <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+                    </p>
+                </div>
+            <?php endif; ?>
 
 			<?php echo with(new FileLayout('joomla.batchtools.modal'))->render(array('view' => $this->data, 'task_prefix' => '{{controller.list.name.lower}}.')); ?>
 

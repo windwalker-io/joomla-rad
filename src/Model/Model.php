@@ -485,7 +485,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	protected function getCache($id = null)
 	{
-		return $this->cache->get($this->getStoreId($id));
+		return $this->getCacheObject()->get($this->getStoreId($id));
 	}
 
 	/**
@@ -500,7 +500,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	protected function setCache($id = null, $data = null)
 	{
-		$this->cache->set($this->getStoreId($id), $data);
+		$this->getCacheObject()->set($this->getStoreId($id), $data);
 
 		return $data;
 	}
@@ -516,7 +516,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	protected function hasCache($id = null)
 	{
-		return $this->cache->exists($this->getStoreId($id));
+		return $this->getCacheObject()->exists($this->getStoreId($id));
 	}
 
 	/**
@@ -542,6 +542,11 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	public function getCacheObject()
 	{
+		if (!$this->cache)
+		{
+			$this->resetCache();
+		}
+
 		return $this->cache;
 	}
 
@@ -557,7 +562,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	protected function fetch($id, $closure)
 	{
-		return $this->cache->call($this->getStoreId($id), $closure);
+		return $this->getCacheObject()->call($this->getStoreId($id), $closure);
 	}
 
 	/**
