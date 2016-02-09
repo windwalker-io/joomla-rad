@@ -154,4 +154,20 @@ class TestApplication extends \JApplicationCms
 	{
 		return $this->isAdmin;
 	}
+
+	/**
+	 * getParams
+	 *
+	 * @param string $option
+	 *
+	 * @return  \JRegistry
+	 */
+	public function getParams($option = null)
+	{
+		return new \JRegistry(array(
+			'foo' => 'bar',
+			'bar' => 'foo',
+			'foobar' => 123
+		));
+	}
 }

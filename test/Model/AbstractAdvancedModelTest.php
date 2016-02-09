@@ -9,7 +9,6 @@
 namespace Windwalker\Test\Model;
 
 use Windwalker\Data\Data;
-use Windwalker\Registry\Registry;
 use Windwalker\Test\Model\Stub\StubModelAdvanced;
 use Windwalker\Test\TestHelper;
 
@@ -93,7 +92,8 @@ class AbstractAdvancedModelTest extends \PHPUnit_Framework_TestCase
 		$this->assertNull(TestHelper::getValue($model, 'params'));
 
 		$params = $model->getParams();
-		$expectParams = new Registry(array(
+
+		$expectParams = new \JRegistry(array(
 			'foo' => 'bar',
 			'bar' => 'foo',
 			'foobar' => 123,
