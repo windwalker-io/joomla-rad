@@ -10,6 +10,9 @@ use Windwalker\Data\Data;
 
 $data = new Data($displayData);
 
+/**
+ * @var $this  \Windwalker\View\Engine\PhpEngine
+ */
 ?>
 <?php if ($data->params->get('show_pagination', 1) == 1 || ($data->params->get('show_pagination', 1) == 2 && $data->pagination->get('pages.total') > 1)) : ?>
 	<div class="pagination">

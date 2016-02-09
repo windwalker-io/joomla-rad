@@ -129,6 +129,9 @@ abstract class FrontViewHelper
 
 		$class = str_replace('_', '-', $key) . ' ' . $class;
 
+		$value = htmlspecialchars($value);
+		$link = htmlspecialchars($link);
+
 		if ($link)
 		{
 			return static::showLink($label, $value, $link, $icon, $class);
@@ -172,6 +175,8 @@ abstract class FrontViewHelper
 	{
 		$value = \JHtml::date($value, $format, $tz);
 
+		$value = htmlspecialchars($value);
+
 		return static::showLabel($title, $value, 'calendar', $class);
 	}
 
@@ -194,6 +199,9 @@ abstract class FrontViewHelper
 
 		$icon = $icon ? 'icon-' . $icon : '';
 		$title = \JText::_($title);
+
+		$title = htmlspecialchars($title);
+		$icon  = htmlspecialchars($icon);
 
 		return <<<INFO
 		<div class="{$class}">

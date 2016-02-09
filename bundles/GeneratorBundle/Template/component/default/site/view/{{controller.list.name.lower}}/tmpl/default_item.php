@@ -19,6 +19,7 @@ defined('_JEXEC') or die;
  * @var $data      \Windwalker\Data\Data
  * @var $state     \Joomla\Registry\Registry
  * @var $user      \JUser
+ * @var $this      \Windwalker\View\Engine\PhpEngine
  */
 $container = $this->getContainer();
 $data      = $this->data;
@@ -76,7 +77,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 
 				<?php if (!empty($item->images)): ?>
 					<div class="content-img thumbnail span3">
-						<?php echo JHtml::_('image', $item->images, $item->title); ?>
+						<?php echo JHtml::_('image', $this->escape($item->images), $this->escape($item->title)); ?>
 					</div>
 				<?php endif; ?>
 
@@ -98,7 +99,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 			<div class="span12">
 				<p></p>
 				<p class="readmore">
-                    <a href="<?php echo $item->link; ?>" class="btn btn-small btn-primary">
+                    <a href="<?php echo $this->escape($item->link); ?>" class="btn btn-small btn-primary">
                         <?php echo JText::_('{{extension.element.upper}}_READMORE'); ?>
                     </a>
 				</p>

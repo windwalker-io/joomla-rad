@@ -10,6 +10,9 @@ use Windwalker\Data\Data;
 
 $data = new Data($displayData);
 
+/**
+ * @var $this  \Windwalker\View\Engine\PhpEngine
+ */
 ?>
 <?php if ($data->params->get('show_page_heading', 1)) : ?>
 	<h1>

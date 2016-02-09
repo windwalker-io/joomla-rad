@@ -10,6 +10,9 @@ use Windwalker\Data\Data;
 
 $data = new Data($displayData);
 
+/**
+ * @var $this  \Windwalker\View\Engine\PhpEngine
+ */
 ?>
 <?php if ($data->params->get('show_description', 1) || $data->params->def('show_description_image', 1)) : ?>
 	<div class="category-desc">
@@ -21,7 +24,7 @@ $data = new Data($displayData);
 
 		if ($data->params->get('show_description') && $data->category->description)
 		{
-			echo JHtml::_('content.prepare', $data->category->description, '', 'com_flower.category');
+			echo JHtml::_('content.prepare', $data->category->description, '', $data->view->option . '.category');
 		}
 		?>
 		<div class="clr"></div>

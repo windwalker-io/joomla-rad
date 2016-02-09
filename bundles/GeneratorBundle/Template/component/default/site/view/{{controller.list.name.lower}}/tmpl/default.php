@@ -21,6 +21,7 @@ JHtmlBootstrap::tooltip();
  * @var $data      \Windwalker\Data\Data
  * @var $state     \Joomla\Registry\Registry
  * @var $user      \JUser
+ * @var $this      \Windwalker\View\Engine\PhpEngine
  */
 $container = $this->getContainer();
 $data      = $this->data;
@@ -29,7 +30,7 @@ $user      = $container->get('user');
 ?>
 <form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm">
 
-	<div id="{{extension.name.lower}}-wrap" class="windwalker list container-fluid {{controller.list.name.lower}}<?php echo $data->params->get('pageclass_sfx'); ?>">
+	<div id="{{extension.name.lower}}-wrap" class="windwalker list container-fluid {{controller.list.name.lower}}<?php echo $this->escape($data->params->get('pageclass_sfx')); ?>">
 		<div id="{{extension.name.lower}}-wrap-inner">
 
             <!-- Heading -->
