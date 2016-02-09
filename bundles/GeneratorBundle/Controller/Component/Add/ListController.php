@@ -9,15 +9,14 @@
 namespace GeneratorBundle\Controller\Component\Add;
 
 use GeneratorBundle\Action\Component\Subsystem;
-use GeneratorBundle\Controller\Component\ComponentController;
-use Joomla\Registry\Registry;
+use GeneratorBundle\Controller\Component\AbstractComponentController;
 
 /**
  * Class SubsystemController
  *
  * @since 1.0
  */
-class ListController extends ComponentController
+class ListController extends AbstractComponentController
 {
 	/**
 	 * Do Execute.

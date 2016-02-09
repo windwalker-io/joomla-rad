@@ -17,10 +17,10 @@ JHtmlBehavior::multiselect('adminForm');
 /**
  * Prepare data for this template.
  *
- * @var $container Windwalker\DI\Container
- * @var $data      Windwalker\Data\Data
- * @var $asset     Windwalker\Helper\AssetHelper
- * @var $grid      Windwalker\View\Helper\GridHelper
+ * @var $container \Windwalker\DI\Container
+ * @var $data      \Windwalker\Data\Data
+ * @var $asset     \Windwalker\Asset\AssetManager
+ * @var $grid      \Windwalker\View\Helper\GridHelper
  * @var $date      \JDate
  */
 $container = $this->getContainer();
@@ -119,7 +119,7 @@ $grid->registerTableSort();
 
 		<!--CHECKBOX-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->{{controller.item.name.lower}}_id); ?>
+			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!--STATE-->

@@ -1,74 +1,36 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b98f13c2740345c3445cae2d73f19442",
+    "hash": "bd06be4bb57b4943c7f82a7e76ecc319",
+    "content-hash": "1589f967b693c22a740bc3d3420f7fd5",
     "packages": [
         {
-            "name": "asika/joomla-console",
-            "version": "1.1.1",
-            "target-dir": "Joomla/Console",
+            "name": "asika/muse",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/asika32764/joomla-framework-console.git",
-                "reference": "fe28cf9e1c694049e015121e2bd041268e814249"
+                "url": "https://github.com/asika32764/muse.git",
+                "reference": "fa7ebdc53062aa4dd0ee6a78987d9fb5517f20c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asika32764/joomla-framework-console/zipball/fe28cf9e1c694049e015121e2bd041268e814249",
-                "reference": "fe28cf9e1c694049e015121e2bd041268e814249",
+                "url": "https://api.github.com/repos/asika32764/muse/zipball/fa7ebdc53062aa4dd0ee6a78987d9fb5517f20c0",
+                "reference": "fa7ebdc53062aa4dd0ee6a78987d9fb5517f20c0",
                 "shasum": ""
             },
             "require": {
-                "joomla/application": "~1.0",
-                "php": ">=5.3.10"
+                "windwalker/filesystem": "~2.0",
+                "windwalker/registry": "~2.0",
+                "windwalker/utilities": "~2.0"
             },
             "require-dev": {
-                "joomla/test": "~1.0",
-                "symfony/yaml": "~2.0"
+                "windwalker/console": "~2.0",
+                "windwalker/database": "~2.0"
             },
-            "type": "joomla-package",
-            "autoload": {
-                "psr-0": {
-                    "Joomla\\Console": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "3rd Joomla Console Package",
-            "homepage": "https://github.com/asika32764/joomla-framework-console",
-            "keywords": [
-                "console",
-                "framework",
-                "joomla"
-            ],
-            "time": "2014-06-11 15:28:48"
-        },
-        {
-            "name": "asika/php-code-generator",
-            "version": "0.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/asika32764/php-code-generator.git",
-                "reference": "f3cd515c0ad1ae17c3f66272f6cbcee92ef60695"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/asika32764/php-code-generator/zipball/f3cd515c0ad1ae17c3f66272f6cbcee92ef60695",
-                "reference": "f3cd515c0ad1ae17c3f66272f6cbcee92ef60695",
-                "shasum": ""
-            },
-            "require-dev": {
-                "asika/joomla-console": "1.1.*"
-            },
-            "suggest": {
-                "asika/joomla-console": "If you want to use PHP Code Generator self not integrate to other system."
-            },
-            "type": "library",
+            "type": "framework",
             "autoload": {
                 "psr-0": {
                     "": "src/"
@@ -84,21 +46,30 @@
                     "email": "asika32764@gmail.com"
                 }
             ],
-            "description": "PHP Code generator",
-            "time": "2014-04-02 07:48:22"
+            "description": "Muse - The PHP Code generator. She is Goddess, she is the Creator.",
+            "homepage": "https://github.com/asika32764/muse",
+            "keywords": [
+                "builder",
+                "code",
+                "generator",
+                "muse",
+                "scaffold",
+                "scaffolding"
+            ],
+            "time": "2015-08-23 12:56:50"
         },
         {
             "name": "filp/whoops",
-            "version": "1.1.4",
+            "version": "1.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "dcce91553e2e056857f1ea844949e9a8a71b613d"
+                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/dcce91553e2e056857f1ea844949e9a8a71b613d",
-                "reference": "dcce91553e2e056857f1ea844949e9a8a71b613d",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/72538eeb70bbfb11964412a3d098d109efd012f7",
+                "reference": "72538eeb70bbfb11964412a3d098d109efd012f7",
                 "shasum": ""
             },
             "require": {
@@ -143,518 +114,747 @@
                 "whoops",
                 "zf2"
             ],
-            "time": "2015-02-17 15:50:31"
+            "time": "2015-06-29 05:42:04"
         },
         {
-            "name": "joomla/application",
-            "version": "1.4.0",
+            "name": "symfony/yaml",
+            "version": "v2.8.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joomla-framework/application.git",
-                "reference": "185b68fe55537281385b637a90e11856ea01c8da"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "34c8a4b51e751e7ea869b8262f883d008a2b81b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/application/zipball/185b68fe55537281385b637a90e11856ea01c8da",
-                "reference": "185b68fe55537281385b637a90e11856ea01c8da",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/34c8a4b51e751e7ea869b8262f883d008a2b81b8",
+                "reference": "34c8a4b51e751e7ea869b8262f883d008a2b81b8",
                 "shasum": ""
             },
             "require": {
-                "joomla/input": "~1.2",
-                "joomla/registry": "~1.1",
-                "php": ">=5.3.10",
-                "psr/log": "~1.0"
+                "php": ">=5.3.9"
             },
-            "require-dev": {
-                "joomla/session": "~1.1",
-                "joomla/test": "~1.1",
-                "joomla/uri": "~1.1",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
-            },
-            "suggest": {
-                "joomla/session": "To use AbstractWebApplication with session support, install joomla/session",
-                "joomla/uri": "To use AbstractWebApplication, install joomla/uri"
-            },
-            "type": "joomla-package",
+            "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Application\\": "src/",
-                    "Joomla\\Application\\Tests\\": "Tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Joomla Application Package",
-            "homepage": "https://github.com/joomla-framework/application",
-            "keywords": [
-                "application",
-                "framework",
-                "joomla"
-            ],
-            "time": "2015-03-06 17:37:01"
-        },
-        {
-            "name": "joomla/compat",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joomla-framework/compat.git",
-                "reference": "f23565fe0184517778996226eb4b2333deb369c4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/compat/zipball/f23565fe0184517778996226eb4b2333deb369c4",
-                "reference": "f23565fe0184517778996226eb4b2333deb369c4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.10"
-            },
-            "type": "joomla-package",
-            "autoload": {
-                "classmap": [
-                    "src/JsonSerializable.php",
-                    "src/CallbackFilterIterator.php"
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "MIT"
             ],
-            "description": "Joomla Compat Package",
-            "homepage": "https://github.com/joomla-framework/compat",
-            "keywords": [
-                "compat",
-                "framework",
-                "joomla"
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
             ],
-            "time": "2015-02-24 00:21:06"
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-01-13 10:28:07"
         },
         {
-            "name": "joomla/filesystem",
-            "version": "1.2.0",
+            "name": "windwalker/cache",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joomla-framework/filesystem.git",
-                "reference": "31884adf5470baf14de74bfd36482fd18ae048ad"
+                "url": "https://github.com/ventoviro/windwalker-cache.git",
+                "reference": "b1255aeb78a843ddda536b000a60f7cd6df33654"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filesystem/zipball/31884adf5470baf14de74bfd36482fd18ae048ad",
-                "reference": "31884adf5470baf14de74bfd36482fd18ae048ad",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-cache/zipball/b1255aeb78a843ddda536b000a60f7cd6df33654",
+                "reference": "b1255aeb78a843ddda536b000a60f7cd6df33654",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.10"
             },
-            "type": "joomla-package",
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Filesystem\\": "src/",
-                    "Joomla\\Filesystem\\Tests\\": "Tests/"
+                    "Windwalker\\Cache\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "LGPL-2.0+"
             ],
-            "description": "Joomla Filesystem Package",
-            "homepage": "https://github.com/joomla/joomla-framework-filesystem",
+            "description": "Windwalker Cache package",
+            "homepage": "https://github.com/ventoviro/windwalker-cache",
+            "keywords": [
+                "cache",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2015-09-07 05:06:04"
+        },
+        {
+            "name": "windwalker/compare",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-compare.git",
+                "reference": "6bb1e02f1964e192273f799e1a56103b60a889d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-compare/zipball/6bb1e02f1964e192273f799e1a56103b60a889d6",
+                "reference": "6bb1e02f1964e192273f799e1a56103b60a889d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Compare\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Compare package",
+            "homepage": "https://github.com/ventoviro/windwalker-compare",
+            "keywords": [
+                "compare",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2015-08-11 07:10:07"
+        },
+        {
+            "name": "windwalker/console",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-console.git",
+                "reference": "8d390b1ead1ad663387cc7114e775ad28108cdce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-console/zipball/8d390b1ead1ad663387cc7114e775ad28108cdce",
+                "reference": "8d390b1ead1ad663387cc7114e775ad28108cdce",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10",
+                "windwalker/io": "~2.0",
+                "windwalker/registry": "~2.0"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Console\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Controller package",
+            "homepage": "https://github.com/ventoviro/windwalker-console",
+            "keywords": [
+                "console",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2015-08-21 14:56:15"
+        },
+        {
+            "name": "windwalker/data",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-data.git",
+                "reference": "d812df5796cfe62a88cfec26cb35d509d45c47e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-data/zipball/d812df5796cfe62a88cfec26cb35d509d45c47e7",
+                "reference": "d812df5796cfe62a88cfec26cb35d509d45c47e7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Data\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Data package",
+            "homepage": "https://github.com/ventoviro/windwalker-data",
+            "keywords": [
+                "data",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2015-08-16 13:51:01"
+        },
+        {
+            "name": "windwalker/datamapper",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-datamapper.git",
+                "reference": "aa19559689709432b474c72d5d809365d2e09393"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-datamapper/zipball/aa19559689709432b474c72d5d809365d2e09393",
+                "reference": "aa19559689709432b474c72d5d809365d2e09393",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10",
+                "windwalker/data": "~2.0"
+            },
+            "require-dev": {
+                "windwalker/compare": "~2.0",
+                "windwalker/database": "~2.0",
+                "windwalker/event": "~2.0",
+                "windwalker/test": "~2.0"
+            },
+            "suggest": {
+                "windwalker/compare": "Install 2.* if you want to use Compare object.",
+                "windwalker/database": "Install 2.* if you want Windwalker Database.",
+                "windwalker/event": "Install 2.* if you want to use hooks."
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\DataMapper\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker DataMapper package",
+            "homepage": "https://github.com/ventoviro/windwalker-datamapper",
+            "keywords": [
+                "datamapper",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2016-01-07 04:49:34"
+        },
+        {
+            "name": "windwalker/dom",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-dom.git",
+                "reference": "872281917f00084e6088060106e383ed15d7eeb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-dom/zipball/872281917f00084e6088060106e383ed15d7eeb1",
+                "reference": "872281917f00084e6088060106e383ed15d7eeb1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Dom\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Dom package",
+            "homepage": "https://github.com/ventoviro/windwalker-dom",
             "keywords": [
                 "filesystem",
                 "framework",
-                "joomla"
+                "windwalker"
             ],
-            "time": "2014-04-10 02:54:58"
+            "time": "2016-01-06 11:35:43"
         },
         {
-            "name": "joomla/filter",
-            "version": "1.1.5",
+            "name": "windwalker/filesystem",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joomla-framework/filter.git",
-                "reference": "ed6d695a81e71508782ab8d711498c684465b041"
+                "url": "https://github.com/ventoviro/windwalker-filesystem.git",
+                "reference": "2670bfd5c14cc5adf6b1b0aadfa476b6a0211607"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/filter/zipball/ed6d695a81e71508782ab8d711498c684465b041",
-                "reference": "ed6d695a81e71508782ab8d711498c684465b041",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-filesystem/zipball/2670bfd5c14cc5adf6b1b0aadfa476b6a0211607",
+                "reference": "2670bfd5c14cc5adf6b1b0aadfa476b6a0211607",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.10"
             },
             "require-dev": {
-                "joomla/language": "~1.0",
-                "joomla/string": "~1.0",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Filesystem\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Filesystem package",
+            "homepage": "https://github.com/ventoviro/windwalker-filesystem",
+            "keywords": [
+                "filesystem",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2015-08-11 08:56:05"
+        },
+        {
+            "name": "windwalker/html",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-html.git",
+                "reference": "54d8307ff7ea4755b1e4689ec0d97d42472936d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-html/zipball/54d8307ff7ea4755b1e4689ec0d97d42472936d8",
+                "reference": "54d8307ff7ea4755b1e4689ec0d97d42472936d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10",
+                "windwalker/dom": "~2.0"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Html\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Html package",
+            "homepage": "https://github.com/ventoviro/windwalker-html",
+            "keywords": [
+                "framework",
+                "html",
+                "windwalker"
+            ],
+            "time": "2016-01-06 11:34:45"
+        },
+        {
+            "name": "windwalker/io",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-io.git",
+                "reference": "f3e871f213dc97f6ae0c311d3963dbba941c8f65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-io/zipball/f3e871f213dc97f6ae0c311d3963dbba941c8f65",
+                "reference": "f3e871f213dc97f6ae0c311d3963dbba941c8f65",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "windwalker/filter": "~2.0",
+                "windwalker/test": "~2.0"
             },
             "suggest": {
-                "joomla/language": "Required only if you want to use `OutputFilter::stringURLSafe`.",
-                "joomla/string": "Required only if you want to use `OutputFilter::stringURLSafe` and `OutputFilter::stringURLUnicodeSlug`."
+                "windwalker/filter": "Install 2.* if you require filter support."
             },
-            "type": "joomla-package",
+            "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Filter\\": "src/",
-                    "Joomla\\Filter\\Tests\\": "Tests/"
+                    "Windwalker\\IO\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "LGPL-2.0+"
             ],
-            "description": "Joomla Filter Package",
-            "homepage": "https://github.com/joomla-framework/filter",
+            "description": "Windwalker IO package",
+            "homepage": "https://github.com/ventoviro/windwalker-io",
             "keywords": [
-                "filter",
                 "framework",
-                "joomla"
+                "io",
+                "windwalker"
             ],
-            "time": "2014-12-12 21:46:44"
+            "time": "2016-01-06 08:05:01"
         },
         {
-            "name": "joomla/input",
-            "version": "1.2.0",
+            "name": "windwalker/registry",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joomla-framework/input.git",
-                "reference": "b6098276043e2d627221fe54d3c91232e6679d0f"
+                "url": "https://github.com/ventoviro/windwalker-registry.git",
+                "reference": "4e586405163f85d27f7da3564d1ec39a9cb74fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/input/zipball/b6098276043e2d627221fe54d3c91232e6679d0f",
-                "reference": "b6098276043e2d627221fe54d3c91232e6679d0f",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-registry/zipball/4e586405163f85d27f7da3564d1ec39a9cb74fe5",
+                "reference": "4e586405163f85d27f7da3564d1ec39a9cb74fe5",
                 "shasum": ""
             },
             "require": {
-                "joomla/filter": "~1.0",
                 "php": ">=5.3.10"
             },
             "require-dev": {
-                "joomla/test": "~1.0",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
-            },
-            "type": "joomla-package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Joomla\\Input\\": "src/",
-                    "Joomla\\Input\\Tests\\": "Tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "description": "Joomla Input Package",
-            "homepage": "https://github.com/joomla-framework/input",
-            "keywords": [
-                "framework",
-                "input",
-                "joomla"
-            ],
-            "time": "2014-10-12 18:01:36"
-        },
-        {
-            "name": "joomla/registry",
-            "version": "1.4.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/joomla-framework/registry.git",
-                "reference": "4f926ba961ca45eb95076a1598c3ae689cb02fc5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/registry/zipball/4f926ba961ca45eb95076a1598c3ae689cb02fc5",
-                "reference": "4f926ba961ca45eb95076a1598c3ae689cb02fc5",
-                "shasum": ""
-            },
-            "require": {
-                "joomla/compat": "~1.0",
-                "joomla/string": "~1.3",
-                "joomla/utilities": "~1.0",
-                "php": ">=5.3.10"
-            },
-            "require-dev": {
-                "joomla/test": "~1.0",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*",
-                "symfony/yaml": "~2.0"
+                "symfony/yaml": "2.*",
+                "windwalker/test": "~2.0"
             },
             "suggest": {
                 "symfony/yaml": "Install 2.* if you require YAML support."
             },
-            "type": "joomla-package",
+            "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Registry\\": "src/",
-                    "Joomla\\Registry\\Tests\\": "Tests/"
+                    "Windwalker\\Registry\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "LGPL-2.0+"
             ],
-            "description": "Joomla Registry Package",
-            "homepage": "https://github.com/joomla-framework/registry",
+            "description": "Windwalker Registry package",
+            "homepage": "https://github.com/ventoviro/windwalker-registry",
             "keywords": [
                 "framework",
-                "joomla",
-                "registry"
+                "registry",
+                "windwalker"
             ],
-            "time": "2015-03-28 17:54:38"
+            "time": "2015-09-07 03:21:18"
         },
         {
-            "name": "joomla/string",
-            "version": "1.3.0",
+            "name": "windwalker/router",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joomla-framework/string.git",
-                "reference": "0df8ead8c726a1f648e624d3bcbef8cf05c1d0da"
+                "url": "https://github.com/ventoviro/windwalker-router.git",
+                "reference": "da16c6fcfa909068824feb966db1ef55fe0c7d1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/string/zipball/0df8ead8c726a1f648e624d3bcbef8cf05c1d0da",
-                "reference": "0df8ead8c726a1f648e624d3bcbef8cf05c1d0da",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-router/zipball/da16c6fcfa909068824feb966db1ef55fe0c7d1e",
+                "reference": "da16c6fcfa909068824feb966db1ef55fe0c7d1e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.10"
             },
             "require-dev": {
-                "joomla/test": "~1.0",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
+                "windwalker/test": "~2.0",
+                "windwalker/uri": "~2.0"
             },
-            "type": "joomla-package",
+            "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\String\\": "src/",
-                    "Joomla\\String\\Tests\\": "Tests/"
+                    "Windwalker\\Router\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "LGPL-2.0+"
             ],
-            "description": "Joomla String Package",
-            "homepage": "https://github.com/joomla-framework/string",
+            "description": "Windwalker Router package",
+            "homepage": "https://github.com/ventoviro/windwalker-router",
             "keywords": [
                 "framework",
-                "joomla",
-                "string"
+                "router",
+                "windwalker"
             ],
-            "time": "2015-03-26 01:02:20"
+            "time": "2015-08-16 10:11:20"
         },
         {
-            "name": "joomla/utilities",
-            "version": "1.3.3",
+            "name": "windwalker/string",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joomla-framework/utilities.git",
-                "reference": "3e43b0806c194a92b58a176b73d6cc2dc6c9c3a4"
+                "url": "https://github.com/ventoviro/windwalker-string.git",
+                "reference": "24e598fe89216745a0a01b5af9b58be24bdaa4f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joomla-framework/utilities/zipball/3e43b0806c194a92b58a176b73d6cc2dc6c9c3a4",
-                "reference": "3e43b0806c194a92b58a176b73d6cc2dc6c9c3a4",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-string/zipball/24e598fe89216745a0a01b5af9b58be24bdaa4f7",
+                "reference": "24e598fe89216745a0a01b5af9b58be24bdaa4f7",
                 "shasum": ""
             },
             "require": {
-                "joomla/string": "~1.3",
                 "php": ">=5.3.10"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "1.*"
+                "windwalker/test": "~2.0",
+                "windwalker/utilities": "~2.0"
             },
-            "type": "joomla-package",
+            "suggest": {
+                "windwalker/utilities": "Install 2.* if you want to use StringHelper::parseVariable() tmpl engine."
+            },
+            "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.x-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Joomla\\Utilities\\": "src/",
-                    "Joomla\\Utilities\\Tests\\": "Tests/"
+                    "Windwalker\\String\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "LGPL-2.0+"
             ],
-            "description": "Joomla Utilities Package",
-            "homepage": "https://github.com/joomla-framework/utilities",
+            "description": "Windwalker String package",
+            "homepage": "https://github.com/ventoviro/windwalker-string",
             "keywords": [
                 "framework",
-                "joomla",
-                "utilities"
+                "string",
+                "windwalker"
             ],
-            "time": "2015-03-28 17:52:43"
+            "time": "2015-09-07 04:40:00"
         },
         {
-            "name": "psr/log",
-            "version": "1.0.0",
+            "name": "windwalker/utilities",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "url": "https://github.com/ventoviro/windwalker-utilities.git",
+                "reference": "a5e34d7131f8a9222df6e2121d81aca89747ebd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for logging libraries",
-            "keywords": [
-                "log",
-                "psr",
-                "psr-3"
-            ],
-            "time": "2012-12-21 11:40:51"
-        },
-        {
-            "name": "symfony/yaml",
-            "version": "v2.6.6",
-            "target-dir": "Symfony/Component/Yaml",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "174f009ed36379a801109955fc5a71a49fe62dd4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/174f009ed36379a801109955fc5a71a49fe62dd4",
-                "reference": "174f009ed36379a801109955fc5a71a49fe62dd4",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-utilities/zipball/a5e34d7131f8a9222df6e2121d81aca89747ebd9",
+                "reference": "a5e34d7131f8a9222df6e2121d81aca89747ebd9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.10",
+                "windwalker/string": "~2.0"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
+                "windwalker/test": "~2.0"
             },
-            "type": "library",
+            "type": "windwalker-package",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\Yaml\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
+                "psr-4": {
+                    "Windwalker\\Utilities\\": ""
                 },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "http://symfony.com",
-            "time": "2015-03-30 15:54:10"
-        },
-        {
-            "name": "windwalker/framework",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ventoviro/windwalker.git",
-                "reference": "cfc91608ea0fab8856dcc4317bd8b99ae7e3f5fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ventoviro/windwalker/zipball/cfc91608ea0fab8856dcc4317bd8b99ae7e3f5fc",
-                "reference": "cfc91608ea0fab8856dcc4317bd8b99ae7e3f5fc",
-                "shasum": ""
-            },
-            "require": {
-                "joomla/utilities": "~1.0"
-            },
-            "require-dev": {
-                "joomla/application": "~1.0",
-                "joomla/database": "~1.0",
-                "joomla/test": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Windwalker\\": "src/"
-                }
+                "files": [
+                    "functions.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GNU Lesser General Public License"
+                "LGPL-2.0+"
             ],
-            "authors": [
-                {
-                    "name": "Simon Asika",
-                    "email": "asika32764@gmail.com"
-                }
+            "description": "Windwalker Utilities package",
+            "homepage": "https://github.com/ventoviro/windwalker-utilities",
+            "keywords": [
+                "framework",
+                "utilities",
+                "windwalker"
             ],
-            "description": "Rapido de la vento viro.",
-            "homepage": "https://github.com/ventoviro/windwalker",
-            "time": "2014-06-16 08:39:10"
+            "time": "2015-10-01 07:16:34"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "windwalker/environment",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-environment.git",
+                "reference": "d6f8a096df7406e8df9ac1dffa8460b957587ffd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-environment/zipball/d6f8a096df7406e8df9ac1dffa8460b957587ffd",
+                "reference": "d6f8a096df7406e8df9ac1dffa8460b957587ffd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10"
+            },
+            "require-dev": {
+                "windwalker/test": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Environment\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Environment package",
+            "homepage": "https://github.com/ventoviro/windwalker-environment",
+            "keywords": [
+                "environment",
+                "framework",
+                "windwalker"
+            ],
+            "time": "2015-08-11 08:56:05"
+        },
+        {
+            "name": "windwalker/test",
+            "version": "2.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ventoviro/windwalker-test.git",
+                "reference": "d1704eb01155d41c4da12756dcc0ffbbe9fcfd2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ventoviro/windwalker-test/zipball/d1704eb01155d41c4da12756dcc0ffbbe9fcfd2f",
+                "reference": "d1704eb01155d41c4da12756dcc0ffbbe9fcfd2f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.10",
+                "windwalker/environment": "~2.0"
+            },
+            "type": "windwalker-package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Windwalker\\Test\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.0+"
+            ],
+            "description": "Windwalker Test package",
+            "homepage": "https://github.com/ventoviro/windwalker-test",
+            "keywords": [
+                "framework",
+                "test",
+                "windwalker"
+            ],
+            "time": "2015-08-21 14:56:15"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": [],

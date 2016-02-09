@@ -8,11 +8,8 @@
 
 namespace GeneratorBundle\Action;
 
-use GeneratorBundle\Action\AbstractAction;
-use CodeGenerator\Controller\TaskController;
-
 /**
- * Class CopyBasefilesAction
+ * Class CopyAllAction
  *
  * @since 1.0
  */

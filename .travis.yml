@@ -1,0 +1,35 @@
+language: php
+
+php:
+  - hhvm
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+
+matrix:
+  allow_failures:
+    - php: 7.0
+    - php: hhvm
+
+before_script:
+  # Download Joomla
+  - cd /home/travis/build
+  - git clone https://github.com/asika32764/joomla-cmf.git joomla
+  - cd joomla
+  - cp -r $TRAVIS_BUILD_DIR libraries/windwalker
+  - mkdir libraries/windwalker-bundles
+
+  # Import SQL
+  - cp libraries/windwalker/resource/travis/configuration.dist.php configuration.php
+  - mysql -e 'CREATE DATABASE windwalker_test;'
+  - php cli/console sql import default -y
+
+  # Prapare Test
+  - cd libraries/windwalker
+  - cp resource/travis/travis-phpunit.xml phpunit.xml
+  - composer update
+
+script:
+  - phpunit -v

@@ -10,15 +10,18 @@ namespace Windwalker\Model;
 
 use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
+use Joomla\String\Inflector;
 use JTable;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\DateHelper;
+use Windwalker\String\StringHelper;
 
 /**
  * Prototype admin model.
  *
  * @since 2.0
  */
-abstract class AdminModel extends CrudModel
+class AdminModel extends CrudModel
 {
 	/**
 	 * The reorder conditions.
@@ -41,7 +44,7 @@ abstract class AdminModel extends CrudModel
 
 		if (!$this->reorderConditions)
 		{
-			$this->reorderConditions = \JArrayHelper::getValue($config, 'reorder_conditions', array('catid'));
+			$this->reorderConditions = ArrayHelper::getValue($config, 'reorder_conditions', array('catid'));
 		}
 
 		// Guess the item view as the context.
@@ -53,7 +56,7 @@ abstract class AdminModel extends CrudModel
 		// Guess the list view as the plural of the item view.
 		if (empty($this->viewList))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewList = $inflector->toPlural($this->viewItem);
 		}
@@ -249,7 +252,7 @@ abstract class AdminModel extends CrudModel
 	 */
 	protected function prepareTable(\JTable $table)
 	{
-		$date = DateHelper::getDate();
+		$date = DateHelper::getDate('now');
 		$user = $this->container->get('user');
 
 		// Alias
@@ -271,15 +274,42 @@ abstract class AdminModel extends CrudModel
 		}
 
 		// Created date
-		if (property_exists($table, 'created') && !$table->created)
+		if (property_exists($table, 'created'))
 		{
-			$table->created = $date->toSql();
+			if ($table->created)
+			{
+				$table->created = DateHelper::toServerTime($table->created);
+			}
+			else
+			{
+				$table->created = $date->toSql();
+			}
 		}
 
 		// Publish_up date
-		if (property_exists($table, 'publish_up') && !$table->publish_up)
+		if (property_exists($table, 'publish_up'))
 		{
-			$table->publish_up = $this->db->getNullDate();
+			if ($table->publish_up)
+			{
+				$table->publish_up = DateHelper::toServerTime($table->publish_up);
+			}
+			else
+			{
+				$table->publish_up = $this->db->getNullDate();
+			}
+		}
+
+		// Publish_down date
+		if (property_exists($table, 'publish_down'))
+		{
+			if ($table->publish_down)
+			{
+				$table->publish_down = DateHelper::toServerTime($table->publish_down);
+			}
+			else
+			{
+				$table->publish_down = $this->db->getNullDate();
+			}
 		}
 
 		// Modified date
@@ -421,8 +451,8 @@ abstract class AdminModel extends CrudModel
 
 		while ($table->load(array('alias' => $alias, 'catid' => $categoryId)))
 		{
-			$title = \JString::increment($title);
-			$alias = \JString::increment($alias, 'dash');
+			$title = StringHelper::increment($title);
+			$alias = StringHelper::increment($alias, 'dash');
 		}
 
 		return array($title, $alias);

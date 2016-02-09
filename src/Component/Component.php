@@ -8,9 +8,11 @@
 
 namespace Windwalker\Component;
 
+use Joomla\Registry\Registry;
 use Windwalker\Controller\Controller;
 use Windwalker\DI\Container;
 use Windwalker\Event\ListenerHelper;
+use Windwalker\Utilities\Reflection\ReflectionHelper;
 
 /**
  * Component class.
@@ -69,14 +71,21 @@ class Component
 	protected $defaultController;
 
 	/**
+	 * Property config.
+	 *
+	 * @var  Registry
+	 */
+	protected $config;
+
+	/**
 	 * The paths of this component.
 	 *
 	 * @var array
 	 */
 	protected $path = array(
-		'self',
-		'site',
-		'administrator'
+		'self' => '',
+		'site' => '',
+		'administrator' => '',
 	);
 
 	/**
@@ -91,9 +100,7 @@ class Component
 	 */
 	public function __construct($name = null, $input = null, $application = null, $container = null)
 	{
-		$this->application = $application ?: \JFactory::getApplication();
-		$this->input       = $input       ?: $this->application->input;
-		$this->name        = $name;
+		$this->name = $name;
 
 		// Guess component name.
 		if (!$this->name)
@@ -102,7 +109,7 @@ class Component
 
 			$this->name = $reflection->getShortName();
 
-			$this->name = str_replace('Component', '', $this->name);
+			$this->name = strtolower(str_replace('Component', '', $this->name));
 
 			if (!$this->name)
 			{
@@ -112,7 +119,18 @@ class Component
 
 		$this->option = 'com_' . strtolower($this->name);
 
-		$this->container = $container ?: Container::getInstance($this->option);
+		$this->container   = $container   ? : Container::getInstance($this->option);
+		$this->application = $application ? : $this->container->get('app');
+		$this->input       = $input       ? : $this->application->input;
+
+		// Add a config but make it B/C
+		if ($this->container->exists($this->option . '.config'))
+		{
+			$this->config = $this->container->get($this->option . '.config');
+		}
+
+		$this->config = $this->config ? : new Registry;
+		$this->config->merge(\JComponentHelper::getParams($this->option));
 
 		$this->init();
 	}
@@ -156,10 +174,14 @@ class Component
 		$resolver   = $this->container->get('controller.resolver');
 		$controller = $resolver->getController($this->name, $task, $this->input);
 
-		$controller->setComponentPath(JPATH_BASE . '/components/' . $this->option);
+		$controller->setComponentPath($this->getPath('self'))
+			->setContainer($this->container);
 
-		return $controller->setContainer($this->container)
-			->execute();
+		$result = $controller->execute();
+
+		$controller->redirect();
+
+		return $result;
 	}
 
 	/**
@@ -198,13 +220,27 @@ class Component
 		$dispatcher->trigger('onComponentBeforeInit', array($this->name, $this, $this->input));
 
 		// We build component path constant, helpe us get path easily.
-		$this->path['self']          = JPATH_BASE . '/components/' . strtolower($this->option);
-		$this->path['site']          = JPATH_ROOT . '/components/' . strtolower($this->option);
-		$this->path['administrator'] = JPATH_ROOT . '/administrator/components/' . strtolower($this->option);
+		$this->path['self'] = $this->config->get('init.path.self') ? : JPATH_BASE . '/components/' . strtolower($this->option);
+		$this->path['site'] = $this->config->get('init.path.site') ? : JPATH_ROOT . '/components/' . strtolower($this->option);
+		$this->path['administrator'] = $this->config->get('init.path.administrator') ? : JPATH_ROOT . '/administrator/components/' . strtolower($this->option);
 
-		define(strtoupper($this->name) . '_SELF',  $this->path['self']);
-		define(strtoupper($this->name) . '_SITE',  $this->path['site']);
-		define(strtoupper($this->name) . '_ADMIN', $this->path['administrator']);
+		if ($this->config->get('init.constants', true))
+		{
+			if (!defined(strtoupper($this->name) . '_SELF'))
+			{
+				define(strtoupper($this->name) . '_SELF',  $this->path['self']);
+			}
+
+			if (!defined(strtoupper($this->name) . '_SITE'))
+			{
+				define(strtoupper($this->name) . '_SITE',  $this->path['site']);
+			}
+
+			if (!defined(strtoupper($this->name) . '_ADMIN'))
+			{
+				define(strtoupper($this->name) . '_ADMIN', $this->path['administrator']);
+			}
+		}
 
 		// Register some useful object for this component.
 		$this->container->registerServiceProvider(new ComponentProvider($this->name, $this));
@@ -245,11 +281,16 @@ class Component
 	 */
 	protected function registerEventListener()
 	{
-		ListenerHelper::registerListeners(
-			ucfirst($this->name),
-			$this->container->get('event.dispatcher'),
-			$this->path['administrator'] . '/src/' . ucfirst($this->name) . '/Listener'
-		);
+		$path = $this->getAdminPath() . '/src/' . ucfirst($this->name) . '/Listener';
+
+		if (is_dir($path))
+		{
+			ListenerHelper::registerListeners(
+				ucfirst($this->name),
+				$this->container->get('event.dispatcher'),
+				$this->path['administrator'] . '/src/' . ucfirst($this->name) . '/Listener'
+			);
+		}
 	}
 
 	/**
@@ -294,7 +335,7 @@ class Component
 	{
 		$user = $this->container->get('user');
 
-		return ComponentHelper::getActions($user, $this->option, $assetName, $categoryId, $id);
+		return ComponentHelper::getActions($user, $this->getAdminPath(), $assetName, $categoryId, $id);
 	}
 
 	/**
@@ -451,5 +492,77 @@ class Component
 	public function getAdminPath()
 	{
 		return $this->getPath('administrator');
+	}
+
+	/**
+	 * Method to get property Name
+	 *
+	 * @return  string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	/**
+	 * Method to set property name
+	 *
+	 * @param   string $name
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Option
+	 *
+	 * @return  string
+	 */
+	public function getOption()
+	{
+		return $this->option;
+	}
+
+	/**
+	 * Method to set property option
+	 *
+	 * @param   string $option
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setOption($option)
+	{
+		$this->option = $option;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Config
+	 *
+	 * @return  Registry
+	 */
+	public function getConfig()
+	{
+		return $this->config;
+	}
+
+	/**
+	 * Method to set property config
+	 *
+	 * @param   Registry $config
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setConfig($config)
+	{
+		$this->config = $config;
+
+		return $this;
 	}
 }

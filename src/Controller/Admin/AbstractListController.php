@@ -8,6 +8,9 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Joomla\String\Inflector;
+use Windwalker\Helper\ArrayHelper;
+
 /**
  * A controller to handle list page operation.
  *
@@ -34,14 +37,14 @@ abstract class AbstractListController extends AbstractAdminController
 		parent::__construct($input, $app, $config);
 
 		// Guess the item view as the context.
-		$this->viewList = $this->viewList ? : \JArrayHelper::getValue($config, 'view_list', $this->getName());
+		$this->viewList = $this->viewList ? : ArrayHelper::getValue($config, 'view_list', $this->getName());
 
 		// Guess the list view as the plural of the item view.
-		$this->viewItem = $this->viewItem ? : \JArrayHelper::getValue($config, 'view_item');
+		$this->viewItem = $this->viewItem ? : ArrayHelper::getValue($config, 'view_item');
 
 		if (empty($this->viewItem))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewItem = $inflector->toSingular($this->viewList);
 		}
@@ -56,8 +59,7 @@ abstract class AbstractListController extends AbstractAdminController
 	{
 		parent::prepareExecute();
 
-		$this->cid     = $this->input->get('cid', array(), 'array');
-		$this->context = $this->option . '.list.' . $this->context;
+		$this->cid = $this->input->get('cid', array(), 'array');
 	}
 
 	/**
@@ -78,5 +80,25 @@ abstract class AbstractListController extends AbstractAdminController
 		}
 
 		return parent::getModel($name, $prefix, $config);
+	}
+
+	/**
+	 * Set redirect URL for action success.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getSuccessRedirect()
+	{
+		return \JRoute::_($this->getRedirectListUrl(), false);
+	}
+
+	/**
+	 * Set redirect URL for action failure.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getFailRedirect()
+	{
+		return \JRoute::_($this->getRedirectListUrl(), false);
 	}
 }

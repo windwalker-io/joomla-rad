@@ -10,6 +10,7 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\ModalHelper;
 use Windwalker\Helper\LanguageHelper;
+use Windwalker\Script\WindwalkerScript;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -98,11 +99,6 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 			return '';
 		}
 
-		// Prepare Script & Styles
-		/** @var Windwalker\Helper\AssetHelper $asset */
-		$asset = Container::getInstance($quickadd_handler)->get('helper.asset');
-		$asset->addJs('js/quickadd.js');
-
 		// Set AKQuickAddOption
 		$config['task']             = $this->view_item . '.ajax.legacyquickadd';
 		$config['quickadd_handler'] = $quickadd_handler;
@@ -115,16 +111,7 @@ class JFormFieldCategoryadd extends JFormFieldCategory
 		$config['value_field']      = $value_field;
 		$config['joomla3']          = (JVERSION >= 3);
 
-		$config = HtmlHelper::getJSObject($config);
-
-		$script = <<<QA
-        window.addEvent('domready', function(){
-            var AKQuickAddOption = {$config} ;
-            AKQuickAdd.init('{$qid}', AKQuickAddOption);
-        });
-QA;
-
-		$asset->internalJS($script);
+		WindwalkerScript::quickadd('#' . $qid, $config);
 
 		// Load Language & Form
 		LanguageHelper::loadLanguage('com_' . $this->component, null);
@@ -136,10 +123,10 @@ QA;
 		$html         = '';
 		$button_title = $title;
 		$modal_title  = $button_title;
-		$button_class = 'btn btn-small btn-success delicious green light fltlft quickadd_button';
+		$button_class = 'btn btn-small btn-success quickadd_button';
 
-		$footer = "<button class=\"btn delicious\" type=\"button\" onclick=\"$$('#{$qid} input', '#{$qid} select').set('value', '');AKQuickAdd.closeModal('{$qid}');\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
-		$footer .= "<button class=\"btn btn-primary delicious blue\" type=\"submit\" onclick=\"AKQuickAdd.submit('{$qid}', event);\">" . JText::_('JSUBMIT') . "</button>";
+		$footer = "<button class=\"btn\" type=\"button\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
+		$footer .= "<button class=\"btn btn-primary\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
 
 		$html .= ModalHelper::modalLink(JText::_($button_title), $qid, array('class' => $button_class, 'icon' => 'icon-new icon-white'));
 		$html .= ModalHelper::renderModal($qid, $content, array('title' => JText::_($modal_title), 'footer' => $footer));

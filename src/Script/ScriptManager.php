@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of joomla330 project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
@@ -9,19 +9,22 @@
 namespace Windwalker\Script;
 
 use Windwalker\DI\Container;
-use Windwalker\Helper\AssetHelper;
+use Windwalker\Facade\AbstractProxyFacade;
+use Windwalker\Asset\AssetManager;
 
 /**
  * An Asset Manager class help us manage script dependency.
  *
  * @since 2.0
+ *
+ * @deprecated  3.0  Use AbstractScriptManager instead.
  */
-class ScriptManager
+class ScriptManager extends AbstractProxyFacade
 {
 	/**
 	 * THe asset helpers storage.
 	 *
-	 * @var  AssetHelper[]
+	 * @var  AssetManager[]
 	 */
 	protected static $assetHelpers = array();
 
@@ -216,7 +219,7 @@ class ScriptManager
 	 *
 	 * @param   string $option Option name.
 	 *
-	 * @return  AssetHelper
+	 * @return  AssetManager
 	 */
 	public static function getHelper($option = 'windwalker')
 	{
@@ -231,7 +234,7 @@ class ScriptManager
 		}
 		catch (\UnexpectedValueException $e)
 		{
-			$asset = new AssetHelper($option);
+			$asset = new AssetManager($option);
 		}
 
 		return static::$assetHelpers[$option] = $asset;

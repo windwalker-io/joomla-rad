@@ -113,6 +113,7 @@ class AbstractBundle implements ContainerAwareInterface
 
 		$path = new PathLocator($path);
 
+		/** @var \SplFileInfo $file */
 		foreach ($path as $file)
 		{
 			if (!$file->isDir())
@@ -122,7 +123,7 @@ class AbstractBundle implements ContainerAwareInterface
 
 			$class = $namespace . '\\Command\\' . $file->getBasename() . '\\' . $file->getBasename() . 'Command';
 
-			if (class_exists($class) && is_subclass_of($class, 'Joomla\\Console\\Command\\Command') && $class::$isEnabled)
+			if (class_exists($class) && is_subclass_of($class, 'Windwalker\Console\Command\AbstractCommand') && $class::$isEnabled)
 			{
 				$console->addCommand(new $class);
 			}

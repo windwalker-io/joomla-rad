@@ -8,6 +8,8 @@
 
 use Windwalker\DI\Container;
 use Windwalker\Helper\XmlHelper;
+use Windwalker\Script\JQueryScript;
+use Windwalker\Script\WindwalkerScript;
 
 defined('JPATH_PLATFORM') or die;
 
@@ -49,29 +51,42 @@ class JFormFieldWinduser extends JFormField
 		$onchange = (string) $this->element['onchange'];
 
 		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modal_' . $this->id);
+		WindwalkerScript::modal('.hasUserModal');
+		JQueryScript::ui(array('effect'));
 
 		// Build the script.
-		$script   = array();
-		$script[] = '	function jSelectUser_' . $this->id . '(id, title) {';
-		$script[] = '		var old_id = document.getElementById("' . $this->id . '_id").value;';
-		$script[] = '		if (old_id != id) {';
-		$script[] = '			document.getElementById("' . $this->id . '_id").value = id;';
-		$script[] = '			document.getElementById("' . $this->id . '_name").value = title;';
-		$script[] = '			' . $onchange;
-		$script[] = '		}';
-		$script[] = '		SqueezeBox.close();';
-		$script[] = '	}';
+		$js = <<<JS
+function jSelectUser_{$this->id}(id, title) {
+	var input = jQuery('#{$this->id}_id');
+	var oldId = input.val();
+
+	if (oldId != id) {
+		input.val(id);
+		jQuery('#{$this->id}_name').val(title).removeClass('invalid').delay(300).effect('highlight');
+	}
+
+	$onchange;
+
+	Windwalker.Modal.hide();
+};
+JS;
 
 		// Add the script to the document head.
 		$asset = Container::getInstance()->get('helper.asset');
-		$asset->internalJS(implode("\n", $script));
+		$asset->internalJS($js);
 
 		// Load the current username if available.
 		$table = JTable::getInstance('user');
 
 		if ($this->value)
 		{
+			$table->load($this->value);
+		}
+		// Handle the special case for "current".
+		elseif (strtoupper($this->value) == 'CURRENT')
+		{
+			// 'CURRENT' is not a reasonable value to be placed in the html
+			$this->value = JFactory::getUser()->id;
 			$table->load($this->value);
 		}
 		else
@@ -81,13 +96,13 @@ class JFormFieldWinduser extends JFormField
 
 		// Create a dummy text field with the user name.
 		$html[] = '<div class="input-append">';
-		$html[] = '	<input type="text" id="' . $this->id . '" value="' . htmlspecialchars($table->name, ENT_COMPAT, 'UTF-8') . '"'
+		$html[] = '	<input type="text" id="' . $this->id . '_name" value="' . htmlspecialchars($table->name, ENT_COMPAT, 'UTF-8') . '"'
 			. ' readonly' . $attr . ' />';
 
 		// Create the user select button.
 		if (!XmlHelper::getBool($this->element, 'readonly', false))
 		{
-			$html[] = '		<a class="btn btn-primary modal_' . $this->id . '" title="' . JText::_('JLIB_FORM_CHANGE_USER') . '" href="' . $link . '"'
+			$html[] = '		<a class="btn btn-primary hasUserModal modal_' . $this->id . '" title="' . JText::_('JLIB_FORM_CHANGE_USER') . '" href="' . $link . '"'
 				. ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}">';
 			$html[] = '<i class="icon-user"></i></a>';
 		}

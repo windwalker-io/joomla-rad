@@ -44,6 +44,9 @@ require_once JPATH_CONFIGURATION . '/configuration.php';
 // System configuration.
 $config = new JConfig;
 
-\Windwalker\DI\Container::getInstance()->get('app')
-	->setDescription(null)
+$console = \Windwalker\DI\Container::getInstance()->get('app');
+
+\JFactory::$application = $console;
+
+$console->setDescription(null)
 	->execute();

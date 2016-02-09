@@ -8,9 +8,9 @@
 
 namespace GeneratorBundle\FileOperator;
 
-use CodeGenerator\FileOperator\CopyOperator as CodeGeneratorCopyOperator;
-use Joomla\Filesystem\File;
-use Windwalker\String\String;
+use Muse\FileOperator\CopyOperator as CodeGeneratorCopyOperator;
+use Windwalker\Filesystem\File;
+use Windwalker\String\StringHelper;
 
 /**
  * Class CopyOperator
@@ -31,7 +31,7 @@ class CopyOperator extends CodeGeneratorCopyOperator
 	protected function copyFile($src, $dest, $replace = array())
 	{
 		// Replace dest file name.
-		$dest = String::parseVariable($dest, $replace);
+		$dest = StringHelper::parseVariable($dest, $replace);
 
 		if (is_file($dest))
 		{
@@ -39,7 +39,7 @@ class CopyOperator extends CodeGeneratorCopyOperator
 		}
 		else
 		{
-			$content = String::parseVariable(file_get_contents($src), $replace);
+			$content = StringHelper::parseVariable(file_get_contents($src), $replace);
 
 			if (File::write($dest, $content))
 			{

@@ -8,6 +8,9 @@
 
 namespace Windwalker\Controller;
 
+use Windwalker\Model\Model;
+use Windwalker\Utilities\Queue\PriorityQueue;
+use Windwalker\View\AbstractView;
 use Windwalker\View\Html\AbstractHtmlView;
 
 defined('_JEXEC') or die('Restricted access');
@@ -55,6 +58,13 @@ class DisplayController extends Controller
 	protected $format = 'html';
 
 	/**
+	 * Property subModels.
+	 *
+	 * @var  Model[]
+	 */
+	protected $subModels = array();
+
+	/**
 	 * Prepare execute hook.
 	 *
 	 * @throws \LogicException
@@ -85,9 +95,17 @@ class DisplayController extends Controller
 		}
 
 		// Push JDocument to View
-		$view->document = $document;
+		$view->getData()->set('document', $document);
 
 		$this->view = $view;
+
+		// Redirect to GET
+		if (strtoupper($this->input->getMethod()) == 'POST')
+		{
+			$this->redirect(\JUri::getInstance());
+
+			return;
+		}
 	}
 
 
@@ -99,9 +117,9 @@ class DisplayController extends Controller
 	protected function doExecute()
 	{
 		// Display the view
-		$conf = $this->container->get('joomla.config');
+		$config = $this->container->get('joomla.config');
 
-		if ($this->cachable && $this->format != 'feed' && $conf->get('caching') >= 1)
+		if ($this->cachable && $this->format != 'feed' && $config->get('caching') >= 1)
 		{
 			$option = $this->input->get('option');
 			$cache = \JFactory::getCache($option, 'view');
@@ -128,6 +146,12 @@ class DisplayController extends Controller
 			}
 
 			return $cache->get($this->view, 'render');
+		}
+
+		// Set sub models
+		foreach ($this->subModels as $subModel)
+		{
+			$this->view->setModel($subModel);
 		}
 
 		return  $this->view->render();
@@ -230,11 +254,7 @@ class DisplayController extends Controller
 
 		$viewKey = 'view.' . strtolower($name);
 
-		try
-		{
-			$view = $container->get($viewKey, $forceNew);
-		}
-		catch (\InvalidArgumentException $e)
+		if (!$container->exists($viewKey))
 		{
 			$container->share(
 				$viewKey,
@@ -243,27 +263,25 @@ class DisplayController extends Controller
 					return new $viewName($model, $container, $config, $paths);
 				}
 			);
-
-			$view = $container->get($viewKey);
 		}
 
-		return $view;
+		return $container->get($viewKey, $forceNew);
 	}
 
 	/**
-	 * Get teplate path.
+	 * Get template path.
 	 *
-	 * @param \JView $view The view object.
+	 * @param string  $view  The view name.
 	 *
-	 * @return \SplPriorityQueue The queue object.
+	 * @return PriorityQueue The queue object.
 	 */
 	public function getTemplatePath($view)
 	{
 		// Register the layout paths for the view
 		$componentFolder = $this->getComponentPath();
-		$paths = new \SplPriorityQueue;
+		$paths = new PriorityQueue;
 
-		$view = $view ?: $this->defaultView;
+		$view = $view ? : $this->defaultView;
 
 		// Theme override path.
 		$paths->insert(JPATH_THEMES . '/' . $this->app->getTemplate() . '/html/' . $this->option . '/' . $view, 200);
@@ -277,7 +295,7 @@ class DisplayController extends Controller
 	/**
 	 * Assign Models Hook.
 	 *
-	 * @param \JView $view The view object.
+	 * @param AbstractView $view The view object.
 	 *
 	 * @return void
 	 */

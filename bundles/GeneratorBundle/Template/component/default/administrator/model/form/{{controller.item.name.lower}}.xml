@@ -25,6 +25,7 @@
 			show_root="true"
 			class="input-xlarge"
 			access="true"
+			quickadd="true"
 			/>
 
 		<field name="catid"
@@ -42,6 +43,7 @@
 			label="{{extension.element.upper}}_IMAGES"
 			description="{{extension.element.upper}}_IMAGES_DESC"
 			preview="true"
+			root="images"
 			/>
 
 		<field name="url"
@@ -173,7 +175,6 @@
 			type="text"
 			label="JGLOBAL_TITLE"
 			description="JFIELD_TITLE_DESC"
-			required="true"
 			size="50"
 			labelclass=""
 			class="input-xlarge"

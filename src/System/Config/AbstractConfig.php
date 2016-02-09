@@ -8,8 +8,8 @@
 
 namespace Windwalker\System\Config;
 
-use Joomla\Filesystem\File;
-use Joomla\Registry\Registry;
+use Windwalker\Filesystem\File;
+use Windwalker\Registry\Registry;
 
 /**
  * The config class.

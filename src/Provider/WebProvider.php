@@ -2,10 +2,8 @@
 
 namespace Windwalker\Provider;
 
-use Joomla\Console\Output\Stdout;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
-use Joomla\Input\Input;
 
 /**
  * The web application provider.

@@ -9,14 +9,14 @@
 namespace GeneratorBundle\Controller\Plugin\Template;
 
 use GeneratorBundle\Action;
-use GeneratorBundle\Controller\Plugin\PluginController;
+use GeneratorBundle\Controller\Plugin\AbstractPluginController;
 
 /**
  * Class ConvertController
  *
  * @since 1.0
  */
-class ConvertController extends PluginController
+class ConvertController extends AbstractPluginController
 {
 	/**
 	 * Execute the controller.

@@ -3,9 +3,12 @@
 namespace Windwalker\Provider;
 
 use Joomla\DI\Container;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\DI\ServiceProvider;
 use Windwalker\Helper\DateHelper;
+use Windwalker\Script\ModuleManager;
+use Windwalker\Relation\RelationContainer;
+
 
 /**
  * Windwalker system provider.
@@ -14,6 +17,23 @@ use Windwalker\Helper\DateHelper;
  */
 class SystemProvider extends ServiceProvider
 {
+	/**
+	 * Property client.
+	 *
+	 * @var  string
+	 */
+	protected $isConsole = false;
+
+	/**
+	 * Class init.
+	 *
+	 * @param  boolean  $isConsole
+	 */
+	public function __construct($isConsole = false)
+	{
+		$this->isConsole = (bool) $isConsole;
+	}
+
 	/**
 	 * Registers the service provider with a DI container.
 	 *
@@ -62,12 +82,31 @@ class SystemProvider extends ServiceProvider
 			'helper.asset',
 			function()
 			{
-				return new \Windwalker\Helper\AssetHelper;
+				return new \Windwalker\Asset\AssetManager;
+			}
+		);
+
+		// Script Manager
+		$container->share(
+			'script.manager',
+			function()
+			{
+				return new ModuleManager;
+			}
+		);
+
+		// Relation
+		$container->share(
+			'relation.container',
+			function()
+			{
+				return new RelationContainer;
+
 			}
 		);
 
 		// Detect deferent environment
-		if (defined('WINDWALKER_CONSOLE'))
+		if ($this->isConsole)
 		{
 			$container->registerServiceProvider(new CliProvider);
 		}

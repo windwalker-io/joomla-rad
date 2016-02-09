@@ -8,6 +8,7 @@
 
 namespace Windwalker\View\Html;
 
+use Joomla\String\Inflector;
 use Windwalker\Model\Model;
 use Windwalker\DI\Container;
 
@@ -39,7 +40,7 @@ class ItemHtmlView extends HtmlView
 		// Guess the list view as the plural of the item view.
 		if (empty($this->viewList))
 		{
-			$inflector = \JStringInflector::getInstance();
+			$inflector = Inflector::getInstance();
 
 			$this->viewList = $inflector->toPlural($this->viewItem);
 		}
@@ -54,13 +55,16 @@ class ItemHtmlView extends HtmlView
 	{
 		parent::prepareRender();
 
-		$data        = $this->getData();
-		$data->item  = $this->get('Item');
-		$data->state = $this->get('State');
+		$this['item'] = $this->get('Item');
 
-		if ($errors = $data->state->get('errors'))
+		if (property_exists($this['item'], 'catid'))
 		{
-			$this->flash($errors);
+			$this['state']->set('category.id', $this['item']->catid);
+		}
+
+		if ($errors = $this['state']->get('errors'))
+		{
+			$this->addMessage($errors);
 		}
 	}
 }

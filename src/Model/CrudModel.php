@@ -4,13 +4,14 @@ namespace Windwalker\Model;
 
 use Joomla\DI\Container as JoomlaContainer;
 use JTable;
+use Windwalker\Helper\ArrayHelper;
 
 /**
  * The basic Crud Model
  *
  * @since 2.0
  */
-class CrudModel extends FormModel
+class CrudModel extends AbstractFormModel
 {
 	/**
 	 * Item cache.
@@ -73,14 +74,14 @@ class CrudModel extends FormModel
 	{
 		parent::__construct($config, $container, $state, $db);
 
-		$this->eventAfterDelete  = $this->eventAfterDelete  ? : \JArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
-		$this->eventBeforeDelete = $this->eventBeforeDelete ? : \JArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
-		$this->eventAfterSave    = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
-		$this->eventBeforeSave   = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
-		$this->eventChangeState  = $this->eventAfterSave    ? : \JArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
+		$this->eventAfterDelete  = $this->eventAfterDelete  ? : ArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
+		$this->eventBeforeDelete = $this->eventBeforeDelete ? : ArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
+		$this->eventAfterSave    = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
+		$this->eventBeforeSave   = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
+		$this->eventChangeState  = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
 
 		// @TODO: Check is needed or not.
-		$this->textPrefix = $this->textPrefix ? : strtoupper(\JArrayHelper::getValue($config, 'text_prefix', $this->option));
+		$this->textPrefix = $this->textPrefix ? : strtoupper(ArrayHelper::getValue($config, 'text_prefix', $this->option));
 	}
 
 	/**
@@ -105,40 +106,6 @@ class CrudModel extends FormModel
 	}
 
 	/**
-	 * Method to get a single record.
-	 *
-	 * @param   integer  $pk  The id of the primary key.
-	 *
-	 * @return  mixed    Object on success, false on failure.
-	 */
-	public function getItem($pk = null)
-	{
-		$pk = (!empty($pk)) ? $pk : $this->state->get($this->getName() . '.id');
-		$table = $this->getTable();
-
-		if (!empty($pk))
-		{
-			// Attempt to load the row.
-			$table->load($pk);
-		}
-
-		// Convert to the JObject before adding other data.
-		$properties = $table->getProperties(1);
-		$item = \JArrayHelper::toObject($properties, 'stdClass');
-
-		if (property_exists($item, 'params'))
-		{
-			$registry = new \JRegistry;
-
-			$registry->loadString($item->params);
-
-			$item->params = $registry->toArray();
-		}
-
-		return $item;
-	}
-
-	/**
 	 * Method to save the form data.
 	 *
 	 * @param   array  $data  The form data.
@@ -158,7 +125,7 @@ class CrudModel extends FormModel
 		}
 
 		$key = $table->getKeyName();
-		$pk  = \JArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
+		$pk  = ArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
 
 		$isNew = true;
 
@@ -253,7 +220,7 @@ class CrudModel extends FormModel
 		$input = $container->get('input');
 
 		// Check the session for previously entered form data.
-		$data = $app->getUserState("{$this->option}.edit.{$this->getName()}.data", array());
+		$data = $app->getUserState($this->context . '.edit.data', array());
 
 		if (empty($data))
 		{

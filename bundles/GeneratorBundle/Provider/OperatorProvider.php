@@ -31,5 +31,8 @@ class OperatorProvider implements ServiceProviderInterface
 	{
 		$container->alias('operator.copy', 'GeneratorBundle\\FileOperator\\CopyOperator')
 			->buildSharedObject('GeneratorBundle\\FileOperator\\CopyOperator');
+
+		$container->alias('operator.convert', 'GeneratorBundle\\FileOperator\\ConvertOperator')
+			->buildSharedObject('GeneratorBundle\\FileOperator\\ConvertOperator');
 	}
 }

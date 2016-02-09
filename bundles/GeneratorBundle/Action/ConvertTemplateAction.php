@@ -8,7 +8,7 @@
 
 namespace GeneratorBundle\Action;
 
-use Joomla\Filesystem\Folder;
+use Windwalker\Filesystem\Folder;
 
 /**
  * Class ConvertTemplateAction

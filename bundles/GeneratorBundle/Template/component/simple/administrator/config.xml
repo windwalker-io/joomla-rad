@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset name="component"
+        label="{{extension.element.upper}}_COMPONENT_LABEL"
+        description="{{extension.element.upper}}_COMPONENT_DESC"
+        addfieldpath="administrator/components/{{extension.element.lower}}/model/field"
+    >
+
+	</fieldset>
+</config>

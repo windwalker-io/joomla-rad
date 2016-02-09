@@ -9,9 +9,7 @@
 namespace GeneratorBundle\Action\Component;
 
 use GeneratorBundle\Action\AbstractAction;
-use CodeGenerator\Controller\TaskController;
-use Windwalker\DI\Container;
-use Windwalker\String\String;
+use Windwalker\String\StringHelper;
 
 /**
  * Class ImportSqlAction
@@ -145,6 +143,6 @@ class CopyLanguageAction extends AbstractAction
 
 		$text = substr($text, strpos($text, '; {{controller.item.name.cap}}') - strlen($text));
 
-		return String::parseVariable($text, $this->config['replace']);
+		return StringHelper::parseVariable($text, $this->config['replace']);
 	}
 }

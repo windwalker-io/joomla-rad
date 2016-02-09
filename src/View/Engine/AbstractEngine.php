@@ -11,8 +11,9 @@ namespace Windwalker\View\Engine;
 use SplPriorityQueue;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\Container as JoomlaContainer;
+use Windwalker\Data\Data;
 use Windwalker\DI\Container;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 
 /**
  * The view engine.
@@ -73,7 +74,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	/**
 	 * The data to push into template.
 	 *
-	 * @var  mixed
+	 * @var  Data
 	 */
 	protected $data = null;
 
@@ -89,8 +90,8 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 		// Setup dependencies.
 		$this->paths  = $paths ? : new SplPriorityQueue;
 		$this->config = new Registry($config);
-
 		$this->container = $container ? : Container::getInstance();
+		$this->data = new Data;
 	}
 
 	/**
@@ -104,8 +105,6 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	public function render($layout, $data = array())
 	{
 		$this->layout = $layout;
-
-		$this->data = $data;
 
 		return $this->loadTemplate(null, $data);
 	}
@@ -131,21 +130,15 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 
 		// Clean the file name
 		$file = preg_replace('/[^A-Z0-9_\.-]/i', '', $file);
-		$tpl  = isset($tpl) ? preg_replace('/[^A-Z0-9_\.-]/i', '', $tpl) : $tpl;
 
 		// Load the template script
 		$templateFile = $this->getPath($file);
 
 		// Change the template folder if alternative layout is in different template
-		if (isset($layoutTemplate) && $layoutTemplate != '_' && $layoutTemplate != $template)
+		if (isset($layoutTemplate) && $layoutTemplate != '_' && $layoutTemplate != $template && is_file($layoutTemplate))
 		{
-			$alternateTmplFile = str_replace($template, $layoutTemplate, $template);
-
-			if (is_file($alternateTmplFile))
-			{
-				$templateFile = $alternateTmplFile;
-				$template     = $layoutTemplate;
-			}
+			$templateFile = $layoutTemplate;
+			$template     = $layoutTemplate;
 		}
 
 		if (strpos($templateFile, \JPath::clean(JPATH_THEMES)) !== false)
@@ -156,16 +149,6 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 		if (!$templateFile)
 		{
 			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND',  $file . '.' . $this->layoutExt), 500);
-		}
-
-		// Unset so as not to introduce into template scope
-		unset($tpl);
-		unset($file);
-
-		// Never allow a 'this' property
-		if (isset($this->this))
-		{
-			unset($this->this);
 		}
 
 		$output = $this->execute($templateFile, $data);

@@ -24,13 +24,6 @@ abstract class AbstractRedirectController extends Controller
 	);
 
 	/**
-	 * Are we allow return?
-	 *
-	 * @var  boolean
-	 */
-	protected $allowReturn = false;
-
-	/**
 	 * View item name.
 	 *
 	 * @var string
@@ -67,13 +60,23 @@ abstract class AbstractRedirectController extends Controller
 	}
 
 	/**
-	 * Prepare execute hook.
+	 * Set redirect URL for action success.
 	 *
-	 * @return void
+	 * @return  string  Redirect URL.
 	 */
-	protected function prepareExecute()
+	public function getSuccessRedirect()
 	{
-		parent::prepareExecute();
+		return \JRoute::_($this->getRedirectListUrl(), false);
+	}
+
+	/**
+	 * Set redirect URL for action failure.
+	 *
+	 * @return  string  Redirect URL.
+	 */
+	public function getFailRedirect()
+	{
+		return \JRoute::_($this->getRedirectItemUrl(), false);
 	}
 
 	/**
@@ -84,11 +87,13 @@ abstract class AbstractRedirectController extends Controller
 	 * @param   string   $msg       Message to display on redirect. Optional, defaults to value set internally by controller, if any.
 	 * @param   string   $type      Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return  void
+	 * @return  static  Return self to support chaining.
 	 */
 	public function redirectToItem($recordId = null, $urlVar = 'id', $msg = null, $type = 'message')
 	{
-		$this->redirect(\JRoute::_($this->getRedirectItemUrl($recordId, $urlVar), false), $msg, $type);
+		$this->setRedirect(\JRoute::_($this->getRedirectItemUrl($recordId, $urlVar), false), $msg, $type);
+
+		return $this;
 	}
 
 	/**
@@ -97,39 +102,15 @@ abstract class AbstractRedirectController extends Controller
 	 * @param   string  $msg   Message to display on redirect. Optional, defaults to value set internally by controller, if any.
 	 * @param   string  $type  Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return  void
+	 * @return  static  Return self to support chaining.
 	 */
 	public function redirectToList($msg = null, $type = 'message')
 	{
 		$this->input->set('layout', null);
 
-		$this->redirect(\JRoute::_($this->getRedirectListUrl(), false), $msg, $type);
-	}
+		$this->setRedirect(\JRoute::_($this->getRedirectListUrl(), false), $msg, $type);
 
-	/**
-	 * Set a URL for browser redirection.
-	 *
-	 * @param   string $url  URL to redirect to.
-	 * @param   string $msg  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
-	 * @param   string $type Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
-	 *
-	 * @return  void
-	 */
-	public function redirect($url, $msg = null, $type = 'message')
-	{
-		$this->setMessage($msg, $type);
-
-		if ($this->input->get('hmvc') || !$this->input->get('redirect', true))
-		{
-			return;
-		}
-
-		if ($this->input->get('return') && $this->allowReturn)
-		{
-			$url = UriHelper::base64('decode', $this->input->get('return'));
-		}
-
-		$this->app->redirect($url);
+		return $this;
 	}
 
 	/**

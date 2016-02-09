@@ -10,8 +10,9 @@ namespace Windwalker\View\Html;
 
 use Joomla\DI\Container;
 use Windwalker\Data\Data;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\View\Helper\ToolbarHelper;
 
 /**
@@ -47,9 +48,9 @@ class HtmlView extends AbstractHtmlView
 	{
 		parent::__construct($model, $container, $config, $paths);
 
-		$this->buttons = $this->buttons ? : \JArrayHelper::getValue($config, 'buttons', array());
+		$this->buttons = $this->buttons ? : ArrayHelper::getValue($config, 'buttons', array());
 
-		$this->toolbarConfig = $this->toolbarConfig ? : \JArrayHelper::getValue($config, 'toolbar', array());
+		$this->toolbarConfig = $this->toolbarConfig ? : ArrayHelper::getValue($config, 'toolbar', array());
 	}
 
 	/**
@@ -80,26 +81,27 @@ class HtmlView extends AbstractHtmlView
 	{
 		parent::prepareRender();
 
-		$data = $this->data;
+		// State
+		$this['state'] = $this->get('State');
 
 		// View data
-		$data->view = new Data;
-		$data->view->prefix   = $this->prefix;
-		$data->view->option   = $this->option;
-		$data->view->name     = $this->getName();
-		$data->view->viewItem = $this->viewItem;
-		$data->view->viewList = $this->viewList;
-		$data->view->layout   = $this->layout;
+		$this['view'] = new Data;
+		$this['view']->prefix   = $this->prefix;
+		$this['view']->option   = $this->option;
+		$this['view']->name     = $this->getName();
+		$this['view']->viewItem = $this->viewItem;
+		$this['view']->viewList = $this->viewList;
+		$this['view']->layout   = $this->layout;
 
 		// Uri data
 		$uri = \JUri::getInstance();
-		$data->uri = new Data;
-		$data->uri->path = $uri->toString(array('path', 'query', 'fragment'));
-		$data->uri->base = \JUri::base(true);
-		$data->uri->root = \JUri::root(true);
+		$this['uri'] = new Data;
+		$this['uri']->path = $uri->toString(array('path', 'query', 'fragment'));
+		$this['uri']->base = \JUri::base(true);
+		$this['uri']->root = \JUri::root(true);
 
 		// Asset data
-		$data->asset = $this->container->get('helper.asset');
+		$this['asset'] = $this->container->get('helper.asset');
 	}
 
 	/**

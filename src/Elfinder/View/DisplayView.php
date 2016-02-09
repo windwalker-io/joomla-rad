@@ -8,8 +8,7 @@
 
 namespace Windwalker\Elfinder\View;
 
-use Joomla\Registry\Registry;
-use JRegistry;
+use Windwalker\Registry\Registry;
 use JURI;
 use Windwalker\View\Html\AbstractHtmlView;
 
@@ -67,6 +66,7 @@ class DisplayView extends AbstractHtmlView
 		// Get Request
 		$finder_id  = $input->get('finder_id');
 		$modal      = ($input->get('tmpl') == 'component') ? : false;
+		$callback   = $input->get('callback');
 		$root       = $config->get('root', $input->getPath('root', '/'));
 		$start_path = $config->get('start_path', $input->getPath('start_path', '/'));
 		$site_root  = JURI::root(true) . '/';
@@ -81,7 +81,7 @@ class DisplayView extends AbstractHtmlView
 		{
 			$onlymimes = is_array($onlymimes) ? $onlymimes : explode(',', $onlymimes);
 			$onlymimes = array_map('trim', $onlymimes);
-			$onlymimes = array_map(array('\\Windwalker\\String\\String', 'quote'), $onlymimes);
+			$onlymimes = array_map(array('Windwalker\String\StringHelper', 'quote'), $onlymimes);
 			$onlymimes = implode(',', $onlymimes);
 		}
 
@@ -93,15 +93,14 @@ class DisplayView extends AbstractHtmlView
 		$upload_limit .= ' | Max upload files: ' . $upload_num;
 
 		// Set Script
-		$getFileCallback = !$modal ? '' : "
+		$getFileCallback = !$callback ? '' : "
             ,
-            getFileCallback : function(file)
-            {
-                if (window.parent) window.parent.AKFinderSelect( '{$finder_id}', AKFinderSelected, window.elFinder, '{$site_root}');
+            getFileCallback : function (files) {
+                window.parent.$callback(WindwalkerFinderSelected, window.elFinder, '$site_root');
             }";
 
 		$script = <<<SCRIPT
-		var AKFinderSelected ;
+		var WindwalkerFinderSelected ;
         var elFinder ;
 
 		// Init elFinder
@@ -122,10 +121,10 @@ class DisplayView extends AbstractHtmlView
 
                         if (selected.length)
                         {
-                            AKFinderSelected = [];
+                            WindwalkerFinderSelected = [];
 
                             jQuery.each(selected, function(i, e){
-                                    AKFinderSelected[i] = elfinderInstance.file(e);
+                                    WindwalkerFinderSelected[i] = elfinderInstance.file(e);
                             });
                         }
 
@@ -171,12 +170,12 @@ SCRIPT;
 		$asset->bootstrap();
 
 		// ElFinder includes
-		$asset->addCss('js/jquery-ui/css/smoothness/jquery-ui-1.8.24.custom.css');
+		$asset->addCss('jquery-ui/smoothness/jquery-ui-1.8.24.custom.css');
 		$asset->addCss('js/elfinder/css/elfinder.min.css');
 		$asset->addCss('js/elfinder/css/theme.css');
 
-		$asset->addJs('js/jquery-ui/js/jquery-ui.min.js');
-		$asset->addJs('js/elfinder/js/elfinder.min.js');
+		$asset->addJs('jquery/jquery-ui.min.js');
+		$asset->addJs('elfinder/js/elfinder.min.js');
 
 		if (is_file(WINDWALKER . '/asset/js/elfinder/js/i18n/elfinder.' . $lang_code . '.js'))
 		{

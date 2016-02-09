@@ -10,14 +10,20 @@ namespace Windwalker\Model;
 
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
+use Joomla\Registry\Registry;
+use Windwalker\Cache\Cache;
+use Windwalker\Cache\Storage\RuntimeStorage;
 use Windwalker\DI\Container;
+use Windwalker\Helper\ArrayHelper;
+use Windwalker\Helper\ContextHelper;
+use Windwalker\Joomla\Registry\DecoratingRegistry;
 
 /**
  * Windwalker basic model class.
  *
  * @since 2.0
  */
-class Model extends \JModelDatabase implements ContainerAwareInterface
+class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAccess
 {
 	/**
 	 * The model (base) name
@@ -25,6 +31,13 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 * @var  string
 	 */
 	protected $name = null;
+
+	/**
+	 * Property cache.
+	 *
+	 * @var  Cache
+	 */
+	protected $cache;
 
 	/**
 	 * Component prefix.
@@ -68,13 +81,57 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 *
 	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
 	 * @param   JoomlaContainer    $container Service container.
-	 * @param   \JRegistry         $state     The model state.
+	 * @param   Registry           $state     The model state.
 	 * @param   \JDatabaseDriver   $db        The database adapter.
 	 *
 	 * @throws \Exception
 	 */
-	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
+	public function __construct($config = array(), JoomlaContainer $container = null, Registry $state = null, \JDatabaseDriver $db = null)
 	{
+		$this->prefix = $this->getPrefix($config);
+		$this->option = 'com_' . $this->prefix;
+
+		// Guess name
+		$this->name = $this->name ? : ArrayHelper::getValue($config, 'name', $this->getName());
+
+		// Register the paths for the form
+		$this->registerTablePaths($config);
+
+		// Set the clean cache event
+		$this->eventCleanCache = $this->eventCleanCache ? : ArrayHelper::getValue($config, 'event_clean_cache', 'onContentCleanCache');
+
+		$this->container = $container ? : $this->getContainer();
+
+		$this->resetCache();
+
+		parent::__construct($state, $db);
+
+		$this->state->loadArray($config);
+
+		// Guess the context as Option.ModelName.
+		$this->context = $this->context ? : ContextHelper::fromModel($this);
+
+		// Set the internal state marker - used to ignore setting state from the request
+		if (empty($config['ignore_request']))
+		{
+			// Protected method to auto-populate the model state.
+			$this->populateState();
+		}
+	}
+
+	/**
+	 * getPrefix
+	 *
+	 * @param   array  $config  An array of configuration options (name, state, dbo, table_path, ignore_request).
+	 *
+	 * @return  string
+	 *
+	 * @throws \Exception
+	 */
+	public function getPrefix($config = array())
+	{
+		$this->prefix = !empty($config['prefix']) ? $config['prefix'] : $this->prefix;
+
 		// Guess the option from the class name (Option)Model(View).
 		if (empty($this->prefix))
 		{
@@ -88,32 +145,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 			$this->prefix = strtolower($r[1]);
 		}
 
-		$this->option = 'com_' . $this->prefix;
-
-		// Guess name
-		$this->name = $this->name ? : \JArrayHelper::getValue($config, 'name', $this->getName());
-
-		// Register the paths for the form
-		$this->registerTablePaths($config);
-
-		// Set the clean cache event
-		$this->eventCleanCache = $this->eventCleanCache ? : \JArrayHelper::getValue($config, 'event_clean_cache', 'onContentCleanCache');
-
-		$this->container = $container ? : $this->getContainer();
-
-		$state = new \JRegistry($config);
-
-		parent::__construct($state, $db);
-
-		// Guess the context as Option.ModelName.
-		$this->context = $this->context ? : strtolower($this->option . '.' . $this->getName());
-
-		// Set the internal state marker - used to ignore setting state from the request
-		if (empty($config['ignore_request']))
-		{
-			// Protected method to auto-populate the model state.
-			$this->populateState();
-		}
+		return $this->prefix;
 	}
 
 	/**
@@ -241,7 +273,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 	 */
 	protected function populateState()
 	{
-		$this->loadState();
+		// $this->loadState();
 	}
 
 	/**
@@ -375,5 +407,263 @@ class Model extends \JModelDatabase implements ContainerAwareInterface
 		$this->container = $container;
 
 		return $this;
+	}
+
+	/**
+	 * Get value from a state key.
+	 *
+	 * @param string $key      Key to get this value.
+	 * @param mixed  $default  Default value if key not exists.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	public function get($key, $default = null)
+	{
+		return $this->state->get($key, $default);
+	}
+
+	/**
+	 * Set value to state.
+	 *
+	 * @param string $key    Key of this state.
+	 * @param mixed  $value  Value of this state.
+	 *
+	 * @return  static  Return self to support chaining.
+	 *
+	 * @since   2.1
+	 */
+	public function set($key, $value)
+	{
+		$this->state->set($key, $value);
+
+		return $this;
+	}
+
+	/**
+	 * Reset the state.
+	 *
+	 * @return  static  Return self to support chaining.
+	 *
+	 * @since   2.1
+	 */
+	public function reset()
+	{
+		$this->state = $this->loadState();
+
+		return $this;
+	}
+
+	/**
+	 * Method to get a store id based on the model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param   string  $id  An identifier string to generate the store id.
+	 *
+	 * @return  string  A store id.
+	 *
+	 * @since   2.1
+	 */
+	protected function getStoreId($id = '')
+	{
+		// Add the list state to the store id.
+		$id .= ':' . json_encode($this->state->toArray());
+
+		return md5($this->context . ':' . $id);
+	}
+
+	/**
+	 * Get cached data.
+	 *
+	 * @param   string  $id  the cache id prefix.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	protected function getCache($id = null)
+	{
+		return $this->getCacheObject()->get($this->getStoreId($id));
+	}
+
+	/**
+	 * Set data to cache.
+	 *
+	 * @param   string  $id    The cache id prefix.
+	 * @param   mixed   $data  The data to store.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	protected function setCache($id = null, $data = null)
+	{
+		$this->getCacheObject()->set($this->getStoreId($id), $data);
+
+		return $data;
+	}
+
+	/**
+	 * Is this cache exists.
+	 *
+	 * @param   string  $id  The cache id prefix.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   2.1
+	 */
+	protected function hasCache($id = null)
+	{
+		return $this->getCacheObject()->exists($this->getStoreId($id));
+	}
+
+	/**
+	 * Reset all cache.
+	 *
+	 * @return  static
+	 *
+	 * @since   2.1
+	 */
+	public function resetCache()
+	{
+		$this->cache = new Cache(new RuntimeStorage);
+
+		return $this;
+	}
+
+	/**
+	 * Get runtime cache object.
+	 *
+	 * @return  Cache
+	 *
+	 * @since   2.1
+	 */
+	public function getCacheObject()
+	{
+		if (!$this->cache)
+		{
+			$this->resetCache();
+		}
+
+		return $this->cache;
+	}
+
+	/**
+	 * Fetch data from cache by a callback.
+	 *
+	 * @param string   $id      The store id prefix.
+	 * @param callable $closure The callback to get data.
+	 *
+	 * @return  mixed
+	 *
+	 * @since   2.1
+	 */
+	protected function fetch($id, $closure)
+	{
+		return $this->getCacheObject()->call($this->getStoreId($id), $closure);
+	}
+
+	/**
+	 * Is a property exists or not.
+	 *
+	 * @param mixed $offset Offset key.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   2.1
+	 */
+	public function offsetExists($offset)
+	{
+		return $this->state->exists($offset);
+	}
+
+	/**
+	 * Get a property.
+	 *
+	 * @param mixed $offset Offset key.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  mixed The value to return.
+	 *
+	 * @since   2.1
+	 */
+	public function offsetGet($offset)
+	{
+		return $this->state->get($offset);
+	}
+
+	/**
+	 * Set a value to property.
+	 *
+	 * @param mixed $offset Offset key.
+	 * @param mixed $value  The value to set.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	public function offsetSet($offset, $value)
+	{
+		$this->state->set($offset, $value);
+	}
+
+	/**
+	 * Unset a property.
+	 *
+	 * @param mixed $offset Offset key to unset.
+	 *
+	 * @throws  \InvalidArgumentException
+	 * @return  void
+	 *
+	 * @since   2.1
+	 */
+	public function offsetUnset($offset)
+	{
+		$this->state->set($offset, null);
+	}
+
+	/**
+	 * Load the model state.
+	 *
+	 * Will Convert to Windwalker Registry.
+	 *
+	 * @return  Registry  The state object.
+	 *
+	 * @since   2.1
+	 */
+	protected function loadState()
+	{
+		return new DecoratingRegistry(new \Windwalker\Registry\Registry);
+	}
+
+	/**
+	 * Set the model state.
+	 *
+	 * @param   Registry $state The state object.
+	 *
+	 * @return  void
+	 *
+	 * @since   12.1
+	 */
+	public function setState(Registry $state)
+	{
+		$registry = new \Windwalker\Registry\Registry($state->toArray());
+
+		$this->state = new DecoratingRegistry($registry);
+	}
+
+	/**
+	 * Method to get property Option
+	 *
+	 * @return  string
+	 */
+	public function getOption()
+	{
+		return $this->option;
 	}
 }

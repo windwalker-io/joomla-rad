@@ -8,21 +8,26 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Windwalker\String\StringHelper;
+
 /**
  * Save2Copy Controller
  *
  * @since 2.0
  */
-class Save2copyController extends ApplyController
+class Save2copyController extends SaveController
 {
 	/**
-	 * Method to do something before save.
+	 * Pose execute hook.
 	 *
-	 * @return void
+	 * @param   mixed $return Executed return value.
+	 *
+	 * @return  mixed
 	 */
-	protected function prepareExecute()
+	protected function postExecute($return = null)
 	{
-		parent::prepareExecute();
+		// Run old save process to release edit id.
+		parent::postExecute($return);
 
 		// Attempt to check-in the current record.
 		$data = array('cid' => array($this->recordId), 'quiet' => true);
@@ -36,32 +41,31 @@ class Save2copyController extends ApplyController
 
 		if (isset($this->data['title']))
 		{
-			$this->data['title'] = \JString::increment($this->data['title']);
+			$this->data['title'] = StringHelper::increment($this->data['title']);
 		}
 
 		if (isset($this->data['alias']))
 		{
-			$this->data['alias'] = \JString::increment($this->data['alias'], 'dash');
+			$this->data['alias'] = StringHelper::increment($this->data['alias'], 'dash');
 		}
+
+		// Set new date into session.
+		$this->app->setUserState($this->context . '.data', $this->data);
+
+		return $return;
 	}
 
 	/**
-	 * Method to run this controller.
+	 * Set redirect URL for action success.
 	 *
-	 * @return  mixed
+	 * @return  string  Redirect URL.
 	 */
-	protected function doExecute()
+	public function getSuccessRedirect()
 	{
-		$data = array('jform' => $this->data, $this->key => 0);
-
-		$input = new \JInput($data);
-
-		$input->post = $input;
-
-		$result = $this->fetch($this->prefix, $this->name . '.edit.save', $input);
-
 		$this->input->set('layout', 'edit');
+		$this->input->set($this->urlVar, null);
+		$this->recordId = null;
 
-		return $result;
+		return \JRoute::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
 	}
 }

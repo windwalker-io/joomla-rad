@@ -2,6 +2,7 @@
 
 namespace Windwalker\Controller\State;
 
+use Windwalker\Bootstrap\Message;
 use Windwalker\Controller\Admin\AbstractListController;
 
 /**
@@ -81,7 +82,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 				throw $e;
 			}
 
-			$this->redirectToList($e->getMessage(), 'error');
+			$this->setRedirect($this->getFailRedirect(), $e->getMessage(), Message::ERROR_RED);
 
 			return false;
 		}
@@ -156,7 +157,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 		// Check in the items.
 		$msg = \JText::plural($this->option . '_N_ITEMS_' . $this->actionText, $this->model->getState()->get('success.number'));
 
-		$this->redirectToList($msg);
+		$this->setRedirect($this->getSuccessRedirect(), $msg, Message::MESSAGE_GREEN);
 
 		return $return;
 	}

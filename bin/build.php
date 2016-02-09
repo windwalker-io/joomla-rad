@@ -14,19 +14,17 @@
 class Build
 {
 	/**
-	 * Property gitignore.
+	 * Property removes.
 	 *
-	 * @var  string
+	 * @var  array
 	 */
-	protected $gitignore = <<<GI
-# Development system files #
-.*
-!/.gitignore
-
-# Windwalker #
-/config.json
-GI;
-
+	protected $removes = array(
+		'test',
+		'.gitignore',
+		'.travis.yml',
+		'phpunit.xml.dist',
+		'README.md'
+	);
 
 	/**
 	 * Class init.
@@ -43,6 +41,23 @@ GI;
 	 */
 	public function execute()
 	{
+		// Prepare zip name.
+		$zipFile = BUILD_ROOT . '/../windwalker-rad-%s.zip';
+
+		$version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : null;
+
+		if (!$version)
+		{
+			$this->out('Please enter a version.');
+			$this->out('[Usage] php build.php <version>');
+
+			exit();
+		}
+
+		// Remove unnecessary files and folders.
+		$this->removeFiles();
+
+		// Prepare load composer
 		$this->exec("php -r \"readfile('https://getcomposer.org/installer');\" | php");
 
 		rename('composer.phar', BUILD_ROOT . '/composer.phar');
@@ -50,37 +65,72 @@ GI;
 		$this->exec(sprintf('php %s/composer.phar install', BUILD_ROOT));
 
 		$this->out('>> Remove composer.phar');
+
 		unlink(sprintf('%s/composer.phar', BUILD_ROOT));
 
-		$this->out('>> Writing .gitignore');
-		file_put_contents(BUILD_ROOT . '/.gitignore', $this->gitignore);
-
+		// Include dependency to do more things.
 		include BUILD_ROOT . '/vendor/autoload.php';
+
+		$zipFile = new \SplFileInfo(\Windwalker\Filesystem\Path::clean(sprintf($zipFile, $version)));
 
 		$dir = new \Windwalker\Filesystem\Path\PathLocator(BUILD_ROOT);
 
+		// Start ZIP archive
 		$zip = new ZipArchive;
 
-		@unlink(BUILD_ROOT . '/../rad.zip');
+		@unlink($zipFile->getPathname());
 
-		$zip->open(BUILD_ROOT . '/../rad.zip', ZIPARCHIVE::CREATE);
+		$zip->open($zipFile->getPathname(), ZIPARCHIVE::CREATE);
 
 		foreach ($dir->getFiles(true) as $file)
 		{
 			$file = str_replace(BUILD_ROOT . DIRECTORY_SEPARATOR , '', $file->getPathname());
 
-			if (strpos($file, '.') === 0 && $file != '.gitignore')
+			if (strpos($file, '.') === 0)
 			{
 				continue;
 			}
 
-			$this->out('Zip file: ' . $file);
+			$this->out('[Zip file] ' . $file);
 			$zip->addFile($file);
 		}
 
 		$zip->close();
 
-		$this->out('Zip success to: ' . realpath(BUILD_ROOT . '/../rad.zip'));
+		$this->out('Zip success to: ' . realpath($zipFile->getPathname()));
+	}
+
+	/**
+	 * removeFiles
+	 *
+	 * @return  void
+	 */
+	public function removeFiles()
+	{
+		foreach ($this->removes as $remove)
+		{
+			$path = BUILD_ROOT . '/' . $remove;
+
+			if (is_file($path))
+			{
+				unlink($path);
+			}
+			elseif (is_dir($path))
+			{
+				$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
+
+				foreach($files as $file) 
+				{
+					$file->isDir() && !$file->isLink() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+				}
+
+				rmdir($path);
+			}
+
+			$this->out('[Remove] ' . $remove);
+		}
+
+		$this->out();
 	}
 
 	/**
@@ -109,7 +159,7 @@ GI;
 	 *
 	 * @return  Build
 	 */
-	public function out($text, $nl = true)
+	public function out($text = null, $nl = true)
 	{
 		fwrite(STDOUT, $text . ($nl ? "\n" : ''));
 

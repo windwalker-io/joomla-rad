@@ -9,6 +9,7 @@
 namespace Windwalker\Model\Helper;
 
 use Windwalker\DI\Container;
+use Windwalker\Helper\DatabaseHelper;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Joomla\Database\DatabaseFactory;
 
@@ -30,7 +31,7 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 
 		foreach ($this->tables as $alias => $table)
 		{
-			$columns = DatabaseFactory::getCommand()->getColumns($table['name']);
+			$columns = DatabaseHelper::getColumns($table['name']);
 
 			foreach ($columns as $key => $var)
 			{

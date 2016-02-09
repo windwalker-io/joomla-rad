@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Check;
 
+use Windwalker\Bootstrap\Message;
 use Windwalker\Controller\Admin\AbstractListController;
 
 /**
@@ -27,7 +28,9 @@ class CheckinController extends AbstractListController
 	{
 		if (empty($this->cid))
 		{
-			throw new \InvalidArgumentException(\JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), 500);
+			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), Message::ERROR_RED);
+
+			return false;
 		}
 
 		$pks = $this->cid;
@@ -62,7 +65,7 @@ class CheckinController extends AbstractListController
 
 		$message = \JText::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', count($pks));
 
-		$this->redirectToList($message);
+		$this->setRedirect($this->getSuccessRedirect(), $message, Message::MESSAGE_GREEN);
 
 		return true;
 	}

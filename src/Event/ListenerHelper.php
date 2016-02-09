@@ -67,7 +67,12 @@ class ListenerHelper
 			$listener = new $listener($dispatcher);
 		}
 
-		return $dispatcher->attach($listener);
+		if ($listener instanceof \JEvent)
+		{
+			return $dispatcher->attach($listener);
+		}
+
+		return false;
 	}
 
 	/**
@@ -94,7 +99,12 @@ class ListenerHelper
 			}
 		}
 
-		return $dispatcher->detach($listener);
+		if ($listener instanceof \JEvent)
+		{
+			return $dispatcher->detach($listener);
+		}
+
+		return false;
 	}
 
 	/**

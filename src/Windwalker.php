@@ -9,6 +9,9 @@
 namespace Windwalker;
 
 use Windwalker\DI\Container;
+use Windwalker\Filesystem\Path\PathCollection;
+use Windwalker\Joomla\DataMapper\DataMapperProvider;
+use Windwalker\Provider\SystemProvider;
 
 /**
  * Windwalker main application.
@@ -20,10 +23,13 @@ class Windwalker
 	/**
 	 * Init windalkwer.
 	 *
+	 * @param bool $cli
+	 *
 	 * @throws \Exception
-	 * @return  void
+	 *
+	 * @return void
 	 */
-	public function init()
+	public function init($cli = false)
 	{
 		$version = new \JVersion;
 
@@ -41,12 +47,15 @@ class Windwalker
 
 		define('WINDWALKER_SOURCE', __DIR__);
 
+		define('WINDWALKER_TEST', WINDWALKER . '/test');
+
 		define('WINDWALKER_BUNDLE', dirname(WINDWALKER) . '/windwalker-bundles');
 
 		// Register global provider
 		$container = Container::getInstance();
 
-		$container->registerServiceProvider(new \Windwalker\Provider\SystemProvider);
+		$container->registerServiceProvider(new SystemProvider($cli))
+			->registerServiceProvider(new DataMapperProvider);
 
 		// Register bundles
 		$this->registerBundles($container);
@@ -73,14 +82,14 @@ class Windwalker
 			return;
 		}
 
-		$paths = new \Windwalker\Filesystem\Path\PathCollection(
+		$paths = new PathCollection(
 			array(
 				WINDWALKER . '/bundles',
 				WINDWALKER_BUNDLE,
 			)
 		);
 
-		$bundles = $paths->findAll('Bundle$');
+		$bundles = $paths->find('Bundle$');
 
 		$config = $container->get('windwalker.config');
 
@@ -108,6 +117,13 @@ class Windwalker
 	 */
 	public function autoload()
 	{
+		static $loaded = false;
+
+		if ($loaded)
+		{
+			return;
+		}
+
 		// Load Composer
 		include_once dirname(__DIR__) . '/vendor/autoload.php';
 
@@ -118,5 +134,10 @@ class Windwalker
 		jimport('joomla.filesystem.file');
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.path');
+
+		// Aliases
+		class_alias('Windwalker\Router\CmsRoute', 'Windwalker\Router\Route');
+
+		$loaded = true;
 	}
 }

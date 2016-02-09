@@ -8,12 +8,13 @@
 
 namespace GeneratorBundle\Controller;
 
-use CodeGenerator\Controller\GeneratorController as CodeGeneratorController;
-use CodeGenerator\IO\IOInterface;
+use Muse\Controller\AbstractController;
+use Muse\Controller\AbstractTaskController;
+use Muse\IO\IOInterface;
 use GeneratorBundle\Prompter\ElementPrompter;
 use GeneratorBundle\Provider\GeneratorBundleProvider;
 use GeneratorBundle\Provider\OperatorProvider;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\DI\Container;
 use Windwalker\Console\Command\Command;
 
@@ -22,7 +23,7 @@ use Windwalker\Console\Command\Command;
  *
  * @since 1.0
  */
-class GeneratorController extends CodeGeneratorController
+class GeneratorController extends AbstractController
 {
 	/**
 	 * Property task.
@@ -74,6 +75,20 @@ class GeneratorController extends CodeGeneratorController
 	protected $template = null;
 
 	/**
+	 * Property container.
+	 *
+	 * @var  Container
+	 */
+	protected $container = null;
+
+	/**
+	 * Property command.
+	 *
+	 * @var  Command
+	 */
+	protected $command = null;
+
+	/**
 	 * The mapper to find extension type.
 	 *
 	 * @var    array
@@ -107,7 +122,7 @@ class GeneratorController extends CodeGeneratorController
 
 		$io->setCommand($command);
 
-		parent::__construct($container, $io);
+		parent::__construct($io);
 
 		$container->registerServiceProvider(new OperatorProvider($command));
 	}
@@ -159,6 +174,7 @@ class GeneratorController extends CodeGeneratorController
 			throw new \RuntimeException(sprintf('Action %s of %s not support.', $this->type, $this->getTask()));
 		}
 
+		/** @var AbstractTaskController $controller */
 		$controller = new $class($this->container, $this->io, new Registry($config));
 
 		$controller->execute();

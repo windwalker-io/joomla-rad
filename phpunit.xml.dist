@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="test/bootstrap.php"
+	colors="false"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	strict="true"
+	syntaxCheck="true"
+	>
+	<php>
+		<ini name="error_reporting" value="32767" />
+
+		<const name="WINDWALKER_TEST_HOST" value="rad.windwalker.io" />
+		<const name="WINDWALKER_TEST_URI" value="/flower/sakura" />
+
+		<const name="WINDWALKER_TEST_CURL_HELPER" value="0" />
+		<const name="WINDWALKER_TEST_GOOGLE_TRANSLATE" value="0" />
+	</php>
+	<testsuites>
+		<testsuite name="RAD">
+			<directory>test</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

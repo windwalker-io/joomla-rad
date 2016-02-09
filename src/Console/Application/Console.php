@@ -8,22 +8,18 @@
 
 namespace Windwalker\Console\Application;
 
-use Joomla\Application\Cli\CliOutput;
-use Joomla\Application\Cli\Output;
-use Joomla\Console\Console as JoomlaConsole;
-use Joomla\Input;
-use Joomla\Registry\Registry;
-
-use Windwalker\Console\Descriptor\CommandDescriptor;
+use Windwalker\Console\IO\IOInterface;
 use Windwalker\DI\Container;
+use Windwalker\Console\Descriptor\CommandDescriptor;
 use Windwalker\Console\Descriptor\OptionDescriptor;
+use Windwalker\Registry\Registry;
 
 /**
  * Console Class.
  *
  * @since  2.0
  */
-class Console extends JoomlaConsole
+class Console extends \Windwalker\Console\Console
 {
 	/**
 	 * The application dispatcher object.
@@ -54,44 +50,34 @@ class Console extends JoomlaConsole
 	protected $container;
 
 	/**
-	 * Class constructor.
+	 * Class init.
 	 *
-	 * @param   Input\Cli  $input   An optional argument to provide dependency injection for the application's
-	 *                              input object.  If the argument is a InputCli object that object will become
-	 *                              the application's input object, otherwise a default input object is created.
-	 *
-	 * @param   Registry   $config  An optional argument to provide dependency injection for the application's
-	 *                              config object.  If the argument is a Registry object that object will become
-	 *                              the application's config object, otherwise a default config object is created.
-	 *
-	 * @param   CliOutput  $output  The output handler.
+	 * @param   IOInterface $io      The Input and output handler.
+	 * @param   Registry    $config  Application's config object.
 	 */
-	public function __construct(Input\Cli $input = null, Registry $config = null, CliOutput $output = null)
+	public function __construct(IOInterface $io = null, \Windwalker\Registry\Registry $config = null)
 	{
 		$this->loadDispatcher();
 
-		$input = $input ? : $this->getContainer()->get('input');
+		$io = $io ? : $this->getContainer()->get('input');
 
 		// Make Windows no ANSI color
 		if (defined('PHP_WINDOWS_VERSION_BUILD'))
 		{
-			$input->set('no-ansi', true);
+			$io->setOption('ansi', true);
 		}
 
-		\JFactory::$application = $this;
-
-		parent::__construct($input, $config, $output);
+		parent::__construct($io, $config);
 
 		$this->rootCommand
-			->setHelp(
+			->help(
 <<<HELP
 Welcome to Windwalker Console.
 
 HELP
 			);
 
-		$descriptorHelper = $this->rootCommand->getChild('help')
-			->getDescriptor();
+		$descriptorHelper = $this->getDescriptor();
 
 		$descriptorHelper->setOptionDescriptor(new OptionDescriptor)
 			->setCommandDescriptor(new CommandDescriptor);
@@ -187,7 +173,7 @@ HELP
 	 * @param   string  $msg   The message to enqueue.
 	 * @param   string  $type  The message type. Default is message.
 	 *
-	 * @return  void
+	 * @return  static
 	 */
 	public function enqueueMessage($msg, $type = 'message')
 	{

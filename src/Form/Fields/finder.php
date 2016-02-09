@@ -7,12 +7,13 @@
  */
 
 // No direct access
+defined('_JEXEC') or die;
+
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\XmlHelper;
-use Windwalker\String\String;
-
-defined('_JEXEC') or die;
+use Windwalker\Script\WindwalkerScript;
+use Windwalker\String\StringHelper;
 
 JFormHelper::loadFieldClass('text');
 
@@ -33,13 +34,6 @@ class JFormFieldFinder extends JFormFieldText
 	protected $type = 'Finder';
 
 	/**
-	 * Show as tooltip.
-	 *
-	 * @var boolean
-	 */
-	protected $showAsTooltip = false;
-
-	/**
 	 * The initialised state of the document object.
 	 *
 	 * @var boolean
@@ -54,9 +48,9 @@ class JFormFieldFinder extends JFormFieldText
 	public function getInput()
 	{
 		// Load the modal behavior script.
-		JHtmlBehavior::modal('a.modal');
+		WindwalkerScript::modal('.hasFinderModal');
 
-		if (!self::$initialised)
+		if (!static::$initialised)
 		{
 			$this->setScript();
 		}
@@ -84,10 +78,10 @@ class JFormFieldFinder extends JFormFieldText
 
 		// The current user display field.
 		$html[] = '<span class="' . (!$disabled && !$readonly ? 'input-append' : '') . '">';
-		$html[] = '<input type="text" class="' . (!$disabled && !$readonly ? 'input-medium ' . $this->element['class'] : $this->element['class']) . '" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
+		$html[] = '<input type="text" class="finder-item-name ' . (!$disabled && !$readonly ? 'input-medium ' . $this->element['class'] : $this->element['class']) . '" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
 
 		if (!$disabled && !$readonly) :
-			$html[] = '<a class="modal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 920, y: 450}}">
+			$html[] = '<a class="hasFinderModal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1">
 							<i class="icon-picture"></i> ' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES')
 				. '</a>';
 		endif;
@@ -108,32 +102,23 @@ class JFormFieldFinder extends JFormFieldText
 
 		$html = implode("\n", $html);
 
-		// Tooltip Preview
-		// ================================================================
-		if ($this->showAsTooltip)
+		$options = array(
+			'text' => array(
+				'clear_title' => JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_SELECT_FILE')
+			)
+		);
+
+		$this->initScript('#' . $this->id, $options);
+
+		if (!$disabled && !$readonly)
 		{
-			$html = $preview . $html;
-			$html = '<div class="input-prepend input-append" style="margin-right: 7px;">' . $html . '</div>';
-		}
-
-		// Clear Button
-		// ================================================================
-		$clear_title = JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_SELECT_FILE');
-
-		if (!$disabled && !$readonly) :
-			$html .= '<a class="btn btn-danger delicious light red fltlft hasTooltip" title="' . JText::_('JLIB_FORM_BUTTON_CLEAR') . '"' . ' href="#" onclick="';
-			$html .= "AKFinderClear('{$this->id}', '{$clear_title}');";
-			$html .= 'return false;';
-			$html .= '">';
+			$html .= '<a class="btn btn-danger hasTooltip clear-button" title="' . JText::_('JLIB_FORM_BUTTON_CLEAR') . '"' . ' href="javascript: void(0)">';
 			$html .= '<i class="icon-remove"></i></a>';
-		endif;
+		}
 
 		// Image Preview
 		// ================================================================
-		if (!$this->showAsTooltip)
-		{
-			$html = $html . $preview;
-		}
+		$html = $html . $preview;
 
 		return $html;
 	}
@@ -146,9 +131,9 @@ class JFormFieldFinder extends JFormFieldText
 	public function getPreview()
 	{
 		// The Preview.
-		$preview       = (string) $this->element['preview'];
-		$showPreview   = true;
-		$showAsTooltip = false;
+		$preview      = (string) $this->element['preview'];
+		$showPreview  = true;
+		$html         = array();
 
 		switch ($preview)
 		{
@@ -161,16 +146,6 @@ class JFormFieldFinder extends JFormFieldText
 			case 'yes': // Deprecated parameter value
 			case 'true':
 			case 'show':
-				break;
-
-			case 'tooltip':
-			default:
-				$this->showAsTooltip = $showAsTooltip = true;
-				$options = array(
-					'onShow' => 'AKFinderRefreshPreviewTip(this)',
-				);
-
-				JHtmlBehavior::tooltip('.hasTipPreview', $options);
 				break;
 		}
 
@@ -190,7 +165,7 @@ class JFormFieldFinder extends JFormFieldText
 			$style  = '';
 			$style .= ($width > 0)  ? 'max-width:' . $width . 'px;'   : '';
 			$style .= ($height > 0) ? 'max-height:' . $height . 'px;' : '';
-			$style .= !$showAsTooltip ? 'margin: 10px 0;' : '';
+			$style .= 'margin: 10px 0;';
 
 			$imgattr = array(
 				'id'    => $this->id . '_preview',
@@ -198,38 +173,48 @@ class JFormFieldFinder extends JFormFieldText
 				'style' => $style,
 			);
 
-			$imgattr['class'] = $showAsTooltip ? $imgattr['class'] : $imgattr['class'] . ' img-polaroid';
+			$imgattr['class'] = $imgattr['class'] . ' img-polaroid';
 
 			$img             = JHtml::image($src, JText::_('JLIB_FORM_MEDIA_PREVIEW_ALT'), $imgattr);
-			$previewImg      = '<div id="' . $this->id . '_preview_img"' . ($src ? '' : ' style="display:none"') . '>' . $img . '</div>';
-			$previewImgEmpty = '<div id="' . $this->id . '_preview_empty"' . ($src ? ' style="display:none"' : '') . '>'
+			$previewImg      = '<div class="preview-img" id="' . $this->id . '_preview_img"' . ($src ? '' : ' style="display:none"') . '>' . $img . '</div>';
+			$previewImgEmpty = '<div class="preview-empty" id="' . $this->id . '_preview_empty"' . ($src ? ' style="display:none"' : '') . '>'
 				. JText::_('JLIB_FORM_MEDIA_PREVIEW_EMPTY') . '</div>';
 
 			$html[] = '<div class="media-preview add-on fltlft">';
 
-			if ($showAsTooltip)
-			{
-				$tooltip = $previewImgEmpty . $previewImg;
-				$options = array(
-					'title' => JText::_('JLIB_FORM_MEDIA_PREVIEW_SELECTED_IMAGE'),
-					'text'  => '<i class="icon-eye"></i>',
-					'class' => 'hasTipPreview'
-				);
-
-				$options['text'] = JVERSION >= 3 ? $options['text'] : JText::_('JLIB_FORM_MEDIA_PREVIEW_TIP_TITLE');
-				$html[]          = JHtml::tooltip($tooltip, $options);
-			}
-			else
-			{
-				$html[] = ' ' . $previewImgEmpty;
-				$html[] = ' ' . $previewImg;
-				$html[] = '<script type="text/javascript">AKFinderRefreshPreview("' . $this->id . '");</script>';
-			}
+			$html[] = ' ' . $previewImgEmpty;
+			$html[] = ' ' . $previewImg;
 
 			$html[] = '</div>';
 		}
 
 		return implode("\n", $html);
+	}
+
+	/**
+	 * initScript
+	 *
+	 * @param   string  $selector
+	 * @param   array   $options
+	 *
+	 * @return  void
+	 */
+	protected function initScript($selector, $options)
+	{
+		$options = \Windwalker\Asset\AssetManager::getJSObject($options);
+
+		$asset = Container::getInstance()->get('helper.asset');
+		$asset->internalJS(<<<JS
+// Finder Field for $selector
+jQuery(document).ready(function($) {
+    var finder = $('$selector').finderField($options);
+
+    window.windwalkerFinderSelect_{$this->id} = function (selected, elFinder, root) {
+		finder.selectFile(selected, elFinder, root);
+	}
+});
+JS
+);
 	}
 
 	/**
@@ -240,93 +225,159 @@ class JFormFieldFinder extends JFormFieldText
 	public function setScript()
 	{
 		// Build Select script.
-		$url_root = JURI::root();
+		$url_root = JUri::root();
 
-		$script = <<<SCRIPT
-        // Do Select
-        var AKFinderSelect = function(id, selected, elFinder, root){
-            if(selected.length < 1) return ;
-            var link    = elFinder.url(selected[0].hash) ;
-            var name    = selected[0].name ;
-            
+		$script = <<<JS
+
+;(function($) {
+
+    var plugin = 'finderField';
+
+    var urlRoot = "$url_root";
+
+    /**
+     * Windwalker Finder object.
+     *
+     * @param {jQuery} element
+     * @param {Object} options
+     *
+     * @constructor
+     */
+    var WindwalkerFinder = function(element, options) {
+		this.element = element;
+		this.options = $.extend(true, {}, options);
+
+		this.wrapper = this.element.parents('.controls');
+
+		this.nameInput = this.wrapper.find('.finder-item-name');
+		this.previewWrapper = this.wrapper.find('.preview-img');
+		this.previewImage = this.wrapper.find('.media-preview');
+		this.previewEmpty = this.wrapper.find('.preview-empty');
+		this.clearButton = this.wrapper.find('.clear-button');
+
+		this.registerEvents();
+    };
+
+    WindwalkerFinder.prototype = {
+
+        /**
+         * Register events.
+         */
+        registerEvents: function() {
+    	    var self = this;
+
+			this.clearButton.click(function(event) {
+			    event.stopPropagation();
+			    event.preventDefault();
+
+				self.clear();
+			});
+    	},
+
+        /**
+         * Select file action.
+         *
+         * @param {Array}    selected  The selected files list.
+         * @param {elFinder} elFinder  The elFinder object.
+         * @param {string}   root      Root URL string.
+         */
+    	selectFile: function(selected, elFinder, root) {
+    	    if(selected.length < 1) {
+    	    	return;
+    	    }
+
+            var link = elFinder.url(selected[0].hash) ;
+            var name = selected[0].name;
+
             // Clean DS
             link = link.replace(/\\\\/g, '/');
-            
             link = link.replace( root, '' );
-            
+
             // Detect is image
-            var onlyImage = false ;
-            
-            if( selected[0].mime.substring(0, 5) == 'image' ) {
-                $(id).set('image', 1);
-                $(id).set('mime', selected[0].mime.split('/')[0]);
-                
-                document.id(id).value = link;
-                document.id(id+"_name").value = name;
-            }else{
-                $(id).set('image', 0);
-                $(id).set('mime', selected[0].mime.split('/')[1]);
-                
-                if(!onlyImage) {
-                    document.id(id).value = link;
-                    document.id(id+"_name").value = name;
-                }else{
-                    //SqueezeBox.close();
-                    return ;
+            var onlyImage = false;
+
+            if(selected[0].mime.substring(0, 5) == 'image' ) {
+                this.element.attr('image', 1);
+            	this.element.attr('mime', selected[0].mime.split('/')[1]);
+
+                this.element.val(link);
+                this.nameInput.val(name);
+            } else {
+            	this.element.attr('image', 0);
+            	this.element.attr('mime', selected[0].mime.split('/')[1]);
+
+                if (!onlyImage) {
+                    this.element.val(link);
+                	this.nameInput.val(name);
+                } else {
+                    return;
                 }
             }
-            
-            AKFinderRefreshPreview(id);
-            setTimeout( function(){
-                SqueezeBox.close();
-            } ,200);
-        }
-        
-        // Clear Select
-        var AKFinderClear = function(id, title){
-            document.id(id).value = '';
-            document.id(id+"_name").value = title;
-            
-            AKFinderRefreshPreview(id);
-        };
 
-        // Refresh Preview
-        var AKFinderRefreshPreview = function(id) {
-            var value = document.id(id).value;
-            var input = $(id) ;
-            var img = document.id(id + "_preview");
-            var img_ext = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
-            var ext = value.split('.').getLast();
-            if (img) {
-                if ( img_ext.contains(ext.toLowerCase()) ) {
-                    img.src = "{$url_root}" + value;
-                    document.id(id + "_preview_empty").setStyle("display", "none");
-                    document.id(id + "_preview_img").setStyle("display", "");
+            this.refreshPreview();
+
+            setTimeout( function() {
+                Windwalker.Modal.hide();
+            } ,200);
+    	},
+
+        /**
+         * Clear image selected.
+         */
+    	clear: function() {
+    	    this.element.val(null);
+    	    this.nameInput.val(this.options.text.clear_title);
+
+    	    this.refreshPreview();
+    	},
+
+        /**
+         * Refresh preview.
+         */
+    	refreshPreview: function() {
+            var value   = this.element.val();
+            var imgExts = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
+            var ext     = value.split('.').pop();
+
+            if (this.previewWrapper.length > 0) {
+                if ($.inArray(imgExts, ext.toLowerCase())) {
+                    this.previewImage.attr('src', urlRoot + value);
+                    this.previewWrapper.css('display', '');
+                    this.previewEmpty.css('display', 'none');
                 } else {
-                    img.src = ""
-                    document.id(id + "_preview_empty").setStyle("display", "none");
-                    document.id(id + "_preview_img").setStyle("display", "none");
-                } 
+                    this.previewImage.attr('src', '');
+                    this.previewWrapper.css('display', 'none');
+                    this.previewEmpty.css('display', 'none');
+                }
             }
-            
-            if(!value){
-                img.src = ""
-                document.id(id + "_preview_empty").setStyle("display", "");
-                document.id(id + "_preview_img").setStyle("display", "none");
+
+            if (!value) {
+                this.previewImage.attr('src', '');
+                this.previewWrapper.css('display', 'none');
+				this.previewEmpty.css('display', '');
             }
         }
-        
-        // Refresh Preview for Tips
-        var AKFinderRefreshPreviewTip = function(tip)
+    };
+
+    /**
+     * Push to plugin.
+     *
+     * @param {Object} options
+     *
+     * @returns {*}
+     */
+    $.fn[plugin] = function(options)
+    {
+        if (!$.data(this, "windwalker." + plugin))
         {
-            var img = tip.getElement("img.media-preview");
-            tip.getElement("div.tip").setStyle("max-width", "none");
-            var id = img.getProperty("id");
-            id = id.substring(0, id.length - "_preview".length);
-            AKFinderRefreshPreview(id);
-            tip.setStyle("display", "block");
+            $.data(this, "windwalker." + plugin, new WindwalkerFinder(this, options));
         }
-SCRIPT;
+
+        return $.data(this, "windwalker." + plugin);
+    };
+
+})(jQuery);
+JS;
 
 		// Add the script to the document head.
 		$asset = Container::getInstance()->get('helper.asset');
@@ -372,7 +423,7 @@ SCRIPT;
 		$root = $this->convertPath($root);
 		$start_path = $this->convertPath($start_path);
 
-		$link = "index.php?option={$handler}&task=finder.elfinder.display&tmpl=component&finder_id={$this->id}&root={$root}&start_path={$start_path}&onlymimes={$onlymimes}";
+		$link = "index.php?option={$handler}&task=finder.elfinder.display&tmpl=component&finder_id={$this->id}&root={$root}&start_path={$start_path}&onlymimes={$onlymimes}&callback=windwalkerFinderSelect_{$this->id}";
 
 		return $link;
 	}
@@ -398,6 +449,6 @@ SCRIPT;
 			'day' => $date->day
 		);
 
-		return String::parseVariable($path, $replace);
+		return StringHelper::parseVariable($path, $replace);
 	}
 }

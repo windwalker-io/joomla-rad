@@ -8,6 +8,8 @@
 
 namespace Windwalker\Controller\State;
 
+use Windwalker\Bootstrap\Message;
+
 /**
  * Reorder Controller
  *
@@ -129,8 +131,13 @@ class ReorderController extends AbstractUpdateStateController
 	 *
 	 * @return  void
 	 */
-	public function redirect($url, $msg = null, $type = 'message')
+	public function redirect($url, $msg = null, $type = Message::MESSAGE_GREEN)
 	{
+		if (!$msg)
+		{
+			list($url, $msg, $type) = $this->getRedirect(true);
+		}
+
 		jexit($msg);
 	}
 }

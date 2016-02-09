@@ -8,10 +8,12 @@
 
 namespace Windwalker\Joomla\Database;
 
-use JDatabaseDriver as DatabaseDriver;
-use JDatabaseQuery as DatabaseQuery;
+use JDatabaseDriver as AbstractDatabaseDriver;
+use JDatabaseQuery as Query;
 use JDatabaseQueryElement as QueryElement;
 use Windwalker\Compare\Compare;
+use Windwalker\DI\Container;
+use Windwalker\Helper\DatabaseHelper;
 
 /**
  * Class QueryHelper
@@ -19,27 +21,9 @@ use Windwalker\Compare\Compare;
 class QueryHelper
 {
 	/**
-	 * THe first table only select columns' name.
-	 *
-	 * For example: `item.title AS title`
-	 *
-	 * @const integer
-	 */
-	const COLS_WITH_FIRST = 1;
-
-	/**
-	 * The first table select column with prefix as alias.
-	 *
-	 * For example: `item.title AS item_title`
-	 *
-	 * @const integer
-	 */
-	const COLS_PREFIX_WITH_FIRST = 2;
-
-	/**
 	 * Property db.
 	 *
-	 * @var  DatabaseDriver
+	 * @var  AbstractDatabaseDriver
 	 */
 	protected $db = null;
 
@@ -53,9 +37,9 @@ class QueryHelper
 	/**
 	 * Constructor.
 	 *
-	 * @param DatabaseDriver $db
+	 * @param AbstractDatabaseDriver $db
 	 */
-	public function __construct(DatabaseDriver $db = null)
+	public function __construct(AbstractDatabaseDriver $db = null)
 	{
 		$this->db = $db ? : $this->getDb();
 	}
@@ -63,14 +47,15 @@ class QueryHelper
 	/**
 	 * addTable
 	 *
-	 * @param string $alias
-	 * @param string $table
-	 * @param mixed  $condition
-	 * @param string $joinType
+	 * @param string  $alias
+	 * @param string  $table
+	 * @param mixed   $condition
+	 * @param string  $joinType
+	 * @param boolean $prefix
 	 *
 	 * @return  QueryHelper
 	 */
-	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT')
+	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT', $prefix = null)
 	{
 		$tableStorage = array();
 
@@ -95,6 +80,7 @@ class QueryHelper
 		$condition = preg_replace('/\s(?=\s)/', '', $condition);
 
 		$tableStorage['condition'] = trim($condition);
+		$tableStorage['prefix'] = $prefix;
 
 		$this->tables[$alias] = $tableStorage;
 
@@ -121,11 +107,9 @@ class QueryHelper
 	/**
 	 * getFilterFields
 	 *
-	 * @param int $prefixFirst
-	 *
 	 * @return  array
 	 */
-	public function getSelectFields($prefixFirst = self::COLS_WITH_FIRST)
+	public function getSelectFields()
 	{
 		$fields = array();
 
@@ -133,25 +117,28 @@ class QueryHelper
 
 		foreach ($this->tables as $alias => $table)
 		{
-			$columns = DatabaseFactory::getCommand()->getColumns($table['name']);
+			$columns = DatabaseHelper::getColumns($table['name']);
 
-			foreach ($columns as $column => $var)
+			foreach ($columns as $column => $type)
 			{
+				$prefix = $table['prefix'];
+
 				if ($i === 0)
 				{
-					if ($prefixFirst & self::COLS_WITH_FIRST)
-					{
-						$fields[] = $this->db->quoteName("{$alias}.{$column}", $column);
-					}
-
-					if ($prefixFirst & self::COLS_PREFIX_WITH_FIRST)
-					{
-						$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$alias}_{$column}");
-					}
+					$prefix = $prefix === null ? false : true;
 				}
 				else
 				{
+					$prefix = $prefix === null ? true : false;
+				}
+
+				if ($prefix === true)
+				{
 					$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$alias}_{$column}");
+				}
+				else
+				{
+					$fields[] = $this->db->quoteName("{$alias}.{$column}", "{$column}");
 				}
 			}
 
@@ -164,11 +151,11 @@ class QueryHelper
 	/**
 	 * registerQueryTables
 	 *
-	 * @param DatabaseQuery $query
+	 * @param Query $query
 	 *
-	 * @return  DatabaseQuery
+	 * @return  Query
 	 */
-	public function registerQueryTables(DatabaseQuery $query)
+	public function registerQueryTables(Query $query)
 	{
 		foreach ($this->tables as $alias => $table)
 		{
@@ -191,22 +178,23 @@ class QueryHelper
 	/**
 	 * buildConditions
 	 *
-	 * @param DatabaseQuery $query
+	 * @param Query $query
 	 * @param array         $conditions
 	 *
-	 * @return  DatabaseQuery
+	 * @return  Query
 	 */
-	public static function buildWheres(DatabaseQuery $query, array $conditions)
+	public static function buildWheres(Query $query, array $conditions)
 	{
 		foreach ($conditions as $key => $value)
 		{
-			if (empty($value))
+			// NULL
+			if ($value === null)
 			{
-				continue;
+				$query->where($query->format('%n = NULL', $key));
 			}
 
 			// If using Compare class, we convert it to string.
-			if ($value instanceof Compare)
+			elseif ($value instanceof Compare)
 			{
 				$query->where((string) static::buildCompare($key, $value, $query));
 			}
@@ -214,7 +202,7 @@ class QueryHelper
 			// If key is numeric, just send value to query where.
 			elseif (is_numeric($key))
 			{
-				$query->where((string) $value);
+				$query->where($query->format('%n = %a', $key, $value));
 			}
 
 			// If is array or object, we use "IN" condition.
@@ -238,15 +226,16 @@ class QueryHelper
 	/**
 	 * buildCompare
 	 *
-	 * @param string|int    $key
-	 * @param Compare       $value
-	 * @param DatabaseQuery $query
+	 * @param string|int  $key
+	 * @param Compare     $value
+	 * @param Query       $query
 	 *
 	 * @return  string
 	 */
 	public static function buildCompare($key, Compare $value, $query = null)
 	{
-		$query = $query ? : DatabaseFactory::getDbo()->getQuery(true);
+		/** @var Query $query */
+		$query = $query ? : Container::getInstance()->get('db')->getQuery(true);
 
 		if (!is_numeric($key))
 		{
@@ -266,13 +255,13 @@ class QueryHelper
 	/**
 	 * getDb
 	 *
-	 * @return  DatabaseDriver
+	 * @return  AbstractDatabaseDriver
 	 */
 	public function getDb()
 	{
 		if (!$this->db)
 		{
-			$this->db = DatabaseFactory::getDbo();
+			$this->db = Container::getInstance()->get('db');
 		}
 
 		return $this->db;
@@ -281,13 +270,37 @@ class QueryHelper
 	/**
 	 * setDb
 	 *
-	 * @param   DatabaseDriver $db
+	 * @param   AbstractDatabaseDriver $db
 	 *
 	 * @return  QueryHelper  Return self to support chaining.
 	 */
 	public function setDb($db)
 	{
 		$this->db = $db;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Tables
+	 *
+	 * @return  array
+	 */
+	public function getTables()
+	{
+		return $this->tables;
+	}
+
+	/**
+	 * Method to set property tables
+	 *
+	 * @param   array $tables
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setTables($tables)
+	{
+		$this->tables = $tables;
 
 		return $this;
 	}

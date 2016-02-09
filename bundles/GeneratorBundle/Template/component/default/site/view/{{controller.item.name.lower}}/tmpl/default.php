@@ -7,7 +7,7 @@
  */
 
 use {{extension.name.cap}}\Router\Route;
-use Windwalker\View\Helper\ViewHtmlHelper;
+use Windwalker\View\Helper\FrontViewHelper;
 
 // No direct access
 defined('_JEXEC') or die;
@@ -15,10 +15,11 @@ defined('_JEXEC') or die;
 /**
  * Prepare data for this template.
  *
- * @var $container Windwalker\DI\Container
- * @var $data      Windwalker\Data\Data
- * @var $item      Windwalker\Data\Data
- * @var $params    Joomla\Registry\Registry
+ * @var $container \Windwalker\DI\Container
+ * @var $data      \Windwalker\Data\Data
+ * @var $item      \Windwalker\Data\Data
+ * @var $params    \Joomla\Registry\Registry
+ * @var $this      \Windwalker\View\Engine\PhpEngine
  */
 $container = $this->getContainer();
 $params = $data->item->params;
@@ -27,7 +28,7 @@ $item = $data->item;
 
 <form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
-	<div id="{{extension.name.cap}}" class="windwalker item container-fluid {{controller.item.name.lower}}<?php echo $params->get('pageclass_sfx'); ?>">
+	<div id="{{extension.name.cap}}" class="windwalker item container-fluid {{controller.item.name.lower}}<?php echo $this->escape($params->get('pageclass_sfx')); ?>">
 		<div id="{{extension.name.lower}}-wrap-inner">
 
 			<div class="{{controller.item.name.lower}}-item item<?php echo $item->state == 0 ? ' well well-small' : ''; ?>">
@@ -36,7 +37,7 @@ $item = $data->item;
 					<!-- Heading -->
 					<!-- ============================================================================= -->
 					<div class="heading">
-						<h2><?php echo $params->get('link_titles', 1) ? JHtml::_('link', $item->link, $item->title) : $item->title ?></h2>
+						<h2><?php echo $params->get('link_titles', 1) ? JHtml::_('link', $item->link, $this->escape($item->title)) : $this->escape($item->title); ?></h2>
 					</div>
 					<!-- ============================================================================= -->
 					<!-- Heading -->
@@ -57,10 +58,10 @@ $item = $data->item;
 					<!-- ============================================================================= -->
 					<div class="info">
 						<div class="info-inner">
-							<?php echo ViewHtmlHelper::showInfo($item, 'category_title', 'jcategory', 'folder', Route::_('{{extension.element.lower}}.{{controller.list.name.lower}}', array('id' => $item->catid))); ?>
-							<?php echo ViewHtmlHelper::showInfo($item, 'created', '{{extension.element.lower}}_created', 'calendar'); ?>
-							<?php echo ViewHtmlHelper::showInfo($item, 'modified', '{{extension.element.lower}}_modified', 'calendar'); ?>
-							<?php echo ViewHtmlHelper::showInfo($item, 'name', '{{extension.element.lower}}_created_by', 'user'); ?>
+                            <?php echo FrontViewHelper::showLink('jcategory', $data->category->title, Route::_('{{controller.list.name.lower}}', array('id' => $item->catid)), 'folder'); ?>
+                            <?php echo FrontViewHelper::showDate('{{extension.element.lower}}_created', $item->created); ?>
+                            <?php echo FrontViewHelper::showDate('{{extension.element.lower}}_modified', $item->modified); ?>
+                            <?php echo FrontViewHelper::showLabel('{{extension.element.lower}}_created_by', $item->user_name, 'user'); ?>
 						</div>
 					</div>
 
@@ -76,13 +77,17 @@ $item = $data->item;
 							<div class="span12">
 								<?php if (!empty($item->images)): ?>
 									<div class="content-img">
-										<?php echo JHtml::_('image', $item->images, $item->title); ?>
+										<?php echo JHtml::_('image', $this->escape($item->images), $this->escape($item->title)); ?>
 									</div>
 								<?php endif; ?>
 
+                                <!-- Text -->
+                                <!-- ============================================================================= -->
 								<div class="text">
 									<?php echo $item->text; ?>
 								</div>
+                                <!-- ============================================================================= -->
+                                <!-- Text End -->
 							</div>
 
 						</div>

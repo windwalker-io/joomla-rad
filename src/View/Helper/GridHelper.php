@@ -10,9 +10,8 @@ namespace Windwalker\View\Helper;
 
 use JHtml;
 use JText;
-use Windwalker\Bootstrap\Dropdown;
 use Windwalker\Data\Data;
-use Joomla\Registry\Registry;
+use Windwalker\Registry\Registry;
 use Windwalker\DI\Container;
 use Windwalker\Html\HtmlElement;
 
