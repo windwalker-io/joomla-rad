@@ -468,44 +468,40 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 			$name = $this->getName();
 		}
 
-		// Get Prefix
-		if (!$prefix)
-		{
-			$prefix = ucfirst($this->getPrefix());
-		}
-
-		$modelName = $prefix . 'Model' . ucfirst($name);
-
-		if (!class_exists($modelName))
-		{
-			$modelName = '\\Windwalker\\Model\\Model';
-		}
-
-		$defaultConfig = array(
-			'name'   => strtolower($name),
-			'option' => strtolower($this->option),
-			'prefix' => strtolower($this->getPrefix())
-		);
-
-		$config = array_merge($defaultConfig, $config);
-
-		// Get model.
-		$container = $this->getContainer();
-
 		$modelKey = 'model.' . strtolower($name);
 
-		if (!$container->exists($modelKey))
+		$container = $this->getContainer();
+
+		if (!$container->exists($modelKey) || $forceNew)
 		{
-			$container->share(
-				$modelKey,
-				function(Container $container) use($modelName, $config)
-				{
-					return new $modelName($config, $container, null, $container->get('db'));
-				}
+			// Get Prefix
+			if (!$prefix)
+			{
+				$prefix = ucfirst($this->getPrefix());
+			}
+
+			$defaultConfig = array(
+				'name'   => strtolower($name),
+				'option' => strtolower($this->option),
+				'prefix' => strtolower($this->getPrefix())
 			);
+
+			$config = array_merge($defaultConfig, $config);
+
+			$modelName = $prefix . 'Model' . ucfirst($name);
+
+			if (!class_exists($modelName))
+			{
+				$modelName = 'Windwalker\\Model\\Model';
+			}
+
+			// Get model.
+			$model = new $modelName($config, $container, null, $container->get('db'));
+
+			$container->share($modelKey, $model);
 		}
 
-		return $container->get($modelKey, $forceNew);
+		return $container->get($modelKey);
 	}
 
 	/**

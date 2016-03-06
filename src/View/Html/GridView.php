@@ -261,7 +261,7 @@ class GridView extends ListHtmlView
 	/**
 	 * configureFields
 	 *
-	 * @param null $fields
+	 * @param array $fields
 	 *
 	 * @return  array
 	 */

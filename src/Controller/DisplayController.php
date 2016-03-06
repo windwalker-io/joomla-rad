@@ -215,7 +215,7 @@ class DisplayController extends Controller
 	 *
 	 * @return  \Windwalker\View\AbstractView  Reference to the view or an error.
 	 */
-	public function getView($name = null, $type = null, $config = array(), $forceNew = false)
+	public function getView($name = null, $type = 'html', $config = array(), $forceNew = false)
 	{
 		// Get the name.
 		if (!$name)
@@ -224,48 +224,43 @@ class DisplayController extends Controller
 		}
 
 		$container = $this->getContainer();
+		$viewKey   = 'view.' . strtolower($name) . '.' . strtolower($type);
 
-		// Get View
-		$type     = ucfirst($type);
-		$prefix   = ucfirst($this->getPrefix()) . 'View';
-		$viewName = $prefix . ucfirst($name) . $type;
-
-		if (!class_exists($viewName))
+		if (!$container->exists($viewKey) || $forceNew)
 		{
-			$viewName = '\\Windwalker\\View\\' . $type . '\\' . $type . 'View';
-		}
+			// Get View
+			$type     = ucfirst($type);
+			$prefix   = ucfirst($this->getPrefix()) . 'View';
+			$viewName = $prefix . ucfirst($name) . $type;
 
-		// Load view
-		if (!class_exists($viewName))
-		{
-			return null;
-		}
+			if (!class_exists($viewName))
+			{
+				$viewName = 'Windwalker\View\\' . $type . '\\' . $type . 'View';
+			}
 
-		$model  = $this->getModel($name);
-		$paths  = $this->getTemplatePath($name);
+			// Load view
+			if (!class_exists($viewName))
+			{
+				throw new \LogicException('View: ' . $name . ' with type: ' . $type . ' not found.');
+			}
 
-		$defaultConfig = array(
-			'name'   => strtolower($name),
-			'option' => strtolower($this->option),
-			'prefix' => strtolower($this->getPrefix())
-		);
+			$model  = $this->getModel($name);
+			$paths  = $this->getTemplatePath($name);
 
-		$config = array_merge($defaultConfig, $config);
-
-		$viewKey = 'view.' . strtolower($name);
-
-		if (!$container->exists($viewKey))
-		{
-			$container->share(
-				$viewKey,
-				function($container) use($viewName, $model, $paths, $config)
-				{
-					return new $viewName($model, $container, $config, $paths);
-				}
+			$defaultConfig = array(
+				'name'   => strtolower($name),
+				'option' => strtolower($this->option),
+				'prefix' => strtolower($this->getPrefix())
 			);
+
+			$config = array_merge($defaultConfig, $config);
+
+			$view = new $viewName($model, $container, $config, $paths);
+
+			$container->share($viewKey, $view);
 		}
 
-		return $container->get($viewKey, $forceNew);
+		return $container->get($viewKey);
 	}
 
 	/**
