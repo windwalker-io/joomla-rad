@@ -67,7 +67,7 @@ class ListHtmlView extends HtmlView
 		foreach ($this['items'] as $item)
 		{
 			$pkName = strtolower($this->viewItem) . '_id';
-			$item->$pkName = $item->id;
+			$item->$pkName = isset($item->id) ? $item->id : null;
 		}
 	}
 }
