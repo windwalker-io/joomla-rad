@@ -5,23 +5,15 @@
 [![Latest Unstable Version](https://poser.pugx.org/windwalker/joomla-rad/v/unstable)](https://packagist.org/packages/windwalker/joomla-rad) 
 [![License](https://poser.pugx.org/windwalker/joomla-rad/license)](https://packagist.org/packages/windwalker/joomla-rad)
 
-## Introduction
-
 [![Join the chat at https://gitter.im/ventoviro/windwalker-joomla-rad](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ventoviro/windwalker-joomla-rad?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Windwalker** is a RAD framework of Joomla! CMS.
+## Introduction
 
-We provides modern functions and interfaces help developer quickly create extensions.
-Windwalker contains single action controller(Joomla new MVC), XUL engine, console interface, Dependency Injection,
-DataMapper and code generator.
+**Windwalker** is a RAD framework for Joomla! CMS development.
 
-Hope our framework bring you a joy time :)
-
-### Version 1 and 2
-
-This is the version 2 repository, all folder with lower case is legacy code, and all folders with capitals is for version 2 and follows PSR-0 naming standard.
-
-The version 2 has already release `1.0`.
+We provide modern functions and interfaces to help developer quickly create extensions.
+Windwalker contains single action controller(Joomla new MVC), console interface, Dependency Injection,
+DataMapper, Simple ORM and code generator.
 
 ## Installation Via Composer
 
@@ -38,23 +30,26 @@ php bin/windwalker generator init com_flower sakura.sakuras -c admin
 
 ## Documentation
 
-[Windwalker RAD Document](http://rad.windwalker.io/)
+- [Windwalker RAD Document](http://rad.windwalker.io/)
+- [Hot to Run Test](docs/unittest.md)
 
 ## About
 Author
 :   [Simon Asika](https://github.com/asika32764)
 
+Company
+:   [LYRASOFT](http://lyrasoft.net)
+
 Joomla!CMS version
-:   3.2 and newer
+:   3.4 and newer
 
 First release
 :   2012-05-05
 
-## All extensions created by Windwalker
+## Extensions created by Windwalker
 
 - Asikart Quickicons: https://github.com/asikart/quickicons
 - Asikart Quickcontent: https://github.com/asikart/quickcontent
 - Remote and Local Image Manager: https://github.com/asikart/remoteimage
 - ACE x Markdown Editor: https://github.com/asikart/ace-markdown-editor
 - Asikart UserXTD: https://github.com/asikart/userxtd
-
