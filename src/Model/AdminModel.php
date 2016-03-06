@@ -10,7 +10,7 @@ namespace Windwalker\Model;
 
 use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
-use Joomla\String\Inflector;
+use Windwalker\String\StringInflector as Inflector;;
 use JTable;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\DateHelper;

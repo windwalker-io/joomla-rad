@@ -29,10 +29,14 @@ class ModalHelper
 	 * @param   array  $option   Modal options.
 	 *
 	 * @return  void
+	 *
+	 * @deprecated  3.0  This method was used by the old renderModal() implementation.
+	 *                   Since the new implementation it is unneeded and the broken JS it was injecting could create issues
+	 *                   As a case, please see: https://github.com/joomla/joomla-cms/pull/6918
 	 */
 	public static function modal($selector, $option = array())
 	{
-		JHtml::_('bootstrap.modal', $selector);
+		return;
 	}
 
 	/**
@@ -73,8 +77,6 @@ HTML;
 	 */
 	public static function renderModal($selector = 'modal', $content = '', $option = array())
 	{
-		self::modal($selector, $option);
-
 		$header = '';
 		$footer = '';
 

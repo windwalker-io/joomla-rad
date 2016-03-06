@@ -66,25 +66,6 @@ class ModalHelperTest extends AbstractDomTestCase
 
 		$this->reflectedLoaded->setAccessible(false);
 	}
-	
-	/**
-	 * Method to test modal().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Helper\ModalHelper::modal
-	 */
-	public function testModal()
-	{
-		// Reset Loaded
-		$this->reflectedLoaded->setValue($this->originalLoaded);
-
-		// Execute method
-		ModalHelper::modal('tag');
-
-		// Test if JHtmlBootstrap::modal did executed
-		$this->assertArrayHasKey('JHtmlBootstrap::modal', $this->reflectedLoaded->getValue());
-	}
 
 	/**
 	 * Method to test modalLink().
@@ -169,9 +150,6 @@ HTML;
 HTML;
 
 		$this->assertEquals($expected, ModalHelper::renderModal($selector, $option['content'], $option));
-
-		// Test if JHtmlBootstrap::modal did executed
-		$this->assertArrayHasKey('JHtmlBootstrap::modal', $this->reflectedLoaded->getValue());
 	}
 
 	/**
@@ -194,6 +172,7 @@ HTML;
 	<div class="control-label">
 		<label id="{$id}_title-lbl" for="{$id}_title" class="required">
 	stub_label<span class="star">&#160;*</span></label>
+
 	</div>
 	<div class="controls">
 		<input type="text" name="{$id}[title]" id="{$id}_title" value="" class="input-xlarge required" required aria-required="true" />

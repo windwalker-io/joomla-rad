@@ -8,7 +8,7 @@
 
 namespace Windwalker\Controller\Admin;
 
-use Joomla\String\Inflector;
+use Windwalker\String\StringInflector as Inflector;;
 use Windwalker\Helper\ArrayHelper;
 
 /**

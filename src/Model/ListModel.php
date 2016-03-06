@@ -9,7 +9,7 @@
 namespace Windwalker\Model;
 
 use JDatabaseQuery;
-use Joomla\String\Inflector;
+use Windwalker\String\StringInflector as Inflector;;
 use JPagination;
 use JPluginHelper;
 

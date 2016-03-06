@@ -86,21 +86,21 @@ class MockSession extends \JSession
 	}
 
 	/**
-	 * Returns the global Session object, only creating it
-	 * if it doesn't already exist.
+	 * Returns the global Session object, only creating it if it doesn't already exist.
 	 *
-	 * @param   string  $handler  The type of session handler.
-	 * @param   array   $options  An array of configuration options.
+	 * @param   string                    $store             The type of storage for the session.
+	 * @param   array                     $options           An array of configuration options.
+	 * @param   \JSessionHandlerInterface  $handlerInterface  The session handler
 	 *
-	 * @return  \JSession  The Session object.
+	 * @return  static  The Session object.
 	 *
 	 * @since   11.1
 	 */
-	public static function getInstance($handler, $options)
+	public static function getInstance($store, $options, \JSessionHandlerInterface $handlerInterface = null)
 	{
 		if (!is_object(self::$instance))
 		{
-			self::$instance = new static($handler, $options);
+			static::$instance = new static($store, $options, $handlerInterface);
 		}
 
 		return self::$instance;

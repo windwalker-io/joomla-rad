@@ -8,7 +8,7 @@
 
 namespace Windwalker\View\Html;
 
-use Joomla\String\Inflector;
+use Windwalker\String\StringInflector as Inflector;;
 use Windwalker\Model\Model;
 use Windwalker\DI\Container;
 
