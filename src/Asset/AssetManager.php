@@ -529,7 +529,7 @@ class AssetManager implements ContainerAwareInterface
 
 		$prefix = $app->isAdmin() ? 'administrator/' : '';
 
-		if ($includeTemplate && $app->isSite())
+		if ($includeTemplate)
 		{
 			// (1) Find: templates/[tmpl]/[type]/[name]/[file_name].[type]
 			$this->paths->insert($prefix . 'templates/' . $app->getTemplate() . '/{type}/{name}', 800);
