@@ -73,19 +73,6 @@ JS;
 	}
 
 	/**
-	 * Load RequireJS.
-	 *
-	 * @return  void
-	 */
-	public static function requireJS()
-	{
-		if (!static::inited(__METHOD__))
-		{
-			static::getAsset()->addJS('core/require.js');
-		}
-	}
-
-	/**
 	 * Include Backbone. Note this library may not support old IE browser.
 	 *
 	 * Please see: http://backbonejs.org/
