@@ -646,26 +646,24 @@ class ListModel extends AbstractFormModel
 		// If the context is set, assume that stateful lists are used.
 		if ($this->context)
 		{
-			$app = $this->container->get('app');
-
 			// Receive & set filters
-			if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array'))
+			if ($filters = (array) $this->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array'))
 			{
 				$this->state->set('filter', $filters);
 			}
 
 			// Receive & set searches
-			if ($searches = $app->getUserStateFromRequest($this->context . '.search', 'search', array(), 'array'))
+			if ($searches = (array) $this->getUserStateFromRequest($this->context . '.search', 'search', array(), 'array'))
 			{
 				$searches = AdminListHelper::handleSearches($searches, $this->getSearchFields());
 
 				$this->state->set('search', $searches);
 			}
 
-			$limit = 0;
+			$limit = null;
 
 			// Receive & set list options
-			if ($list = $app->getUserStateFromRequest($this->context . '.list', 'list', array(), 'array'))
+			if ($list = $this->getUserStateFromRequest($this->context . '.list', 'list', array(), 'array'))
 			{
 				foreach ($list as $name => $value)
 				{
@@ -710,13 +708,13 @@ class ListModel extends AbstractFormModel
 			}
 
 			// Fill the limits and start
-			if (!$limit)
+			if ('' === (string) $limit)
 			{
-				$limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $config->get('list_limit'), 'uint');
+				$limit = $this->getUserStateFromRequest('global.list.limit', 'limit', $config->get('list_limit'), 'uint');
 				$this->state->set('list.limit', $limit);
 			}
 
-			$value = $app->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
+			$value = $this->getUserStateFromRequest($this->context . '.limitstart', 'limitstart', 0);
 			$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
 			$this->state->set('list.start', $limitstart);
 		}
@@ -977,26 +975,26 @@ class ListModel extends AbstractFormModel
 		/** @var \JApplicationCms $app */
 		$app       = $this->container->get('app');
 		$input     = $app->input;
-		$old_state = $app->getUserState($key);
-		$cur_state = (!is_null($old_state)) ? $old_state : $default;
-		$new_state = $input->get($request, null, $type);
+		$oldState  = $app->getUserState($key);
+		$currentState = (!is_null($oldState)) ? $oldState : $default;
+		$newState     = $input->get($request, null, $type);
 
-		if (($cur_state != $new_state) && ($resetPage))
+		if (($currentState != $newState) && ($resetPage))
 		{
 			$input->set('limitstart', 0);
 		}
 
 		// Save the new value only if it is set in this request.
-		if ($new_state !== null)
+		if ($newState !== null)
 		{
-			$app->setUserState($key, $new_state);
+			$app->setUserState($key, $newState);
 		}
 		else
 		{
-			$new_state = $cur_state;
+			$newState = $currentState;
 		}
 
-		return $new_state;
+		return $newState;
 	}
 
 	/**

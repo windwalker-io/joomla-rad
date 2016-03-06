@@ -9,6 +9,8 @@
 namespace Windwalker\Test\Model\Stub;
 
 use JDatabaseQuery;
+use Windwalker\DI\Container;
+use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\ListModel;
 
 /**
@@ -59,6 +61,23 @@ class WindwalkerModelStubList extends ListModel
 	 * @var \JForm
 	 */
 	protected $loadedForm;
+
+	/**
+	 * Property userState.
+	 *
+	 * @var  array
+	 */
+	public $userState = array();
+
+	/**
+	 * Configure tables through QueryHelper.
+	 *
+	 * @return  void
+	 */
+	protected function configureTables()
+	{
+		$this->addTable('test', '#__test_table');
+	}
 
 	/**
 	 * quickCleanCache
@@ -135,5 +154,46 @@ class WindwalkerModelStubList extends ListModel
 		}
 
 		return $this->loadedForm;
+	}
+
+	/**
+	 * Gets the value of a user state variable and sets it in the session
+	 *
+	 * This is the same as the method in JApplication except that this also can optionally
+	 * force you back to the first page when a filter has changed
+	 *
+	 * @param   string  $key       The key of the user state variable.
+	 * @param   string  $request   The name of the variable passed in a request.
+	 * @param   string  $default   The default value for the variable if not found. Optional.
+	 * @param   string  $type      Filter for the variable, for valid values see {@link \JFilterInput::clean()}. Optional.
+	 * @param   boolean $resetPage If true, the limitstart in request is set to zero
+	 *
+	 * @return  array The request user state.
+	 */
+	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
+	{
+		/** @var \JApplicationCms $app */
+		$app       = Container::getInstance()->get('app');
+		$input     = $app->input;
+		$oldState  = ArrayHelper::getValue($this->userState, $key);
+		$currentState = (!is_null($oldState)) ? $oldState : $default;
+		$newState     = $input->get($request, null, $type);
+
+//		if (($currentState != $newState) && ($resetPage))
+//		{
+//			$input->set('limitstart', 0);
+//		}
+
+		// Save the new value only if it is set in this request.
+		if ($newState !== null)
+		{
+			ArrayHelper::setValue($this->userState, $key, $newState);
+		}
+		else
+		{
+			$newState = $currentState;
+		}
+
+		return $newState;
 	}
 }

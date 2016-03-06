@@ -11,6 +11,7 @@ namespace Windwalker\Test\Model;
 use Windwalker\DI\Container;
 use Windwalker\Model\ListModel;
 use Windwalker\Model\Provider\GridProvider;
+use Windwalker\String\StringInflector;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\Model\Stub\WindwalkerModelStubList;
 use Windwalker\Test\TestHelper;
@@ -91,7 +92,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 		$option = TestHelper::getValue($listModel, 'option');
 		$viewList = TestHelper::getValue($listModel, 'viewList');
 		$viewItem = TestHelper::getValue($listModel, 'viewItem');
-		$expectedViewItem = \JStringInflector::getInstance()->toSingular($viewList);
+		$expectedViewItem = StringInflector::getInstance()->toSingular($viewList);
 
 		$this->assertNull(TestHelper::getValue($listModel, 'orderCol'));
 		$this->assertEquals(array('*'), TestHelper::getValue($listModel, 'filterFields'));
@@ -151,32 +152,33 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return \PHPUnit_Framework_MockObject_MockObject
 	 */
-	public function getConstructContainer(array $config = array())
+	public function getConstructContainer(array $config = null)
 	{
+		$jconfig = Container::getInstance()->get('joomla.config');
+
 		$container = $this->getMockBuilder('Windwalker\DI\Container')
 			->disableOriginalConstructor()
 			->setMethods(array('get'))
 			->getMock();
 
-		$config = $this->getMockBuilder('JConfig')
+		$config = $this->getMockBuilder('JRegistry')
 			->disableOriginalConstructor()
 			->setMethods(array('get'))
 			->getMock();
 
-		$config->expects($this->once())
+		$config->expects($this->any())
 			->method('get')
 			->with('list_limit')
-			->will($this->returnValue(100));
+			->will($this->returnValue($jconfig->get('list_limit')));
 
-		$container->expects($this->at(0))
+		$container->expects($this->any())
 			->method('get')
-			->with('joomla.config')
-			->will($this->returnValue($config));
+			->will($this->returnCallback(function($arguments)
+			{
+				$result = Container::getInstance()->get($arguments);
 
-		$container->expects($this->at(1))
-			->method('get')
-			->with('app')
-			->will($this->returnValue(Container::getInstance()->get('app')));
+				return $result;
+			}));
 
 		return $container;
 	}
@@ -190,7 +192,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 */
 	public function testGetTable()
 	{
-		$listModel = new ListModel();
+		$listModel = new ListModel;
 
 		$this->assertInstanceOf('JTableContent', $listModel->getTable('Content', 'JTable'));
 
@@ -237,6 +239,52 @@ class ListModelTest extends AbstractDatabaseTestCase
 		$listModel->setListQuery($query);
 
 		$this->assertEquals($expected, $listModel->getItems());
+	}
+
+	/**
+	 * testPopulateState
+	 *
+	 * @return void
+	 *
+	 * @covers Windwalker\Model\ListModel::populateState
+	 */
+	public function testPopulateState()
+	{
+		$model = new WindwalkerModelStubList(array('name' => 'stubs'), Container::getInstance());
+		$model->userState = array(
+			'com_windwalker.stublist.list' => array(
+				'limit' => 100,
+				'ordering' => 'foo',
+				'direction' => 'DESC'
+			),
+			'com_windwalker.stublist.limitstart' => 200,
+			'com_windwalker.stublist.filter' => array(
+				'flower.sakura' => 'foo',
+				'test.foo' => 'bar'
+			)
+		);
+
+		TestHelper::invoke($model, 'populateState');
+
+		$this->assertEquals(100, $model['list.limit']);
+		$this->assertEquals(200, $model['list.start']);
+		$this->assertEquals('foo', $model['list.ordering']);
+		$this->assertEquals('DESC', $model['list.direction']);
+
+		$model->userState['com_windwalker.stublist.list']['limit'] = null;
+
+		TestHelper::invoke($model, 'populateState');
+
+		$config = Container::getInstance()->get('joomla.config');
+
+		$this->assertEquals($config->get('list_limit'), $model['list.limit']);
+
+		// Set limit 0 should get NULL
+		$model->userState['com_windwalker.stublist.list']['limit'] = 0;
+
+		TestHelper::invoke($model, 'populateState');
+
+		$this->assertEquals(null, $model['list.limit']);
 	}
 
 	/**
