@@ -15,8 +15,34 @@ namespace Windwalker\Relation;
  */
 class Action
 {
+	/**
+	 * Delete or update the row from the parent table, and automatically delete or update the matching rows
+	 * in the child table.
+	 *
+	 * @const  string
+	 */
 	const CASCADE   = 'CASCADE';
+
+	/**
+	 * Rejects the delete or update operation for the parent table.
+	 *
+	 * @const  string
+	 */
 	const NO_ACTION = 'NO ACTION';
+
+	/**
+	 * Rejects the delete or update operation for the parent table.
+	 *
+	 * Same as NO_ACTION.
+	 *
+	 * @const  string
+	 */
 	const RESTRICT  = 'NO ACTION';
+
+	/**
+	 * Delete or update the row from the parent table, and set the foreign key column or columns in the child table to NULL.
+	 *
+	 * @const  string
+	 */
 	const SET_NULL  = 'SET NULL';
 }

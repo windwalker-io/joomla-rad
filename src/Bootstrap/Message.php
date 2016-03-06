@@ -9,7 +9,7 @@
 namespace Windwalker\Bootstrap;
 
 /**
- * The Message class.
+ * The Message class to help us get Bootstrap message type..
  *
  * @since  2.1
  */

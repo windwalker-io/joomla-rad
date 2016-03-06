@@ -11,9 +11,9 @@ namespace Windwalker\View\Helper;
 use JHtml;
 use JText;
 use Windwalker\Data\Data;
+use Windwalker\Dom\HtmlElement;
 use Windwalker\Registry\Registry;
 use Windwalker\DI\Container;
-use Windwalker\Html\HtmlElement;
 
 /**
  * A helper to handle list grid operation.

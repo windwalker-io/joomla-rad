@@ -33,16 +33,17 @@ abstract class AbstractScriptManager
 	protected static $assets;
 
 	/**
-	 * inited
+	 * Check an identify initialised of not.
 	 *
-	 * @param   string $name
-	 * @param   mixed  $data
+	 * @param   string $name   the identify name, often use __METHOD__ as unique name.
+	 * @param   mixed  $state  The state to combine into identify, you can use func_get_args() to add arguments
+	 *                         to make sure the script only call once for every state.
 	 *
-	 * @return bool
+	 * @return  boolean  A state inited or not.
 	 */
-	protected static function inited($name, $data = null)
+	protected static function inited($name, $state = null)
 	{
-		$id = static::getInitedId($data);
+		$id = static::getInitedId($state);
 
 		$class = get_called_class();
 
@@ -57,23 +58,23 @@ abstract class AbstractScriptManager
 	}
 
 	/**
-	 * getInitedId
+	 * Get initialised identify.
 	 *
-	 * @param   mixed  $data
+	 * @param   mixed  $state  The data to check state is same.
 	 *
-	 * @return  string
+	 * @return  string  The identify string to check state same.
 	 */
-	protected static function getInitedId($data)
+	protected static function getInitedId($state)
 	{
-		return sha1(serialize($data));
+		return sha1(serialize($state));
 	}
 
 	/**
-	 * Method to get property Asset
+	 * Method to get AssetManager.
 	 *
-	 * @param string $option
+	 * @param  string  $option  The option name to get AssetManager.
 	 *
-	 * @return AssetManager
+	 * @return  AssetManager  The AssetManager object.
 	 */
 	public static function getAsset($option = 'windwalker')
 	{
@@ -99,8 +100,8 @@ abstract class AbstractScriptManager
 	/**
 	 * Method to set property asset
 	 *
-	 * @param   string       $option
-	 * @param   AssetManager $asset
+	 * @param   string        $option  The option name to set AssetManager.
+	 * @param   AssetManager  $asset   The AssetManager object.
 	 *
 	 * @return  void
 	 */
@@ -122,9 +123,9 @@ abstract class AbstractScriptManager
 	}
 
 	/**
-	 * reset
+	 * Reset state identify.
 	 *
-	 * @param bool $all
+	 * @param  boolean  $all  Reset all state or only for this class.
 	 *
 	 * @return void
 	 */

@@ -18,8 +18,8 @@ abstract class AbstractProxyFacade extends AbstractFacade
 	/**
 	 * Handle dynamic, static calls to the object.
 	 *
-	 * @param string $method The method name.
-	 * @param array  $args   The arguments of method call.
+	 * @param   string  $method  The method name.
+	 * @param   array   $args    The arguments of method call.
 	 *
 	 * @return  mixed
 	 */

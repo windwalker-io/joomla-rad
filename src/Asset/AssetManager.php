@@ -16,7 +16,7 @@ use Windwalker\String\StringHelper;
 use Windwalker\Utilities\Queue\PriorityQueue;
 
 /**
- * The Asset Helper
+ * The AssetManager to auto find asset files.
  *
  * @since 2.1
  */
@@ -88,8 +88,8 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Constructor.
 	 *
-	 * @param string                   $name  The instance name.
-	 * @param \SplPriorityQueue|array  $paths Paths to scan assets.
+	 * @param  string                   $name   The instance name.
+	 * @param  \SplPriorityQueue|array  $paths  Paths to scan assets.
 	 */
 	public function __construct($name = 'windwalker', $paths = null)
 	{
@@ -109,10 +109,10 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Add CSS to document.
 	 *
-	 * @param string $file    The css file name(with subfolder) to add.
-	 * @param string $name    The instance name, also means component subfolder name,
-	 *                        default is the name of this instance.
-	 * @param array  $attribs The link attributes in html element.
+	 * @param   string  $file   The css file name(with subfolder) to add.
+	 * @param   string  $name   The instance name, also means component subfolder name,
+	 *                          default is the name of this instance.
+	 * @param   array  $attribs The link attributes in html element.
 	 *
 	 * @return AssetManager Return self to support chaining.
 	 */
@@ -318,10 +318,10 @@ class AssetManager implements ContainerAwareInterface
 	 *
 	 * If debugging mode is on an uncompressed version of Bootstrap is included for easier debugging.
 	 *
-	 * @param bool    $css   Include CSS.
-	 * @param boolean $debug Is debugging mode on? [optional]
+	 * @param  boolean  $css    Include CSS.
+	 * @param  boolean  $debug  Is debugging mode on? [optional]
 	 *
-	 * @return AssetManager Return self to support chaining.
+	 * @return  AssetManager  Return self to support chaining.
 	 */
 	public function bootstrap($css = false, $debug = null)
 	{
@@ -338,9 +338,9 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Method to load the Admin isis template CSS.
 	 *
-	 * @param boolean $debug Is debugging mode on? [optional]
+	 * @param   boolean  $debug  Is debugging mode on? [optional]
 	 *
-	 * @return AssetManager Return self to support chaining.
+	 * @return  AssetManager  Return self to support chaining.
 	 */
 	public function isis($debug = false)
 	{
@@ -370,11 +370,11 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Find the file we want in oaths.
 	 *
-	 * @param string $file  File name to find.
-	 * @param string $type  File type, css or js.
-	 * @param string $name  The instance name.
+	 * @param   string  $file  File name to find.
+	 * @param   string  $type  File type, css or js.
+	 * @param   string  $name  The instance name.
 	 *
-	 * @return array|boolean Found file & sum information.
+	 * @return  array|boolean  Found file & sum information.
 	 */
 	protected function findFile($file, $type, $name = null)
 	{
@@ -458,12 +458,16 @@ class AssetManager implements ContainerAwareInterface
 	}
 
 	/**
-	 * getMinFile
+	 * Get minify file name.
 	 *
-	 * @param  string  $path
-	 * @param  string $file
+	 * - If in debug mode, we will search for .min file, if minify file not exists, retuen nomral file.
+	 * - If not in debug mode, we will search for normal file, if normal file not exists but min file does, retuen min file.
+	 * - If both not exists, return false.
 	 *
-	 * @return  string
+	 * @param  string  $path  The path to check file.
+	 * @param  string  $file  The file name.
+	 *
+	 * @return  string|false  The found file or false.
 	 */
 	protected function getMinFile($path, $file)
 	{
@@ -579,7 +583,7 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Get the DI container.
 	 *
-	 * @param   string $name
+	 * @param   string  $name  The name of container.
 	 *
 	 * @return  Container
 	 */
@@ -636,7 +640,7 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Get scan paths.
 	 *
-	 * @return  PriorityQueue
+	 * @return  PriorityQueue  The paths object.
 	 */
 	public function getPaths()
 	{
@@ -729,11 +733,11 @@ class AssetManager implements ContainerAwareInterface
 	}
 
 	/**
-	 * Method to get property Debug
+	 * Method to get property Debug.
 	 *
-	 * @param boolean $bool
+	 * @param  boolean  $bool  Support debug mode to random version.
 	 *
-	 * @return boolean|static
+	 * @return  boolean|static  Return debug value or self to chaining.
 	 */
 	public function isDebug($bool = null)
 	{
@@ -748,12 +752,16 @@ class AssetManager implements ContainerAwareInterface
 	}
 
 	/**
-	 * Internal method to get a JavaScript object notation string from an array
+	 * Internal method to get a JavaScript object notation string from an array.
 	 *
-	 * @param mixed $data
-	 * @param bool  $quoteKey
+	 * You can add \\ before a function string that this string will keep as a real JS function.
 	 *
-	 * @return string JavaScript object notation representation of the array
+	 * @param   mixed  $data      The data to convert to JS object.
+	 * @param   bool   $quoteKey  Quote key by double quote or not.
+	 *                            - TRUE:  {"key":"value"}
+	 *                            - FALSE: {key:"value"}
+	 *
+	 * @return  string  JavaScript object notation representation of the array
 	 */
 	public static function getJSObject($data, $quoteKey = true)
 	{

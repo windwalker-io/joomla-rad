@@ -78,9 +78,9 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput          $input  The input object.
-	 * @param   \JApplicationCms $app    The application object.
-	 * @param   array            $config Additional config.
+	 * @param   \JInput           $input   The input object.
+	 * @param   \JApplicationCms  $app     The application object.
+	 * @param   array             $config  Additional config.
 	 *
 	 * @throws  \Exception
 	 */

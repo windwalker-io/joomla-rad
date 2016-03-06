@@ -40,9 +40,9 @@ abstract class AbstractRedirectController extends Controller
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput          $input   The input object.
-	 * @param   \JApplicationCms $app     The application object.
-	 * @param   array            $config  The config object.
+	 * @param   \JInput           $input   The input object.
+	 * @param   \JApplicationCms  $app     The application object.
+	 * @param   array             $config  The config object.
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{

@@ -15,7 +15,7 @@ use Windwalker\Helper\ContextHelper;
 /**
  * The Controller to handle single item.
  *
- * @since 2.0
+ * @since  2.0
  */
 abstract class AbstractItemController extends AbstractAdminController
 {
@@ -36,9 +36,9 @@ abstract class AbstractItemController extends AbstractAdminController
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput          $input  The input object.
-	 * @param   \JApplicationCms $app    The application object.
-	 * @param   array            $config The config object.
+	 * @param   \JInput           $input   The input object.
+	 * @param   \JApplicationCms  $app     The application object.
+	 * @param   array             $config  The config object.
 	 */
 	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
 	{

@@ -46,13 +46,13 @@ class AbstractScriptManagerTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testReset()
 	{
-		CoreScript::requireJS();
+		CoreScript::windwalker();
 
 		$inited = $this->readAttribute('Windwalker\Script\AbstractScriptManager', 'inited');
 
 		$this->assertEquals(
 			array('a03e9ce134099d2bd410bdc53e8abb7d3f95c397' => true),
-			$inited['Windwalker\Script\CoreScript']['Windwalker\Script\CoreScript::requireJS']
+			$inited['Windwalker\Script\CoreScript']['Windwalker\Script\CoreScript::windwalker']
 		);
 
 		StubScript::reset();
@@ -61,7 +61,7 @@ class AbstractScriptManagerTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEquals(
 			array('a03e9ce134099d2bd410bdc53e8abb7d3f95c397' => true),
-			$inited['Windwalker\Script\CoreScript']['Windwalker\Script\CoreScript::requireJS']
+			$inited['Windwalker\Script\CoreScript']['Windwalker\Script\CoreScript::windwalker']
 		);
 
 		AbstractScriptManager::reset();
@@ -70,7 +70,7 @@ class AbstractScriptManagerTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertEmpty($inited);
 
-		CoreScript::requireJS();
+		CoreScript::windwalker();
 
 		StubScript::reset(true);
 

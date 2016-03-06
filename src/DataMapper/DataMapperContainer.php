@@ -9,7 +9,7 @@
 namespace Windwalker\DataMapper;
 
 /**
- * The DataMapperContainer class.
+ * The DataMapperContainer to store DataMapper singleton.
  * 
  * @since  2.1
  */

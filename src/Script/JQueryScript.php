@@ -18,11 +18,11 @@ use Windwalker\Helper\ArrayHelper;
 class JQueryScript extends AbstractScriptManager
 {
 	/**
-	 * jquery
+	 * Add jQuery core script.
 	 *
-	 * @param   boolean $noConflict
-	 * @param   boolean $debug
-	 * @param   boolean $migrate
+	 * @param   boolean  $noConflict  True to load jQuery in noConflict mode [optional]
+	 * @param   boolean  $debug       Is debugging mode on? [optional]
+	 * @param   boolean  $migrate     True to enable the jQuery Migrate plugin
 	 */
 	public static function core($noConflict = true, $debug = null, $migrate = true)
 	{
@@ -30,9 +30,9 @@ class JQueryScript extends AbstractScriptManager
 	}
 
 	/**
-	 * ui
+	 * Method to load the jQuery UI framework.
 	 *
-	 * @param array $components
+	 * @param   array  $components  The jQuery UI components to load [optional]
 	 *
 	 * @return  void
 	 */
@@ -67,11 +67,11 @@ class JQueryScript extends AbstractScriptManager
 	}
 
 	/**
-	 * highlight
+	 * Add jQuery highlight plugin.
 	 *
-	 * @param  string  $selector
-	 * @param  string  $text
-	 * @param  array   $options
+	 * @param  string  $selector  The selector to make highlight.
+	 * @param  string  $text      The text to mark.
+	 * @param  array   $options   The options of this script.
 	 *
 	 * @see  http://bartaz.github.io/sandbox.js/jquery.highlight.html
 	 *

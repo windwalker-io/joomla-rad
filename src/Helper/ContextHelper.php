@@ -13,19 +13,19 @@ use Windwalker\Model\Model;
 use Windwalker\View\AbstractView;
 
 /**
- * The ContextHelper class.
+ * The ContextHelper to auto get context string.
  *
  * @since  2.1
  */
 abstract class ContextHelper
 {
 	/**
-	 * fromController
+	 * Get context from controller.
 	 *
-	 * @param Controller $controller
-	 * @param string     $suffix
+	 * @param  Controller  $controller  Controller object.
+	 * @param  string      $suffix      Add suffix or not.
 	 *
-	 * @return  string
+	 * @return  string  The generated context string.
 	 */
 	public static function fromController(Controller $controller, $suffix = null)
 	{
@@ -35,12 +35,12 @@ abstract class ContextHelper
 	}
 
 	/**
-	 * fromModel
+	 * Get context from model.
 	 *
-	 * @param   Model   $model
-	 * @param   string  $suffix
+	 * @param   Model   $model   The model object.
+	 * @param   string  $suffix  Add suffix or not.
 	 *
-	 * @return  string
+	 * @return  string  The generated context string.
 	 *
 	 * @throws \Exception
 	 */
@@ -52,12 +52,12 @@ abstract class ContextHelper
 	}
 
 	/**
-	 * fromView
+	 * Get context from view.
 	 *
-	 * @param AbstractView $view
-	 * @param string       $suffix
+	 * @param   AbstractView  $view    The view object.
+	 * @param   string        $suffix  Add suffix or not.
 	 *
-	 * @return  string
+	 * @return  string  The generated context string.
 	 *
 	 * @throws \Exception
 	 */

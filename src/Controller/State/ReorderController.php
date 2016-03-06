@@ -125,19 +125,19 @@ class ReorderController extends AbstractUpdateStateController
 	/**
 	 * Set a URL for browser redirection.
 	 *
-	 * @param   string $url  URL to redirect to.
-	 * @param   string $msg  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
-	 * @param   string $type Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
+	 * @param   string  $url      URL to redirect to.
+	 * @param   string  $message  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string  $type     Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
 	 * @return  void
 	 */
-	public function redirect($url, $msg = null, $type = Message::MESSAGE_GREEN)
+	public function redirect($url, $message = null, $type = Message::MESSAGE_GREEN)
 	{
-		if (!$msg)
+		if (!$message && $redirect = $this->getRedirect(true))
 		{
-			list($url, $msg, $type) = $this->getRedirect(true);
+			list($url, $message, $type) = $redirect;
 		}
 
-		jexit($msg);
+		jexit($message);
 	}
 }

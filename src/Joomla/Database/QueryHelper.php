@@ -37,7 +37,7 @@ class QueryHelper
 	/**
 	 * Constructor.
 	 *
-	 * @param AbstractDatabaseDriver $db
+	 * @param  AbstractDatabaseDriver  $db  The DB adapter.
 	 */
 	public function __construct(AbstractDatabaseDriver $db = null)
 	{
@@ -45,15 +45,15 @@ class QueryHelper
 	}
 
 	/**
-	 * addTable
+	 * Add table alias and name to join list.
 	 *
-	 * @param string  $alias
-	 * @param string  $table
-	 * @param mixed   $condition
-	 * @param string  $joinType
-	 * @param boolean $prefix
+	 * @param   string   $alias      The table alias.
+	 * @param   string   $table      The table name.
+	 * @param   mixed    $condition  Join ON conditions, can be an array or string.
+	 * @param   string   $joinType   The join type, default is LEFT.
+	 * @param   boolean  $prefix     Add table alias as prefix before select field name.
 	 *
-	 * @return  QueryHelper
+	 * @return  static  Return self to support chaining.
 	 */
 	public function addTable($alias, $table, $condition = null, $joinType = 'LEFT', $prefix = null)
 	{
@@ -88,11 +88,11 @@ class QueryHelper
 	}
 
 	/**
-	 * removeTable
+	 * Remove aa table from join list.
 	 *
-	 * @param string $alias
+	 * @param   string  $alias  The table alias.
 	 *
-	 * @return  $this
+	 * @return  static  Return self to support chaining.
 	 */
 	public function removeTable($alias)
 	{
@@ -105,9 +105,11 @@ class QueryHelper
 	}
 
 	/**
-	 * getFilterFields
+	 * Generate all selected fields from joined tables.
 	 *
-	 * @return  array
+	 * This method will auto get all columns from every table and set the selected fields to: `alias`.`field` AS `alias_field`
+	 *
+	 * @return  array  Generated select fields.
 	 */
 	public function getSelectFields()
 	{
@@ -149,11 +151,11 @@ class QueryHelper
 	}
 
 	/**
-	 * registerQueryTables
+	 * Register join tables to Query object.
 	 *
-	 * @param Query $query
+	 * @param   Query  $query  The query object.
 	 *
-	 * @return  Query
+	 * @return  Query  Return the query object.
 	 */
 	public function registerQueryTables(Query $query)
 	{
@@ -176,12 +178,12 @@ class QueryHelper
 	}
 
 	/**
-	 * buildConditions
+	 * Build conditions into query object.
 	 *
-	 * @param Query $query
-	 * @param array         $conditions
+	 * @param   Query  $query       The query object to add where conditions.
+	 * @param   array  $conditions  The where conditions array to add to query object.
 	 *
-	 * @return  Query
+	 * @return  Query  Return the query object.
 	 */
 	public static function buildWheres(Query $query, array $conditions)
 	{

@@ -58,12 +58,12 @@ class Relation implements RelationHandlerInterface
 	/**
 	 * Add one to many relation configurations.
 	 *
-	 * @param string  $field     Field of parent table to store children.
-	 * @param \JTable $table     The Table object of this relation child.
-	 * @param array   $fks       Foreign key mapping.
-	 * @param string  $onUpdate  The action of ON UPDATE operation.
-	 * @param string  $onDelete  The action of ON DELETE operation.
-	 * @param array   $options   Some options to configure this relation.
+	 * @param   string   $field     Field of parent table to store children.
+	 * @param   \JTable  $table     The Table object of this relation child.
+	 * @param   array    $fks       Foreign key mapping.
+	 * @param   string   $onUpdate  The action of ON UPDATE operation.
+	 * @param   string   $onDelete  The action of ON DELETE operation.
+	 * @param   array    $options   Some options to configure this relation.
 	 *
 	 * @return  OneToManyRelation
 	 */
@@ -82,14 +82,14 @@ class Relation implements RelationHandlerInterface
 	/**
 	 * Add one to many relation configurations.
 	 *
-	 * @param string  $field    Field of parent table to store children.
-	 * @param \JTable $map      The mapping table.
-	 * @param array   $mapFks   The mapping foreign keys.
-	 * @param \JTable $table    The Table object of this relation child.
-	 * @param array   $fks      Foreign key mapping.
-	 * @param string  $onUpdate The action of ON UPDATE operation.
-	 * @param string  $onDelete The action of ON DELETE operation.
-	 * @param array   $options  Some options to configure this relation.
+	 * @param   string   $field     Field of parent table to store children.
+	 * @param   \JTable  $map       The mapping table.
+	 * @param   array    $mapFks    The mapping foreign keys.
+	 * @param   \JTable  $table     The Table object of this relation child.
+	 * @param   array    $fks       Foreign key mapping.
+	 * @param   string   $onUpdate  The action of ON UPDATE operation.
+	 * @param   string   $onDelete  The action of ON DELETE operation.
+	 * @param   array    $options   Some options to configure this relation.
 	 *
 	 * @return ManyToManyRelation
 	 */
@@ -108,12 +108,12 @@ class Relation implements RelationHandlerInterface
 	/**
 	 * Add one to many relation configurations.
 	 *
-	 * @param string  $field     Field of parent table to store children.
-	 * @param \JTable $table     The Table object of this relation child.
-	 * @param array   $fks       Foreign key mapping.
-	 * @param string  $onUpdate  The action of ON UPDATE operation.
-	 * @param string  $onDelete  The action of ON DELETE operation.
-	 * @param array   $options   Some options to configure this relation.
+	 * @param   string   $field     Field of parent table to store children.
+	 * @param   \JTable  $table     The Table object of this relation child.
+	 * @param   array    $fks       Foreign key mapping.
+	 * @param   string   $onUpdate  The action of ON UPDATE operation.
+	 * @param   string   $onDelete  The action of ON DELETE operation.
+	 * @param   array    $options   Some options to configure this relation.
 	 *
 	 * @return  ManyToOneRelation
 	 */
@@ -132,12 +132,12 @@ class Relation implements RelationHandlerInterface
 	/**
 	 * Add one to many relation configurations.
 	 *
-	 * @param string  $field     Field of parent table to store children.
-	 * @param \JTable $table     The Table object of this relation child.
-	 * @param array   $fks       Foreign key mapping.
-	 * @param string  $onUpdate  The action of ON UPDATE operation.
-	 * @param string  $onDelete  The action of ON DELETE operation.
-	 * @param array   $options   Some options to configure this relation.
+	 * @param  string   $field     Field of parent table to store children.
+	 * @param  \JTable  $table     The Table object of this relation child.
+	 * @param  array    $fks       Foreign key mapping.
+	 * @param  string   $onUpdate  The action of ON UPDATE operation.
+	 * @param  string   $onDelete  The action of ON DELETE operation.
+	 * @param  array    $options   Some options to configure this relation.
 	 *
 	 * @return  OneToOneRelation
 	 */
@@ -197,11 +197,11 @@ class Relation implements RelationHandlerInterface
 	}
 
 	/**
-	 * getRelation
+	 * Get relation object.
 	 *
-	 * @param string $field
+	 * @param  string  $field  The field of this relation.
 	 *
-	 * @return  AbstractRelationHandler
+	 * @return  AbstractRelationHandler  The relation handler.
 	 */
 	public function getRelation($field)
 	{
@@ -214,12 +214,12 @@ class Relation implements RelationHandlerInterface
 	}
 
 	/**
-	 * setRelation
+	 * Set relation object.
 	 *
-	 * @param string                   $field
-	 * @param RelationHandlerInterface $relation
+	 * @param  string                    $field     The field of this relation.
+	 * @param  RelationHandlerInterface  $relation  The relation handler.
 	 *
-	 * @return  static
+	 * @return  static  Return self to support chaining.
 	 */
 	public function setRelation($field, RelationHandlerInterface $relation)
 	{
@@ -253,7 +253,7 @@ class Relation implements RelationHandlerInterface
 	}
 
 	/**
-	 * Method to get property Parent
+	 * Method to get Parent Table.
 	 *
 	 * @return  Table
 	 */
@@ -265,7 +265,7 @@ class Relation implements RelationHandlerInterface
 	/**
 	 * Method to set property parent
 	 *
-	 * @param   Table $parent
+	 * @param   Table  $parent  The parent table object.
 	 *
 	 * @return  static  Return self to support chaining.
 	 */
@@ -277,12 +277,12 @@ class Relation implements RelationHandlerInterface
 	}
 
 	/**
-	 * Get Table object.
+	 * Get Table object by string name and prefix.
 	 *
 	 * @param   string  $table   The table name.
 	 * @param   string  $prefix  The table class prefix.
 	 *
-	 * @return  \JTable
+	 * @return  \JTable  Found table.
 	 */
 	protected function getTable($table, $prefix = null)
 	{

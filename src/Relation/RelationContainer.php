@@ -25,11 +25,11 @@ class RelationContainer
 	protected $relations;
 
 	/**
-	 * getRelation
+	 * Get relation handler.
 	 *
-	 * @param string $name
+	 * @param  string  $name  Relation field name.
 	 *
-	 * @return  Relation
+	 * @return  Relation  Return relation handler.
 	 */
 	public function getRelation($name)
 	{
@@ -42,12 +42,12 @@ class RelationContainer
 	}
 
 	/**
-	 * setRelation
+	 * Ser relation handler.
 	 *
-	 * @param string                   $name
-	 * @param RelationHandlerInterface $relation
+	 * @param  string                    $name      Field of this relation.
+	 * @param  RelationHandlerInterface  $relation  Relation handler object.
 	 *
-	 * @return  $this
+	 * @return  static  Return self to support chaining.
 	 */
 	public function setRelation($name, RelationHandlerInterface $relation)
 	{
@@ -57,7 +57,7 @@ class RelationContainer
 	}
 
 	/**
-	 * Method to get property Relations
+	 * Method to get property Relation handlers.
 	 *
 	 * @return  Relation[]
 	 */
@@ -69,7 +69,7 @@ class RelationContainer
 	/**
 	 * Method to set property relations
 	 *
-	 * @param   Relation[] $relations
+	 * @param   Relation[]  $relations  Relation handlers.
 	 *
 	 * @return  static  Return self to support chaining.
 	 */

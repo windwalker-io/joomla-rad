@@ -81,9 +81,9 @@ class RelationObserver extends AbstractDataMapperObserver
 	}
 
 	/**
-	 * onAfterFind
+	 * Event after find.
 	 *
-	 * @param DataSet $dataset
+	 * @param  DataSet  $dataset  The dataset which found.
 	 *
 	 * @return  void
 	 */
@@ -110,9 +110,9 @@ class RelationObserver extends AbstractDataMapperObserver
 	}
 
 	/**
-	 * onAfterCreate
+	 * Event after create.
 	 *
-	 * @param $dataset
+	 * @param   DataSet  $dataset  The dataset which created.
 	 *
 	 * @return  void
 	 */
@@ -138,9 +138,9 @@ class RelationObserver extends AbstractDataMapperObserver
 	}
 
 	/**
-	 * onAfterUpdate
+	 * Event after update.
 	 *
-	 * @param DataSet $dataset
+	 * @param   DataSet  $dataset  The dataset which updated.
 	 *
 	 * @return  void
 	 */
@@ -150,9 +150,9 @@ class RelationObserver extends AbstractDataMapperObserver
 	}
 
 	/**
-	 * onBeforeDelete
+	 * Event before delete.
 	 *
-	 * @param array $conditions
+	 * @param   array  $conditions  The condition to delete rows.
 	 *
 	 * @return  void
 	 */
@@ -162,9 +162,9 @@ class RelationObserver extends AbstractDataMapperObserver
 	}
 
 	/**
-	 * onAfterDelete
+	 * Event after deleted.
 	 *
-	 * @param boolean $result
+	 * @param  boolean  $result  The result of deleted.
 	 *
 	 * @return  void
 	 */

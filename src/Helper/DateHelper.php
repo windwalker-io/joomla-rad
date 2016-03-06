@@ -31,7 +31,7 @@ abstract class DateHelper
 	protected static $tzOffset;
 
 	/**
-	 * Return the {@link JDate} object
+	 * Return the {@link \JDate} object
 	 *
 	 * @param   mixed  $time      The initial time for the JDate object
 	 * @param   mixed  $tzOffset  The timezone offset.
@@ -94,13 +94,13 @@ abstract class DateHelper
 	}
 
 	/**
-	 * utcToLocal
+	 * Convert a date string to local time.
 	 *
-	 * @param string $date
-	 * @param string $format
-	 * @param string $to
+	 * @param   string  $date    Date string.
+	 * @param   string  $format  The converted format, keep NULL will use default SQL format.
+	 * @param   string  $to      If keep NULL, will auto get target timezone from Joomla config.
 	 *
-	 * @return  string
+	 * @return  string  The converted date string.
 	 */
 	public static function toLocalTime($date, $format = null, $to = null)
 	{
@@ -110,13 +110,13 @@ abstract class DateHelper
 	}
 
 	/**
-	 * localToUTC
+	 * Convert a date string to server time.
 	 *
-	 * @param string $date
-	 * @param string $format
-	 * @param string $from
+	 * @param   string  $date    Date string.
+	 * @param   string  $format  The converted format, keep NULL will use default SQL format.
+	 * @param   string  $from    If keep NULL, will auto get timezone from Joomla config.
 	 *
-	 * @return  string
+	 * @return  string  The converted date string.
 	 */
 	public static function toServerTime($date, $format = null, $from = null)
 	{
@@ -126,9 +126,9 @@ abstract class DateHelper
 	}
 
 	/**
-	 * getOffset
+	 * Get Timezone offset from config.
 	 *
-	 * @return  string
+	 * @return  string  Timezone string.
 	 */
 	public static function getTZOffset()
 	{
@@ -143,14 +143,14 @@ abstract class DateHelper
 	}
 
 	/**
-	 * itemDatesToLocal
+	 * Convert some common fields to local timezone.
 	 *
-	 * @param object $item
-	 * @param array  $fields
+	 * @param   object  $item    The item data object.
+	 * @param   array   $fields  The fields we want to convert.
 	 *
-	 * @return  object
+	 * @return  object  Return converted data.
 	 */
-	public static function itemDatesToLocal($item, $fields = null)
+	public static function itemDatesToLocal($item, array $fields = null)
 	{
 		if (!is_object($item))
 		{
@@ -177,14 +177,14 @@ abstract class DateHelper
 	}
 
 	/**
-	 * itemDatesToServer
+	 * Convert some common fields to server timezone.
 	 *
-	 * @param object $item
-	 * @param array  $fields
+	 * @param   object  $item    The item data object.
+	 * @param   array   $fields  The fields we want to convert.
 	 *
-	 * @return  object
+	 * @return  object  Return converted data.
 	 */
-	public static function itemDatesToServer($item, $fields = null)
+	public static function itemDatesToServer($item, array $fields = null)
 	{
 		if (!is_object($item))
 		{

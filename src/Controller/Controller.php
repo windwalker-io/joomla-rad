@@ -98,9 +98,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput          $input  The input object.
-	 * @param   \JApplicationCms $app    The application object.
-	 * @param   array            $config The config object.
+	 * @param   \JInput           $input   The input object.
+	 * @param   \JApplicationCms  $app     The application object.
+	 * @param   array             $config  The config object.
 	 */
 	public function __construct(JInput $input = null, JApplicationCms $app = null, $config = array())
 	{
@@ -172,11 +172,11 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Fetch HMVC result.
 	 *
-	 * @param string       $prefix  The controller prefix, it means the component.
-	 * @param string       $name    Controller task name.
-	 * @param JInput|array $input   The input object or an array, it will pass to child controller.
+	 * @param   string        $prefix  The controller prefix, it means the component.
+	 * @param   string        $name    Controller task name.
+	 * @param   JInput|array  $input   The input object or an array, it will pass to child controller.
 	 *
-	 * @return mixed HMVC executed result.
+	 * @return   mixed  HMVC executed result.
 	 */
 	public function fetch($prefix, $name, $input = array())
 	{
@@ -297,7 +297,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Set controller name
 	 *
-	 * @param   string $name The controller name.
+	 * @param   string  $name  The controller name.
 	 *
 	 * @return  Controller  Return self to support chaining.
 	 */
@@ -311,7 +311,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Set option name.
 	 *
-	 * @param   string $option Option name.
+	 * @param   string  $option  Option name.
 	 *
 	 * @return  Controller  Return self to support chaining.
 	 */
@@ -370,13 +370,13 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Set a URL for browser redirection.
 	 *
-	 * @param   string $url  URL to redirect to.
-	 * @param   string $msg  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
-	 * @param   string $type Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
+	 * @param   string $url     URL to redirect to.
+	 * @param   string $message Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string $type    Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
 	 * @return  void
 	 */
-	public function redirect($url = null, $msg = null, $type = Message::MESSAGE_GREEN)
+	public function redirect($url = null, $message = null, $type = Message::MESSAGE_GREEN)
 	{
 		if ($this->input->get('hmvc') || !$this->input->get('redirect', true))
 		{
@@ -390,25 +390,25 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 
 		if (!$url && $redirect = $this->getRedirect(true))
 		{
-			list($url, $msg, $type) = $redirect;
+			list($url, $message, $type) = $redirect;
 		}
 
 		if ($url)
 		{
-			$this->setMessage($msg, $type);
+			$this->setMessage($message, $type);
 
 			$this->app->redirect($url);
 		}
 	}
 
 	/**
-	 * setRedirect
+	 * Store a redirect information then later call redirect() will use this URL to redirect.
 	 *
-	 * @param string $url
-	 * @param string $message
-	 * @param string $type
+	 * @param   string  $url      URL to redirect to.
+	 * @param   string  $message  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string  $type     Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return  static
+	 * @return  static  Return self to support chaining.
 	 */
 	public function setRedirect($url, $message = null, $type = Message::MESSAGE_GREEN)
 	{
@@ -422,9 +422,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * removeRedirect
+	 * Remove redirect information.
 	 *
-	 * @return  static
+	 * @return  static  Return self to support chaining.
 	 */
 	public function removeRedirect()
 	{
@@ -434,9 +434,9 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	}
 
 	/**
-	 * getRedirect
+	 * Get redirect information.
 	 *
-	 * @param bool $onlyValue
+	 * @param  bool  $onlyValue  Only get value without array key.
 	 *
 	 * @return  array
 	 */
@@ -453,12 +453,12 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Method to get a model object, loading it if required.
 	 *
-	 * @param   string  $name     The model name. Optional.
-	 * @param   string  $prefix   The class prefix. Optional.
-	 * @param   array   $config   Configuration array for model. Optional.
-	 * @param   boolean $forceNew Force get new model, or we get it from cache.
+	 * @param   string   $name      The model name. Optional.
+	 * @param   string   $prefix    The class prefix. Optional.
+	 * @param   array    $config    Configuration array for model. Optional.
+	 * @param   boolean  $forceNew  Force get new model, or we get it from cache.
 	 *
-	 * @return  Model  The model.
+	 * @return  Model  The model found.
 	 */
 	public function getModel($name = null, $prefix = null, $config = array(), $forceNew = false)
 	{
@@ -538,16 +538,33 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Set message to queue.
 	 *
-	 * @param   string  $msg   Message to display on redirect. Optional, defaults to value set internally by controller, if any.
-	 * @param   string  $type  Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
+	 * @param   string  $message  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string  $type     Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
 	 *
-	 * @return  Controller
+	 * @return  static  Return self to support chaining.
+	 *
+	 * @deprecated  3.0  Use addMessage() instead.
 	 */
-	public function setMessage($msg, $type = 'message')
+	public function setMessage($message, $type = 'message')
+	{
+		$this->addMessage($message, $type);
+
+		return $this;
+	}
+
+	/**
+	 * Add message to queue.
+	 *
+	 * @param   string  $message  Message to display on redirect. Optional, defaults to value set internally by controller, if any.
+	 * @param   string  $type     Message type. Optional, defaults to 'message' or the type set by a previous call to setMessage.
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function addMessage($message, $type = 'message')
 	{
 		if (!$this->input->get('quiet', false))
 		{
-			$this->app->enqueueMessage($msg, $type);
+			$this->app->enqueueMessage($message, $type);
 
 			return $this;
 		}

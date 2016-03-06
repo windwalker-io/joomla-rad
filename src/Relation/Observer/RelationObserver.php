@@ -72,10 +72,10 @@ class RelationObserver extends \JTableObserver
 	}
 
 	/**
-	 * onAfterLoad
+	 * Event after load.
 	 *
-	 * @param bool  $result
-	 * @param array $row
+	 * @param  boolean  $result  Load result.
+	 * @param  array    $row     The found data.
 	 *
 	 * @return  void
 	 */
@@ -88,9 +88,9 @@ class RelationObserver extends \JTableObserver
 	}
 
 	/**
-	 * onAfterStore
+	 * Event after store.
 	 *
-	 * @param boolean $result
+	 * @param  boolean  $result  The store result.
 	 *
 	 * @return  void
 	 */
@@ -103,9 +103,9 @@ class RelationObserver extends \JTableObserver
 	}
 
 	/**
-	 * onBeforeDelete
+	 * Event before  delete.
 	 *
-	 * @param mixed $pk
+	 * @param   mixed  $pk  The delete key or conditions.
 	 *
 	 * @return  void
 	 */
@@ -120,9 +120,9 @@ class RelationObserver extends \JTableObserver
 	}
 
 	/**
-	 * onAfterDelete
+	 * Event after delete.
 	 *
-	 * @param mixed $pk
+	 * @param   mixed  $pk  The delete key or conditions.
 	 *
 	 * @return  void
 	 */

@@ -132,23 +132,6 @@ JS;
 	}
 
 	/**
-	 * Method to test requireJS().
-	 *
-	 * @return void
-	 *
-	 * @covers Windwalker\Script\CoreScript::requireJS
-	 * @TODO   Implement testRequireJS().
-	 */
-	public function testRequireJS()
-	{
-		CoreScript::requireJS();
-
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/require.js';
-
-		$this->assertEquals($url, $this->doc->getLastScript());
-	}
-
-	/**
 	 * Method to test backbone().
 	 *
 	 * @return void

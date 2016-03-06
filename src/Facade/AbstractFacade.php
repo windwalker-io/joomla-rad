@@ -32,11 +32,11 @@ abstract class AbstractFacade
 	protected static $_child;
 
 	/**
-	 * getInstance
+	 * Get instance of the key.
 	 *
-	 * @param bool $forceNew
+	 * @param   boolean  $forceNew  Force new or not.
 	 *
-	 * @return mixed
+	 * @return  mixed  The value get from container.
 	 */
 	public static function getInstance($forceNew = false)
 	{
@@ -44,9 +44,9 @@ abstract class AbstractFacade
 	}
 
 	/**
-	 * getContainer
+	 * Get DI contaier.
 	 *
-	 * @param string $child
+	 * @param   string  $child  The container child name.
 	 *
 	 * @return  Container
 	 */
@@ -58,7 +58,7 @@ abstract class AbstractFacade
 	/**
 	 * Method to set property key
 	 *
-	 * @param   string $key
+	 * @param   string  $key  Set DI key to support Facade pattern.
 	 *
 	 * @return  void
 	 */
@@ -90,7 +90,7 @@ abstract class AbstractFacade
 	/**
 	 * Method to set property child
 	 *
-	 * @param   string $child
+	 * @param   string  $child  Child name to get container.
 	 *
 	 * @return  void
 	 */

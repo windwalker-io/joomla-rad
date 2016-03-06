@@ -40,9 +40,9 @@ abstract class CoreScript extends AbstractScriptManager
 	}
 
 	/**
-	 * Load underscore.string.
+	 * Load Underscore.String.
 	 *
-	 * @param bool $noConflict Enable underscore no conflict mode.
+	 * @param   boolean  $noConflict  Enable underscore no conflict mode.
 	 *
 	 * @return  void
 	 */

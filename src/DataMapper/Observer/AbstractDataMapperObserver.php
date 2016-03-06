@@ -35,12 +35,13 @@ abstract class AbstractDataMapperObserver implements \JObserverInterface
 	/**
 	 * Class init.
 	 *
-	 * @param ObservableDataMapper $mapper
-	 * @param array                        $params
+	 * @param  ObservableDataMapper  $mapper  An ObservableDataMapper to support hooks.
+	 * @param  array                 $params  Params to provide other information.
 	 */
 	public function __construct(ObservableDataMapper $mapper, $params = array())
 	{
 		$mapper->attachObserver($this);
+
 		$this->mapper = $mapper;
 		$this->params = new Registry($params);
 	}

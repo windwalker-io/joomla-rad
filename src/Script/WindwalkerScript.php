@@ -18,10 +18,10 @@ use Windwalker\Asset\AssetManager;
 class WindwalkerScript extends AbstractScriptManager
 {
 	/**
-	 * quickadd
+	 * Quickadd script.
 	 *
-	 * @param string $selector
-	 * @param array  $options
+	 * @param  string  $selector  The selector to enable this script.
+	 * @param  array   $options   The options of this script.
 	 *
 	 * @return  void
 	 */
@@ -50,9 +50,9 @@ JS;
 	}
 
 	/**
-	 * modal
+	 * The modal to open link.
 	 *
-	 * @param string $selector
+	 * @param  string  $selector  The selector to enable this script.
 	 *
 	 * @return  void
 	 */

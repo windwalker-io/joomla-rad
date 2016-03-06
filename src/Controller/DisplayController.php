@@ -37,7 +37,9 @@ class DisplayController extends Controller
 	protected $cachable = false;
 
 	/**
-	 * An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 * An array of safe url parameters and their variable types, for valid values.
+	 *
+	 * @see \JFilterInput::clean()
 	 *
 	 * @var array
 	 */
@@ -107,7 +109,6 @@ class DisplayController extends Controller
 			return;
 		}
 	}
-
 
 	/**
 	 * Method to run this controller.

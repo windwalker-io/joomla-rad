@@ -9,7 +9,7 @@
 namespace Windwalker\Joomla\DataMapper;
 
 use Joomla\DI\Container;
-use Windwalker\DataMapper\Adapter\DatabaseAdapter;
+use Windwalker\DataMapper\Adapter\AbstractDatabaseAdapter;
 use Windwalker\DI\ServiceProvider;
 use Windwalker\Joomla\Database\JoomlaAdapter;
 
@@ -31,6 +31,6 @@ class DataMapperProvider extends ServiceProvider
 	 */
 	public function register(Container $container)
 	{
-		DatabaseAdapter::setInstance(new JoomlaAdapter($container->get('db')));
+		AbstractDatabaseAdapter::setInstance(new JoomlaAdapter($container->get('db')));
 	}
 }

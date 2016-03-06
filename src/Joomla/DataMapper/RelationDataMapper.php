@@ -12,6 +12,8 @@ namespace Windwalker\Joomla\DataMapper;
  * Relation Database Mapper.
  *
  * Provides join functions help ue select multiple tables.
+ *
+ * @deprecated  3.0  Directly use \Windwalker\DataMapper\RelationDataMapper instead.
  */
 class RelationDataMapper extends \Windwalker\DataMapper\RelationDataMapper
 {

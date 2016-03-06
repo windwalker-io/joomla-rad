@@ -18,7 +18,7 @@ use Windwalker\Relation\Relation;
 use Windwalker\Table\Table;
 
 /**
- * An observable DataMapper, we can add many observers to this object and trigger them when CRUD.
+ * An observable DataMapper, we can add observers to this object and trigger them when running CRUD.
  *
  * @property-read  Relation  $relation  The Relation object.
  * 
