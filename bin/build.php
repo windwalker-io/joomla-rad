@@ -19,6 +19,7 @@ class Build
 	 * @var  array
 	 */
 	protected $removes = array(
+		'docs',
 		'test',
 		'.gitignore',
 		'.travis.yml',
