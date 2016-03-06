@@ -8,6 +8,8 @@
 
 namespace Windwalker\Script;
 
+use Windwalker\Helper\ArrayHelper;
+
 /**
  * The JqueryScript class.
  *
@@ -61,6 +63,53 @@ class JQueryScript extends AbstractScriptManager
 					$asset->addJS('jquery/jquery.ui.' . $component . '.min.js');
 				}
 			}
+		}
+	}
+
+	/**
+	 * highlight
+	 *
+	 * @param  string  $selector
+	 * @param  string  $text
+	 * @param  array   $options
+	 *
+	 * @see  http://bartaz.github.io/sandbox.js/jquery.highlight.html
+	 *
+	 * @return  void
+	 */
+	public static function highlight($selector = '.hasHighlight', $text = null, $options = array())
+	{
+		$asset = static::getAsset();
+
+		if (!static::inited(__METHOD__))
+		{
+			JQueryScript::core();
+
+			$asset->addJS('jquery/jquery.highlight.js');
+		}
+
+		if (!static::inited(__METHOD__, func_get_args()) && $selector && $text)
+		{
+			if (is_array($text))
+			{
+				$text = implode(' ', $text);
+			}
+
+			$defaultOptions = array(
+				'element' => 'mark',
+				'className' => 'windwalker-highlight'
+			);
+
+			$options = $asset::getJSObject(ArrayHelper::merge($defaultOptions, $options));
+
+			$js = <<<JS
+// Highlight Text
+jQuery(document).ready(function($)
+{
+	$('$selector').highlight('$text', $options);
+});
+JS;
+			$asset->internalJS($js);
 		}
 	}
 }
