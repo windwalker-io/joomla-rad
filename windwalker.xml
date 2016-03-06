@@ -3,13 +3,13 @@
 	<name>windwalker</name>
 	<libraryname>windwalker</libraryname>
 	<creationDate>2012-11-23</creationDate>
-	<copyright>Copyright (C) Asikart 2008 - 2015. All rights reserved.</copyright>
+	<copyright>Copyright (C) 2008 - 2016 LYRASOFT. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
-	<authorUrl>http://asikart.com</authorUrl>
-	<version>4.1.0-beta</version>
-	<newversion>2.1.0-beta</newversion>
+	<authorUrl>http://lyrasoft.net</authorUrl>
+	<version>4.1.0</version>
+	<newversion>2.1.0</newversion>
 	<description>LIB_WINDWALKER_XML_DESC</description>
 
 	<files>
