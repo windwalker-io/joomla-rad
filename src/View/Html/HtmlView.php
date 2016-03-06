@@ -82,26 +82,32 @@ class HtmlView extends AbstractHtmlView
 		parent::prepareRender();
 
 		// State
-		$this['state'] = $this->get('State');
+		$this['state'] = $this['state'] ? : $this->get('State');
 
 		// View data
-		$this['view'] = new Data;
-		$this['view']->prefix   = $this->prefix;
-		$this['view']->option   = $this->option;
-		$this['view']->name     = $this->getName();
-		$this['view']->viewItem = $this->viewItem;
-		$this['view']->viewList = $this->viewList;
-		$this['view']->layout   = $this->layout;
+		if (!$this['view'])
+		{
+			$this['view'] = new Data;
+			$this['view']->prefix   = $this->prefix;
+			$this['view']->option   = $this->option;
+			$this['view']->name     = $this->getName();
+			$this['view']->viewItem = $this->viewItem;
+			$this['view']->viewList = $this->viewList;
+			$this['view']->layout   = $this->layout;
+		}
 
 		// Uri data
-		$uri = \JUri::getInstance();
-		$this['uri'] = new Data;
-		$this['uri']->path = $uri->toString(array('path', 'query', 'fragment'));
-		$this['uri']->base = \JUri::base(true);
-		$this['uri']->root = \JUri::root(true);
+		if (!$this['uri'])
+		{
+			$uri = \JUri::getInstance();
+			$this['uri'] = new Data;
+			$this['uri']->path = $uri->toString(array('path', 'query', 'fragment'));
+			$this['uri']->base = \JUri::base(true);
+			$this['uri']->root = \JUri::root(true);
+		}
 
 		// Asset data
-		$this['asset'] = $this->container->get('helper.asset');
+		$this['asset'] = $this['asset'] ? : $this->container->get('helper.asset');
 	}
 
 	/**

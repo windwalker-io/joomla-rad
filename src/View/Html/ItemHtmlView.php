@@ -55,7 +55,7 @@ class ItemHtmlView extends HtmlView
 	{
 		parent::prepareRender();
 
-		$this['item'] = $this->get('Item');
+		$this['item'] = $this['item'] ? : $this->get('Item');
 
 		if (property_exists($this['item'], 'catid'))
 		{

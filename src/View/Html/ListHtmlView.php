@@ -55,17 +55,17 @@ class ListHtmlView extends HtmlView
 	{
 		parent::prepareRender();
 
-		$this['items']      = $this->get('Items');
-		$this['pagination'] = $this->get('Pagination');
+		$this['items']      = $this['items'] ? : $this->get('Items');
+		$this['pagination'] = $this['pagination'] ? : $this->get('Pagination');
 
 		if ($errors = $this['state']->get('errors'))
 		{
 			$this->addMessage($errors);
 		}
 
+		// B/C for old templates
 		foreach ($this['items'] as $item)
 		{
-			// B/C for old templates
 			$pkName = strtolower($this->viewItem) . '_id';
 			$item->$pkName = $item->id;
 		}

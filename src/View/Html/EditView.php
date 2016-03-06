@@ -46,7 +46,7 @@ class EditView extends ItemHtmlView
 	{
 		parent::prepareRender();
 
-		$this['form'] = $this->get('Form');
+		$this['form'] = $this['form'] ? : $this->get('Form');
 
 		if ($errors = $this['state']->get('errors'))
 		{

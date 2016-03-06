@@ -79,9 +79,9 @@ class GridView extends ListHtmlView
 	{
 		parent::prepareRender();
 
-		$this['grid']       = $this->getGridHelper($this->gridConfig);
-		$this['filterForm'] = $this->get('FilterForm');
-		$this['batchForm']  = $this->get('BatchForm');
+		$this['grid']       = $this['grid'] ? : $this->getGridHelper($this->gridConfig);
+		$this['filterForm'] = $this['filterForm'] ? : $this->get('FilterForm');
+		$this['batchForm']  = $this['batchForm'] ? : $this->get('BatchForm');
 
 		if ($errors = $this['state']->get('errors'))
 		{
