@@ -13,7 +13,7 @@ namespace Windwalker\Test\Joomla;
 /**
  * The MockDocument class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class MockHtmlDocument extends \JDocumentHTML
 {

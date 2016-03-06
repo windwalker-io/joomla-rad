@@ -3,7 +3,7 @@
  * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2014 SMS Taiwan. All rights reserved.
- * @license    GNU General Public License version 2 or later;
+ * @license    GNU General Public License version 2 or later.
  */
 
 use Windwalker\Cache\RuntimeStorage;

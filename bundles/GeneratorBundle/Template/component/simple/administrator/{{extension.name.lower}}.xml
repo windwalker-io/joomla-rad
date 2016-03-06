@@ -5,10 +5,10 @@
 	<name>{{extension.element.lower}}</name>
 	<creationDate>2016-02-03</creationDate>
 	<copyright>Copyright (C) 2016. All rights reserved.</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<license>GNU General Public License version 2 or later.</license>
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
-	<authorUrl>http://asikart.com</authorUrl>
+	<authorUrl>http://{ORGANIZATION}.com</authorUrl>
 	<version>1.0.0</version>
 	<description>{{extension.element.upper}}_XML_DESCRIPTION</description>
 

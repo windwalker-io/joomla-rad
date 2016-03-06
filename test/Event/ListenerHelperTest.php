@@ -2,7 +2,7 @@
 /**
  * Part of Windwalker project Test files.
  *
- * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2016 LYRASOFT, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -13,7 +13,7 @@ use Windwalker\Event\ListenerHelper;
 /**
  * Test class of \Windwalker\Event\ListenerHelper
  *
- * @since {DEPLOY_VERSION}
+ * @since 2.1
  */
 class ListenerHelperTest extends \PHPUnit_Framework_TestCase
 {

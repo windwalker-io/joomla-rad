@@ -14,7 +14,7 @@ use Windwalker\Table\Table;
 /**
  * The StubTableLocationData class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubTableLocationData extends Table
 {

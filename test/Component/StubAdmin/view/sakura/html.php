@@ -11,7 +11,7 @@ use Windwalker\View\Html\HtmlView;
 /**
  * The StubViewSakuraHtml class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubViewSakuraHtml extends HtmlView
 {

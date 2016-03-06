@@ -2,8 +2,8 @@
 /**
  * Part of Windwalker project Test files.
  *
- * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @copyright  Copyright (C) 2016 LYRASOFT, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later. see LICENSE
  */
 
 namespace {{ test.class.namespace }};
@@ -11,7 +11,7 @@ namespace {{ test.class.namespace }};
 /**
  * Test class of \{{ origin.class.name }}
  *
- * @since {DEPLOY_VERSION}
+ * @since 2.1
  */
 class {{ test.class.shortname }} extends \PHPUnit_Framework_TestCase
 {

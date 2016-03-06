@@ -13,7 +13,7 @@ use Windwalker\Model\ItemModel;
 /**
  * The WindwalkerModelStubItem class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class WindwalkerModelStubItem extends ItemModel
 {

@@ -17,7 +17,7 @@ use Windwalker\Test\Relation\Stub\StubTableLocation;
 /**
  * The OneToOneRelationTest class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class OneToOneRelationTest extends AbstractDatabaseTestCase
 {

@@ -2,8 +2,8 @@
 /**
  * Part of joomla336 project. 
  *
- * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later;
+ * @copyright  Copyright (C) 2014 LYRASOFT. All rights reserved.
+ * @license    GNU General Public License version 2 or later.
  */
 
 namespace Windwalker\Joomla\DataMapper;
@@ -16,7 +16,7 @@ use Windwalker\Joomla\Database\JoomlaAdapter;
 /**
  * The DataMapperProvider class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class DataMapperProvider extends ServiceProvider
 {

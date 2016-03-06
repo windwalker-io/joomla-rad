@@ -16,7 +16,7 @@ use Windwalker\Test\Relation\Stub\StubTableSakura;
 /**
  * The ManyRoOneRelationTest class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class ManyRoOneRelationTest extends AbstractDatabaseTestCase
 {

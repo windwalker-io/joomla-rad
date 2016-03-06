@@ -6,10 +6,10 @@
 	<name>{{extension.element.lower}}</name>
 	<author>Asika</author>
 	<creationDate>2014-02-06</creationDate>
-	<copyright>Copyright (C) 2014 Asikart.com</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<authorEmail>asika@asikart.com</authorEmail>
-	<authorUrl>http://asikart.com</authorUrl>
+	<copyright>Copyright (C) 2016 {ORGANIZATION}.com</copyright>
+	<license>GNU General Public License version 2 or later.</license>
+	<authorEmail>asika@{ORGANIZATION}.com</authorEmail>
+	<authorUrl>http://{ORGANIZATION}.com</authorUrl>
 	<version>1.0</version>
 	<description>{{extension.element.upper}}_INSTALL_DESC</description>
 
@@ -151,7 +151,7 @@
 		<!--<server type="collection">http://example.com/list.xml</server>-->
 		<server type="extension"
 			priority="1"
-			name="Asikart {{extension.name.cap}} Module">http://update.asikart.com/module/{{extension.element.lower}}.xml
+			name="{ORGANIZATION} {{extension.name.cap}} Module">http://update.{ORGANIZATION}.com/module/{{extension.element.lower}}.xml
 		</server>
 	</updateservers>
 

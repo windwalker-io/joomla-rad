@@ -13,7 +13,7 @@ use Windwalker\Relation\Handler\AbstractRelationHandler;
 /**
  * The StubRelationHandler class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubRelationHandler extends AbstractRelationHandler
 {

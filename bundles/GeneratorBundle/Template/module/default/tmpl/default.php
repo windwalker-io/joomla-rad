@@ -1,9 +1,9 @@
 <?php
 /**
- * @package        Asikart.Module
+ * @package        {ORGANIZATION}.Module
  * @subpackage     {{extension.element.lower}}
- * @copyright      Copyright (C) 2014 SMS Taiwan, Inc. All rights reserved.
- * @license        GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright      Copyright (C) 2016 {ORGANIZATION}, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later.
  */
 
 // No direct access

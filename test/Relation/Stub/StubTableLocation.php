@@ -14,7 +14,7 @@ use Windwalker\Test\Database\AbstractDatabaseTestCase;
 /**
  * The StubTableLocation class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubTableLocation extends Table
 {

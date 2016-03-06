@@ -1,9 +1,9 @@
 <?php
 /**
- * @package        Asikart.Plugin
+ * @package        {ORGANIZATION}.Plugin
  * @subpackage     {{plugin.group.lower}}.plg_{{extension.name.lower}}
- * @copyright      Copyright (C) 2012 Asikart.com, Inc. All rights reserved.
- * @license        GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright      Copyright (C) 2012 {ORGANIZATION}.com, Inc. All rights reserved.
+ * @license        GNU General Public License version 2 or later.
  */
 
 // No direct access

@@ -13,7 +13,7 @@ use Windwalker\View\Engine\AbstractEngine;
 /**
  * The StubEngine class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubEngine extends AbstractEngine
 {

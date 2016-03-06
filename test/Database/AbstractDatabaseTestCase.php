@@ -15,7 +15,7 @@ use Windwalker\Test\TestCase\AbstractBaseTestCase;
 /**
  * The AbstractDatabaseTestCase class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 abstract class AbstractDatabaseTestCase extends AbstractBaseTestCase
 {

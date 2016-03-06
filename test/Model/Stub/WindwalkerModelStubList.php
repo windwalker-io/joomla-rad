@@ -16,7 +16,7 @@ use Windwalker\Model\ListModel;
 /**
  * The StubModel class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class WindwalkerModelStubList extends ListModel
 {

@@ -2,7 +2,7 @@
 /**
  * Part of Windwalker project Test files.
  *
- * @copyright  Copyright (C) 2011 - 2014 SMS Taiwan, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2016 LYRASOFT, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -16,7 +16,7 @@ use Windwalker\Test\Script\Stub\StubScript;
 /**
  * Test class of \Windwalker\Script\AbstractScriptManager
  *
- * @since {DEPLOY_VERSION}
+ * @since 2.1
  */
 class AbstractScriptManagerTest extends \PHPUnit_Framework_TestCase
 {

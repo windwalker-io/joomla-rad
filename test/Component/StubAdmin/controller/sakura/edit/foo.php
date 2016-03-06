@@ -9,7 +9,7 @@
 /**
  * The FooController class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubControllerSakuraEditFoo extends \Windwalker\Controller\Controller
 {

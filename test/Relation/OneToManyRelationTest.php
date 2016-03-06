@@ -22,7 +22,7 @@ use Windwalker\Test\Relation\Stub\StubTableSakura;
 /**
  * The RelationHandlerTest class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class OneToManyRelationTest extends AbstractDatabaseTestCase
 {

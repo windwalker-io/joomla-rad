@@ -19,7 +19,7 @@ use Windwalker\Test\Relation\Stub\StubTableSakura;
 /**
  * The RelationHandlerTest class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class ManyToManyRelationTest extends AbstractDatabaseTestCase
 {

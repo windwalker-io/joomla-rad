@@ -13,7 +13,7 @@ use Windwalker\Script\AbstractScriptManager;
 /**
  * The StubScript class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubScript extends AbstractScriptManager
 {

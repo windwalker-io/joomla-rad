@@ -11,7 +11,7 @@ use Windwalker\Table\Table;
 /**
  * The WindwalkerTableStubItem class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class WindwalkerTableStubitem extends Table
 {

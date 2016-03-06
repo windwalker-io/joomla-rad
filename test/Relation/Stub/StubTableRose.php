@@ -13,7 +13,7 @@ use Windwalker\Table\Table;
 /**
  * The StubTableRose class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubTableRose extends Table
 {

@@ -2,8 +2,8 @@
 /**
  * Part of joomla336 project. 
  *
- * @copyright  Copyright (C) 2014 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later;
+ * @copyright  Copyright (C) 2014 LYRASOFT. All rights reserved.
+ * @license    GNU General Public License version 2 or later.
  */
 
 namespace Windwalker\Joomla\Database;
@@ -14,7 +14,7 @@ use Windwalker\DataMapper\Adapter\AbstractDatabaseAdapter;
 /**
  * The DatabaseAdapter class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class JoomlaAdapter extends AbstractDatabaseAdapter
 {

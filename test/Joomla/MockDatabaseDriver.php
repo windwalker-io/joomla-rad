@@ -14,7 +14,7 @@ use RuntimeException;
 /**
  * The MockDatabaseDriver class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class MockDatabaseDriver extends \JDatabaseDriver
 {

@@ -12,7 +12,7 @@ use Windwalker\Model\Model;
 /**
  * The WindwalkerModelStub class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class WindwalkerModelStub extends Model
 {

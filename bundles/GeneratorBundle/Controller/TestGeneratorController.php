@@ -2,7 +2,7 @@
 /**
  * Part of Windwalker project. 
  *
- * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
+ * @copyright  Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
  * @license    GNU General Public License version 2 or later;
  */
 
@@ -18,7 +18,7 @@ define('WINDWALKER_ROOT', realpath(JPATH_LIBRARIES . '/windwalker'));
 /**
  * The TestGeneratorController class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class TestGeneratorController extends GeneratorController
 {

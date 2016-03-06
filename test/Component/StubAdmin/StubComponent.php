@@ -13,7 +13,7 @@ use Windwalker\Component\Component;
 /**
  * The StubComponent class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubComponent extends Component
 {

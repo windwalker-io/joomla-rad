@@ -13,7 +13,7 @@ use Joomla\Registry\Registry;
 /**
  * The MockSession class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class MockSession extends \JSession
 {

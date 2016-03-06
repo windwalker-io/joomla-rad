@@ -13,7 +13,7 @@ require_once __DIR__ . '/WindwalkerModelStub.php';
 /**
  * The StubModel class.
  * 
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 class StubModel extends \WindwalkerModelStub
 {

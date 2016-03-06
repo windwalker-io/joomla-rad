@@ -2,8 +2,8 @@
 /**
  * Part of Windwalker project.
  *
- * @copyright  Copyright (C) 2015 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later;
+ * @copyright  Copyright (C) 2016 LYRASOFT. All rights reserved.
+ * @license    GNU General Public License version 2 or later.
  */
 
 namespace Windwalker\Relation\Handler;
@@ -17,7 +17,7 @@ use Windwalker\Table\Table;
 /**
  * The AbstractRelationHandler class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1
  */
 abstract class AbstractRelationHandler implements RelationHandlerInterface
 {
