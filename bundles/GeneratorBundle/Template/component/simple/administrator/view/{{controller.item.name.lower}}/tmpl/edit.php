@@ -34,7 +34,7 @@ $tabs = array(
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == '{{controller.item.name.lower}}.edit.cancel' || document.formvalidator.isValid(document.id('adminForm')))
+		if (task == '{{controller.item.name.lower}}.edit.cancel' || document.formvalidator.isValid(document.getElementById('adminForm')))
 		{
 			Joomla.submitform(task, document.getElementById('adminForm'));
 		}
