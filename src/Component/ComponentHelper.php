@@ -98,7 +98,7 @@ abstract class ComponentHelper
 		$input = new \JInput($input);
 
 		// Prevent class conflict
-		class_alias('JString', 'Joomla\\String\\String');
+		class_alias('JString', 'Joomla\\String\\StringHelper');
 
 		if (! defined('JPATH_COMPONENT_ADMINISTRATOR'))
 		{

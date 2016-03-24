@@ -15,6 +15,7 @@ use Windwalker\Registry\Registry;
 use Windwalker\Console\Command\Command;
 use Windwalker\DI\Container;
 use Windwalker\Helper\PathHelper;
+use Windwalker\String\StringInflector;
 
 /**
  * Class AbstractJExtensionController
@@ -44,7 +45,7 @@ abstract class AbstractJExtensionController extends AbstractTaskController
 
 		$ctrl = explode('.', $ctrl);
 
-		$inflector = \JStringInflector::getInstance();
+		$inflector = StringInflector::getInstance();
 
 		if (empty($ctrl[0]))
 		{

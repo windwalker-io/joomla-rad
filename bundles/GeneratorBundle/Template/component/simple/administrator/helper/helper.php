@@ -6,6 +6,8 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Windwalker\String\StringInflector;
+
 // No direct access
 defined('_JEXEC') or die;
 
@@ -26,7 +28,7 @@ abstract class {{extension.name.cap}}Helper
 	public static function addSubmenu($vName)
 	{
 		$app       = \JFactory::getApplication();
-		$inflector = \JStringInflector::getInstance(true);
+		$inflector = StringInflector::getInstance(true);
 
 		// Add Category Menu Item
 		if ($app->isAdmin())
