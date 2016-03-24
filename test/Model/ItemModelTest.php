@@ -140,7 +140,7 @@ class ItemModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @depends  test__construct
 	 *
-	 * @dataProvider  testGetItemDataProvider
+	 * @dataProvider  getItemDataProvider
 	 * @covers        \Windwalker\Model\ItemModel::getItem
 	 * @group         getItem
 	 */
@@ -169,7 +169,7 @@ class ItemModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @depends  test__constructIgnoreRequest
 	 *
-	 * @dataProvider  testGetItemDataProvider
+	 * @dataProvider  getItemDataProvider
 	 * @covers        \Windwalker\Model\ItemModel::getItem
 	 * @group         getItemIgnoreRequest
 	 */
@@ -192,7 +192,7 @@ class ItemModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  array
 	 */
-	public function testGetItemDataProvider()
+	public function getItemDataProvider()
 	{
 		$data = array();
 

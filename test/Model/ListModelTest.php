@@ -114,7 +114,9 @@ class ListModelTest extends AbstractDatabaseTestCase
 			'name' => 'foo',
 		);
 
-		new ListModel($config, $this->getConstructContainer($config));
+		$model = new ListModel($config, $this->getConstructContainer($config));
+
+		$this->assertEquals(Container::getInstance()->get('joomla.config')->get('list_limit'), $model->get('list.limit'));
 	}
 
 	/**

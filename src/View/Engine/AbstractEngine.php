@@ -13,6 +13,7 @@ use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\Container as JoomlaContainer;
 use Windwalker\Data\Data;
 use Windwalker\DI\Container;
+use Windwalker\Joomla\Registry\DecoratingRegistry;
 use Windwalker\Registry\Registry;
 
 /**
@@ -89,7 +90,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	{
 		// Setup dependencies.
 		$this->paths  = $paths ? : new SplPriorityQueue;
-		$this->config = new Registry($config);
+		$this->config = DecoratingRegistry::toWindwalkerRegistry($config);
 		$this->container = $container ? : Container::getInstance();
 		$this->data = new Data;
 	}

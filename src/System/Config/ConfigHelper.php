@@ -8,6 +8,7 @@
 
 namespace Windwalker\System\Config;
 
+use Windwalker\Joomla\Registry\DecoratingRegistry;
 use Windwalker\Registry\Registry;
 use Windwalker\System\ExtensionHelper;
 
@@ -33,8 +34,10 @@ abstract class ConfigHelper
 	 *
 	 * @return  void
 	 */
-	public static function saveConfig(Registry $config, $element)
+	public static function saveConfig($config, $element)
 	{
+		$config = DecoratingRegistry::toWindwalkerRegistry($config);
+
 		/** @var $class AbstractConfig */
 		$class = static::getClass($element);
 
@@ -51,6 +54,8 @@ abstract class ConfigHelper
 	 */
 	public static function setConfig(Registry $config, $element)
 	{
+		DecoratingRegistry::toWindwalkerRegistry($config);
+
 		/** @var $class AbstractConfig */
 		$class = static::getClass($element);
 

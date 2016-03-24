@@ -172,7 +172,6 @@ HTML;
 	<div class="control-label">
 		<label id="{$id}_title-lbl" for="{$id}_title" class="required">
 	stub_label<span class="star">&#160;*</span></label>
-
 	</div>
 	<div class="controls">
 		<input type="text" name="{$id}[title]" id="{$id}_title" value="" class="input-xlarge required" required aria-required="true" />

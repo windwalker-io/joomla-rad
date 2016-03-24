@@ -8,8 +8,6 @@
 
 namespace Windwalker\System;
 
-use Windwalker\Registry\Registry;
-
 /**
  * The extension helper.
  *
@@ -107,23 +105,23 @@ class ExtensionHelper
 		{
 			case 'component':
 				$params = \JComponentHelper::getParams($element);
-				$params = new Registry($params->toArray());
+				$params = new \JRegistry($params->toArray());
 				break;
 
 			case 'module':
 				$module = \JModuleHelper::getModule($element);
-				$params = new Registry;
+				$params = new \JRegistry;
 				$params->loadString($module->params);
 				break;
 
 			case 'plugin':
 				$plugin = \JPluginHelper::getPlugin($extension['group'], $extension['name']);
 				$params = $plugin->params;
-				$params = new Registry($params);
+				$params = new \JRegistry($params);
 				break;
 
 			default:
-				$params = new Registry;
+				$params = new \JRegistry;
 				break;
 		}
 

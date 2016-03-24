@@ -9,6 +9,8 @@
 namespace Windwalker\Test\View\Helper;
 
 use Joomla\Registry\Registry;
+use Windwalker\Dom\Format\HtmlFormatter;
+use Windwalker\Dom\Test\AbstractDomTestCase;
 use Windwalker\View\Helper\GridHelper;
 use Windwalker\View\Html\GridView;
 
@@ -17,7 +19,7 @@ use Windwalker\View\Html\GridView;
  *
  * @since 2.1
  */
-class GridHelperTest extends \PHPUnit_Framework_TestCase
+class GridHelperTest extends AbstractDomTestCase
 {
 
 	/**
@@ -397,9 +399,15 @@ class GridHelperTest extends \PHPUnit_Framework_TestCase
 		$grid->setItem($item, 1);
 		$result = $grid->checkoutButton();
 
-		$this->assertRegExp('(onclick="return listItemTask\(\'cb1\',\'testViewList.check.checkin\'\)")', $result);
-		$this->assertRegExp('(Sakura)', $result);
-		$this->assertRegExp('(Monday, 24 August 2015.*16:00)', $result);
+		$html = <<<HTML
+<a class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb1','testViewList.check.checkin')" title="&lt;strong&gt;JLIB_HTML_CHECKIN&lt;/strong&gt;&lt;br /&gt;Sakura&lt;br /&gt;Monday, 24 August 2015&lt;br /&gt;08:00"><span class="icon-checkedout"></span></a>
+HTML;
+		
+		$this->assertHtmlFormatEquals($html, $result);
+
+//		$this->assertRegExp('(onclick="return listItemTask\(\'cb1\',\'testViewList.check.checkin\'\)")', $result);
+//		$this->assertRegExp('(Sakura)', $result);
+//		$this->assertRegExp('(Monday, 24 August 2015.*16:00)', $result);
 	}
 
 	/**

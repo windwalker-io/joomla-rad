@@ -25,6 +25,50 @@ class DecoratingRegistry extends \Joomla\Registry\Registry
 	protected $registry;
 
 	/**
+	 * toWindwalkerRegistry
+	 *
+	 * @param   mixed  $config
+	 *
+	 * @return  Registry
+	 */
+	public static function toWindwalkerRegistry($config)
+	{
+		if ($config instanceof Registry)
+		{
+			return $config;
+		}
+
+		if ($config instanceof \Joomla\Registry\Registry)
+		{
+			$config = $config->toArray();
+		}
+
+		return new Registry($config);
+	}
+
+	/**
+	 * toJoomlaRegistry
+	 *
+	 * @param   mixed  $config
+	 *
+	 * @return  \JRegistry
+	 */
+	public static function toJRegistry($config)
+	{
+		if ($config instanceof \Joomla\Registry\Registry)
+		{
+			return $config;
+		}
+
+		if ($config instanceof Registry)
+		{
+			$config = $config->toArray();
+		}
+
+		return new \JRegistry($config);
+	}
+
+	/**
 	 * DecoratingRegistry constructor.
 	 *
 	 * @param Registry $registry

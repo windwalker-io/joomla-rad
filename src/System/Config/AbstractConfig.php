@@ -89,12 +89,17 @@ abstract class AbstractConfig implements ConfigInterface
 	/**
 	 * Set config object into this class.
 	 *
-	 * @param   \Joomla\Registry\Registry $config The config object.
+	 * @param   Registry $config The config object.
 	 *
 	 * @return  void
 	 */
-	public static function setConfig(Registry $config)
+	public static function setConfig($config)
 	{
+		if ($config instanceof \Joomla\Registry\Registry)
+		{
+			$config = new Registry($config->toArray());
+		}
+
 		self::$config = $config;
 	}
 }

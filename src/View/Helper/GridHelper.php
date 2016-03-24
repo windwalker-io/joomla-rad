@@ -12,6 +12,7 @@ use JHtml;
 use JText;
 use Windwalker\Data\Data;
 use Windwalker\Dom\HtmlElement;
+use Windwalker\Joomla\Registry\DecoratingRegistry;
 use Windwalker\Registry\Registry;
 use Windwalker\DI\Container;
 
@@ -85,7 +86,7 @@ class GridHelper
 	public function __construct($view, $config = array())
 	{
 		$this->view   = $view;
-		$this->config = $config = ($config instanceof Registry) ? $config : new Registry($config);
+		$this->config = $config = DecoratingRegistry::toWindwalkerRegistry($config);
 		$this->state  = $state = $view->state;
 
 		// Merge fields

@@ -9,6 +9,7 @@
 namespace Windwalker\Image;
 
 use Windwalker\Filesystem\Path;
+use Windwalker\Joomla\Registry\DecoratingRegistry;
 use Windwalker\Registry\Registry;
 use Windwalker\Helper\CurlHelper;
 use Windwalker\System\ExtensionHelper;
@@ -57,12 +58,12 @@ class Thumb
 	/**
 	 * Constructor.
 	 *
-	 * @param Registry $config    The config object.
+	 * @param array    $config    The config object.
 	 * @param string   $extension The extension name.
 	 */
-	public function __construct(Registry $config = null, $extension = null)
+	public function __construct($config = array(), $extension = null)
 	{
-		$config = $config ? : new Registry;
+		$config = DecoratingRegistry::toWindwalkerRegistry($config);
 		$this->extension = $extension;
 
 		$this->resetCachePosition();
