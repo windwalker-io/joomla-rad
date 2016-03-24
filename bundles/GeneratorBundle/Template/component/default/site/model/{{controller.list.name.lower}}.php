@@ -245,7 +245,7 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 			}
 		}
 
-		unset($filters['unpublished']);
+		unset($filters['show_unpublished']);
 
 		// View Level
 		// =====================================================================================
