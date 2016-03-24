@@ -125,7 +125,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 					// Prune items that you can't change.
 					unset($pks[$i]);
 
-					$this->setMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -139,7 +139,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 
 		if (count($errors))
 		{
-			$this->setMessage(implode('<br />', $errors));
+			$this->addMessage(implode('<br />', $errors));
 		}
 
 		return true;

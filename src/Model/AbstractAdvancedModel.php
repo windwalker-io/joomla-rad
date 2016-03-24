@@ -8,8 +8,8 @@
 
 namespace Windwalker\Model;
 
+use Windwalker\DataMapper\DataMapper;
 use Windwalker\Registry\Registry;
-use Windwalker\Joomla\DataMapper\DataMapper;
 
 /**
  * Advanced Model.

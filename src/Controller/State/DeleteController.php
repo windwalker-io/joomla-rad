@@ -72,7 +72,7 @@ class DeleteController extends AbstractUpdateStateController
 					// Prune items that you can't change.
 					unset($pks[$i]);
 
-					$this->setMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -86,7 +86,7 @@ class DeleteController extends AbstractUpdateStateController
 
 		if (count($errors))
 		{
-			$this->setMessage(implode('<br />', $errors));
+			$this->addMessage(implode('<br />', $errors));
 		}
 
 		return true;

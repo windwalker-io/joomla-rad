@@ -11,7 +11,6 @@ namespace Windwalker\Model\Helper;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DatabaseHelper;
 use Windwalker\Helper\DateHelper;
-use Windwalker\Joomla\Database\DatabaseFactory;
 
 /**
  * The Query Helper

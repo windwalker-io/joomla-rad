@@ -99,7 +99,7 @@ class SaveController extends AbstractItemController
 			$this->postSaveHook($this->model, $validData);
 
 			// Set success message
-			$this->setMessage(
+			$this->addMessage(
 				\JText::_(
 					($this->lang->hasKey(strtoupper($this->option) . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS')
 						? strtoupper($this->option)
@@ -120,11 +120,11 @@ class SaveController extends AbstractItemController
 			{
 				if ($error instanceof \Exception)
 				{
-					$this->setMessage($error->getMessage(), Message::WARNING_YELLOW);
+					$this->addMessage($error->getMessage(), Message::WARNING_YELLOW);
 				}
 				else
 				{
-					$this->setMessage($error, Message::WARNING_YELLOW);
+					$this->addMessage($error, Message::WARNING_YELLOW);
 				}
 			}
 

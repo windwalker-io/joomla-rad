@@ -48,7 +48,7 @@ class CheckinController extends AbstractListController
 
 			if (!$this->allowEdit($data))
 			{
-				$this->setMessage(\JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+				$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 
 				continue;
 			}
@@ -59,7 +59,7 @@ class CheckinController extends AbstractListController
 			}
 			catch (\Exception $e)
 			{
-				$this->setMessage($this->table->getError());
+				$this->addMessage($this->table->getError());
 			}
 		}
 

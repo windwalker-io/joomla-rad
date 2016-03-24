@@ -395,7 +395,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 
 		if ($url)
 		{
-			$this->setMessage($message, $type);
+			$this->addMessage($message, $type);
 
 			$this->app->redirect($url);
 		}

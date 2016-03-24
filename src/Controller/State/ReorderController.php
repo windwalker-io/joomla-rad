@@ -95,7 +95,7 @@ class ReorderController extends AbstractUpdateStateController
 					unset($pks[$i]);
 					unset($ordering[$i]);
 
-					$this->setMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -116,7 +116,7 @@ class ReorderController extends AbstractUpdateStateController
 
 		if (count($errors))
 		{
-			$this->setMessage(implode('<br />', $errors));
+			$this->addMessage(implode('<br />', $errors));
 		}
 
 		return true;

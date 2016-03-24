@@ -48,7 +48,7 @@ class CheckoutController extends AbstractListController
 
 			if (!$this->allowEdit($data, $this->urlVar))
 			{
-				$this->setMessage(\JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
+				$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
 
 				continue;
 			}
@@ -59,7 +59,7 @@ class CheckoutController extends AbstractListController
 			}
 			catch (\Exception $e)
 			{
-				$this->setMessage(\JText::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $this->table->getError()));
+				$this->addMessage(\JText::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $this->table->getError()));
 			}
 		}
 
