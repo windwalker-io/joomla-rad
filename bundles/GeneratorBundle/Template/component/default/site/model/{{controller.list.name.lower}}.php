@@ -241,7 +241,6 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 			{
 				$query->where('({{controller.item.name.lower}}.publish_up = ' . $nullDate . ' OR {{controller.item.name.lower}}.publish_up <= ' . $nowDate . ')');
 				$query->where('({{controller.item.name.lower}}.publish_down = ' . $nullDate . ' OR {{controller.item.name.lower}}.publish_down >= ' . $nowDate . ')');
-				$query->where('({{controller.item.name.lower}}.publish_down = ' . $nullDate . ' OR {{controller.item.name.lower}}.publish_down >= ' . $nowDate . ')');
 			}
 		}
 
