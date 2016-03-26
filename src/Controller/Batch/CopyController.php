@@ -23,8 +23,8 @@ class CopyController extends AbstractBatchController
 	 * @var array
 	 */
 	protected $incrementFields = array(
-		'title' => 'default',
-		'alias' => 'dash'
+		'title' => StringHelper::INCREMENT_STYLE_DEFAULT,
+		'alias' => StringHelper::INCREMENT_STYLE_DASH
 	);
 
 	/**
@@ -66,15 +66,18 @@ class CopyController extends AbstractBatchController
 			}
 		}
 
-		// Recheck item with same conditions(default is title & alias), if true, increment them.
-		// If no item got, means it is the max number.
-		while ($table2->load($condition))
+		if (count($condition))
 		{
-			foreach ($this->incrementFields as $field => $type)
+			// Recheck item with same conditions(default is title & alias), if true, increment them.
+			// If no item got, means it is the max number.
+			while ($table2->load($condition))
 			{
-				if (property_exists($this->table, $field))
+				foreach ($this->incrementFields as $field => $type)
 				{
-					$item[$field] = $condition[$field] = StringHelper::increment($item[$field], $type);
+					if (property_exists($this->table, $field))
+					{
+						$item[$field] = $condition[$field] = StringHelper::increment($item[$field], $type);
+					}
 				}
 			}
 		}
