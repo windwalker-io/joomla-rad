@@ -19,8 +19,8 @@
         "windwalker/filesystem": "~2.0",
         "windwalker/console": "~2.0",
         "asika/muse": "~1.0",
-        "symfony/yaml": "2.*",
-        "filp/whoops": "2.*"
+        "symfony/yaml": "~2.0",
+        "filp/whoops": "~2.0"
     },
     "require-dev": {
         "windwalker/test": "~2.0"

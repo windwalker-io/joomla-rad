@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "55c882af83eb1cd16be1b3452a1cb728",
-    "content-hash": "a23a98ed663cb18bfafd618e433e2a2c",
+    "hash": "d95ad040df9e6375912ace7c8960019d",
+    "content-hash": "601621b04374a7649442a5c17027d58f",
     "packages": [
         {
             "name": "asika/muse",
