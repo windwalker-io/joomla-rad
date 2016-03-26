@@ -33,7 +33,7 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
+        "post-create-project-cmd": [
             "Windwalker\\System\\Installer\\ComposerInstaller::install"
         ],
         "post-update-cmd": []
