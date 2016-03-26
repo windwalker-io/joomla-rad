@@ -9,11 +9,16 @@
 namespace Windwalker\Router;
 
 use Joomla\Uri\Uri;
+use Windwalker\Joomla\Registry\DecoratingRegistry;
+use Windwalker\Registry\Registry;
 use Windwalker\Router\Matcher\MatcherInterface;
 use Windwalker\Utilities\ArrayHelper;
 
 /**
  * The RadRouter class.
+ *
+ * @property-read  Route     route
+ * @property-read  Registry  extra
  *
  * @since  2.1
  */
@@ -41,6 +46,20 @@ class RadRouter extends Router
 	protected $menu;
 
 	/**
+	 * Property matched.
+	 *
+	 * @var  Route
+	 */
+	protected $matched;
+
+	/**
+	 * Property extra.
+	 *
+	 * @var  Registry
+	 */
+	protected $extra;
+
+	/**
 	 * Singleton.
 	 *
 	 * @param string $option The component option name.
@@ -48,7 +67,7 @@ class RadRouter extends Router
 	 *
 	 * @return static Router instance.
 	 */
-	public static function getInstance($option, $menu)
+	public static function getInstance($option, $menu = null)
 	{
 		if (empty(self::$instance[$option]))
 		{
@@ -68,6 +87,7 @@ class RadRouter extends Router
 	public function __construct($menu, array $routes = array(), MatcherInterface $matcher = null)
 	{
 		$this->menu = $menu;
+		$this->extra = new Registry;
 
 		parent::__construct($routes, $matcher);
 	}
@@ -159,7 +179,7 @@ class RadRouter extends Router
 	{
 		$matched = parent::match($route, $method, $options);
 
-		$matched->getExtra();
+		$extra = $matched->getExtra();
 
 		if (isset($extra['parseHandler']) && is_callable($extra['parseHandler']))
 		{
@@ -167,6 +187,9 @@ class RadRouter extends Router
 
 			$matched->setVariables($variables);
 		}
+
+		$this->matched = $matched;
+		$this->extra->reset()->load($matched->getExtra());
 
 		return $matched;
 	}
@@ -224,5 +247,74 @@ class RadRouter extends Router
 		$this->queries = $queries;
 
 		return $this;
+	}
+
+	/**
+	 * Method to get property Matched
+	 *
+	 * @return  Route
+	 */
+	public function getMatched()
+	{
+		return $this->matched;
+	}
+
+	/**
+	 * Method to set property matched
+	 *
+	 * @param   Route $matched
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setMatched($matched)
+	{
+		$this->matched = $matched;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property Extra
+	 *
+	 * @return  Registry
+	 */
+	public function getExtra()
+	{
+		return $this->extra;
+	}
+
+	/**
+	 * Method to set property extra
+	 *
+	 * @param   Registry $extra
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setExtra($extra)
+	{
+		$extra = DecoratingRegistry::toWindwalkerRegistry($extra);
+
+		$this->extra = $extra;
+
+		return $this;
+	}
+
+	/**
+	 * __get
+	 *
+	 * @param   string  $name
+	 *
+	 * @return  mixed
+	 */
+	public function __get($name)
+	{
+		$allow = array('extra', 'matched');
+
+		if (in_array($name, $allow))
+		{
+			return $this->$name;
+		}
+
+		throw new \OutOfRangeException('Property: ' . $name . ' not exists.');
 	}
 }

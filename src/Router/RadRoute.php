@@ -158,7 +158,7 @@ class RadRoute
 		// Replace all '.' and ':' to '@' to make it B/C
 		$resource = str_replace(array('.', ':'), '@', $resource);
 
-		if (static::$defaultOption && strpos('@', $resource) === false)
+		if (static::$defaultOption && strpos($resource, '@') === false)
 		{
 			$resource = static::$defaultOption . '@' . $resource;
 		}
