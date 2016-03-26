@@ -116,6 +116,13 @@ class RadRoute
 	protected $extra = array();
 
 	/**
+	 * Property defaultOption.
+	 *
+	 * @var  string
+	 */
+	protected static $defaultOption;
+
+	/**
 	 * Class init.
 	 *
 	 * @param string       $name
@@ -148,8 +155,15 @@ class RadRoute
 	 */
 	public static function _($resource, $data = array(), $xhtml = true, $ssl = null)
 	{
-		$resource = str_replace('.', ':', $resource);
-		$resource = explode(':', $resource, 2);
+		// Replace all '.' and ':' to '@' to make it B/C
+		$resource = str_replace(array('.', ':'), '@', $resource);
+
+		if (static::$defaultOption && strpos('@', $resource) === false)
+		{
+			$resource = static::$defaultOption . '@' . $resource;
+		}
+
+		$resource = explode('@', $resource, 2);
 
 		if (count($resource) == 2)
 		{
@@ -256,6 +270,28 @@ class RadRoute
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Method to get property DefaultOption
+	 *
+	 * @return  string
+	 */
+	public static function getDefaultOption()
+	{
+		return static::$defaultOption;
+	}
+
+	/**
+	 * Method to set property defaultOption
+	 *
+	 * @param   string $defaultOption
+	 *
+	 * @return  void
+	 */
+	public static function setDefaultOption($defaultOption)
+	{
+		static::$defaultOption = $defaultOption;
 	}
 
 	/**
