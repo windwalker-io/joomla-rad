@@ -93,7 +93,7 @@ class Build
 			}
 
 			$this->out('[Zip file] ' . $file);
-			$zip->addFile($file);
+			$zip->addFile(str_replace('\\', '/', $file));
 		}
 
 		$zip->close();
