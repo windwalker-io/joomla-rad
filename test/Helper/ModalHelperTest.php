@@ -8,6 +8,7 @@
 
 namespace Windwalker\Test\Helper;
 
+use Windwalker\Dom\Format\HtmlFormatter;
 use Windwalker\Dom\Test\AbstractDomTestCase;
 use Windwalker\Helper\ModalHelper;
 
@@ -170,8 +171,8 @@ HTML;
 		$expectedForm = <<<HTML
 <div class="alert alert-info">$text</div><div class="control-group" id="{$id}_title-wrap">
 	<div class="control-label">
-		<label id="{$id}_title-lbl" for="{$id}_title" class="required">
-	stub_label<span class="star">&#160;*</span></label>
+		<label id="{$id}_title-lbl" for="{$id}_title" class="required"> 
+stub_label<span class="star">&#160;*</span></label>
 	</div>
 	<div class="controls">
 		<input type="text" name="{$id}[title]" id="{$id}_title" value="" class="input-xlarge required" required aria-required="true" />
@@ -179,6 +180,6 @@ HTML;
 </div>
 HTML;
 
-		$this->assertStringSafeEquals($expectedForm, ModalHelper::getQuickaddForm($id, $pathToQuickaddForm));
+		$this->assertStringDataEquals($expectedForm, ModalHelper::getQuickaddForm($id, $pathToQuickaddForm));
 	}
 }
