@@ -106,13 +106,13 @@ class RadRouter extends Router
 	}
 
 	/**
-	 * build
+	 * Build route by resource setting.
 	 *
-	 * @param string $name
-	 * @param array  $queries
-	 * @param bool   $rootSlash
+	 * @param string $name       The route name.
+	 * @param array  $queries    The queries.
+	 * @param bool   $rootSlash  Add root slash or not.
 	 *
-	 * @return  string
+	 * @return  array|string  Segments, can be string or array.
 	 */
 	public function build($name, $queries = array(), $rootSlash = false)
 	{
@@ -127,13 +127,13 @@ class RadRouter extends Router
 	}
 
 	/**
-	 * generate
+	 * Generate route, the queries must be reference.
 	 *
-	 * @param       $name
-	 * @param array $queries
-	 * @param bool  $rootSlash
+	 * @param string $name       The route name.
+	 * @param array  $queries    The queries.
+	 * @param bool   $rootSlash  Add root slash or not.
 	 *
-	 * @return  string
+	 * @return  array|string  Segments, can be string or array.
 	 */
 	public function generate($name, &$queries = array(), $rootSlash = false)
 	{
@@ -154,6 +154,8 @@ class RadRouter extends Router
 		if (isset($extra['buildHandler']) && is_callable($extra['buildHandler']))
 		{
 			$segments = call_user_func_array($extra['buildHandler'], array(&$queries, &$replace, $this->menu));
+
+			$this->queries = $queries;
 		}
 
 		if (!$replace)
@@ -167,7 +169,7 @@ class RadRouter extends Router
 	}
 
 	/**
-	 * parseRoute
+	 * Match route.
 	 *
 	 * @param string $route
 	 * @param string $method
