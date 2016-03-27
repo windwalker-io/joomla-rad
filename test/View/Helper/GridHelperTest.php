@@ -403,7 +403,7 @@ class GridHelperTest extends AbstractDomTestCase
 <a class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb1','testViewList.check.checkin')" title="&lt;strong&gt;JLIB_HTML_CHECKIN&lt;/strong&gt;&lt;br /&gt;Sakura&lt;br /&gt;Monday, 24 August 2015&lt;br /&gt;08:00"><span class="icon-checkedout"></span></a>
 HTML;
 		
-		$this->assertHtmlFormatEquals($html, $result);
+		$this->assertStringDataEquals($html, $result);
 
 //		$this->assertRegExp('(onclick="return listItemTask\(\'cb1\',\'testViewList.check.checkin\'\)")', $result);
 //		$this->assertRegExp('(Sakura)', $result);
