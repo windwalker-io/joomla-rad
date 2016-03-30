@@ -888,7 +888,7 @@ class ListModel extends AbstractFormModel
 		foreach ($ordering as $key => &$value)
 		{
 			// Remove extra spaces
-			preg_replace('/\s+/', ' ', trim($value));
+			$value = preg_replace('/\s+/', ' ', trim($value));
 
 			$value = StringHelper::explode(' ', $value);
 
