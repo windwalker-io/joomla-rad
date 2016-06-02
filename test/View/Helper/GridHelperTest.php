@@ -384,6 +384,9 @@ class GridHelperTest extends AbstractDomTestCase
 		$item->author = 'Sakura';
 		$item->checkout = '2015-08-24 08:00:00';
 
+		$date = \JHtml::_('date', $item->checkout, 'l, d F Y') . '<br />' . \JHtml::_('date', $item->checkout, 'H:i');
+		$date = htmlspecialchars($date);
+
 		$grid->setItem($item, 1);
 
 		$result = $grid->checkoutButton();
@@ -400,7 +403,7 @@ class GridHelperTest extends AbstractDomTestCase
 		$result = $grid->checkoutButton();
 
 		$html = <<<HTML
-<a class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb1','testViewList.check.checkin')" title="&lt;strong&gt;JLIB_HTML_CHECKIN&lt;/strong&gt;&lt;br /&gt;Sakura&lt;br /&gt;Monday, 24 August 2015&lt;br /&gt;08:00"><span class="icon-checkedout"></span></a>
+<a class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb1','testViewList.check.checkin')" title="&lt;strong&gt;JLIB_HTML_CHECKIN&lt;/strong&gt;&lt;br /&gt;Sakura&lt;br /&gt;{$date}"><span class="icon-checkedout"></span></a>
 HTML;
 		
 		$this->assertStringDataEquals($html, $result);
