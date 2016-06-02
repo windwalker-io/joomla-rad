@@ -7,13 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Command\User;
+namespace SystemBundle\Command\User;
 
-use Command\User\Create\CreateCommand;
-use Command\User\Member\MemberCommand;
+use SystemBundle\Command\User\Create\CreateCommand;
 use Windwalker\Console\Command\Command;
-
-
 
 /**
  * Class User
@@ -63,7 +60,6 @@ class UserCommand extends Command
 	protected function initialise()
 	{
 		$this->addCommand(new CreateCommand);
-		$this->addCommand(new MemberCommand);
 	}
 
 	/**

@@ -7,13 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Command\User\Create;
+namespace SystemBundle\Command\User\Create;
 
 use Windwalker\Console\Command\Command;
-use JConsole\Prompter\NotNullPrompter;
-use Joomla\Console\Prompter\PasswordPrompter;
-
-
+use Windwalker\Console\Prompter\NotNullPrompter;
+use Windwalker\Console\Prompter\PasswordPrompter;
+use Windwalker\DataMapper\DataMapperFacade;
 
 /**
  * Class Install
@@ -65,11 +64,13 @@ class CreateCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
-		// $this->addCommand();
+		$this->addGlobalOption('g')
+			->alias('group')
+			->description('The group id, default will use SuperUser group.');
 
-		parent::configure();
+		parent::initialise();
 	}
 
 	/**
@@ -81,6 +82,8 @@ class CreateCommand extends Command
 	 */
 	protected function doExecute()
 	{
+		\JFactory::getLanguage()->load('lib_joomla', JPATH_ROOT, 'en-GB');
+		
 		// Install User
 		$userdata = array();
 
@@ -119,12 +122,19 @@ class CreateCommand extends Command
 
 		$userId = $user->id;
 
+		$groupId = $this->getOption('group');
+
+		if (!$groupId)
+		{
+			$groupId = $this->getSuperUserGroup();
+		}
+
 		// Save Super admin
 		$db = \JFactory::getDbo();
 
 		$query = $db->getQuery(true)
 			->update('#__user_usergroup_map')
-			->set('group_id = ' . self::SUPER_USER_GROUP_ID)
+			->set('group_id = ' . $groupId)
 			->where('user_id = ' . $userId);
 
 		$db->setQuery($query)->execute();
@@ -144,5 +154,26 @@ class CreateCommand extends Command
 	public function with($object)
 	{
 		return $object;
+	}
+
+	/**
+	 * getSuperUserGroup
+	 *
+	 * @return  integer
+	 */
+	protected function getSuperUserGroup()
+	{
+		$data = DataMapperFacade::findOne('#__assets', 1);
+
+		$rules = json_decode($data->rules, true);
+
+		if (!isset($rules['core.admin']))
+		{
+			return static::SUPER_USER_GROUP_ID;
+		}
+
+		$ids = array_keys($rules['core.admin']);
+
+		return array_shift($ids);
 	}
 }
