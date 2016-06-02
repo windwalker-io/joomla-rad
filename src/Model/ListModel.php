@@ -978,7 +978,26 @@ class ListModel extends AbstractFormModel
 		$currentState = (!is_null($oldState)) ? $oldState : $default;
 		$newState     = $input->get($request, null, $type);
 
-		if (($currentState != $newState) && ($resetPage))
+		/*
+		 * In RAD, filter & search is array with default elements,
+		 * so we can't directly compare them with empty value.
+		 * Here prepare some default value to compare them.
+		 */
+
+		// Remove empty values from input, because session registry will remove empty values too.
+		if ($request == 'filter' && is_array($newState))
+		{
+			$newState = ArrayHelper::filterRecursive($newState, 'strlen');
+		}
+
+		// Add default field name '*' if we clear filter bar.
+		if ($request == 'search' && '' === (string) ArrayHelper::getValue($currentState, 'field'))
+		{
+			$currentState['field'] = '*';
+		}
+
+		// Now compare them, and set start to 0 if there has any differences.
+		if ($newState && ($currentState != $newState) && ($resetPage))
 		{
 			$input->set('limitstart', 0);
 		}

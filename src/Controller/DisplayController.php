@@ -134,7 +134,7 @@ class DisplayController extends Controller
 				}
 				else
 				{
-					$registeredurlparams = new \StdClass;
+					$registeredurlparams = new \stdClass;
 				}
 
 				foreach ($this->urlParams as $key => $value)

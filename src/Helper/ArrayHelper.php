@@ -228,4 +228,25 @@ class ArrayHelper extends \Windwalker\Utilities\ArrayHelper
 
 		return $array;
 	}
+
+	/**
+	 * filterRecursive
+	 *
+	 * @param  array     $array
+	 * @param  callable  $callback
+	 *
+	 * @return  array
+	 */
+	public static function filterRecursive($array, $callback)
+	{
+		foreach ($array as &$value)
+		{
+			if (is_array($value))
+			{
+				$value = static::filterRecursive($value, $callback);
+			}
+		}
+
+		return array_filter($array, $callback);
+	}
 }
