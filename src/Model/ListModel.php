@@ -8,16 +8,9 @@
 
 namespace Windwalker\Model;
 
-use JDatabaseQuery;
-use Windwalker\String\StringInflector as Inflector;;
-use JPagination;
-use JPluginHelper;
-
 use Joomla\DI\Container as JoomlaContainer;
-
-use JTable;
+use Windwalker\String\StringInflector as Inflector;
 use Windwalker\Helper\ArrayHelper;
-use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
 use Windwalker\Model\Filter\FilterHelper;
@@ -72,7 +65,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * An internal cache for the last query used.
 	 *
-	 * @var JDatabaseQuery
+	 * @var \JDatabaseQuery
 	 */
 	protected $query = array();
 
@@ -211,7 +204,7 @@ class ListModel extends AbstractFormModel
 	 *
 	 * This method ensures that the query is constructed only once for a given state of the model.
 	 *
-	 * @return  JDatabaseQuery  A JDatabaseQuery object
+	 * @return  \JDatabaseQuery  A JDatabaseQuery object
 	 */
 	protected function _getListQuery()
 	{
@@ -255,7 +248,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Method to get a JDatabaseQuery object for retrieving the data set from a database.
 	 *
-	 * @return  JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
+	 * @return  \JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
 	 */
 	protected function getListQuery()
 	{
@@ -316,7 +309,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * The prepare getQuery hook
 	 *
-	 * @param JDatabaseQuery $query The db query object.
+	 * @param \JDatabaseQuery $query The db query object.
 	 *
 	 * @return  void
 	 */
@@ -327,7 +320,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * The post getQuery object.
 	 *
-	 * @param JDatabaseQuery $query The db query object.
+	 * @param \JDatabaseQuery $query The db query object.
 	 *
 	 * @return  void
 	 */
@@ -338,7 +331,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Method to get a JPagination object for the data set.
 	 *
-	 * @return  JPagination  A JPagination object for the data set.
+	 * @return  \JPagination  A JPagination object for the data set.
 	 */
 	public function getPagination()
 	{
@@ -351,7 +344,7 @@ class ListModel extends AbstractFormModel
 			// Create the pagination object.
 			$limit = (int) $state->get('list.limit') - (int) $state->get('list.links');
 
-			 return new JPagination($self->getTotal(), $self->getStart(), $limit);
+			 return new \JPagination($self->getTotal(), $self->getStart(), $limit);
 		});
 	}
 
@@ -517,7 +510,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Get cached query.
 	 *
-	 * @return  JDatabaseQuery The db query object.
+	 * @return  \JDatabaseQuery The db query object.
 	 */
 	public function getQuery()
 	{
@@ -527,7 +520,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Set a query to cache.
 	 *
-	 * @param   JDatabaseQuery $query The db query object.
+	 * @param   \JDatabaseQuery $query The db query object.
 	 *
 	 * @return  ListModel  Return self to support chaining.
 	 */
@@ -649,6 +642,8 @@ class ListModel extends AbstractFormModel
 			// Receive & set filters
 			if ($filters = (array) $this->getUserStateFromRequest($this->context . '.filter', 'filter', array(), 'array'))
 			{
+				$filters = array_filter($filters, 'strlen');
+
 				$this->state->set('filter', $filters);
 			}
 
@@ -739,7 +734,7 @@ class ListModel extends AbstractFormModel
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
 		// Import the appropriate plugin group.
-		JPluginHelper::importPlugin($group);
+		\JPluginHelper::importPlugin($group);
 
 		// Get the dispatcher.
 		$dispatcher = $this->getContainer()->get('event.dispatcher');
@@ -763,12 +758,12 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Process the query filters.
 	 *
-	 * @param JDatabaseQuery $query   The query object.
+	 * @param \JDatabaseQuery $query   The query object.
 	 * @param array          $filters The filters values.
 	 *
-	 * @return  JDatabaseQuery The db query object.
+	 * @return  \JDatabaseQuery The db query object.
 	 */
-	protected function processFilters(JDatabaseQuery $query, $filters = array())
+	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
 		$filters = $filters ? : $this->get('filter', array());
 
@@ -812,12 +807,12 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Process the search query.
 	 *
-	 * @param JDatabaseQuery $query    The query object.
-	 * @param array          $searches The search values.
+	 * @param \JDatabaseQuery $query    The query object.
+	 * @param array           $searches The search values.
 	 *
-	 * @return  JDatabaseQuery The db query object.
+	 * @return  \JDatabaseQuery The db query object.
 	 */
-	protected function processSearches(JDatabaseQuery $query, $searches = array())
+	protected function processSearches(\JDatabaseQuery $query, $searches = array())
 	{
 		$searches = $searches ? : $this->state->get('search', array());
 
@@ -861,13 +856,13 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Process ordering query.
 	 *
-	 * @param JDatabaseQuery $query     The query object.
-	 * @param string         $ordering  The ordering string.
-	 * @param string         $direction ASC or DESC.
+	 * @param \JDatabaseQuery $query     The query object.
+	 * @param string          $ordering  The ordering string.
+	 * @param string          $direction ASC or DESC.
 	 *
 	 * @return  void
 	 */
-	protected function processOrdering(JDatabaseQuery $query, $ordering = null, $direction = null)
+	protected function processOrdering(\JDatabaseQuery $query, $ordering = null, $direction = null)
 	{
 		$ordering  = $ordering ? : $this->get('list.ordering');
 
