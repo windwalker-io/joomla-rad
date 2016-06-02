@@ -19,7 +19,7 @@ $data = new Data($displayData);
 		<?php
 		if ($data->params->get('show_description_image') && $data->category->params->get('image'))
 		{
-			echo JHtml::image($data->category->params()->get('image'), 'Desc Image');
+			echo JHtml::image($data->category->params->get('image'), 'Desc Image');
 		}
 
 		if ($data->params->get('show_description') && $data->category->description)

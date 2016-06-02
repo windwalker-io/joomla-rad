@@ -452,11 +452,15 @@ class ListModel extends AbstractFormModel
 			return $this->getCache(__FUNCTION__);
 		}
 
-		$start = $this->state->get('list.start');
-		$limit = $this->state->get('list.limit');
-		$total = $this->getTotal();
+		$start = (int) $this->state->get('list.start');
+		$limit = (int) $this->state->get('list.limit');
+		$total = (int) $this->getTotal();
 
-		if ($start > $total - $limit)
+		if ($limit === 0)
+		{
+			$start = 0;
+		}
+		elseif ($start > $total - $limit)
 		{
 			$start = max(0, (int) (ceil($total / $limit) - 1) * $limit);
 		}
@@ -879,7 +883,7 @@ class ListModel extends AbstractFormModel
 		foreach ($ordering as $key => &$value)
 		{
 			// Remove extra spaces
-			preg_replace('/\s+/', ' ', trim($value));
+			$value = preg_replace('/\s+/', ' ', trim($value));
 
 			$value = StringHelper::explode(' ', $value);
 
