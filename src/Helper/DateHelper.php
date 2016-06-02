@@ -10,6 +10,8 @@ namespace Windwalker\Helper;
 
 use Windwalker\DI\Container;
 
+define('WINDWALKER_DATE_FORMAT_SQL', \JFactory::getDbo()->getDateFormat());
+
 /**
  * The Date Helper
  *
@@ -21,7 +23,7 @@ abstract class DateHelper
 	const FORMAT_YMD      = 'Y-m-d';
 	const FORMAT_YMD_HI   = 'Y-m-d H:i';
 	const FORMAT_YMD_HIS  = 'Y-m-d H:i:s';
-	const FORMAT_SQL      = 'Y-m-d H:i:s';
+	const FORMAT_SQL      = WINDWALKER_DATE_FORMAT_SQL;
 
 	/**
 	 * Property offset.
