@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+	<!-- Joomla!3.[345] -->
+	<update>
+		<name>Windwalker Framework</name>
+		<version>4.1.5</version>
+		<infourl title="Windwalker Framework">http://windwalker.io</infourl>
+		<downloads>
+			<downloadurl type="upgrade" format="zip">https://github.com/ventoviro/windwalker-joomla-rad/archive/master.zip</downloadurl>
+		</downloads>
+		<targetplatform name="joomla" version="3.[345]" />
+		<element>windwalker</element>
+		<type>library</type>
+	</update>
+</updates>

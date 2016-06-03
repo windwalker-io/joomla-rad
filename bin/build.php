@@ -24,7 +24,8 @@ class Build
 		'.gitignore',
 		'.travis.yml',
 		'phpunit.xml.dist',
-		'README.md'
+		'README.md',
+		'update.xml'
 	);
 
 	/**

@@ -13,7 +13,7 @@ use Windwalker\Console\Command\Command;
 /**
  * The OnCommand class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1.5
  */
 class OnCommand extends Command
 {

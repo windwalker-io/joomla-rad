@@ -2,7 +2,7 @@
 /**
  * Part of rad project.
  *
- * @copyright  Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
+ * @copyright  Copyright (C) 2016 LYRASOFT. All rights reserved.
  * @license    GNU General Public License version 2 or later.
  */
 
@@ -16,7 +16,7 @@ use Windwalker\DI\Container;
 /**
  * The Ioc class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1.5
  */
 class Ioc
 {

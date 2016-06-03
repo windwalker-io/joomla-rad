@@ -13,7 +13,7 @@ use SystemBundle\Command\System\On\OnCommand;
 /**
  * The OffCommand class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  2.1.5
  */
 class OffCommand extends OnCommand
 {

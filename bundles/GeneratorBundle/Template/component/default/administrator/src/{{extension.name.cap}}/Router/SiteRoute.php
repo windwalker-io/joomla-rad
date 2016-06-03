@@ -11,7 +11,7 @@ namespace {{extension.name.cap}}\Router;
 /**
  * The SiteRoute class.
  *
- * @since  {DEPLOY_VERSION}
+ * @since  1.0
  */
 abstract class SiteRoute extends \Windwalker\Router\SiteRoute
 {
