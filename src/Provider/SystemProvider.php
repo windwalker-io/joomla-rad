@@ -58,6 +58,10 @@ class SystemProvider extends ServiceProvider
 		// Dispatcher
 		$this->share($container, 'event.dispatcher', 'JEventDispatcher', array('JEventDispatcher', 'getInstance'));
 
+		// Mailer
+
+		$this->share($container, 'mailer', 'JMail', array('JFactory', 'getMailer'));
+
 		// Date
 		$this->set(
 			$container,
@@ -82,16 +86,7 @@ class SystemProvider extends ServiceProvider
 			'helper.asset',
 			function()
 			{
-				return new \Windwalker\Asset\AssetManager;
-			}
-		);
-
-		// Script Manager
-		$container->share(
-			'script.manager',
-			function()
-			{
-				return new ModuleManager;
+				return \Windwalker\Asset\AssetManager::getInstance();
 			}
 		);
 

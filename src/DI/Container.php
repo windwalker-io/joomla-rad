@@ -49,6 +49,11 @@ class Container extends JoomlaContainer
 	 */
 	public static function getInstance($name = null)
 	{
+		if ($name == 'windwalker')
+		{
+			$name = null;
+		}
+
 		// No name, return root container.
 		if (!$name)
 		{
@@ -208,5 +213,29 @@ class Container extends JoomlaContainer
 		$key = $this->resolveAlias($key);
 
 		return (bool) $this->getRaw($key);
+	}
+
+	/**
+	 * getParent
+	 *
+	 * @return  JoomlaContainer
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	/**
+	 * setParent
+	 *
+	 * @param JoomlaContainer $parent
+	 *
+	 * @return  static
+	 */
+	public function setParent(JoomlaContainer $parent)
+	{
+		$this->parent = $parent;
+
+		return $this;
 	}
 }

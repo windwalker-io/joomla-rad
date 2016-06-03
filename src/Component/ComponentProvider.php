@@ -10,6 +10,7 @@ namespace Windwalker\Component;
 
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
+use Windwalker\Asset\AssetManager;
 
 /**
  * Component Provider class.
@@ -72,16 +73,15 @@ class ComponentProvider implements ServiceProviderInterface
 			);
 
 		// Asset Helper
-		$container->extend(
+		$container->share(
 			'helper.asset',
-			function($asset, $container) use($name)
+			function($container) use ($name)
 			{
-				$asset->resetPaths();
+				$asset = AssetManager::getInstance($name);
 
-				$asset = clone $asset;
+				$asset->setContainer($container);
 
-				return $asset->setName('com_' . strtolower($name))
-					->setContainer($container);
+				return $asset;
 			}
 		);
 	}

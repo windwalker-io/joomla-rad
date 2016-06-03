@@ -23,6 +23,13 @@ use Windwalker\Utilities\Queue\PriorityQueue;
 class AssetManager implements ContainerAwareInterface
 {
 	/**
+	 * Property instances.
+	 *
+	 * @var  AssetManager[]
+	 */
+	protected static $instances = array();
+	
+	/**
 	 * Paths to scan.
 	 *
 	 * @var \SplPriorityQueue
@@ -84,6 +91,39 @@ class AssetManager implements ContainerAwareInterface
 	 * @var  boolean
 	 */
 	protected $debug = false;
+
+	/**
+	 * Get AssetManager by different namespace.
+	 *
+	 * @param  string  $name  The instance name.
+	 *
+	 * @return  static
+	 */
+	public static function getInstance($name = 'windwalker')
+	{
+		if (!isset(static::$instances['windwalker']))
+		{
+			static::$instances['windwalker'] = new static;
+		}
+
+		$name = strtolower($name);
+
+		if ($name == 'windwalker')
+		{
+			return static::$instances['windwalker'];
+		}
+
+		if (!isset(static::$instances[$name]))
+		{
+			static::$instances['windwalker']->resetPaths();
+			
+			$instance = clone static::$instances['windwalker'];
+
+			static::$instances[$name] = $instance;
+		}
+
+		return static::$instances[$name];
+	}
 
 	/**
 	 * Constructor.

@@ -75,6 +75,13 @@ class AbstractAdvancedModelTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->reflectedJComponentHelper->setValue($this->originComponents);
 		$this->reflectedJComponentHelper->setAccessible(false);
+
+		$db = \JFactory::getDbo();
+
+		// Remove test data
+		$sql = 'DELETE FROM `#__categories` WHERE `id` IN (10008, 10009)';
+
+		$db->setQuery($sql)->execute();
 	}
 	
 	/**
@@ -142,12 +149,6 @@ class AbstractAdvancedModelTest extends \PHPUnit_Framework_TestCase
 
 		$this->assertNull($category->id);
 		$this->assertNull($category->title);
-
-
-		// Remove test data
-		$sql = 'DELETE FROM `#__categories` WHERE `id` IN (10008, 10009)';
-
-		$db->setQuery($sql)->execute();
 	}
 
 	/**
