@@ -11,7 +11,6 @@ namespace Windwalker\Test\Windwalker;
 use Windwalker\Console\IO\IO;
 use Windwalker\DI\Container;
 use Windwalker\Ioc;
-use Windwalker\Test\Joomla\MockSession;
 
 /**
  * Test class of \Windwalker\Ioc
@@ -20,16 +19,6 @@ use Windwalker\Test\Joomla\MockSession;
  */
 class IocTest extends \PHPUnit_Framework_TestCase
 {
-	public static function setUpBeforeClass()
-	{
-		$_SERVER['HTTP_HOST'] = 'windwalker.io';
-	}
-
-	public static function tearDownAfterClass()
-	{
-		unset($_SERVER['HTTP_HOST']);
-	}
-
 	/**
 	 * Method to test getApplication().
 	 *
@@ -111,8 +100,6 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetSession()
 	{
-		Container::getInstance()->set('session', new MockSession);
-
 		$this->assertSame(Container::getInstance()->get('session'), Ioc::getSession());
 	}
 

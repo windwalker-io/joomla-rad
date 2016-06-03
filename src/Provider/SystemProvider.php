@@ -52,6 +52,13 @@ class SystemProvider extends ServiceProvider
 		// Database
 		$this->share($container, 'db', 'JDatabaseDriver', array('JFactory', 'getDbo'));
 
+		// Session
+		// Global Config
+		$container->share('session', function ()
+		{
+		    return \JFactory::getSession();
+		});
+
 		// Language
 		$this->share($container, 'language', 'JLanguage', array('JFactory', 'getLanguage'));
 

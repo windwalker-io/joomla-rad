@@ -9,6 +9,14 @@
 // We are a valid entry point.
 const _JEXEC = 1;
 
+$host = defined('WINDWALKER_TEST_HOST') ? WINDWALKER_TEST_HOST : 'rad.windwalker.io';
+$uri = defined('WINDWALKER_TEST_URI') ? WINDWALKER_TEST_URI : '/flower/sakura';
+
+$_SERVER['HTTP_HOST'] = $host;
+$_SERVER['REQUEST_URI'] = $uri;
+$_SERVER['SCRIPT_NAME'] = $uri;
+$_SERVER['PHP_SELF'] = $uri;
+
 // Configure error reporting to maximum for CLI output.
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -57,11 +65,3 @@ require_once JPATH_CONFIGURATION . '/configuration.php';
 
 // System configuration.
 $config = new JConfig;
-
-$host = defined('WINDWALKER_TEST_HOST') ? WINDWALKER_TEST_HOST : 'rad.windwalker.io';
-$uri = defined('WINDWALKER_TEST_URI') ? WINDWALKER_TEST_URI : '/flower/sakura';
-
-$_SERVER['HTTP_HOST'] = $host;
-$_SERVER['REQUEST_URI'] = $uri;
-$_SERVER['SCRIPT_NAME'] = $uri;
-$_SERVER['PHP_SELF'] = $uri;
