@@ -68,19 +68,17 @@ class MakesumCommand extends Command
 	 *
 	 * @return void
 	 */
-	public function configure()
+	public function initialise()
 	{
-		$this->addOption(
-			array('a', 'admin'),
-			0,
-			'Use admin client.'
-			)->addOption(
-				array('w', 'windwalker'),
-				0,
-				'Use Windwalker sum style.'
-			);
+		$this->addOption('a')
+			->alias('admin')
+			->description('Use admin client.');
 
-		parent::configure();
+		$this->addOption('w')
+			->alias('windwalker')
+			->description('Use Windwalker sum style.');
+
+		parent::initialise();
 	}
 
 	/**
@@ -90,8 +88,8 @@ class MakesumCommand extends Command
 	 */
 	protected function doExecute()
 	{
-		$name     = $this->getArgument(0) ? : $this->application->close('Please enter a asset name.' . "\n");
-		$template = $this->getArgument(1) ? : $this->application->close('Please enter template name.' . "\n");
+		$name     = $this->getArgument(0) ? : $this->app->close('Please enter a asset name.' . "\n");
+		$template = $this->getArgument(1) ? : $this->app->close('Please enter template name.' . "\n");
 
 		$name     = strtolower($name);
 		$template = strtolower($template);
