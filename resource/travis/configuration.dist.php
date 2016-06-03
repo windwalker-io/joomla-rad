@@ -42,7 +42,7 @@ class JConfig
 	public $list_limit = '100';
 	public $access = '1';
 	public $live_site = '';
-	public $secret = 'CEh8niy2Mg7zwHk4';
+	public $secret = 'vbmm04985fj034fj8504hy9yt54y';
 	public $gzip = '0';
 	public $helpurl = 'http://help.joomla.org/proxy/index.php?option=com_help&keyref=Help{major}{minor}:{keyref}';
 	public $ftp_host = '';
@@ -54,7 +54,7 @@ class JConfig
 	public $offset = 'Asia/Taipei';
 	public $mailonline = '1';
 	public $mailer = 'mail';
-	public $mailfrom = '';
+	public $mailfrom = 'test@windwalker.io';
 	public $sendmail = '/usr/sbin/sendmail';
 	public $smtpauth = '0';
 	public $smtpuser = '';
