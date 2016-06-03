@@ -11,5 +11,6 @@
 		<targetplatform name="joomla" version="3.[345]" />
 		<element>windwalker</element>
 		<type>library</type>
+		<client>0</client>
 	</update>
 </updates>
