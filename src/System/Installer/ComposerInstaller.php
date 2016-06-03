@@ -8,7 +8,7 @@
 
 namespace Windwalker\System\Installer;
 
-use Composer\Script\CommandEvent;
+use Composer\Script\Event;
 
 /**
  * The composer installer.
@@ -20,11 +20,11 @@ class ComposerInstaller
 	/**
 	 * Do install.
 	 *
-	 * @param CommandEvent $event The command event.
+	 * @param Event $event The command event.
 	 *
 	 * @return  void
 	 */
-	public static function install(CommandEvent $event)
+	public static function install(Event $event)
 	{
 		$windPath = getcwd();
 		$root = realpath($windPath . '/../..');
