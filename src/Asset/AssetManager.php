@@ -28,7 +28,7 @@ class AssetManager implements ContainerAwareInterface
 	 * @var  AssetManager[]
 	 */
 	protected static $instances = array();
-	
+
 	/**
 	 * Paths to scan.
 	 *
@@ -116,8 +116,10 @@ class AssetManager implements ContainerAwareInterface
 		if (!isset(static::$instances[$name]))
 		{
 			static::$instances['windwalker']->resetPaths();
-			
+
 			$instance = clone static::$instances['windwalker'];
+
+			$instance->setName($name);
 
 			static::$instances[$name] = $instance;
 		}

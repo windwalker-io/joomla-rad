@@ -77,7 +77,7 @@ class ComponentProvider implements ServiceProviderInterface
 			'helper.asset',
 			function($container) use ($name)
 			{
-				$asset = AssetManager::getInstance($name);
+				$asset = AssetManager::getInstance('com_' . strtolower($name));
 
 				$asset->setContainer($container);
 
