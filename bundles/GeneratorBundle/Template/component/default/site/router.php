@@ -41,7 +41,7 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 	 *
 	 * @since   3.4
 	 */
-	public function __construct($app, $menu)
+	public function __construct($app = null, $menu = null)
 	{
 		parent::__construct($app, $menu);
 
