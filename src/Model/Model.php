@@ -12,6 +12,7 @@ use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\Registry\Registry;
 use Windwalker\Cache\Cache;
+use Windwalker\Cache\DataHandler\RawDataHandler;
 use Windwalker\Cache\Storage\RuntimeStorage;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
@@ -530,7 +531,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	public function resetCache()
 	{
-		$this->cache = new Cache(new RuntimeStorage);
+		$this->cache = new Cache(new RuntimeStorage, new RawDataHandler);
 
 		return $this;
 	}
