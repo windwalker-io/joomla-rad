@@ -8,9 +8,12 @@
 
 namespace Windwalker\Test\Helper;
 
+use Windwalker\Data\DataSet;
+use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\DI\Container;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Model\Model;
+use Windwalker\System\JClient;
 use Windwalker\Test\Joomla\MockLanguage;
 
 /**
@@ -26,6 +29,16 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 * @var \Windwalker\Helper\LanguageHelper
 	 */
 	protected $instance;
+
+	/**
+	 * setUpBeforeClass
+	 *
+	 * @return  void
+	 */
+	public static function setUpBeforeClass()
+	{
+		$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-us,en;q=0.7,ja;q=0.3';
+	}
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -46,7 +59,98 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	protected function tearDown()
 	{
 	}
-	
+
+	/**
+	 * testGetLocale
+	 *
+	 * @return  void
+	 *
+	 * @covers Windwalker\Helper\LanguageHelper::getLocale
+	 */
+	public function testGetLocale()
+	{
+		$this->assertEquals('en-GB', LanguageHelper::getLocale());
+	}
+
+	/**
+	 * testGetCurrentLanguage
+	 *
+	 * @return  void
+	 */
+	public function testGetCurrentLanguage()
+	{
+		$langs = \JLanguageHelper::getLanguages('lang_code');
+
+		$this->assertEquals($langs[\JFactory::getLanguage()->getTag()], LanguageHelper::getCurrentLanguage());
+	}
+
+	/**
+	 * testGetLanguageProfile
+	 *
+	 * @return  void
+	 */
+	public function testGetLanguageProfile()
+	{
+		$langs = \JLanguageHelper::getLanguages('lang_code');
+
+		$expected = $langs[\JFactory::getLanguage()->getTag()];
+
+		$this->assertEquals((object) $expected, LanguageHelper::getContentLanguage('en-GB'));
+		$this->assertEquals((object) $expected, LanguageHelper::getContentLanguage('en', 'sef'));
+		$this->assertEquals((object) $expected, LanguageHelper::getContentLanguage(0, 'default'));
+		$this->assertNull(LanguageHelper::getContentLanguage('zh-TW'));
+	}
+
+	/**
+	 * testDetectLanguageFromBrowser
+	 *
+	 * @return  void
+	 */
+	public function testDetectLanguageFromBrowser()
+	{
+		$this->assertEquals('en-GB', LanguageHelper::detectLanguageFromBrowser());
+	}
+
+	/**
+	 * testGetContentLanguages
+	 *
+	 * @return  void
+	 */
+	public function testGetContentLanguages()
+	{
+		$this->assertEquals(\JLanguageHelper::getLanguages(), LanguageHelper::getContentLanguages());
+	}
+
+	/**
+	 * testGetSefPath
+	 *
+	 * @return  void
+	 */
+	public function testGetSefPath()
+	{
+		$this->assertEquals('en', LanguageHelper::getSefPath());
+	}
+
+	/**
+	 * testGetInstalledLanguages
+	 *
+	 * @return  void
+	 */
+	public function testGetInstalledLanguages()
+	{
+		$langs = DataMapperFacade::find('#__extensions', array('type' => 'language'));
+
+		$this->assertEquals($langs, LanguageHelper::getInstalledLanguages());
+
+		$langs = DataMapperFacade::find('#__extensions', array('type' => 'language', 'client_id' => 0));
+
+		$this->assertEquals($langs, LanguageHelper::getInstalledLanguages(JClient::SITE));
+
+		$langs = DataMapperFacade::find('#__extensions', array('type' => 'language', 'client_id' => 1));
+
+		$this->assertEquals($langs, LanguageHelper::getInstalledLanguages(JClient::ADMINISTRATOR));
+	}
+
 	/**
 	 * Method to test translate().
 	 *

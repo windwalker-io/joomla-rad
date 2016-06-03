@@ -11,9 +11,13 @@ namespace Windwalker\Helper;
 use JFactory;
 use JFolder;
 use Joomla\Uri\Uri;
+use Windwalker\Data\Data;
+use Windwalker\Data\DataSet;
+use Windwalker\DataMapper\DataMapperFacade;
 use Windwalker\DI\Container;
 use Windwalker\Facade\AbstractFacade;
 use Windwalker\String\Utf8String;
+use Windwalker\System\JClient;
 
 /**
  * Language Helper
@@ -35,6 +39,142 @@ class LanguageHelper extends AbstractFacade
 	 * @var string
 	 */
 	const APT_KEY = 'AIzaSyC04nF4KXjfR2VQ0jsFm5vEd9LbyiXqbKw';
+
+	/**
+	 * getLocaleTag
+	 *
+	 * @return  string
+	 * 
+	 * @since   2.1.5
+	 */
+	public static function getLocale()
+	{
+		/** @var \JLanguage $lang */
+		$lang = static::getInstance();
+
+		return $lang->getTag();
+	}
+
+	/**
+	 * getCurrentLanguage
+	 *
+	 * @return  \stdClass
+	 * 
+	 * @since   2.1.5
+	 */
+	public static function getCurrentLanguage()
+	{
+		$tag = static::getLocale();
+
+		return static::getContentLanguage($tag);
+	}
+
+	/**
+	 * Tries to detect the language.
+	 *
+	 * @return  string  locale or null if not found
+	 *
+	 * @since   2.1.5
+	 */
+	public static function detectLanguageFromBrowser()
+	{
+		return \JLanguageHelper::detectLanguage();
+	}
+
+	/**
+	 * getLanguageProfile
+	 *
+	 * @param string $code
+	 * @param string $key
+	 *
+	 * @return  \stdClass|null
+	 * 
+	 * @since   2.1.5
+	 */
+	public static function getContentLanguage($code, $key = 'lang_code')
+	{
+		$langs = static::getContentLanguages($key);
+
+		return isset($langs[$code]) ? $langs[$code] : null;
+	}
+
+	/**
+	 * Get available languages
+	 *
+	 * @param   string  $key  Array key
+	 *
+	 * @return  array  An array of published languages
+	 * 
+	 * @since   2.1.5
+	 */
+	public static function getContentLanguages($key = null)
+	{
+		if (!in_array($key, array('sef', 'lang_code')))
+		{
+			$key = null;
+		}
+
+		$key = $key ? : 'default';
+
+		return \JLanguageHelper::getLanguages($key);
+	}
+
+	/**
+	 * getSefPath
+	 *
+	 * @return  string
+	 * 
+	 * @since   2.1.5
+	 */
+	public static function getSefPath()
+	{
+		$lang = static::getCurrentLanguage();
+
+		if (!$lang)
+		{
+			return null;
+		}
+
+		return $lang->sef;
+	}
+
+	/**
+	 * getInstalledLanguages
+	 *
+	 * @param   integer  $client
+	 *
+	 * @return  DataSet|Data[]
+	 * 
+	 * @since   2.1.5
+	 */
+	public static function getInstalledLanguages($client = JClient::BOTH)
+	{
+		$client = strtolower($client);
+
+		if ($client == 'site')
+		{
+			$client = JClient::SITE;
+		}
+		elseif ($client == 'admin' || $client == 'administrator')
+		{
+			$client = JClient::ADMINISTRATOR;
+		}
+		elseif ($client == 'both')
+		{
+			$client = JClient::BOTH;
+		}
+
+		$conditions = array('type' => 'language');
+
+		if ($client != JClient::BOTH)
+		{
+			$conditions['client_id'] = $client;
+		}
+
+		$langs = DataMapperFacade::find('#__extensions', $conditions);
+
+		return $langs;
+	}
 
 	/**
 	 * Translate a long text by Google, if it too long, will separate it..
