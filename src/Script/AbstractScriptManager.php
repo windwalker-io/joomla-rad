@@ -83,18 +83,7 @@ abstract class AbstractScriptManager
 			return static::$assets[$option];
 		}
 
-		$container = static::getContainer($option);
-
-		if ($container->exists('helper.asset'))
-		{
-			$asset = $container->get('helper.asset');
-		}
-		else
-		{
-			$asset = new AssetManager($option);
-		}
-
-		return static::$assets[$option] = $asset;
+		return static::$assets[$option] = AssetManager::getInstance($option);
 	}
 
 	/**
