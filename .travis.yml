@@ -21,10 +21,11 @@ before_script:
   # Import SQL
   - cp $TRAVIS_BUILD_DIR/resource/travis/configuration.dist.php configuration.php
   - mysql -e 'CREATE DATABASE windwalker_test;'
-  - php cli/console sql import default -y
+  - php bin/windwalker sql import default -y
 
   # Remove current windwalker
   - rm -rf libraries/windwalker
+  - rm -rf libraries/windwalker-bundles
   - rm bin/windwalker
 
   # Install current test version
