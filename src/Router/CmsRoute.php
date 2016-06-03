@@ -8,6 +8,7 @@
 
 namespace Windwalker\Router;
 
+use Joomla\Uri\Uri;
 use Windwalker\Helper\ArrayHelper;
 
 /**
@@ -163,7 +164,7 @@ class CmsRoute
 			$data['_resource'] = null;
 		}
 
-		$url = new \JUri;
+		$url = new Uri;
 
 		$url->setQuery($data);
 

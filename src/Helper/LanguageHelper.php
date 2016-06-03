@@ -10,6 +10,7 @@ namespace Windwalker\Helper;
 
 use JFactory;
 use JFolder;
+use Joomla\Uri\Uri;
 use Windwalker\DI\Container;
 use Windwalker\Facade\AbstractFacade;
 use Windwalker\String\Utf8String;
@@ -86,7 +87,7 @@ class LanguageHelper extends AbstractFacade
 	 */
 	public static function gTranslate($text, $SourceLan, $ResultLan)
 	{
-		$url = new \JUri;
+		$url = new Uri;
 
 		// For Google APIv2
 		$url->setHost('https://www.googleapis.com/');
