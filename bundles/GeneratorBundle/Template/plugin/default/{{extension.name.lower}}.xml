@@ -6,10 +6,10 @@
 	<name>{{extension.element.lower}}</name>
 	<author>Asika</author>
 	<creationDate>2014-02-06</creationDate>
-	<copyright>Copyright (C) 2016 {ORGANIZATION}.com</copyright>
+	<copyright>Copyright (C) 2016 {ORGANIZATION}</copyright>
 	<license>GNU General Public License version 2 or later.</license>
-	<authorEmail>asika@{ORGANIZATION}.com</authorEmail>
-	<authorUrl>http://{ORGANIZATION}.com</authorUrl>
+	<authorEmail></authorEmail>
+	<authorUrl>http://example.com</authorUrl>
 	<version>1.0</version>
 	<description>{{extension.element.upper}}_XML_DESCRIPTION</description>
 

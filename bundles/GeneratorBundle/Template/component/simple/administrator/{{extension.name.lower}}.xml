@@ -7,8 +7,8 @@
 	<copyright>Copyright (C) 2016. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later.</license>
 	<author>Asika</author>
-	<authorEmail>asika32764@gmail.com</authorEmail>
-	<authorUrl>http://{ORGANIZATION}.com</authorUrl>
+	<authorEmail></authorEmail>
+	<authorUrl>http://example.com</authorUrl>
 	<version>1.0.0</version>
 	<description>{{extension.element.upper}}_XML_DESCRIPTION</description>
 
