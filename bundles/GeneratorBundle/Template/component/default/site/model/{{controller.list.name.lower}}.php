@@ -184,6 +184,8 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 		// Limitstart
 		// =====================================================================================
 		$this->set('list.start', $input->getInt('limitstart', 0));
+
+		$this->set('list.limit', $params->get('num_intro_articles', 15));
 	}
 
 	/**
