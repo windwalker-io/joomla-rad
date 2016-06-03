@@ -144,4 +144,66 @@ class RadRoutingHelper
 			call_user_func_array(array(__CLASS__, $method), array($view, $input));
 		}
 	}
+
+	/**
+	 * buildFromView
+	 *
+	 * @param string     $component
+	 * @param string     $view
+	 * @param array      $queries
+	 * @param boolean    $replace
+	 * @param \JMenuSite $menu
+	 *
+	 */
+	protected static function buildFromView($component, $view, &$queries, &$replace, \JMenuSite $menu)
+	{
+		// Get all com_flower menus
+		$menuItems = $menu->getItems('component', $component);
+
+		// Find matched menu item.
+		foreach ($menuItems as $menuItem)
+		{
+			if (isset($menuItem->query['view']) && $menuItem->query['view'] == $view)
+			{
+				// Replace core route rule.
+				$replace = true;
+
+				// Only return menu Itemid then Joomla will convert to menu alias
+				$queries = array('Itemid' => $menuItem->id);
+			}
+		}
+
+		// No menu matched, follows default rule.
+	}
+
+	/**
+	 * buildFromViewAndId
+	 *
+	 * @param string  $component
+	 * @param string  $view
+	 * @param array   $queries
+	 * @param boolean $replace
+	 * @param \JMenu  $menu
+	 */
+	public static function buildFromViewAndId($component, $view, &$queries, &$replace, \JMenu $menu)
+	{
+		// Get all com_flower menus
+		$menuItems = $menu->getItems('component', $component);
+
+		// Find matched menu item.
+		foreach ($menuItems as $menuItem)
+		{
+			if (isset($menuItem->query['view']) && $menuItem->query['view'] == $view &&
+				isset($menuItem->query['id']) && $menuItem->query['id'] == $queries['id'])
+			{
+				// Replace core route rule.
+				$replace = true;
+
+				// Only return menu Itemid then Joomla will convert to menu alias
+				$queries = array('Itemid' => $menuItem->id);
+			}
+		}
+
+		// No menu matched, follows default rule.
+	}
 }
