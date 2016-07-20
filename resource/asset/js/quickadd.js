@@ -30,7 +30,7 @@
         this.control = element.parents('.controls');
         this.select  = this.control.find('> select');
         this.inputs  = this.element.find('input, select, textarea');
-        this.submitButton = this.element.find('button[type=submit]');
+        this.submitButton = this.element.find('button.quickadd_submit');
 
         this.options = $.extend(true, {}, defaultOptions, options);
 

@@ -350,7 +350,7 @@ class JFormFieldItemlist extends JFormFieldList
 		$button_class = 'btn btn-small btn-success quickadd_button';
 
 		$footer = "<button class=\"btn\" type=\"button\" data-dismiss=\"modal\">" . JText::_('JCANCEL') . "</button>";
-		$footer .= "<button class=\"btn btn-primary\" type=\"submit\">" . JText::_('JSUBMIT') . "</button>";
+		$footer .= "<button class=\"btn btn-primary quickadd_submit\" type=\"button\">" . JText::_('JSUBMIT') . "</button>";
 
 		$html .= ModalHelper::modalLink(JText::_($button_title), $qid, array('class' => $button_class, 'icon' => 'icon-new icon-white'));
 		$html .= ModalHelper::renderModal($qid, $content, array('title' => JText::_($modal_title), 'footer' => $footer));
