@@ -57,4 +57,16 @@ class FileLayout extends \JLayoutFile
 			$this->addIncludePath(rtrim($this->basePath, DIRECTORY_SEPARATOR));
 		}
 	}
+
+	/**
+	 * getDefaultIncludePaths
+	 *
+	 * @return  array
+	 */
+	public function clearIncludePaths()
+	{
+		$this->refreshIncludePaths();
+
+		return $this->includePaths;
+	}
 }
