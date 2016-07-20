@@ -13,6 +13,7 @@ use JLoader;
 use JTable;
 use Windwalker\Controller\DisplayController;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\Helper\BacktraceHelper;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Model\CrudModel;
 use Windwalker\Model\Exception\ValidateFailException;
@@ -109,10 +110,19 @@ class QuickaddController extends DisplayController
 
 			exit($result);
 		}
+		catch (\Throwable $e)
+		{
+			// Return Error Message.
+			$result->set('errorMsg', \JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
+			$result->set('backtrace', BacktraceHelper::normalizeBacktraces($e->getTrace()));
+
+			jexit($result);
+		}
 		catch (\Exception $e)
 		{
 			// Return Error Message.
 			$result->set('errorMsg', \JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
+			$result->set('backtrace', BacktraceHelper::normalizeBacktraces($e->getTrace()));
 
 			jexit($result);
 		}
