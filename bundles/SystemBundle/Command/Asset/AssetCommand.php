@@ -27,6 +27,6 @@ class AssetCommand extends Command
 
 	protected function doExecute()
 	{
-		$this->out('YOO');
+		return parent::doExecute();
 	}
 }
