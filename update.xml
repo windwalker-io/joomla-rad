@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updates>
-	<!-- Joomla!3.[345] -->
+	<!-- Joomla!3.[3456] -->
 	<update>
 		<name>Windwalker Framework</name>
-		<version>4.1.5</version>
+		<version>4.1.6</version>
 		<infourl title="Windwalker Framework">http://windwalker.io</infourl>
 		<downloads>
-			<downloadurl type="upgrade" format="zip">https://github.com/ventoviro/windwalker-joomla-rad/releases/download/2.1.5/windwalker-rad-2.1.5.zip</downloadurl>
+			<downloadurl type="upgrade" format="zip">https://github.com/ventoviro/windwalker-joomla-rad/releases/download/2.1.6/windwalker-rad-2.1.6.zip</downloadurl>
 		</downloads>
-		<targetplatform name="joomla" version="3.[345]" />
+		<targetplatform name="joomla" version="3.[3456]" />
 		<element>windwalker</element>
 		<type>library</type>
 		<client>0</client>
