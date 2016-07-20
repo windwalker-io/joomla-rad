@@ -42,7 +42,7 @@ $tabs = array(
 </script>
 
 <div id="{{extension.name.lower}}" class="windwalker {{controller.item.name.lower}} edit-form row-fluid">
-	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
+	<form action="<?php echo JUri::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 
 		<?php echo JHtmlBootstrap::startTabSet('{{controller.item.name.lower}}EditTab', array('active' => 'tab_basic')); ?>

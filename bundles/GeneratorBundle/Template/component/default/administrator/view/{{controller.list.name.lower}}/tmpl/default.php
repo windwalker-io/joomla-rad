@@ -26,7 +26,7 @@ $container = $this->getContainer();
 ?>
 
 <div id="{{extension.name.lower}}" class="windwalker {{controller.list.name.lower}} tablelist row-fluid">
-	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+	<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
 		<?php if (!empty($this->data->sidebar)): ?>
 		<div id="j-sidebar-container" class="span2">
