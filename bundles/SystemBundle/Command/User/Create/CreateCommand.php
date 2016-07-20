@@ -12,7 +12,9 @@ namespace SystemBundle\Command\User\Create;
 use Windwalker\Console\Command\Command;
 use Windwalker\Console\Prompter\NotNullPrompter;
 use Windwalker\Console\Prompter\PasswordPrompter;
+use Windwalker\DataMapper\DataMapper;
 use Windwalker\DataMapper\DataMapperFacade;
+use Windwalker\Table\TableHelper;
 
 /**
  * Class Install
@@ -83,6 +85,9 @@ class CreateCommand extends Command
 	protected function doExecute()
 	{
 		\JFactory::getLanguage()->load('lib_joomla', JPATH_ROOT, 'en-GB');
+
+		// Init user
+		$this->initUser();
 		
 		// Install User
 		$userdata = array();
@@ -142,6 +147,25 @@ class CreateCommand extends Command
 		$this->out()->out('Create user success.');
 
 		return true;
+	}
+
+	/**
+	 * initUser
+	 *
+	 * @return  void
+	 */
+	protected function initUser()
+	{
+		$mapper = new DataMapper('#__users');
+		$users = $mapper->findOne();
+
+		if ($users->notNull())
+		{
+			return;
+		}
+
+		$helper = new TableHelper('#__users');
+		$helper->initRow(mt_rand(50, 150));
 	}
 
 	/**
