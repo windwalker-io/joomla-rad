@@ -254,6 +254,7 @@ class AdminModel extends CrudModel
 	{
 		$date = DateHelper::getDate('now');
 		$user = $this->container->get('user');
+		$key  = $table->getKeyName();
 
 		// Alias
 		if (property_exists($table, 'alias'))
@@ -313,7 +314,7 @@ class AdminModel extends CrudModel
 		}
 
 		// Modified date
-		if (property_exists($table, 'modified') && $table->id)
+		if (property_exists($table, 'modified') && $table->$key)
 		{
 			$table->modified = $date->toSql();
 		}
@@ -325,7 +326,7 @@ class AdminModel extends CrudModel
 		}
 
 		// Modified user
-		if (property_exists($table, 'modified_by') && $table->id)
+		if (property_exists($table, 'modified_by') && $table->$key)
 		{
 			$table->modified_by = $user->get('id');
 		}
