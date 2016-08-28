@@ -158,7 +158,7 @@ class CrudModel extends FormModel
 		}
 
 		$key = $table->getKeyName();
-		$pk  = \JArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
+		$pk  = \JArrayHelper::getValue($data, $key, $this->getState()->get($this->getName() . '.id'));
 
 		$isNew = true;
 
