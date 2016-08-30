@@ -125,7 +125,7 @@ class CrudModel extends AbstractFormModel
 		}
 
 		$key = $table->getKeyName();
-		$pk  = ArrayHelper::getValue($data, $key, $this->getState($this->getName() . '.id'));
+		$pk  = ArrayHelper::getValue($data, $key, $this->get($this->getName() . '.id'));
 
 		$isNew = true;
 
