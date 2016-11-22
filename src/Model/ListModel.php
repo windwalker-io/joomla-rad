@@ -997,7 +997,7 @@ class ListModel extends AbstractFormModel
 		}
 
 		// Now compare them, and set start to 0 if there has any differences.
-		if ($newState && ($currentState != $newState) && ($resetPage))
+		if ($request !== 'limitstart' && $newState && ($currentState != $newState) && ($resetPage))
 		{
 			$input->set('limitstart', 0);
 		}
