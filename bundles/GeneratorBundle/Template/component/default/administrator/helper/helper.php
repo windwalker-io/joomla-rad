@@ -59,6 +59,64 @@ abstract class {{extension.name.cap}}Helper
 	}
 
 	/**
+	 * Adds Count Items for Category Manager.
+	 *
+	 * @param   stdClass[] &$items The banner category objects
+	 *
+	 * @return  stdClass[]
+	 *
+	 * @throws  \RuntimeException
+	 *
+	 * @since   1.0
+	 */
+	public static function countItems(&$items)
+	{
+		$db = JFactory::getDbo();
+
+		foreach ($items as $item)
+		{
+			$item->count_trashed = 0;
+			$item->count_archived = 0;
+			$item->count_unpublished = 0;
+			$item->count_published = 0;
+
+			$query = $db->getQuery(true);
+
+			$query->select('state, count(*) AS count')
+				->from($query->quoteName('#__{{extension.name.lower}}_{{controller.list.name.lower}}'))
+				->where('catid = ' . (int) $item->id)
+				->group('state');
+
+			$db->setQuery($query);
+
+			$elements = (array) $db->loadObjectList();
+
+			foreach ($elements as $element)
+			{
+				switch ($element->state) {
+					case 0:
+						$item->count_unpublished = $element->count;
+						break;
+
+					case 1:
+						$item->count_published = $element->count;
+						break;
+
+					case 2:
+						$item->count_archived = $element->count;
+						break;
+
+					case -2:
+						$item->count_trashed = $element->count;
+						break;
+				}
+			}
+		}
+
+		return $items;
+	}
+
+	/**
 	 * Gets a list of the actions that can be performed.
 	 *
 	 * @param   string  $option  Action option.
