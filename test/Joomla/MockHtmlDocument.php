@@ -28,9 +28,9 @@ class MockHtmlDocument extends \JDocumentHTML
 	public function reset()
 	{
 		$this->_scripts = array();
-		$this->_script = '';
+		$this->_script = array();
 		$this->_styleSheets = array();
-		$this->_style = '';
+		$this->_style = array();
 
 		return $this;
 	}

@@ -33,7 +33,7 @@ before_script:
   - cp -r $TRAVIS_BUILD_DIR libraries/windwalker
   - mkdir libraries/windwalker-bundles
 
-  # Prapare Test
+  # Prepare Test
   - cd libraries/windwalker
   - cp resource/travis/travis-phpunit.xml phpunit.xml
   - composer update

@@ -10,7 +10,6 @@ namespace Windwalker\Test\Model;
 
 use Windwalker\DI\Container;
 use Windwalker\Model\ListModel;
-use Windwalker\Model\Provider\GridProvider;
 use Windwalker\String\StringInflector;
 use Windwalker\Test\Database\AbstractDatabaseTestCase;
 use Windwalker\Test\Model\Stub\WindwalkerModelStubList;
@@ -366,10 +365,6 @@ class ListModelTest extends AbstractDatabaseTestCase
 		$testQuery = clone $query;
 
 		$this->assertEquals($expected3, $listModel->getList($testQuery, 2, 3));
-
-		$testQuery = clone $query;
-
-		$this->assertEquals(array(), $listModel->getList($testQuery, 2));
 	}
 
 	/**

@@ -207,7 +207,7 @@ class GridHelperTest extends AbstractDomTestCase
 
 		$result = $grid->setItem($item, 1);
 
-		$this->assertNull($result->state->get('access')->canEdit);
+		$this->assertFalse($result->state->get('access')->canEdit);
 		$this->assertTrue($result->state->get('access')->canCheckin);
 		$this->assertFalse($result->state->get('access')->canChange);
 		$this->assertFalse($result->state->get('access')->canEditOwn);
