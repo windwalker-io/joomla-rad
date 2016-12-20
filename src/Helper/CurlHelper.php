@@ -113,7 +113,7 @@ class CurlHelper
 			\JFolder::create($folder_path);
 		}
 
-		$fp = fopen($file_path, 'w+');
+		$fp = fopen($file_path, 'wb+');
 		$ch = curl_init();
 
 		$options = array(
