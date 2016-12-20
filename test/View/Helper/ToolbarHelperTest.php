@@ -41,7 +41,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Helper\toolHelper::__construct
+	 * @covers \Windwalker\View\Helper\toolHelper::__construct
 	 */
 	public function test__construct()
 	{
@@ -75,7 +75,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::register
+	 * @covers \Windwalker/View/Helper/toolbarHelper::register
 	 */
 	public function testRegister()
 	{
@@ -114,7 +114,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::registerButtons
+	 * @covers \Windwalker/View/Helper/toolbarHelper::registerButtons
 	 */
 	public function testRegisterButtons()
 	{
@@ -126,7 +126,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::custom
+	 * @covers \Windwalker/View/Helper/toolbarHelper::custom
 	 */
 	public function testCustom()
 	{
@@ -138,7 +138,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::deleteList
+	 * @covers \Windwalker/View/Helper/toolbarHelper::deleteList
 	 */
 	public function testDeleteList()
 	{
@@ -150,7 +150,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::duplicate
+	 * @covers \Windwalker/View/Helper/toolbarHelper::duplicate
 	 */
 	public function testDuplicate()
 	{
@@ -162,7 +162,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::modal
+	 * @covers \Windwalker/View/Helper/toolbarHelper::modal
 	 */
 	public function testModal()
 	{
@@ -174,7 +174,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::preferences
+	 * @covers \Windwalker/View/Helper/toolbarHelper::preferences
 	 */
 	public function testPreferences()
 	{
@@ -186,7 +186,7 @@ class ToolbarHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/toolbarHelper::link
+	 * @covers \Windwalker/View/Helper/toolbarHelper::link
 	 */
 	public function testLink()
 	{

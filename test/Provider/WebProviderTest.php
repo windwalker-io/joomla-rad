@@ -23,7 +23,7 @@ class WebProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Provider\WebProvider::register
+	 * @covers \Windwalker\Provider\WebProvider::register
 	 */
 	public function testRegister()
 	{

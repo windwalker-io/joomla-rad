@@ -9,7 +9,6 @@
 namespace Windwalker\Test\View\Helper;
 
 use Joomla\Registry\Registry;
-use Windwalker\Dom\Format\HtmlFormatter;
 use Windwalker\Dom\Test\AbstractDomTestCase;
 use Windwalker\View\Helper\GridHelper;
 use Windwalker\View\Html\GridView;
@@ -85,7 +84,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Helper\GridHelper::__construct
+	 * @covers \Windwalker\View\Helper\GridHelper::__construct
 	 */
 	public function test__construct()
 	{
@@ -112,7 +111,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::registerTableSort
+	 * @covers \Windwalker\View\Helper\GridHelper::registerTableSort
 	 */
 	public function testRegisterTableSort()
 	{
@@ -135,7 +134,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::sortTitle
+	 * @covers \Windwalker\View\Helper\GridHelper::sortTitle
 	 */
 	public function testSortTitle()
 	{
@@ -163,7 +162,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::orderTitle
+	 * @covers \Windwalker\View\Helper\GridHelper::orderTitle
 	 */
 	public function testOrderTitle()
 	{
@@ -185,7 +184,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::setItem
+	 * @covers \Windwalker\View\Helper\GridHelper::setItem
 	 */
 	public function testSetItem()
 	{
@@ -207,7 +206,7 @@ class GridHelperTest extends AbstractDomTestCase
 
 		$result = $grid->setItem($item, 1);
 
-		$this->assertFalse($result->state->get('access')->canEdit);
+		$this->assertFalse((bool) $result->state->get('access')->canEdit);
 		$this->assertTrue($result->state->get('access')->canCheckin);
 		$this->assertFalse($result->state->get('access')->canChange);
 		$this->assertFalse($result->state->get('access')->canEditOwn);
@@ -218,7 +217,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::dragSort
+	 * @covers \Windwalker\View\Helper\GridHelper::dragSort
 	 */
 	public function testDragSort()
 	{
@@ -249,7 +248,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::checkbox
+	 * @covers \Windwalker\View\Helper\GridHelper::checkbox
 	 */
 	public function testCheckbox()
 	{
@@ -270,7 +269,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::editTitle
+	 * @covers \Windwalker\View\Helper\GridHelper::editTitle
 	 */
 	public function testEditTitle()
 	{
@@ -299,7 +298,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::editEditButton
+	 * @covers \Windwalker\View\Helper\GridHelper::editEditButton
 	 */
 	public function testEditButton()
 	{
@@ -321,7 +320,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::foreignLink
+	 * @covers \Windwalker\View\Helper\GridHelper::foreignLink
 	 */
 	public function testForeignLink()
 	{
@@ -350,7 +349,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::state
+	 * @covers \Windwalker\View\Helper\GridHelper::state
 	 */
 	public function testState()
 	{
@@ -372,7 +371,7 @@ class GridHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::checkoutButton
+	 * @covers \Windwalker\View\Helper\GridHelper::checkoutButton
 	 */
 	public function testCheckoutButton()
 	{
@@ -418,7 +417,7 @@ HTML;
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::createdDate
+	 * @covers \Windwalker\View\Helper\GridHelper::createdDate
 	 */
 	public function testCreatedDate()
 	{
@@ -447,7 +446,7 @@ HTML;
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::language
+	 * @covers \Windwalker\View\Helper\GridHelper::language
 	 */
 	public function testLanguage()
 	{
@@ -479,7 +478,7 @@ HTML;
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::booleanIcon
+	 * @covers \Windwalker\View\Helper\GridHelper::booleanIcon
 	 */
 	public function testBooleanIcon()
 	{
@@ -499,7 +498,7 @@ HTML;
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::can
+	 * @covers \Windwalker\View\Helper\GridHelper::can
 	 */
 	public function testCan()
 	{
@@ -523,7 +522,7 @@ HTML;
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker/View/Helper/GridHelper::escape
+	 * @covers \Windwalker\View\Helper\GridHelper::escape
 	 */
 	public function testEscape()
 	{

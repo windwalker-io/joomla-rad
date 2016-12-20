@@ -24,7 +24,7 @@ class SystemProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Provider\SystemProvider::__construct
+	 * @covers \Windwalker\Provider\SystemProvider::__construct
 	 */
 	public function test__construct()
 	{
@@ -54,7 +54,7 @@ class SystemProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Provider\SystemProvider::register
+	 * @covers \Windwalker\Provider\SystemProvider::register
 	 */
 	public function testRegister()
 	{
@@ -102,7 +102,7 @@ class SystemProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Provider\SystemProvider::loadConfig
+	 * @covers \Windwalker\Provider\SystemProvider::loadConfig
 	 * @TODO   Implement testLoadConfig().
 	 */
 	public function testLoadConfig()

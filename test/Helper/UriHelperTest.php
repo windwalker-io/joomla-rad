@@ -199,7 +199,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\UriHelper::download
+	 * @covers \Windwalker\Helper\UriHelper::download
 	 * @group  download
 	 */
 	public function testDownload()

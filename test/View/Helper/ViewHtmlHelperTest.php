@@ -23,7 +23,7 @@ class ViewHtmlHelperTest extends AbstractDomTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\View\Helper\ViewHtmlHelper::showInfo
+	 * @covers \Windwalker\View\Helper\ViewHtmlHelper::showInfo
 	 */
 	public function testShowInfo()
 	{

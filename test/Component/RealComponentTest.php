@@ -101,7 +101,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Component\Component::__construct
+	 * @covers \Windwalker\Component\Component::__construct
 	 */
 	public function test__construct()
 	{
@@ -168,7 +168,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Component\Component::execute
+	 * @covers \Windwalker\Component\Component::execute
 	 */
 	public function testExecute()
 	{
@@ -195,7 +195,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 *
 	 * @see  StubAdmin/access.xml
 	 *
-	 * @covers Windwalker\Component\Component::getActions
+	 * @covers \Windwalker\Component\Component::getActions
 	 */
 	public function testGetActions()
 	{
@@ -227,7 +227,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Component\Component::getPath
+	 * @covers \Windwalker\Component\Component::getPath
 	 * @TODO   Implement testGetPath().
 	 */
 	public function testGetPath()
@@ -243,7 +243,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Component\Component::getSitePath
+	 * @covers \Windwalker\Component\Component::getSitePath
 	 * @TODO   Implement testGetSitePath().
 	 */
 	public function testGetSitePath()
@@ -259,7 +259,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Component\Component::getAdminPath
+	 * @covers \Windwalker\Component\Component::getAdminPath
 	 * @TODO   Implement testGetAdminPath().
 	 */
 	public function testGetAdminPath()

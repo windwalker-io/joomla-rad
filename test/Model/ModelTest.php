@@ -56,7 +56,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::__construct
+	 * @covers \Windwalker\Model\Model::__construct
 	 */
 	public function test__construct()
 	{
@@ -113,7 +113,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::getName
+	 * @covers \Windwalker\Model\Model::getName
 	 */
 	public function testGetName()
 	{
@@ -125,7 +125,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::getTable
+	 * @covers \Windwalker\Model\Model::getTable
 	 */
 	public function testGetTable()
 	{
@@ -137,7 +137,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::registerTablePaths
+	 * @covers \Windwalker\Model\Model::registerTablePaths
 	 */
 	public function testRegisterTablePaths()
 	{
@@ -151,7 +151,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::setName
+	 * @covers \Windwalker\Model\Model::setName
 	 */
 	public function testSetName()
 	{
@@ -165,7 +165,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::setOption
+	 * @covers \Windwalker\Model\Model::setOption
 	 */
 	public function testSetOption()
 	{
@@ -179,7 +179,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::addTablePath
+	 * @covers \Windwalker\Model\Model::addTablePath
 	 */
 	public function testAddTablePath()
 	{
@@ -195,8 +195,8 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::getContainer
-	 * @covers Windwalker\Model\Model::setContainer
+	 * @covers \Windwalker\Model\Model::getContainer
+	 * @covers \Windwalker\Model\Model::setContainer
 	 */
 	public function testGetAndSetContainer()
 	{
@@ -212,7 +212,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::get
+	 * @covers \Windwalker\Model\Model::get
 	 */
 	public function testGetAndSet()
 	{
@@ -231,7 +231,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::reset
+	 * @covers \Windwalker\Model\Model::reset
 	 */
 	public function testReset()
 	{
@@ -247,7 +247,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::offsetExists
+	 * @covers \Windwalker\Model\Model::offsetExists
 	 */
 	public function testOffsetExists()
 	{
@@ -261,8 +261,8 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::offsetGet
-	 * @covers Windwalker\Model\Model::offsetSet
+	 * @covers \Windwalker\Model\Model::offsetGet
+	 * @covers \Windwalker\Model\Model::offsetSet
 	 */
 	public function testOffsetGetAndSet()
 	{
@@ -276,7 +276,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::offsetUnset
+	 * @covers \Windwalker\Model\Model::offsetUnset
 	 */
 	public function testOffsetUnset()
 	{
@@ -292,7 +292,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Model::getDb
+	 * @covers \Windwalker\Model\Model::getDb
 	 */
 	public function testGetAndSetDb()
 	{
@@ -308,7 +308,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Model\Model::getStoreId
+	 * @covers \Windwalker\Model\Model::getStoreId
 	 */
 	public function testGetStoreId()
 	{
@@ -325,8 +325,8 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Model\Model::getCache
-	 * @covers Windwalker\Model\Model::setCache
+	 * @covers \Windwalker\Model\Model::getCache
+	 * @covers \Windwalker\Model\Model::setCache
 	 */
 	public function getGetAndSetCache()
 	{
@@ -345,7 +345,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Model\Model::hasCache
+	 * @covers \Windwalker\Model\Model::hasCache
 	 */
 	public function testHasCache()
 	{
@@ -363,8 +363,8 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Model\Model::resetCache
-	 * @covers Windwalker\Model\Model::getCacheObject
+	 * @covers \Windwalker\Model\Model::resetCache
+	 * @covers \Windwalker\Model\Model::getCacheObject
 	 */
 	public function testResetCache()
 	{
@@ -384,7 +384,7 @@ class ModelTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Model\Model::fetch
+	 * @covers \Windwalker\Model\Model::fetch
 	 */
 	public function testFetch()
 	{

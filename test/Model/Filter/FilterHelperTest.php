@@ -55,7 +55,7 @@ class FilterHelperTest extends AbstractBaseTestCase
 	 * @return void
 	 *
 	 * @dataProvider fieldsProvider
-	 * @covers Windwalker\Model\Filter\FilterHelper::execute
+	 * @covers \Windwalker\Model\Filter\FilterHelper::execute
 	 */
 	public function testExecute($filters, $expected)
 	{
@@ -80,7 +80,7 @@ class FilterHelperTest extends AbstractBaseTestCase
 	 * @return  void
 	 *
 	 * @dataProvider handlerProvider
-	 * @covers Windwalker\Model\Filter\FilterHelper::execute
+	 * @covers \Windwalker\Model\Filter\FilterHelper::execute
 	 */
 	public function testHandler($handler, $filter, $key, $expected)
 	{

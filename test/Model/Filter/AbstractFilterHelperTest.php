@@ -50,7 +50,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Filter\AbstractFilterHelper::__construct
+	 * @covers \Windwalker\Model\Filter\AbstractFilterHelper::__construct
 	 */
 	public function test__construct()
 	{
@@ -72,7 +72,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Filter\AbstractFilterHelper::setHandler
+	 * @covers \Windwalker\Model\Filter\AbstractFilterHelper::setHandler
 	 */
 	public function testSetHandler()
 	{
@@ -102,7 +102,7 @@ class AbstractFilterHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Filter\AbstractFilterHelper::setDefaultHandler
+	 * @covers \Windwalker\Model\Filter\AbstractFilterHelper::setDefaultHandler
 	 */
 	public function testSetDefaultHandler()
 	{

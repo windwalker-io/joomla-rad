@@ -25,7 +25,7 @@ class CliProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Provider\CliProvider::register
+	 * @covers \Windwalker\Provider\CliProvider::register
 	 */
 	public function testRegister()
 	{
@@ -49,7 +49,7 @@ class CliProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Provider\CliProvider::createConsole
+	 * @covers \Windwalker\Provider\CliProvider::createConsole
 	 */
 	public function testCreateConsole()
 	{

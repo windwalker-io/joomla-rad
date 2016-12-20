@@ -43,7 +43,7 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Helper\AdminListHelper::handleFilters
+	 * @covers \Windwalker\Model\Helper\AdminListHelper::handleFilters
 	 *
 	 * @param array $filters
 	 * @param array $filterFields
@@ -120,7 +120,7 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Helper\AdminListHelper::handleSearches
+	 * @covers \Windwalker\Model\Helper\AdminListHelper::handleSearches
 	 *
 	 * @param array $searches
 	 * @param array $searchFields
@@ -183,7 +183,7 @@ class AdminListHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Helper\AdminListHelper::handleFullordering
+	 * @covers \Windwalker\Model\Helper\AdminListHelper::handleFullordering
 	 *
 	 * @dataProvider handleFullorderingProvider
 	 */

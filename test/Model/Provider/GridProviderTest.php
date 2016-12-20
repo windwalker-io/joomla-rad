@@ -24,7 +24,7 @@ class GridProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Provider\GridProvider::__construct
+	 * @covers \Windwalker\Model\Provider\GridProvider::__construct
 	 */
 	public function test__construct()
 	{
@@ -38,7 +38,7 @@ class GridProviderTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\Provider\GridProvider::register
+	 * @covers \Windwalker\Model\Provider\GridProvider::register
 	 */
 	public function testRegister()
 	{

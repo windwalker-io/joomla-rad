@@ -65,7 +65,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Helper\LanguageHelper::getLocale
+	 * @covers \Windwalker\Helper\LanguageHelper::getLocale
 	 */
 	public function testGetLocale()
 	{
@@ -156,7 +156,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\LanguageHelper::translate
+	 * @covers \Windwalker\Helper\LanguageHelper::translate
 	 */
 	public function testTranslate()
 	{
@@ -179,7 +179,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\LanguageHelper::gTranslate
+	 * @covers \Windwalker\Helper\LanguageHelper::gTranslate
 	 */
 	public function testGTranslate()
 	{
@@ -207,7 +207,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\LanguageHelper::loadAll
+	 * @covers \Windwalker\Helper\LanguageHelper::loadAll
 	 */
 	public function testLoadAll()
 	{
@@ -238,7 +238,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\LanguageHelper::loadLanguage
+	 * @covers \Windwalker\Helper\LanguageHelper::loadLanguage
 	 */
 	public function testLoadLanguage()
 	{

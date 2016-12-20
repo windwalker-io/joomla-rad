@@ -25,7 +25,7 @@ class DataMapperFacadeTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\DataMapper\DataMapperFacade::__callStatic
+	 * @covers \Windwalker\DataMapper\DataMapperFacade::__callStatic
 	 */
 	public function test__callStatic()
 	{

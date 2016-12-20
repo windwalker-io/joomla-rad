@@ -99,7 +99,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::__construct
+	 * @covers \Windwalker\Asset\AssetManager::__construct
 	 */
 	public function test__construct()
 	{
@@ -129,7 +129,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::addCSS
+	 * @covers \Windwalker\Asset\AssetManager::addCSS
 	 */
 	public function testAddCSS()
 	{
@@ -269,7 +269,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::addJS
+	 * @covers \Windwalker\Asset\AssetManager::addJS
 	 */
 	public function testAddJS()
 	{
@@ -335,7 +335,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::internalCSS
+	 * @covers \Windwalker\Asset\AssetManager::internalCSS
 	 */
 	public function testInternalCSS()
 	{
@@ -350,7 +350,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::internalJS
+	 * @covers \Windwalker\Asset\AssetManager::internalJS
 	 */
 	public function testInternalJS()
 	{
@@ -365,7 +365,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::getJSObject
+	 * @covers \Windwalker\Asset\AssetManager::getJSObject
 	 */
 	public function testGetJSObject()
 	{
@@ -397,7 +397,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::windwalker
+	 * @covers \Windwalker\Asset\AssetManager::windwalker
 	 * @TODO   Implement testWindwalker().
 	 */
 	public function testWindwalker()
@@ -413,7 +413,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::jquery
+	 * @covers \Windwalker\Asset\AssetManager::jquery
 	 * @TODO   Implement testJquery().
 	 */
 	public function testJquery()
@@ -429,7 +429,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::jqueryUI
+	 * @covers \Windwalker\Asset\AssetManager::jqueryUI
 	 * @TODO   Implement testJqueryUI().
 	 */
 	public function testJqueryUI()
@@ -445,7 +445,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::mootools
+	 * @covers \Windwalker\Asset\AssetManager::mootools
 	 * @TODO   Implement testMootools().
 	 */
 	public function testMootools()
@@ -461,7 +461,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::bootstrap
+	 * @covers \Windwalker\Asset\AssetManager::bootstrap
 	 * @TODO   Implement testBootstrap().
 	 */
 	public function testBootstrap()
@@ -477,7 +477,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::isis
+	 * @covers \Windwalker\Asset\AssetManager::isis
 	 * @TODO   Implement testIsis().
 	 */
 	public function testIsis()
@@ -493,7 +493,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::getMinName
+	 * @covers \Windwalker\Asset\AssetManager::getMinName
 	 */
 	public function testGetMinFile()
 	{
@@ -508,7 +508,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::resetPaths
+	 * @covers \Windwalker\Asset\AssetManager::resetPaths
 	 * @TODO   Implement testResetPaths().
 	 */
 	public function testResetPaths()
@@ -524,7 +524,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::getContainer
+	 * @covers \Windwalker\Asset\AssetManager::getContainer
 	 * @TODO   Implement testGetContainer().
 	 */
 	public function testGetContainer()
@@ -540,7 +540,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::setContainer
+	 * @covers \Windwalker\Asset\AssetManager::setContainer
 	 * @TODO   Implement testSetContainer().
 	 */
 	public function testSetContainer()
@@ -556,7 +556,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::getName
+	 * @covers \Windwalker\Asset\AssetManager::getName
 	 * @TODO   Implement testGetName().
 	 */
 	public function testGetName()
@@ -572,7 +572,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::setName
+	 * @covers \Windwalker\Asset\AssetManager::setName
 	 * @TODO   Implement testSetName().
 	 */
 	public function testSetName()
@@ -588,7 +588,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::getPaths
+	 * @covers \Windwalker\Asset\AssetManager::getPaths
 	 * @TODO   Implement testGetPaths().
 	 */
 	public function testGetPaths()
@@ -604,7 +604,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::setPaths
+	 * @covers \Windwalker\Asset\AssetManager::setPaths
 	 * @TODO   Implement testSetPaths().
 	 */
 	public function testSetPaths()
@@ -620,7 +620,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::getDoc
+	 * @covers \Windwalker\Asset\AssetManager::getDoc
 	 * @TODO   Implement testGetDoc().
 	 */
 	public function testGetDoc()
@@ -636,7 +636,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::setDoc
+	 * @covers \Windwalker\Asset\AssetManager::setDoc
 	 * @TODO   Implement testSetDoc().
 	 */
 	public function testSetDoc()
@@ -652,7 +652,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::setSumName
+	 * @covers \Windwalker\Asset\AssetManager::setSumName
 	 * @TODO   Implement testSetSumName().
 	 */
 	public function testSetSumName()
@@ -668,7 +668,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Asset\AssetManager::__clone
+	 * @covers \Windwalker\Asset\AssetManager::__clone
 	 */
 	public function test__clone()
 	{

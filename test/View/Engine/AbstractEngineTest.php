@@ -26,7 +26,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::__construct
+	 * @covers \Windwalker\View\Engine\AbstractEngine::__construct
 	 */
 	public function test__construct()
 	{
@@ -53,7 +53,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::render
+	 * @covers \Windwalker\View\Engine\AbstractEngine::render
 	 */
 	public function testRender()
 	{
@@ -75,7 +75,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::loadTemplate
+	 * @covers \Windwalker\View\Engine\AbstractEngine::loadTemplate
 	 */
 	public function testLoadTemplate()
 	{
@@ -101,7 +101,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 * @expectedException \Exception
 	 * @expectedExceptionMessage JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::loadTemplate
+	 * @covers \Windwalker\View\Engine\AbstractEngine::loadTemplate
 	 */
 	public function testLoadTemplateException()
 	{
@@ -115,7 +115,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::escape
+	 * @covers \Windwalker\View\Engine\AbstractEngine::escape
 	 */
 	public function testEscape()
 	{
@@ -129,7 +129,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::getLayoutTemplate
+	 * @covers \Windwalker\View\Engine\AbstractEngine::getLayoutTemplate
 	 */
 	public function testGetLayoutTemplate()
 	{
@@ -146,7 +146,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::getPath
+	 * @covers \Windwalker\View\Engine\AbstractEngine::getPath
 	 */
 	public function testGetPath()
 	{
@@ -168,7 +168,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::getPaths
+	 * @covers \Windwalker\View\Engine\AbstractEngine::getPaths
 	 */
 	public function testGetPaths()
 	{
@@ -182,7 +182,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::setPaths
+	 * @covers \Windwalker\View\Engine\AbstractEngine::setPaths
 	 */
 	public function testSetPaths()
 	{
@@ -201,7 +201,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::getLayout
+	 * @covers \Windwalker\View\Engine\AbstractEngine::getLayout
 	 */
 	public function testGetLayout()
 	{
@@ -215,7 +215,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::setLayout
+	 * @covers \Windwalker\View\Engine\AbstractEngine::setLayout
 	 */
 	public function testSetLayout()
 	{
@@ -234,7 +234,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::getContainer
+	 * @covers \Windwalker\View\Engine\AbstractEngine::getContainer
 	 */
 	public function testGetContainer()
 	{
@@ -254,7 +254,7 @@ class AbstractEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\AbstractEngine::setContainer
+	 * @covers \Windwalker\View\Engine\AbstractEngine::setContainer
 	 */
 	public function testSetContainer()
 	{

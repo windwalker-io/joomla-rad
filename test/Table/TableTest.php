@@ -44,7 +44,7 @@ class TableTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Table\Table::__construct
+	 * @covers \Windwalker\Table\Table::__construct
 	 */
 	public function test__construct()
 	{
@@ -76,7 +76,7 @@ class TableTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Table\Table::store
+	 * @covers \Windwalker\Table\Table::store
 	 */
 	public function testStore()
 	{

@@ -24,7 +24,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getApplication
+	 * @covers \Windwalker\Ioc::getApplication
 	 */
 	public function testGetApplication()
 	{
@@ -36,7 +36,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getConfig
+	 * @covers \Windwalker\Ioc::getConfig
 	 */
 	public function testGetConfig()
 	{
@@ -48,7 +48,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getInput
+	 * @covers \Windwalker\Ioc::getInput
 	 */
 	public function testGetInput()
 	{
@@ -60,7 +60,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getLanguage
+	 * @covers \Windwalker\Ioc::getLanguage
 	 */
 	public function testGetLanguage()
 	{
@@ -72,7 +72,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getDocument
+	 * @covers \Windwalker\Ioc::getDocument
 	 */
 	public function testGetDocument()
 	{
@@ -84,7 +84,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getDbo
+	 * @covers \Windwalker\Ioc::getDbo
 	 */
 	public function testGetDbo()
 	{
@@ -96,7 +96,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getSession
+	 * @covers \Windwalker\Ioc::getSession
 	 */
 	public function testGetSession()
 	{
@@ -108,7 +108,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getDispatcher
+	 * @covers \Windwalker\Ioc::getDispatcher
 	 */
 	public function testGetDispatcher()
 	{
@@ -120,7 +120,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getMailer
+	 * @covers \Windwalker\Ioc::getMailer
 	 */
 	public function testGetMailer()
 	{
@@ -132,7 +132,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getAsset
+	 * @covers \Windwalker\Ioc::getAsset
 	 */
 	public function testGetAsset()
 	{
@@ -144,7 +144,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::getIO
+	 * @covers \Windwalker\Ioc::getIO
 	 */
 	public function testGetIO()
 	{
@@ -158,7 +158,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::get
+	 * @covers \Windwalker\Ioc::get
 	 */
 	public function testGet()
 	{
@@ -170,7 +170,7 @@ class IocTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Ioc::factory
+	 * @covers \Windwalker\Ioc::factory
 	 */
 	public function testFactory()
 	{

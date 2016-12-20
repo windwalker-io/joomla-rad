@@ -25,8 +25,8 @@ class AbstractScriptManagerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\AbstractScriptManager::getAsset
-	 * @covers Windwalker\Script\AbstractScriptManager::setAsset
+	 * @covers \Windwalker\Script\AbstractScriptManager::getAsset
+	 * @covers \Windwalker\Script\AbstractScriptManager::setAsset
 	 */
 	public function testGetAndSetAsset()
 	{
@@ -42,7 +42,7 @@ class AbstractScriptManagerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\AbstractScriptManager::reset
+	 * @covers \Windwalker\Script\AbstractScriptManager::reset
 	 */
 	public function testReset()
 	{

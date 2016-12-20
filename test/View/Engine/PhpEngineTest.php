@@ -23,7 +23,7 @@ class PhpEngineTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\View\Engine\PhpEngine::execute
+	 * @covers \Windwalker\View\Engine\PhpEngine::execute
 	 */
 	public function testExecute()
 	{

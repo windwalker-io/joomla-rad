@@ -55,7 +55,7 @@ class SearchHelperTest extends AbstractBaseTestCase
 	 * @return void
 	 *
 	 * @dataProvider searchesProvider
-	 * @covers Windwalker\Model\Filter\SearchHelper::execute
+	 * @covers \Windwalker\Model\Filter\SearchHelper::execute
 	 */
 	public function testExecute($filters, $expected)
 	{
@@ -80,7 +80,7 @@ class SearchHelperTest extends AbstractBaseTestCase
 	 * @return  void
 	 *
 	 * @dataProvider handlerProvider
-	 * @covers Windwalker\Model\Filter\SearchHelper::execute
+	 * @covers \Windwalker\Model\Filter\SearchHelper::execute
 	 */
 	public function testHandler($handler, $filter, $key, $expected)
 	{

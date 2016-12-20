@@ -44,7 +44,7 @@ class TableHelperTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Table\TableHelper::__construct
+	 * @covers \Windwalker\Table\TableHelper::__construct
 	 */
 	public function test__construct()
 	{
@@ -68,7 +68,7 @@ class TableHelperTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Table\TableHelper::exists
+	 * @covers \Windwalker\Table\TableHelper::exists
 	 */
 	public function testExists()
 	{

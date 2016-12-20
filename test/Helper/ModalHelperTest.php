@@ -73,7 +73,7 @@ class ModalHelperTest extends AbstractDomTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\ModalHelper::modalLink
+	 * @covers \Windwalker\Helper\ModalHelper::modalLink
 	 */
 	public function testModalLink()
 	{
@@ -119,7 +119,7 @@ HTML;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\ModalHelper::renderModal
+	 * @covers \Windwalker\Helper\ModalHelper::renderModal
 	 */
 	public function testRenderModal()
 	{
@@ -158,7 +158,7 @@ HTML;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\ModalHelper::getQuickaddForm
+	 * @covers \Windwalker\Helper\ModalHelper::getQuickaddForm
 	 */
 	public function testGetQuickaddForm()
 	{

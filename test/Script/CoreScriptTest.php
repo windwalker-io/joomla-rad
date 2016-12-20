@@ -59,7 +59,7 @@ class CoreScriptTest extends AbstractBaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\CoreScript::underscore
+	 * @covers \Windwalker\Script\CoreScript::underscore
 	 */
 	public function testUnderscore()
 	{
@@ -98,7 +98,7 @@ JS;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\CoreScript::underscoreString
+	 * @covers \Windwalker\Script\CoreScript::underscoreString
 	 */
 	public function testUnderscoreString()
 	{
@@ -136,7 +136,7 @@ JS;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\CoreScript::backbone
+	 * @covers \Windwalker\Script\CoreScript::backbone
 	 */
 	public function testBackbone()
 	{
@@ -189,7 +189,7 @@ JS;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\CoreScript::windwalker
+	 * @covers \Windwalker\Script\CoreScript::windwalker
 	 * @TODO   Implement testWindwalker().
 	 */
 	public function testWindwalker()
@@ -205,7 +205,7 @@ JS;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\CoreScript::getAsset
+	 * @covers \Windwalker\Script\CoreScript::getAsset
 	 * @TODO   Implement testGetAsset().
 	 */
 	public function testGetAsset()
@@ -221,7 +221,7 @@ JS;
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Script\CoreScript::setAsset
+	 * @covers \Windwalker\Script\CoreScript::setAsset
 	 * @TODO   Implement testSetAsset().
 	 */
 	public function testSetAsset()

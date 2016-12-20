@@ -130,7 +130,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\CrudModel::__construct
+	 * @covers \Windwalker\Model\CrudModel::__construct
 	 */
 	public function test__construct()
 	{
@@ -164,7 +164,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return  void
 	 *
-	 * @covers Windwalker\Model\CrudModel::__construct
+	 * @covers \Windwalker\Model\CrudModel::__construct
 	 */
 	public function test__constructWithIgnoreRequest()
 	{
@@ -191,7 +191,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\CrudModel::getItem
+	 * @covers \Windwalker\Model\CrudModel::getItem
 	 */
 	public function testGetItem()
 	{
@@ -221,7 +221,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\CrudModel::save
+	 * @covers \Windwalker\Model\CrudModel::save
 	 */
 	public function testSaveWithId()
 	{
@@ -253,7 +253,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\CrudModel::save
+	 * @covers \Windwalker\Model\CrudModel::save
 	 */
 	public function testSaveWithoutId()
 	{
@@ -288,7 +288,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\CrudModel::updateState
+	 * @covers \Windwalker\Model\CrudModel::updateState
 	 */
 	public function testUpdateState()
 	{
@@ -326,7 +326,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\CrudModel::delete
+	 * @covers \Windwalker\Model\CrudModel::delete
 	 */
 	public function testDelete()
 	{

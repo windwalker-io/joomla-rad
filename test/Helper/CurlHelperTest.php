@@ -69,7 +69,7 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\CurlHelper::get
+	 * @covers \Windwalker\Helper\CurlHelper::get
 	 */
 	public function testGet()
 	{
@@ -97,7 +97,7 @@ class CurlHelperTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Helper\CurlHelper::download
+	 * @covers \Windwalker\Helper\CurlHelper::download
 	 */
 	public function testDownload()
 	{

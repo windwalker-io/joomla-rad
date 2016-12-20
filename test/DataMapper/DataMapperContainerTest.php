@@ -24,7 +24,7 @@ class DataMapperContainerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\DataMapper\DataMapperContainer::getInstance
+	 * @covers \Windwalker\DataMapper\DataMapperContainer::getInstance
 	 */
 	public function testGetInstance()
 	{
@@ -42,7 +42,7 @@ class DataMapperContainerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\DataMapper\DataMapperContainer::setInstance
+	 * @covers \Windwalker\DataMapper\DataMapperContainer::setInstance
 	 */
 	public function testSetInstance()
 	{
@@ -59,7 +59,7 @@ class DataMapperContainerTest extends \PHPUnit_Framework_TestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\DataMapper\DataMapperContainer::removeInstance
+	 * @covers \Windwalker\DataMapper\DataMapperContainer::removeInstance
 	 */
 	public function testRemoveInstance()
 	{

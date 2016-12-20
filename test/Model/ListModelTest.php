@@ -83,7 +83,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::__construct
+	 * @covers \Windwalker\Model\ListModel::__construct
 	 */
 	public function test__construct()
 	{
@@ -105,7 +105,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::__construct
+	 * @covers \Windwalker\Model\ListModel::__construct
 	 */
 	public function test__constructWithGivenContainer()
 	{
@@ -123,7 +123,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::__construct
+	 * @covers \Windwalker\Model\ListModel::__construct
 	 */
 	public function test__constructWithGivenConfigAndContainer()
 	{
@@ -189,7 +189,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getTable
+	 * @covers \Windwalker\Model\ListModel::getTable
 	 */
 	public function testGetTable()
 	{
@@ -212,7 +212,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getItems
+	 * @covers \Windwalker\Model\ListModel::getItems
 	 */
 	public function testGetItems()
 	{
@@ -247,7 +247,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::populateState
+	 * @covers \Windwalker\Model\ListModel::populateState
 	 */
 	public function testPopulateState()
 	{
@@ -293,7 +293,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getPagination
+	 * @covers \Windwalker\Model\ListModel::getPagination
 	 */
 	public function testGetPagination()
 	{
@@ -337,7 +337,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getList
+	 * @covers \Windwalker\Model\ListModel::getList
 	 */
 	public function testGetList()
 	{
@@ -372,7 +372,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getListCount
+	 * @covers \Windwalker\Model\ListModel::getListCount
 	 */
 	public function testGetListCount()
 	{
@@ -404,7 +404,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getTotal
+	 * @covers \Windwalker\Model\ListModel::getTotal
 	 */
 	public function testGetTotal()
 	{
@@ -423,7 +423,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getStart
+	 * @covers \Windwalker\Model\ListModel::getStart
 	 */
 	public function testGetStart()
 	{
@@ -461,7 +461,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getBatchForm
+	 * @covers \Windwalker\Model\ListModel::getBatchForm
 	 */
 	public function testGetBatchForm()
 	{
@@ -484,7 +484,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getFilterForm
+	 * @covers \Windwalker\Model\ListModel::getFilterForm
 	 */
 	public function testGetFilterForm()
 	{
@@ -507,7 +507,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getSearchFields
+	 * @covers \Windwalker\Model\ListModel::getSearchFields
 	 */
 	public function testGetSearchFields()
 	{
@@ -526,7 +526,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::getUserStateFromRequest
+	 * @covers \Windwalker\Model\ListModel::getUserStateFromRequest
 	 */
 	public function testGetUserStateFromRequest()
 	{
@@ -573,7 +573,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::addTable
+	 * @covers \Windwalker\Model\ListModel::addTable
 	 */
 	public function testAddTable()
 	{
@@ -604,7 +604,7 @@ class ListModelTest extends AbstractDatabaseTestCase
 	 *
 	 * @return void
 	 *
-	 * @covers Windwalker\Model\ListModel::removeTable
+	 * @covers \Windwalker\Model\ListModel::removeTable
 	 */
 	public function testRemoveTable()
 	{
