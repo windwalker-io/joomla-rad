@@ -4,7 +4,7 @@
 		option="{{extension.element.lower}}_{{controller.item.name.lower}}_view_default_option">
 		<help
 			key="JHELP_MENUS_MENU_ITEM_ARTICLE_SINGLE_ARTICLE"
-			/>
+		/>
 		<message>
 			<![CDATA[{{extension.element.lower}}_item_view_default_desc]]>
 		</message>
@@ -20,7 +20,7 @@
 				label="{{extension.element.upper}}_SELECT_{{controller.item.name.upper}}"
 				required="true"
 				description="C{{extension.element.upper}}_SELECT_{{controller.item.name.upper}}_DESC"
-				/>
+			/>
 		</fieldset>
 	</fields>
 
@@ -44,7 +44,7 @@
 				type="list"
 				description="JGLOBAL_LINKED_TITLES_DESC"
 				label="JGLOBAL_LINKED_TITLES_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -54,7 +54,7 @@
 				type="list"
 				description="{{extension.element.upper}}_LINKED_TITLES_IN_LIST_DESC"
 				label="{{extension.element.upper}}_LINKED_TITLES_IN_LIST"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -64,7 +64,7 @@
 				type="list"
 				description="JGLOBAL_SHOW_INTRO_DESC"
 				label="JGLOBAL_SHOW_INTRO_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -74,7 +74,7 @@
 				type="list"
 				description="JGLOBAL_SHOW_UNAUTH_LINKS_DESC"
 				label="JGLOBAL_SHOW_UNAUTH_LINKS_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>

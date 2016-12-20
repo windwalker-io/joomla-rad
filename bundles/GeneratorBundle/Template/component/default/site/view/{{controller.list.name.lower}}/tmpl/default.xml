@@ -4,7 +4,7 @@
 		option="{{extension.element.upper}}_{{controller.list.name.upper}}_VIEW_DEFAULT_OPTION">
 		<help
 			key="JHELP_MENUS_MENU_ITEM_ARTICLE_CATEGORY_BLOG"
-			/>
+		/>
 		<message>
 			<![CDATA[{{extension.element.upper}}_LIST_VIEW_DESC]]>
 		</message>
@@ -13,7 +13,7 @@
 	<!-- Add fields to the request variables for the layout. -->
 	<fields name="request">
 		<fieldset name="request"
-			>
+		>
 
 			<field name="id"
 				type="category"
@@ -21,7 +21,7 @@
 				extension="{{extension.element.lower}}"
 				label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
 				required="true"
-				>
+			>
 				<option value="1">JALL</option>
 			</field>
 		</fieldset>
@@ -39,13 +39,13 @@
 				view="{{controller.list.name.lower}}"
 				label="JFIELD_ALT_LAYOUT"
 				description="JGLOBAL_FIELD_LAYOUT_DESC"
-				/>
+			/>
 
 			<field name="show_category_title"
 				type="list"
 				label="JGLOBAL_SHOW_CATEGORY_TITLE"
 				description="JGLOBAL_SHOW_CATEGORY_TITLE_DESC"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -55,7 +55,7 @@
 				type="list"
 				description="JGLOBAL_SHOW_CATEGORY_DESCRIPTION_DESC"
 				label="JGLOBAL_SHOW_CATEGORY_DESCRIPTION_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -65,7 +65,7 @@
 				type="list"
 				description="JGLOBAL_SHOW_CATEGORY_IMAGE_DESC"
 				label="JGLOBAL_SHOW_CATEGORY_IMAGE_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -75,7 +75,7 @@
 				type="list"
 				description="JGLOBAL_MAXLEVEL_DESC"
 				label="JGLOBAL_MAXLEVEL_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="-1">JALL</option>
 				<option value="1">J1</option>
@@ -85,12 +85,90 @@
 				<option value="5">J5</option>
 			</field>
 
+			<field name="num_leading_articles"
+				type="text"
+				description="JGLOBAL_NUM_LEADING_ARTICLES_DESC"
+				label="JGLOBAL_NUM_LEADING_ARTICLES_LABEL"
+				size="3"
+				default="1"
+			/>
+
+			<field name="num_intro_articles"
+				type="text"
+				description="JGLOBAL_NUM_INTRO_ARTICLES_DESC"
+				label="JGLOBAL_NUM_INTRO_ARTICLES_LABEL"
+				size="3"
+				default="4"
+			/>
+
+			<field name="num_columns"
+				type="list"
+				description="JGLOBAL_NUM_COLUMNS_DESC"
+				label="JGLOBAL_NUM_COLUMNS_LABEL"
+				default="2"
+			>
+				<option value="1">J1</option>
+				<option value="2">J2</option>
+				<option value="3">J3</option>
+				<option value="4">J4</option>
+				<option value="5">J6</option>
+			</field>
+
+			<field name="num_links"
+				type="text"
+				description="JGLOBAL_NUM_LINKS_DESC"
+				label="JGLOBAL_NUM_LINKS_LABEL"
+				size="3"
+				default="4"
+			/>
+
+			<field type="spacer"
+				hr="true"
+			/>
+
 			<field name="page_subheading"
 				type="text"
 				description="JGLOBAL_SUBHEADING_DESC"
 				label="JGLOBAL_SUBHEADING_LABEL"
 				size="20"
-				/>
+			/>
+
+			<field name="num_leading_articles"
+				type="text"
+				description="JGLOBAL_NUM_LEADING_ARTICLES_DESC"
+				label="JGLOBAL_NUM_LEADING_ARTICLES_LABEL"
+				size="3"
+				default="1"
+			/>
+
+			<field name="num_intro_articles"
+				type="text"
+				description="JGLOBAL_NUM_INTRO_ARTICLES_DESC"
+				label="JGLOBAL_NUM_INTRO_ARTICLES_LABEL"
+				size="3"
+				default="4"
+			/>
+
+			<field name="num_columns"
+				type="list"
+				description="JGLOBAL_NUM_COLUMNS_DESC"
+				label="JGLOBAL_NUM_COLUMNS_LABEL"
+				default="2"
+			>
+				<option value="1">J1</option>
+				<option value="2">J2</option>
+				<option value="3">J3</option>
+				<option value="4">J4</option>
+				<option value="5">J6</option>
+			</field>
+
+			<field name="num_links"
+				type="text"
+				description="JGLOBAL_NUM_LINKS_DESC"
+				label="JGLOBAL_NUM_LINKS_LABEL"
+				size="3"
+				default="4"
+			/>
 
 		</fieldset>
 
@@ -148,7 +226,7 @@
 				type="list"
 				description="JGLOBAL_ARTICLE_ORDER_DESC"
 				label="JGLOBAL_ARTICLE_ORDER_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="{{controller.item.name.lower}}.created ">{{extension.element.upper}}_CREATED</option>
 				<option value="{{controller.item.name.lower}}.publish_up">{{extension.element.upper}}_PUBLISH_UP</option>
@@ -161,7 +239,7 @@
 			<field name="order_dir"
 				type="list"
 				label="{{extension.element.upper}}_ORDER_DIR"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="ASC">{{extension.element.upper}}_ORDER_DIR_ASC</option>
 				<option value="DESC">{{extension.element.upper}}_ORDER_DIR_DESC</option>
@@ -171,7 +249,7 @@
 				type="list"
 				description="JGLOBAL_PAGINATION_DESC"
 				label="JGLOBAL_PAGINATION_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -197,7 +275,7 @@
 				type="list"
 				description="JGLOBAL_LINKED_TITLES_DESC"
 				label="JGLOBAL_LINKED_TITLES_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -207,7 +285,7 @@
 				type="list"
 				description="{{extension.element.upper}}_LINKED_TITLES_IN_LIST_DESC"
 				label="{{extension.element.upper}}_LINKED_TITLES_IN_LIST"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -217,7 +295,7 @@
 				type="list"
 				description="JGLOBAL_SHOW_INTRO_DESC"
 				label="JGLOBAL_SHOW_INTRO_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -227,7 +305,7 @@
 				type="list"
 				description="JGLOBAL_SHOW_UNAUTH_LINKS_DESC"
 				label="JGLOBAL_SHOW_UNAUTH_LINKS_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JNO</option>
 				<option value="1">JYES</option>
@@ -235,13 +313,13 @@
 
 		</fieldset>
 		<fieldset name="integration"
-			>
+		>
 
 			<field name="show_feed_link"
 				type="list"
 				description="JGLOBAL_SHOW_FEED_LINK_DESC"
 				label="JGLOBAL_SHOW_FEED_LINK_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
@@ -251,7 +329,7 @@
 				type="list"
 				description="JGLOBAL_FEED_SUMMARY_DESC"
 				label="JGLOBAL_FEED_SUMMARY_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="0">JGLOBAL_INTRO_TEXT</option>
 				<option value="1">JGLOBAL_FULL_TEXT</option>
