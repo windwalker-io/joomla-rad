@@ -68,6 +68,9 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 		$this['params']   = $this->get('Params');
 		$this['category'] = $this->get('Category');
 
+		// Uncomment this to fix Joomla pagination routing
+		// $this['pagination']->setAdditionalUrlParam('_resource', '{{controller.list.name.lower}}');
+
 		// Set Data
 		// =====================================================================================
 		foreach ($this->data->items as &$item)

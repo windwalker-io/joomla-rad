@@ -85,47 +85,6 @@
 				<option value="5">J5</option>
 			</field>
 
-			<field name="num_leading_articles"
-				type="text"
-				description="JGLOBAL_NUM_LEADING_ARTICLES_DESC"
-				label="JGLOBAL_NUM_LEADING_ARTICLES_LABEL"
-				size="3"
-				default="1"
-			/>
-
-			<field name="num_intro_articles"
-				type="text"
-				description="JGLOBAL_NUM_INTRO_ARTICLES_DESC"
-				label="JGLOBAL_NUM_INTRO_ARTICLES_LABEL"
-				size="3"
-				default="4"
-			/>
-
-			<field name="num_columns"
-				type="list"
-				description="JGLOBAL_NUM_COLUMNS_DESC"
-				label="JGLOBAL_NUM_COLUMNS_LABEL"
-				default="2"
-			>
-				<option value="1">J1</option>
-				<option value="2">J2</option>
-				<option value="3">J3</option>
-				<option value="4">J4</option>
-				<option value="5">J6</option>
-			</field>
-
-			<field name="num_links"
-				type="text"
-				description="JGLOBAL_NUM_LINKS_DESC"
-				label="JGLOBAL_NUM_LINKS_LABEL"
-				size="3"
-				default="4"
-			/>
-
-			<field type="spacer"
-				hr="true"
-			/>
-
 			<field name="page_subheading"
 				type="text"
 				description="JGLOBAL_SUBHEADING_DESC"
@@ -175,11 +134,11 @@
 		<fieldset name="advanced"
 			label="JGLOBAL_BLOG_LAYOUT_OPTIONS">
 
-			<!--<field name="bloglayout"
+			<field name="bloglayout"
 				type="spacer"
 				class="text"
 				label="JGLOBAL_SUBSLIDER_BLOG_LAYOUT_LABEL"
-				/>
+			/>
 
 
 			<field name="num_leading_articles"
@@ -187,20 +146,20 @@
 				description="JGLOBAL_NUM_LEADING_ARTICLES_DESC"
 				label="JGLOBAL_NUM_LEADING_ARTICLES_LABEL"
 				size="3"
-				/>
+			/>
 
 			<field name="num_intro_articles"
 				type="text"
 				description="JGLOBAL_NUM_INTRO_ARTICLES_DESC"
 				label="JGLOBAL_NUM_INTRO_ARTICLES_LABEL"
 				size="3"
-				/>
+			/>
 
 			<field name="num_columns"
 				type="list"
 				description="JGLOBAL_NUM_COLUMNS_DESC"
 				label="JGLOBAL_NUM_COLUMNS_LABEL"
-				>
+			>
 				<option value="">JGLOBAL_USE_GLOBAL</option>
 				<option value="1">J1</option>
 				<option value="2">J2</option>
@@ -214,13 +173,13 @@
 				description="JGLOBAL_NUM_LINKS_DESC"
 				label="JGLOBAL_NUM_LINKS_LABEL"
 				size="3"
-				/>
+			/>
 
 			<field
 				name="spacer1"
 				type="spacer"
 				hr="true"
-				/>-->
+			/>
 
 			<field name="orderby"
 				type="list"

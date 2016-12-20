@@ -92,6 +92,8 @@ class {{extension.name.cap}}Router extends JComponentRouterBase
 		if (!empty($query['_resource']))
 		{
 			$segments = $this->router->generate($query['_resource'], $query);
+
+			unset($query['view'], $query['_rawRoute']);
 		}
 		else
 		{
