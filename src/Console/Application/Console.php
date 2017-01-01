@@ -81,6 +81,15 @@ HELP
 
 		$descriptorHelper->setOptionDescriptor(new OptionDescriptor)
 			->setCommandDescriptor(new CommandDescriptor);
+		
+		/*
+		 * Note: The below code CANNOT change from instantiating a session via JFactory until there is a proper dependency injection container supported
+		 * by the application. The current default behaviours result in this method being called each time an application class is instantiated.
+		 * https://github.com/joomla/joomla-cms/issues/12108 explains why things will crash and burn if you ever attempt to make this change
+		 * without a proper dependency injection container.
+		 */
+		$session = \JFactory::getSession();
+		$session->initialise(new \JInput, $this->dispatcher);
 
 		$this->loadFirstlevelCommands();
 	}
