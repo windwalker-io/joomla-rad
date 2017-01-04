@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of Windwalker project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2016 LYRASOFT. All rights reserved.
  * @license    GNU General Public License version 2 or later.
@@ -75,7 +75,7 @@ class DisplayView extends AbstractHtmlView
 		$toolbar = $config->get('toolbar', $this->defaultToolbar);
 		$toolbar = json_encode($toolbar);
 
-		$onlymimes = $config->get('onlymimes', $input->get('onlymimes', null));
+		$onlymimes = $config->get('onlymimes', $input->getString('onlymimes', null));
 
 		if ($onlymimes)
 		{
