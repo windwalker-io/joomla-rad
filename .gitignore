@@ -4,6 +4,7 @@
 !.travis.yml
 
 # Composer #
+composer.lock
 /vendor
 !vendor/index.html
 
