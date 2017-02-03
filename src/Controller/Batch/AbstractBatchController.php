@@ -153,10 +153,10 @@ abstract class AbstractBatchController extends AbstractListController
 	 */
 	protected function postExecute($result = null)
 	{
-	    if ($result === false)
-        {
-            return false;
-        }
+		if ($result === false)
+		{
+			return false;
+		}
 
 		if (!is_array($result))
 		{

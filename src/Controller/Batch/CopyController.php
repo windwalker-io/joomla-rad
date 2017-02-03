@@ -85,7 +85,7 @@ class CopyController extends AbstractBatchController
 		// Unset the primary key so that we can copy it.
 		unset($item[$this->urlVar]);
 
-        $this->model->set($this->model->getName() . '.id', null);
+		$this->model->set($this->model->getName() . '.id', null);
 
 		return $this->model->save($item);
 	}

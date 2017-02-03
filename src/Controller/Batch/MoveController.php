@@ -32,7 +32,7 @@ class MoveController extends AbstractBatchController
 			return false;
 		}
 
-        $this->model->set($this->model->getName() . '.id', null);
+		$this->model->set($this->model->getName() . '.id', null);
 
 		return $this->model->save($data);
 	}
