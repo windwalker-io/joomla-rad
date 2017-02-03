@@ -8,7 +8,6 @@
 
 namespace Windwalker\Table;
 
-use JTable;
 use Windwalker\DI\Container;
 use Windwalker\Relation\Observer\RelationObserver;
 use Windwalker\Relation\Relation;
@@ -166,14 +165,21 @@ class Table extends \JTable
 	/**
 	 * Get the columns from database table.
 	 *
+	 * @param   bool  $reload  flag to reload cache
+	 *
 	 * @return  mixed  An array of the field names, or false if an error occurs.
 	 *
 	 * @since   11.1
 	 * @throws  \UnexpectedValueException
 	 */
-	public function getFields()
+	public function getFields($reload = false)
 	{
-		return TableHelper::getFields($this);
+		if (version_compare(JVERSION, '3.7', '<'))
+		{
+			return TableHelper::getFields($this);
+		}
+
+		return parent::getFields($reload);
 	}
 
 	/**

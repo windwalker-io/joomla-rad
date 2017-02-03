@@ -259,6 +259,12 @@ class Component
 			$this->input->set('controller', $task);
 		}
 
+		// Load JFormFieldList to fix 3.7 FormHelper bugs
+		if (version_compare(JVERSION, '3.7', '<'))
+		{
+			\JFormHelper::loadFieldClass('list');
+		}
+
 		// Register form and fields
 		\JForm::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
 		\JForm::addFormPath(WINDWALKER_SOURCE . '/Form/Forms');
