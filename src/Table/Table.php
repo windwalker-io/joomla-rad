@@ -179,7 +179,23 @@ class Table extends \JTable
 			return TableHelper::getFields($this);
 		}
 
-		return parent::getFields($reload);
+		static $cache = null;
+
+		if ($cache === null || $reload)
+		{
+			// Lookup the fields for this table only once.
+			$name   = $this->_tbl;
+			$fields = $this->_db->getTableColumns($name, false);
+
+			if (empty($fields))
+			{
+				throw new \UnexpectedValueException(sprintf('No columns found for %s table', $name));
+			}
+
+			$cache = $fields;
+		}
+
+		return $cache;
 	}
 
 	/**

@@ -8,9 +8,6 @@
 
 namespace Windwalker\Controller\Edit;
 
-use Windwalker\Controller\Admin\AbstractItemController;
-use Windwalker\Model\Exception\ValidateFailException;
-
 /**
  * Save2new Controller
  *
@@ -18,6 +15,16 @@ use Windwalker\Model\Exception\ValidateFailException;
  */
 class Save2newController extends SaveController
 {
+	/**
+	 * Method to run this controller.
+	 *
+	 * @return  mixed
+	 */
+	protected function doExecute()
+	{
+		return $this->fetch($this->prefix, $this->name . '.edit.save');
+	}
+
 	/**
 	 * Set redirect URL for action success.
 	 *

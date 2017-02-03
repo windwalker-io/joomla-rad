@@ -18,6 +18,16 @@ use Windwalker\String\StringHelper;
 class Save2copyController extends SaveController
 {
 	/**
+	 * Method to run this controller.
+	 *
+	 * @return  mixed
+	 */
+	protected function doExecute()
+	{
+		return $this->fetch($this->prefix, $this->name . '.edit.save');
+	}
+
+	/**
 	 * Pose execute hook.
 	 *
 	 * @param   mixed $return Executed return value.

@@ -8,13 +8,25 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Windwalker\Controller\Admin\AbstractItemController;
+
 /**
  * Apply Controller.
  *
  * @since 2.0
  */
-class ApplyController extends SaveController
+class ApplyController extends AbstractItemController
 {
+	/**
+	 * Method to run this controller.
+	 *
+	 * @return  mixed
+	 */
+	protected function doExecute()
+	{
+		return $this->fetch($this->prefix, $this->name . '.edit.save');
+	}
+
 	/**
 	 * Pose execute hook.
 	 *

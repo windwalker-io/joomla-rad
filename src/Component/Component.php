@@ -260,7 +260,7 @@ class Component
 		}
 
 		// Load JFormFieldList to fix 3.7 FormHelper bugs
-		if (version_compare(JVERSION, '3.7', '<'))
+		if (version_compare(JVERSION, '3.7', '>='))
 		{
 			\JFormHelper::loadFieldClass('list');
 		}
