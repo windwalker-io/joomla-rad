@@ -131,7 +131,7 @@ class ReorderController extends AbstractUpdateStateController
 	 *
 	 * @return  void
 	 */
-	public function redirect($url, $message = null, $type = Message::MESSAGE_GREEN)
+	public function redirect($url = null, $message = null, $type = Message::MESSAGE_GREEN)
 	{
 		if (!$message && $redirect = $this->getRedirect(true))
 		{

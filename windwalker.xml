@@ -8,8 +8,8 @@
 	<author>Asika</author>
 	<authorEmail>asika32764@gmail.com</authorEmail>
 	<authorUrl>http://lyrasoft.net</authorUrl>
-	<version>4.1.8</version>
-	<newversion>2.1.8</newversion>
+	<version>4.1.9</version>
+	<newversion>2.1.9</newversion>
 	<description>LIB_WINDWALKER_XML_DESC</description>
 
 	<files>
@@ -38,4 +38,3 @@
 		<server type="extension" priority="1" name="WindWalker Framework">https://raw.githubusercontent.com/ventoviro/windwalker-joomla-rad/staging/update.xml</server>
 	</updateservers>
 </extension>
-

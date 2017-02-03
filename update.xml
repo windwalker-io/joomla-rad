@@ -3,10 +3,10 @@
 	<!-- Joomla!3.[3456] -->
 	<update>
 		<name>Windwalker Framework</name>
-		<version>4.1.7</version>
+		<version>4.1.8</version>
 		<infourl title="Windwalker Framework">http://windwalker.io</infourl>
 		<downloads>
-			<downloadurl type="upgrade" format="zip">https://github.com/ventoviro/windwalker-joomla-rad/releases/download/2.1.7/windwalker-rad-2.1.7.zip</downloadurl>
+			<downloadurl type="upgrade" format="zip">https://github.com/ventoviro/windwalker-joomla-rad/releases/download/2.1.8/windwalker-rad-2.1.8.zip</downloadurl>
 		</downloads>
 		<targetplatform name="joomla" version="3.[3456]" />
 		<element>windwalker</element>

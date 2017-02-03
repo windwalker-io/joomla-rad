@@ -104,8 +104,8 @@ abstract class AbstractAdminController extends AbstractRedirectController
 
 		$this->user  = $this->container->get('user');
 		$this->lang  = $this->container->get('language');
-		$this->model = $this->getModel($this->viewItem);
-		$this->table = $this->model->getTable($this->viewItem, $this->prefix . 'Table');
+		$this->model = $this->getModel();
+		$this->table = $this->model->getTable();
 
 		// Determine model
 		if (!($this->model instanceof CrudModel))
