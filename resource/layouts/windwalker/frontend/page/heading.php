@@ -14,7 +14,7 @@ $data = new Data($displayData);
  * @var $this  \Windwalker\View\Engine\PhpEngine
  */
 ?>
-<?php if ($data->params->get('show_page_heading', 1)) : ?>
+<?php if ($data->params->get('show_page_heading')) : ?>
 	<h1>
 		<?php echo $this->escape($data->params->get('page_heading')); ?>
 	</h1>
