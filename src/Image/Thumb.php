@@ -96,9 +96,13 @@ class Thumb
 		{
 			$img = new \JImage;
 
-			if (\JFile::exists($path))
+			if (is_file($path))
 			{
 				$img->loadFile($path);
+			}
+			elseif (is_file(urldecode($path)))
+			{
+				$img->loadFile(urldecode($path));
 			}
 			else
 			{
