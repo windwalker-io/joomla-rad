@@ -151,7 +151,9 @@ class JFormFieldFinder extends JFormFieldText
 
 		if ($showPreview)
 		{
-			if ($this->value && file_exists(JPATH_ROOT . '/' . $this->value))
+			$value = urldecode($this->value);
+
+			if ($value && (is_file(JPATH_ROOT . '/' . $value) || is_file(JPATH_ROOT . '/' . $this->value)))
 			{
 				$src = JURI::root() . $this->value;
 			}
