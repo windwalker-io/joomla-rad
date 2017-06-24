@@ -153,6 +153,8 @@ class RadRoute
 	 *                             2: Make URI unsecure using the global unsecure site URI.
 	 *
 	 * @return  string Route url.
+	 *
+	 * @deprecated  Use view() and task() after Joomla3.7 with new router.
 	 */
 	public static function _($resource, $data = array(), $xhtml = true, $ssl = null)
 	{
@@ -183,7 +185,7 @@ class RadRoute
 
 		$url->setPath('index.php');
 
-		return \JRoute::_((string) $url, $xhtml, $ssl);
+		return static::toJoomlaRoute((string) $url, $xhtml, $ssl);
 	}
 
 	/**
@@ -197,6 +199,8 @@ class RadRoute
 	 *                             2: Make URI unsecure using the global unsecure site URI.
 	 *
 	 * @return  string
+	 *
+	 * @since   2.1.10
 	 */
 	public static function view($resource, $query, $xhtml = true, $ssl = null)
 	{
@@ -217,7 +221,7 @@ class RadRoute
 			$query['view'] = $resource[1];
 		}
 
-		return \JRoute::_('index.php?' . http_build_query($query), $xhtml, $ssl);
+		return static::toJoomlaRoute('index.php?' . http_build_query($query), $xhtml, $ssl);
 	}
 
 	/**
@@ -231,6 +235,8 @@ class RadRoute
 	 *                             2: Make URI unsecure using the global unsecure site URI.
 	 *
 	 * @return  string
+	 *
+	 * @since   2.1.10
 	 */
 	public static function task($resource, $query, $xhtml = true, $ssl = null)
 	{
@@ -251,7 +257,25 @@ class RadRoute
 			$query['task'] = $resource[1];
 		}
 
-		return \JRoute::_('index.php?' . http_build_query($query), $xhtml, $ssl);
+		return static::toJoomlaRoute('index.php?' . http_build_query($query), $xhtml, $ssl);
+	}
+
+	/**
+	 * Build by Joomla JRoute.
+	 *
+	 * @param   string   $uri      The URI to build.
+	 * @param   boolean  $xhtml    Replace & by &amp; for XML compilance.
+	 * @param   integer  $ssl      Secure state for the resolved URI.
+	 *                             1: Make URI secure using global secure site URI.
+	 *                             2: Make URI unsecure using the global unsecure site URI.
+	 *
+	 * @return  string Route url.
+	 *
+	 * @since   2.1.10
+	 */
+	public static function toJoomlaRoute($uri, $xhtml = true, $ssl = null)
+	{
+		return \JRoute::_($uri, $xhtml, $ssl);
 	}
 
 	/**

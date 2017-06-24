@@ -59,7 +59,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<!-- ============================================================================= -->
 		<div class="info">
 			<div class="info-inner">
-				<?php echo FrontViewHelper::showLink('jcategory', $item->category_title, Route::_('{{controller.list.name.lower}}', array('id' => $item->catid)), 'folder'); ?>
+				<?php echo FrontViewHelper::showLink('jcategory', $item->category_title, Route::view('{{controller.list.name.lower}}', array('id' => $item->catid)), 'folder'); ?>
 				<?php echo FrontViewHelper::showDate('{{extension.element.lower}}_created', $item->created); ?>
 				<?php echo FrontViewHelper::showDate('{{extension.element.lower}}_modified', $item->modified); ?>
 				<?php echo FrontViewHelper::showLabel('{{extension.element.lower}}_created_by', $item->user_name, 'user'); ?>

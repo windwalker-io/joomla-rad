@@ -82,10 +82,9 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 
 			// Link
 			// =====================================================================================
-			$item->link = Route::_('{{controller.item.name.lower}}', array(
-				'id'    => $item->id,
-				'alias' => $item->alias,
-				// 'catid' => $item->catid
+			$item->link = Route::view('{{controller.item.name.lower}}', array(
+				'id'    => $item->id . ':' . $item->alias,
+				'catid' => $item->catid
 			));
 
 			// Publish Date

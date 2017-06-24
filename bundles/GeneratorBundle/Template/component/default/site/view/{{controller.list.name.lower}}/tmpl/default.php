@@ -28,7 +28,7 @@ $data      = $this->data;
 $state     = $data->state;
 $user      = $container->get('user');
 ?>
-<form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}&id='); ?>" method="post" name="adminForm" id="adminForm">
 
 	<div id="{{extension.name.lower}}-wrap" class="windwalker list container-fluid {{controller.list.name.lower}}<?php echo $this->escape($data->params->get('pageclass_sfx')); ?>">
 		<div id="{{extension.name.lower}}-wrap-inner">

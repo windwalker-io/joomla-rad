@@ -6,7 +6,6 @@
  * @license     GNU General Public License version 2 or later.
  */
 
-use {{extension.name.cap}}\Router\Route;
 use Windwalker\View\Helper\FrontViewHelper;
 
 // No direct access
@@ -58,7 +57,7 @@ $item = $data->item;
 					<!-- ============================================================================= -->
 					<div class="info">
 						<div class="info-inner">
-                            <?php echo FrontViewHelper::showLink('jcategory', $data->category->title, Route::_('{{controller.list.name.lower}}', array('id' => $item->catid)), 'folder'); ?>
+                            <?php echo FrontViewHelper::showLink('jcategory', $data->category->title, JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}&id=' . $item->catid), 'folder'); ?>
                             <?php echo FrontViewHelper::showDate('{{extension.element.lower}}_created', $item->created); ?>
                             <?php echo FrontViewHelper::showDate('{{extension.element.lower}}_modified', $item->modified); ?>
                             <?php echo FrontViewHelper::showLabel('{{extension.element.lower}}_created_by', $item->user_name, 'user'); ?>
