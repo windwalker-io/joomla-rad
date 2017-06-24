@@ -187,11 +187,79 @@ class RadRoute
 	}
 
 	/**
+	 * view
+	 *
+	 * @param   string   $resource The resource key to find our route.
+	 * @param   array    $query    The url query data.
+	 * @param   boolean  $xhtml    Replace & by &amp; for XML compilance.
+	 * @param   integer  $ssl      Secure state for the resolved URI.
+	 *                             1: Make URI secure using global secure site URI.
+	 *                             2: Make URI unsecure using the global unsecure site URI.
+	 *
+	 * @return  string
+	 */
+	public static function view($resource, $query, $xhtml = true, $ssl = null)
+	{
+		if (static::$defaultOption && strpos($resource, '@') === false)
+		{
+			$resource = static::$defaultOption . '@' . $resource;
+		}
+
+		$resource = explode('@', $resource, 2);
+
+		if (count($resource) === 1)
+		{
+			$query['option'] = $resource[0];
+		}
+		else
+		{
+			$query['option'] = $resource[0];
+			$query['view'] = $resource[1];
+		}
+
+		return \JRoute::_('index.php?' . http_build_query($query), $xhtml, $ssl);
+	}
+
+	/**
+	 * task
+	 *
+	 * @param   string   $resource The resource key to find our route.
+	 * @param   array    $query    The url query data.
+	 * @param   boolean  $xhtml    Replace & by &amp; for XML compilance.
+	 * @param   integer  $ssl      Secure state for the resolved URI.
+	 *                             1: Make URI secure using global secure site URI.
+	 *                             2: Make URI unsecure using the global unsecure site URI.
+	 *
+	 * @return  string
+	 */
+	public static function task($resource, $query, $xhtml = true, $ssl = null)
+	{
+		if (static::$defaultOption && strpos($resource, '@') === false)
+		{
+			$resource = static::$defaultOption . '@' . $resource;
+		}
+
+		$resource = explode('@', $resource, 2);
+
+		if (count($resource) === 1)
+		{
+			$query['option'] = $resource[0];
+		}
+		else
+		{
+			$query['option'] = $resource[0];
+			$query['task'] = $resource[1];
+		}
+
+		return \JRoute::_('index.php?' . http_build_query($query), $xhtml, $ssl);
+	}
+
+	/**
 	 * Build route.
 	 *
 	 * @param   array  &$data The query data to build route.
 	 *
-	 * @return  string Route url.
+	 * @return  array Route query.
 	 */
 	public static function build(&$data = array())
 	{

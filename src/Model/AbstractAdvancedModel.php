@@ -77,8 +77,9 @@ abstract class AbstractAdvancedModel extends Model
 			return $this->category;
 		}
 
+		/** @var \JInput $input */
 		$input  = $this->getContainer()->get('input');
-		$pk     = $pk ? : $this->state->get('category.id', $input->get('id'));
+		$pk     = $pk ? : $this->state->get('category.id', $input->getInt('id'));
 		$mapper = new DataMapper('#__categories');
 
 		$data = $mapper->findOne($pk);
