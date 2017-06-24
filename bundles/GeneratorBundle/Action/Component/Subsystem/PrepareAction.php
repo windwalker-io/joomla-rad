@@ -34,7 +34,7 @@ class PrepareAction extends AbstractAction
 			'model/field'
 		);
 
-		if ($this->config['client'] == 'administrator')
+		if ($this->config['client'] === 'administrator')
 		{
 			$files[] = 'table/' . $this->config['item_name'] . '.php';
 		}

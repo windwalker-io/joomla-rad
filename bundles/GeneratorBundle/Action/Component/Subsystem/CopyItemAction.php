@@ -35,6 +35,7 @@ class CopyItemAction extends AbstractAction
 			'controller/%s',
 			'model/form/%s.xml',
 			'model/%s.php',
+			'router/handler/%s.php',
 			'view/%s'
 		);
 

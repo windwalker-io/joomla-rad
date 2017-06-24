@@ -35,6 +35,7 @@ class CopyListAction extends AbstractAction
 			'controller/%s',
 			'model/form/%s',
 			'model/%s.php',
+			'router/handler/%s.php',
 			'view/%s'
 		);
 
