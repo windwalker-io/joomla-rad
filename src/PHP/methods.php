@@ -58,7 +58,7 @@ function printRLevel($data, $level = 5)
 	if (in_array($type, $recursiveType))
 	{
 		// If type is object, try to get properties by Reflection.
-		if ($type == 'object')
+		if ($type === 'object')
 		{
 			$output     = get_class($data) . ' ' . ucfirst($type);
 			$ref        = new \ReflectionObject($data);
@@ -88,7 +88,7 @@ function printRLevel($data, $level = 5)
 			}
 		}
 		// If type is array, just retun it's value.
-		elseif ($type == 'array')
+		elseif ($type === 'array')
 		{
 			$output   = ucfirst($type);
 			$elements = $data;

@@ -56,7 +56,7 @@ abstract class AdminListHelper
 		if (!empty($searches['field']) && !empty($searches['index']))
 		{
 			// If field is '*', we copy index value to all fields.
-			if ($searches['field'] == '*')
+			if ($searches['field'] === '*')
 			{
 				foreach ($searchFields as $field)
 				{
@@ -105,7 +105,7 @@ abstract class AdminListHelper
 		{
 			$order = explode(' ', trim($order));
 
-			if (count($order) == 2)
+			if (count($order) === 2)
 			{
 				list($col, $dir) = $order;
 			}

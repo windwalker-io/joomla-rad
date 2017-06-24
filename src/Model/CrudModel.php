@@ -119,7 +119,7 @@ class CrudModel extends AbstractFormModel
 		$table      = $this->getTable();
 		$dispatcher = $container->get('event.dispatcher');
 
-		if ((!empty($data['tags']) && $data['tags'][0] != ''))
+		if ((!empty($data['tags']) && $data['tags'][0] !== ''))
 		{
 			$table->newTags = $data['tags'];
 		}

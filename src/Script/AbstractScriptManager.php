@@ -122,7 +122,7 @@ abstract class AbstractScriptManager
 	{
 		$class = get_called_class();
 
-		if ($all || $class == __CLASS__)
+		if ($all || $class === __CLASS__)
 		{
 			static::$inited = array();
 		}

@@ -690,7 +690,7 @@ class RadRoute
 	{
 		$this->scheme = strtolower($scheme);
 
-		$this->ssl = ($this->scheme == 'https');
+		$this->ssl = ($this->scheme === 'https');
 
 		return $this;
 	}

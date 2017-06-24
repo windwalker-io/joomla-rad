@@ -70,7 +70,7 @@ abstract class {{extension.name.cap}}Component extends Component
 		$doc = \JFactory::getDocument();
 
 		// Debug profiler
-		if (JDEBUG && $doc->getType() == 'html')
+		if (JDEBUG && $doc->getType() === 'html')
 		{
 			$result .= "<hr />" . ProfilerHelper::render('Windwalker', true);
 		}

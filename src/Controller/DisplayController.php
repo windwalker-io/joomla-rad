@@ -102,7 +102,7 @@ class DisplayController extends Controller
 		$this->view = $view;
 
 		// Redirect to GET
-		if (strtoupper($this->input->getMethod()) == 'POST')
+		if (strtoupper($this->input->getMethod()) === 'POST')
 		{
 			$this->redirect(\JUri::getInstance());
 
@@ -120,7 +120,7 @@ class DisplayController extends Controller
 		// Display the view
 		$config = $this->container->get('joomla.config');
 
-		if ($this->cachable && $this->format != 'feed' && $config->get('caching') >= 1)
+		if ($this->cachable && $this->format !== 'feed' && $config->get('caching') >= 1)
 		{
 			$option = $this->input->get('option');
 			$cache = \JFactory::getCache($option, 'view');

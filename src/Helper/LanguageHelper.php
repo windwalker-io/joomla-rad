@@ -151,15 +151,15 @@ class LanguageHelper extends AbstractFacade
 	{
 		$client = strtolower($client);
 
-		if ($client == 'site')
+		if ($client === 'site')
 		{
 			$client = JClient::SITE;
 		}
-		elseif ($client == 'admin' || $client == 'administrator')
+		elseif ($client === 'admin' || $client === 'administrator')
 		{
 			$client = JClient::ADMINISTRATOR;
 		}
-		elseif ($client == 'both')
+		elseif ($client === 'both')
 		{
 			$client = JClient::BOTH;
 		}
@@ -287,14 +287,14 @@ class LanguageHelper extends AbstractFacade
 		{
 			$file = explode('.', $file);
 
-			if (array_pop($file) != 'ini')
+			if (array_pop($file) !== 'ini')
 			{
 				continue;
 			}
 
 			array_shift($file);
 
-			if (count($file) != 1 && $file[1] == 'sys')
+			if (count($file) != 1 && $file[1] === 'sys')
 			{
 				continue;
 			}

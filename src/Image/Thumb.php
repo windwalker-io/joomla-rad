@@ -110,7 +110,7 @@ class Thumb
 			}
 
 			// If file type not png or gif, use jpg as default.
-			if ($file_type != 'png' && $file_type != 'gif')
+			if ($file_type !== 'png' && $file_type !== 'gif')
 			{
 				$file_type = 'jpg';
 			}

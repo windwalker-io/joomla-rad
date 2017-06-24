@@ -65,7 +65,7 @@ class ClearCacheCommand extends Command
 
 		$this->out('Clearing cache files...');
 
-		if ($path != realpath(JPATH_BASE . '/cache'))
+		if ($path !== realpath(JPATH_BASE . '/cache'))
 		{
 			\JFolder::delete($path);
 		}
@@ -75,7 +75,7 @@ class ClearCacheCommand extends Command
 
 			foreach ($files as $file)
 			{
-				if ($file->getBasename() == 'index.html'){
+				if ($file->getBasename() === 'index.html'){
 					continue;
 				}
 

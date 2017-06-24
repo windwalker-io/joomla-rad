@@ -44,7 +44,7 @@ class JFormFieldUploadimage extends JFormField
 		$accept   = $this->element['accept'] ? ' accept="' . (string) $this->element['accept'] . '"' : '';
 		$size     = $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
 		$class    = $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
-		$disabled = ((string) $this->element['disabled'] == 'true') ? ' disabled="disabled"' : '';
+		$disabled = ((string) $this->element['disabled'] === 'true') ? ' disabled="disabled"' : '';
 		$readonly = (string) $this->element['readonly'];
 		$value    = $this->value;
 
@@ -55,7 +55,7 @@ class JFormFieldUploadimage extends JFormField
 		// Initialize JavaScript field attributes.
 		$onchange = $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
 
-		if ($readonly != 'false' && $readonly)
+		if ($readonly !== 'false' && $readonly)
 		{
 			return JHtml::image($this->value, $this->name, array('width' => 150));
 		}

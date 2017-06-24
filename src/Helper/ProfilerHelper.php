@@ -45,7 +45,7 @@ class ProfilerHelper
 		$container = Container::getInstance();
 		$app = $container->get('app');
 
-		if ($namespace == 'core' || !$namespace)
+		if ($namespace === 'core' || !$namespace)
 		{
 			$namespace = 'Application';
 		}
@@ -81,7 +81,7 @@ class ProfilerHelper
 	{
 		$app = Container::getInstance()->get('app');
 
-		if ($namespace == 'core' || !$namespace)
+		if ($namespace === 'core' || !$namespace)
 		{
 			$namespace = 'Application';
 		}

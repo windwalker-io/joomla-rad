@@ -229,7 +229,7 @@ class JFormFieldModal extends JFormField
 			$params .= '&show_root=1';
 		}
 
-		if ($view == $this->view_item && $option == $this->extension && $layout == 'edit' && $id)
+		if ($view == $this->view_item && $option == $this->extension && $layout === 'edit' && $id)
 		{
 			$params .= '&avoid=' . $id;
 		}

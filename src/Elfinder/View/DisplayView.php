@@ -65,7 +65,7 @@ class DisplayView extends AbstractHtmlView
 
 		// Get Request
 		$finder_id  = $input->get('finder_id');
-		$modal      = ($input->get('tmpl') == 'component') ? : false;
+		$modal      = ($input->get('tmpl') === 'component') ? : false;
 		$callback   = $input->get('callback');
 		$root       = $config->get('root', $input->getPath('root', '/'));
 		$start_path = $config->get('start_path', $input->getPath('start_path', '/'));

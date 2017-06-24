@@ -104,7 +104,7 @@ class GridHelper
 		$orderCol  = $state->get('list.orderCol', $config->get('order_column'));
 		$listDirn  = $this->state->get('list.direction');
 
-		$state->set('list.saveorder', ($listOrder == $orderCol) && strtoupper($listDirn) == 'ASC');
+		$state->set('list.saveorder', ($listOrder == $orderCol) && strtoupper($listDirn) === 'ASC');
 	}
 
 	/**
@@ -439,7 +439,7 @@ HTML;
 		$field = $this->config->get('field.language', 'language');
 		$title = $this->config->get('field.lang_title', 'lang_title');
 
-		if ($this->current->$field == '*')
+		if ($this->current->$field === '*')
 		{
 			return JText::alt('JALL', 'language');
 		}

@@ -38,7 +38,7 @@ abstract class FrontViewHelper
 			$item->published = 0;
 		}
 
-		if ($item->modified == '0000-00-00 00:00:00')
+		if ($item->modified === '0000-00-00 00:00:00')
 		{
 			$item->modified = '';
 		}

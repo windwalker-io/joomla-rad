@@ -117,11 +117,11 @@ class CopyLanguageAction extends AbstractAction
 
 			$extract = explode('.', $name);
 
-			if ($suffix == 'main' && count($extract) == 5)
+			if ($suffix === 'main' && count($extract) === 5)
 			{
 				return $file;
 			}
-			elseif (isset($extract[4]) && $extract[4] == $suffix)
+			elseif (isset($extract[4]) && $extract[4] === $suffix)
 			{
 				return $file;
 			}

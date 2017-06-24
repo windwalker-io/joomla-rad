@@ -475,7 +475,7 @@ class Component
 	 */
 	public function getPath($client = 'self')
 	{
-		$client = ($client == 'admin') ? 'administrator' : $client;
+		$client = ($client === 'admin') ? 'administrator' : $client;
 
 		return $this->path[$client];
 	}

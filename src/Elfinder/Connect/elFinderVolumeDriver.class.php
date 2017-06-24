@@ -318,7 +318,7 @@ abstract class elFinderVolumeDriver {
 	private static $mimetypesLoaded = false;
 	
 	/**
-	 * Finfo object for mimeDetect == 'finfo'
+	 * Finfo object for mimeDetect === 'finfo'
 	 *
 	 * @var object
 	 **/
@@ -332,7 +332,7 @@ abstract class elFinderVolumeDriver {
 	protected $diabled = array();
 	
 	/**
-	 * default extensions/mimetypes for mimeDetect == 'internal' 
+	 * default extensions/mimetypes for mimeDetect === 'internal'
 	 *
 	 * @var array
 	 **/
@@ -534,7 +534,7 @@ abstract class elFinderVolumeDriver {
 			? strtolower($this->options['imgLib'])
 			: 'auto';
 
-		if (($type == 'imagick' || $type == 'auto') && extension_loaded('imagick')) {
+		if (($type === 'imagick' || $type === 'auto') && extension_loaded('imagick')) {
 			$this->imgLib = 'imagick';
 		} else {
 			$this->imgLib = function_exists('gd_info') ? 'gd' : '';
@@ -683,7 +683,7 @@ abstract class elFinderVolumeDriver {
 		$type = preg_match('/^(finfo|mime_content_type|internal|auto)$/i', $type) ? $type : 'auto';
 		$regexp = '/text\/x\-(php|c\+\+)/';
 	
-		if (($type == 'finfo' || $type == 'auto') 
+		if (($type === 'finfo' || $type === 'auto')
 		&& class_exists('finfo')) {
 			$tmpFileInfo = @explode(';', @finfo_file(finfo_open(FILEINFO_MIME), __FILE__));
 		} else {
@@ -693,7 +693,7 @@ abstract class elFinderVolumeDriver {
 		if ($tmpFileInfo && preg_match($regexp, array_shift($tmpFileInfo))) {
 			$type = 'finfo';
 			$this->finfo = finfo_open(FILEINFO_MIME);
-		} elseif (($type == 'mime_content_type' || $type == 'auto') 
+		} elseif (($type === 'mime_content_type' || $type === 'auto')
 		&& function_exists('mime_content_type')
 		&& preg_match($regexp, array_shift(explode(';', mime_content_type(__FILE__))))) {
 			$type = 'mime_content_type';
@@ -702,10 +702,10 @@ abstract class elFinderVolumeDriver {
 		}
 		$this->mimeDetect = $type;
 
-		// load mimes from external file for mimeDetect == 'internal'
+		// load mimes from external file for mimeDetect === 'internal'
 		// based on Alexey Sukhotin idea and patch: http://elrte.org/redmine/issues/163
 		// file must be in file directory or in parent one 
-		if ($this->mimeDetect == 'internal' && !self::$mimetypesLoaded) {
+		if ($this->mimeDetect === 'internal' && !self::$mimetypesLoaded) {
 			self::$mimetypesLoaded = true;
 			$this->mimeDetect = 'internal';
 			$file = false;
@@ -750,7 +750,7 @@ abstract class elFinderVolumeDriver {
 			if ($this->options['startPath']) {
 				$start = $this->stat($this->options['startPath']);
 				if (!empty($start)
-				&& $start['mime'] == 'directory'
+				&& $start['mime'] === 'directory'
 				&& $start['read']
 				&& empty($start['hidden'])
 				&& $this->_inpath($this->options['startPath'], $this->root)) {
@@ -928,7 +928,7 @@ abstract class elFinderVolumeDriver {
 		if (empty($mimes)) {
 			return $empty;
 		}
-		return $mime == 'directory'
+		return $mime === 'directory'
 			|| in_array('all', $mimes)
 			|| in_array('All', $mimes)
 			|| in_array($mime, $mimes)
@@ -1051,7 +1051,7 @@ abstract class elFinderVolumeDriver {
 			$dir = $this->file($dir['thash']);
 		}
 		
-		return $dir && $dir['mime'] == 'directory' && empty($dir['hidden']) 
+		return $dir && $dir['mime'] === 'directory' && empty($dir['hidden'])
 			? $dir 
 			: $this->setError(elFinder::ERROR_NOT_DIR);
 	}
@@ -1189,7 +1189,7 @@ abstract class elFinderVolumeDriver {
 	 **/
 	public function open($hash) {
 		if (($file = $this->file($hash)) == false
-		|| $file['mime'] == 'directory') {
+		|| $file['mime'] === 'directory') {
 			return false;
 		}
 		
@@ -1386,8 +1386,8 @@ abstract class elFinderVolumeDriver {
 			return $this->setError(elFinder::ERROR_INVALID_NAME);
 		}
 		
-		$mime = $this->mimetype($this->mimeDetect == 'internal' ? $name : $tmpname, $name); 
-		if ($mime == 'unknown' && $this->mimeDetect == 'internal') {
+		$mime = $this->mimetype($this->mimeDetect === 'internal' ? $name : $tmpname, $name);
+		if ($mime === 'unknown' && $this->mimeDetect === 'internal') {
 			$mime = elFinderVolumeDriver::mimetypeInternalDetect($name);
 		}
 
@@ -1395,7 +1395,7 @@ abstract class elFinderVolumeDriver {
 		$allow  = $this->mimeAccepted($mime, $this->uploadAllow, null);
 		$deny   = $this->mimeAccepted($mime, $this->uploadDeny,  null);
 		$upload = true; // default to allow
-		if (strtolower($this->uploadOrder[0]) == 'allow') { // array('allow', 'deny'), default is to 'deny'
+		if (strtolower($this->uploadOrder[0]) === 'allow') { // array('allow', 'deny'), default is to 'deny'
 			$upload = false; // default is deny
 			if (!$deny && ($allow === true)) { // match only allow
 				$upload = true;
@@ -1424,7 +1424,7 @@ abstract class elFinderVolumeDriver {
 			if ($this->options['uploadOverwrite']) {
 				if (!$file['write']) {
 					return $this->setError(elFinder::ERROR_PERM_DENIED);
-				} elseif ($file['mime'] == 'directory') {
+				} elseif ($file['mime'] === 'directory') {
 					return $this->setError(elFinder::ERROR_NOT_REPLACE, $name);
 				} 
 				$this->remove($test);
@@ -1568,7 +1568,7 @@ abstract class elFinderVolumeDriver {
 			return $this->setError(elFinder::ERROR_FILE_NOT_FOUND);
 		}
 		
-		if ($file['mime'] == 'directory') {
+		if ($file['mime'] === 'directory') {
 			return $this->setError(elFinder::ERROR_NOT_FILE);
 		}
 		
@@ -2190,7 +2190,7 @@ abstract class elFinderVolumeDriver {
 		
 		if ($stat['read'] && empty($stat['hidden'])) {
 			
-			if ($stat['mime'] == 'directory') {
+			if ($stat['mime'] === 'directory') {
 				// for dir - check for subdirs
 
 				if ($this->options['checkSubfolders']) {
@@ -2271,7 +2271,7 @@ abstract class elFinderVolumeDriver {
 	protected function mimetype($path, $name = '') {
 		$type = '';
 		
-		if ($this->mimeDetect == 'finfo') {
+		if ($this->mimeDetect === 'finfo') {
 			if ($type = @finfo_file($this->finfo, $path)) {
 				if ($name === '') {
 					$name = $path;
@@ -2281,7 +2281,7 @@ abstract class elFinderVolumeDriver {
 					if (isset(elFinderVolumeDriver::$mimetypes[$ext])) $type = elFinderVolumeDriver::$mimetypes[$ext];
 				}
 			}
-		} elseif ($type == 'mime_content_type') {
+		} elseif ($type === 'mime_content_type') {
 			$type = mime_content_type($path);
 		} else {
 			$type = elFinderVolumeDriver::mimetypeInternalDetect($path);
@@ -2293,12 +2293,12 @@ abstract class elFinderVolumeDriver {
 		if (in_array($type, array('application/x-empty', 'inode/x-empty'))) {
 			// finfo return this mime for empty files
 			$type = 'text/plain';
-		} elseif ($type == 'application/x-zip') {
+		} elseif ($type === 'application/x-zip') {
 			// http://elrte.org/redmine/issues/163
 			$type = 'application/zip';
 		}
 		
-		return $type == 'unknown' && $this->mimeDetect != 'internal'
+		return $type === 'unknown' && $this->mimeDetect != 'internal'
 			? elFinderVolumeDriver::mimetypeInternalDetect($path)
 			: $type;
 		
@@ -2340,7 +2340,7 @@ abstract class elFinderVolumeDriver {
 		$this->options['checkSubfolders'] = true;
 		$result = 0;
 		foreach ($this->getScandir($path) as $stat) {
-			$size = $stat['mime'] == 'directory' && $stat['read'] 
+			$size = $stat['mime'] === 'directory' && $stat['read']
 				? $this->countSize($this->_joinPath($path, $stat['name'])) 
 				: (isset($stat['size']) ? intval($stat['size']) : 0);
 			if ($size > 0) {
@@ -2360,7 +2360,7 @@ abstract class elFinderVolumeDriver {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	protected function isSameType($mime1, $mime2) {
-		return ($mime1 == 'directory' && $mime1 == $mime2) || ($mime1 != 'directory' && $mime2 != 'directory');
+		return ($mime1 === 'directory' && $mime1 == $mime2) || ($mime1 != 'directory' && $mime2 != 'directory');
 	}
 	
 	/**
@@ -2386,7 +2386,7 @@ abstract class elFinderVolumeDriver {
 			return $path;
 		}
 
-		return $stat['mime'] == 'directory'
+		return $stat['mime'] === 'directory'
 			? $this->childsByAttr($path, $attr, $val) 
 			: false;
 	}
@@ -2450,7 +2450,7 @@ abstract class elFinderVolumeDriver {
 		foreach ($this->dirsCache[$path] as $p) {
 			$stat = $this->stat($p);
 			
-			if ($stat && empty($stat['hidden']) && $p != $exclude && $stat['mime'] == 'directory') {
+			if ($stat && empty($stat['hidden']) && $p != $exclude && $stat['mime'] === 'directory') {
 				$dirs[] = $stat;
 				if ($deep > 0 && !empty($stat['dirs'])) {
 					$dirs = array_merge($dirs, $this->gettree($p, $deep-1));
@@ -2494,7 +2494,7 @@ abstract class elFinderVolumeDriver {
 				
 				$result[] = $stat;
 			}
-			if ($stat['mime'] == 'directory' && $stat['read'] && !isset($stat['alias'])) {
+			if ($stat['mime'] === 'directory' && $stat['read'] && !isset($stat['alias'])) {
 				$result = array_merge($result, $this->doSearch($p, $q, $mimes));
 			}
 		}
@@ -2527,7 +2527,7 @@ abstract class elFinderVolumeDriver {
 				: $this->setError(elFinder::ERROR_COPY, $this->_path($src));
 		} 
 		
-		if ($srcStat['mime'] == 'directory') {
+		if ($srcStat['mime'] === 'directory') {
 			$test = $this->stat($this->_joinPath($dst, $name));
 			
 			if (($test && $test['mime'] != 'directory') || !$this->_mkdir($dst, $name)) {
@@ -2606,7 +2606,7 @@ abstract class elFinderVolumeDriver {
 			return $this->setError(elFinder::ERROR_COPY, $errpath, elFinder::ERROR_PERM_DENIED);
 		}
 		
-		if ($source['mime'] == 'directory') {
+		if ($source['mime'] === 'directory') {
 			$stat = $this->stat($this->_joinPath($destination, $name));
 			$this->clearcache();
 			if ((!$stat || $stat['mime'] != 'directory') && !$this->_mkdir($destination, $name)) {
@@ -2664,7 +2664,7 @@ abstract class elFinderVolumeDriver {
 			return $this->setError(elFinder::ERROR_LOCKED, $this->_path($path));
 		}
 		
-		if ($stat['mime'] == 'directory') {
+		if ($stat['mime'] === 'directory') {
 			foreach ($this->_scandir($path) as $p) {
 				$name = $this->_basename($p);
 				if ($name != '.' && $name != '..' && !$this->remove($p)) {
@@ -2735,7 +2735,7 @@ abstract class elFinderVolumeDriver {
 			&& strpos($path, $this->tmbPath) === false // do not create thumnbnail for thumnbnail
 			&& $this->imgLib 
 			&& strpos($stat['mime'], 'image') === 0 
-			&& ($this->imgLib == 'gd' ? $stat['mime'] == 'image/jpeg' || $stat['mime'] == 'image/png' || $stat['mime'] == 'image/gif' : true);
+			&& ($this->imgLib === 'gd' ? $stat['mime'] === 'image/jpeg' || $stat['mime'] === 'image/png' || $stat['mime'] === 'image/gif' : true);
 	}
 	
 	/**
@@ -3209,11 +3209,11 @@ abstract class elFinderVolumeDriver {
 	 */
 	protected function gdImage($image, $filename, $destformat, $mime ){
 
-		if ($destformat == 'jpg' || ($destformat == null && $mime == 'image/jpeg')) {
+		if ($destformat === 'jpg' || ($destformat == null && $mime === 'image/jpeg')) {
 			return imagejpeg($image, $filename, 100);
 		}
 
-		if ($destformat == 'gif' || ($destformat == null && $mime == 'image/gif')) {
+		if ($destformat === 'gif' || ($destformat == null && $mime === 'image/gif')) {
 			return imagegif($image, $filename, 7);
 		}
 
@@ -3228,7 +3228,7 @@ abstract class elFinderVolumeDriver {
 	 */
 	protected function gdImageBackground($image, $bgcolor){
 
-		if( $bgcolor == 'transparent' ){
+		if( $bgcolor === 'transparent' ){
 			imagesavealpha($image,true);
 			$bgcolor1 = imagecolorallocatealpha($image, 255, 255, 255, 127);
 

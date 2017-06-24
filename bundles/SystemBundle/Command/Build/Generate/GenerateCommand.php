@@ -170,7 +170,7 @@ TMPL;
 
 		$namespace = explode('\\', $namespace);
 
-		if ($namespace[0] == 'Command')
+		if ($namespace[0] === 'Command')
 		{
 			array_shift($namespace);
 		}

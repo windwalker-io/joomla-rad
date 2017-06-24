@@ -298,7 +298,7 @@ JS
             // Detect is image
             var onlyImage = false;
 
-            if(selected[0].mime.substring(0, 5) == 'image' ) {
+            if(selected[0].mime.substring(0, 5) === 'image' ) {
                 this.element.attr('image', 1);
             	this.element.attr('mime', selected[0].mime.split('/')[1]);
 

@@ -136,7 +136,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 		$templateFile = $this->getPath($file);
 
 		// Change the template folder if alternative layout is in different template
-		if (isset($layoutTemplate) && $layoutTemplate != '_' && $layoutTemplate != $template && is_file($layoutTemplate))
+		if (isset($layoutTemplate) && $layoutTemplate !== '_' && $layoutTemplate !== $template && is_file($layoutTemplate))
 		{
 			$templateFile = $layoutTemplate;
 			$template     = $layoutTemplate;

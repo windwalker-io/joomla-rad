@@ -74,7 +74,7 @@ class AdminModel extends CrudModel
 		$result = parent::save($data);
 
 		// Reorder
-		if ($result && $this->state->get('order.position') == 'first')
+		if ($result && $this->state->get('order.position') === 'first')
 		{
 			$pk = $this->state->get($this->getName() . '.id');
 
@@ -358,7 +358,7 @@ class AdminModel extends CrudModel
 			return;
 		}
 
-		if ($position == 'first')
+		if ($position === 'first')
 		{
 			if (empty($table->$orderCol))
 			{

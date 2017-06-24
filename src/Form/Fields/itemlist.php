@@ -198,7 +198,7 @@ class JFormFieldItemlist extends JFormFieldList
 
 		if ($nested)
 		{
-			$query->where("( id != 1 AND `{$value_field}` != 'ROOT' )");
+			$query->where("( id != 1 AND `{$value_field}` !== 'ROOT' )");
 		}
 
 		// Some filter
@@ -213,7 +213,7 @@ class JFormFieldItemlist extends JFormFieldList
 		$order    = $this->ordering_field ? $this->ordering_field : $order;
 		$ordering = $ordering ? $ordering : $order;
 
-		if ($ordering != 'false')
+		if ($ordering !== 'false')
 		{
 			$query->order($ordering);
 		}

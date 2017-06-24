@@ -31,7 +31,7 @@ class InitController extends AbstractComponentController
 	{
 		$this->doAction(new Action\CopyAllAction);
 
-		if ($this->config['client'] == 'administrator')
+		if ($this->config['client'] === 'administrator')
 		{
 			$this->doAction(new Action\Component\ImportSqlAction);
 

@@ -108,7 +108,7 @@ class AssetManager implements ContainerAwareInterface
 
 		$name = strtolower($name);
 
-		if ($name == 'windwalker')
+		if ($name === 'windwalker')
 		{
 			return static::$instances['windwalker'];
 		}
@@ -162,7 +162,7 @@ class AssetManager implements ContainerAwareInterface
 	{
 		$doc = $this->getDoc();
 
-		if ($doc->getType() != 'html')
+		if ($doc->getType() !== 'html')
 		{
 			return $this;
 		}
@@ -215,7 +215,7 @@ class AssetManager implements ContainerAwareInterface
 	{
 		$doc = $this->getDoc();
 
-		if ($doc->getType() != 'html')
+		if ($doc->getType() !== 'html')
 		{
 			return $this;
 		}
@@ -633,7 +633,7 @@ class AssetManager implements ContainerAwareInterface
 	{
 		if (!($this->container instanceof JoomlaContainer))
 		{
-			$name = ($name == 'windwalker') ? null : $name;
+			$name = ($name === 'windwalker') ? null : $name;
 
 			$this->container = Container::getInstance($name);
 		}

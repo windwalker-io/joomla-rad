@@ -399,7 +399,7 @@ class ListModel extends AbstractFormModel
 	{
 		// Use fast COUNT(*) on JDatabaseQuery objects if there no GROUP BY or HAVING clause:
 		if ($query instanceof \JDatabaseQuery
-			&& $query->type == 'select'
+			&& $query->type === 'select'
 			&& $query->group === null
 			&& $query->having === null)
 		{
@@ -897,7 +897,7 @@ class ListModel extends AbstractFormModel
 			$value[0] = $this->mapField($value[0]);
 
 			// Ignore expression
-			if (!empty($value[0]) && $value[0][strlen($value[0]) - 1] != ')')
+			if (!empty($value[0]) && $value[0][strlen($value[0]) - 1] !== ')')
 			{
 				$value[0] = $query->quoteName($value[0]);
 			}
@@ -985,13 +985,13 @@ class ListModel extends AbstractFormModel
 		 */
 
 		// Remove empty values from input, because session registry will remove empty values too.
-		if ($request == 'filter' && is_array($newState))
+		if ($request === 'filter' && is_array($newState))
 		{
 			$newState = ArrayHelper::filterRecursive($newState, 'strlen');
 		}
 
 		// Add default field name '*' if we clear filter bar.
-		if ($request == 'search' && '' === (string) ArrayHelper::getValue($currentState, 'field'))
+		if ($request === 'search' && '' === (string) ArrayHelper::getValue($currentState, 'field'))
 		{
 			$currentState['field'] = '*';
 		}

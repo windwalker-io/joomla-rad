@@ -49,7 +49,7 @@ class Container extends JoomlaContainer
 	 */
 	public static function getInstance($name = null)
 	{
-		if ($name == 'windwalker')
+		if ($name === 'windwalker')
 		{
 			$name = null;
 		}

@@ -52,7 +52,7 @@ class ExtensionHelper
 		$name = substr($element, 4);
 
 		// Get group
-		if ($ext == 'plugin')
+		if ($ext === 'plugin')
 		{
 			$name  = explode('_', $name);
 

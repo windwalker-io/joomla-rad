@@ -119,7 +119,7 @@ $function = $input->get('function', 'jSelectArticle');
 					<!--LANGUAGE-->
 					<td class="center">
 						<?php
-						if ($item->language == '*')
+						if ($item->language === '*')
 						{
 							echo JText::alt('JALL', 'language');
 						}

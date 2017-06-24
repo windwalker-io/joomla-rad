@@ -65,7 +65,7 @@ class ConnectView extends AbstractJsonView
 			// If file/folder begins with '.' (dot). Set read+write to false, other (locked+hidden) set to true
 			if (strpos(basename($path), '.') === 0)
 			{
-				return !($attr == 'read' || $attr == 'write');
+				return !($attr === 'read' || $attr === 'write');
 			}
 			// Else elFinder decide it itself
 			else

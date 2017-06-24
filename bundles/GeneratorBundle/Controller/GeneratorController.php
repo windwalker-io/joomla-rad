@@ -157,7 +157,7 @@ class GeneratorController extends AbstractController
 		$this->template = $config['template']  = $this->command->getOption('t');
 		$this->client   = $config['client']    = $this->command->getOption('c');
 
-		if ($this->client == 'admin')
+		if ($this->client === 'admin')
 		{
 			$this->client = $config['client'] = 'administrator';
 		}
@@ -201,7 +201,7 @@ class GeneratorController extends AbstractController
 		$name = substr($element, 4);
 
 		// Get group
-		if ($ext == 'plugin')
+		if ($ext === 'plugin')
 		{
 			$name  = explode('_', $name);
 

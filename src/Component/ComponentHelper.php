@@ -109,7 +109,7 @@ abstract class ComponentHelper
 
 		$_SERVER['HTTP_HOST'] = 'windwalker';
 
-		if ($client == 'admin')
+		if ($client === 'admin')
 		{
 			$client = 'administrator';
 		}

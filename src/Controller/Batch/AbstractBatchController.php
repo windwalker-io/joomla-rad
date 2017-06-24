@@ -55,7 +55,7 @@ abstract class AbstractBatchController extends AbstractListController
 		// Sanitize data.
 		foreach ($this->batch as $key => &$value)
 		{
-			if ($value == '')
+			if ($value === '')
 			{
 				unset($this->batch[$key]);
 			}

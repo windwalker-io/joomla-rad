@@ -72,7 +72,7 @@ class CmsRouter extends LegacyRouter
 
 		foreach ($this->maps as $view => $map)
 		{
-			if ($map['controller'] == $queries['view'])
+			if ($map['controller'] === $queries['view'])
 			{
 				unset($queries['view']);
 

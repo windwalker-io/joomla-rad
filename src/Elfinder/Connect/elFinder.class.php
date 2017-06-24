@@ -209,7 +209,7 @@ class elFinder {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function __construct($opts) {
-		if (session_id() == '') {
+		if (session_id() === '') {
 			session_start();
 		}
 
@@ -292,7 +292,7 @@ class elFinder {
 	 * @author Dmitry (dio) Levashov
 	 **/
 	public function bind($cmd, $handler) {
-		$cmds = $cmd == '*'
+		$cmds = $cmd === '*'
 			? array_keys($this->commands)
 			: array_map('trim', explode(' ', $cmd));
 		
@@ -763,7 +763,7 @@ class elFinder {
 			$disp = 'attachment';
 			$mime = 'application/octet-stream';
 		} else {
-			$disp  = preg_match('/^(image|text)/i', $file['mime']) || $file['mime'] == 'application/x-shockwave-flash' 
+			$disp  = preg_match('/^(image|text)/i', $file['mime']) || $file['mime'] === 'application/x-shockwave-flash'
 					? 'inline' 
 					: 'attachment';
 			$mime = $file['mime'];
@@ -1269,7 +1269,7 @@ class elFinder {
 		
 		$json = json_encode($content);
 
-		if ($json == 'null' && strlen($json) < strlen($content)) {
+		if ($json === 'null' && strlen($json) < strlen($content)) {
 			return array('error' => $this->error(self::ERROR_NOT_UTF8_CONTENT, $volume->path($target)));
 		}
 		

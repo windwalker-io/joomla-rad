@@ -138,7 +138,7 @@ class ApiServer
 		$uri  = $uri ? : $this->uri;
 		$path = $uri->getPath();
 
-		return rtrim($path, '/') == '/api';
+		return rtrim($path, '/') === '/api';
 	}
 
 	/**

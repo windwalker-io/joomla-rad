@@ -151,7 +151,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 		if (empty($this->options['alias'])) {
 			$this->options['alias'] = $this->options['user'].'@'.$this->options['host'];
 			// $num = elFinder::$volumesCnt-1;
-			// $this->options['alias'] = $this->root == '/' || $this->root == '.' ? 'FTP folder '.$num : basename($this->root);
+			// $this->options['alias'] = $this->root === '/' || $this->root === '.' ? 'FTP folder '.$num : basename($this->root);
 		}
 
 		$this->rootName = $this->options['alias'];
@@ -213,7 +213,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 		// switch off extended passive mode - may be usefull for some servers
 		@ftp_exec($this->connect, 'epsv4 off' );
 		// enter passive mode if required
-		ftp_pasv($this->connect, $this->options['mode'] == 'passive');
+		ftp_pasv($this->connect, $this->options['mode'] === 'passive');
 
 		// enter root folder
 		if (!ftp_chdir($this->connect, $this->root) 
@@ -264,7 +264,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 		$info = preg_split("/\s+/", $raw, 9);
 		$stat = array();
 
-		if (count($info) < 9 || $info[8] == '.' || $info[8] == '..') {
+		if (count($info) < 9 || $info[8] === '.' || $info[8] === '..') {
 			return false;
 		}
 
@@ -291,7 +291,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 				$stat['name']  = $name;
 				if ($this->_inpath($target, $this->root) 
 				&& ($tstat = $this->stat($target))) {
-					$stat['size']  = $tstat['mime'] == 'directory' ? 0 : $info[4];
+					$stat['size']  = $tstat['mime'] === 'directory' ? 0 : $info[4];
 					$stat['alias'] = $this->_relpath($target);
 					$stat['thash'] = $tstat['hash'];
 					$stat['mime']  = $tstat['mime'];
@@ -310,8 +310,8 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 			
 			$perm = $this->parsePermissions($info[0]);
 			$stat['name']  = $name;
-			$stat['mime']  = substr(strtolower($info[0]), 0, 1) == 'd' ? 'directory' : $this->mimetype($stat['name']);
-			$stat['size']  = $stat['mime'] == 'directory' ? 0 : $info[4];
+			$stat['mime']  = substr(strtolower($info[0]), 0, 1) === 'd' ? 'directory' : $this->mimetype($stat['name']);
+			$stat['size']  = $stat['mime'] === 'directory' ? 0 : $info[4];
 			$stat['read']  = $perm['read'];
 			$stat['write'] = $perm['write'];
 			$stat['perm']  = substr($info[0], 1);
@@ -337,11 +337,11 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 			$parts[] = substr($perm, $i, 1);
 		}
 
-		$read = ($owner && $parts[0] == 'r') || $parts[4] == 'r' || $parts[7] == 'r';
+		$read = ($owner && $parts[0] === 'r') || $parts[4] === 'r' || $parts[7] === 'r';
 		
 		return array(
-			'read'  => $parts[0] == 'd' ? $read && (($owner && $parts[3] == 'x') || $parts[6] == 'x' || $parts[9] == 'x') : $read,
-			'write' => ($owner && $parts[2] == 'w') || $parts[5] == 'w' || $parts[8] == 'w'
+			'read'  => $parts[0] === 'd' ? $read && (($owner && $parts[3] === 'x') || $parts[6] === 'x' || $parts[9] === 'x') : $read,
+			'write' => ($owner && $parts[2] === 'w') || $parts[5] === 'w' || $parts[8] === 'w'
 		);
 	}
 	
@@ -461,7 +461,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 				
 			if (($comp != '..') 
 			|| (!$initial_slashes && !$new_comps) 
-			|| ($new_comps && (end($new_comps) == '..'))) {
+			|| ($new_comps && (end($new_comps) === '..'))) {
 				array_push($new_comps, $comp);
 			} elseif ($new_comps) {
 				array_pop($new_comps);
@@ -586,7 +586,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 			if (empty($stat['mime'])) {
 				return array();
 			}
-			if ($stat['mime'] == 'directory') {
+			if ($stat['mime'] === 'directory') {
 				$stat['size'] = 0;
 			}
 			
@@ -631,7 +631,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 				$owner = $this->options['owner'];
 				$read = ($owner && $perm[0][0]) || $perm[1][0] || $perm[2][0];
 
-				$stat['read']  = $stat['mime'] == 'directory' ? $read && (($owner && $perm[0][2]) || $perm[1][2] || $perm[2][2]) : $read;
+				$stat['read']  = $stat['mime'] === 'directory' ? $read && (($owner && $perm[0][2]) || $perm[1][2] || $perm[2][2]) : $read;
 				$stat['write'] = ($owner && $perm[0][1]) || $perm[1][1] || $perm[2][1];
 				unset($stat['chmod']);
 
@@ -655,7 +655,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 		
 		if (preg_match('/\s|\'|\"/', $path)) {
 			foreach (ftp_nlist($this->connect, $path) as $p) {
-				if (($stat = $this->stat($path.'/'.$p)) && $stat['mime'] == 'directory') {
+				if (($stat = $this->stat($path.'/'.$p)) && $stat['mime'] === 'directory') {
 					return true;
 				}
 			}
@@ -663,7 +663,7 @@ class elFinderVolumeFTP extends elFinderVolumeDriver {
 		}
 		
 		foreach (ftp_rawlist($this->connect, $path) as $str) {
-			if (($stat = $this->parseRaw($str)) && $stat['mime'] == 'directory') {
+			if (($stat = $this->parseRaw($str)) && $stat['mime'] === 'directory') {
 				return true;
 			}
 		}

@@ -179,12 +179,12 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	public function handleUpdateRelations(\JTable $itemTable)
 	{
 		// Handle Cascade
-		if ($this->onUpdate == Action::CASCADE)
+		if ($this->onUpdate === Action::CASCADE)
 		{
 			$itemTable = $this->syncParentFields($itemTable);
 		}
 		// Handle Set NULL
-		elseif ($this->onUpdate == Action::SET_NULL)
+		elseif ($this->onUpdate === Action::SET_NULL)
 		{
 			if ($this->changed($itemTable))
 			{
@@ -205,12 +205,12 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	public function handleDeleteRelations(\JTable $itemTable)
 	{
 		// Handle Cascade
-		if ($this->onDelete == Action::CASCADE)
+		if ($this->onDelete === Action::CASCADE)
 		{
 			$itemTable->_delete = true;
 		}
 		// Handle Set NULL
-		elseif ($this->onDelete == Action::SET_NULL)
+		elseif ($this->onDelete === Action::SET_NULL)
 		{
 			$itemTable = $this->setRelativeFields($itemTable, null);
 		}

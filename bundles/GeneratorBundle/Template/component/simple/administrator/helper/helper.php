@@ -36,7 +36,7 @@ abstract class {{extension.name.cap}}Helper
 			JHtmlSidebar::addEntry(
 				JText::_('JCATEGORY'),
 				'index.php?option=com_categories&extension={{extension.element.lower}}',
-				($vName == 'categories')
+				($vName === 'categories')
 			);
 		}
 

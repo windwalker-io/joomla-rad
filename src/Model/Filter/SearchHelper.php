@@ -83,7 +83,7 @@ class SearchHelper extends AbstractFilterHelper
 		 */
 		return function(\JDatabaseQuery $query, $field, $value)
 		{
-			if ($value && $field != '*')
+			if ($value && $field !== '*')
 			{
 				return $query->quoteName($field) . ' LIKE ' . $query->quote('%' . $value . '%');
 			}

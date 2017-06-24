@@ -161,7 +161,7 @@ class QueryHelper
 	{
 		foreach ($this->tables as $alias => $table)
 		{
-			if ($table['join'] == 'FROM')
+			if ($table['join'] === 'FROM')
 			{
 				$query->from($query->quoteName($table['name']) . ' AS ' . $query->quoteName($alias));
 			}

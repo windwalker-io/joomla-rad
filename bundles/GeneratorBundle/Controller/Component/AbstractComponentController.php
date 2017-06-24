@@ -66,7 +66,7 @@ abstract class AbstractComponentController extends AbstractJExtensionController
 		}
 		else
 		{
-			$config['client'] = ($config['client'] == 'site') ? $config['client'] : 'administrator';
+			$config['client'] = ($config['client'] === 'site') ? $config['client'] : 'administrator';
 
 			$this->configurePath()->doExecute();
 		}
