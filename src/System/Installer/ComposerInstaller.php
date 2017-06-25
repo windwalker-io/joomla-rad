@@ -10,6 +10,8 @@ namespace Windwalker\System\Installer;
 
 use Composer\Script\Event;
 
+include_once __DIR__ . '/WindwalkerInstaller.php';
+
 /**
  * The composer installer.
  *
