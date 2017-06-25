@@ -276,6 +276,8 @@ class CrudModel extends AbstractFormModel
 		{
 			$table->reset();
 
+			$table->load($pk);
+
 			// Set primary
 			$table->$key = $pk;
 

@@ -104,4 +104,32 @@ class {{extension.name.cap}}Table{{controller.item.name.cap}} extends Table
 	{
 		return parent::delete($pk);
 	}
+
+	/**
+	 * Method to compute the default name of the asset.
+	 * The default name is in the form table_name.id
+	 * where id is the value of the primary key of the table.
+	 *
+	 * @return  string
+	 */
+	protected function _getAssetName()
+	{
+		$key = $this->getKeyName();
+
+		return '{{extension.element.lower}}.{{controller.item.name.lower}}.' . $this->$key;
+	}
+
+	/**
+	 * Method to return the title to use for the asset table.
+	 *
+	 * In tracking the assets a title is kept for each asset so that there is some context available in a unified access manager.
+	 * Usually this would just return $this->title or $this->name or whatever is being used for the primary name of the row.
+	 * If this method is not overridden, the asset name is used.
+	 *
+	 * @return  string  The string to use as the title in the asset table.
+	 */
+	protected function _getAssetTitle()
+	{
+		return $this->title;
+	}
 }

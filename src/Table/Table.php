@@ -220,4 +220,48 @@ class Table extends \JTable
 
 		return $tablePrefix;
 	}
+
+	/**
+	 * Method to get the parent asset under which to register this one.
+	 *
+	 * By default, all assets are registered to the ROOT node with ID, which will default to 1 if none exists.
+	 * An extended class can define a table and ID to lookup.  If the asset does not exist it will be created.
+	 *
+	 * @param   \JTable  $table A JTable object for the asset parent.
+	 * @param   integer $id    Id to look up
+	 *
+	 * @return  integer
+	 *
+	 * @throws \RuntimeException
+	 */
+	protected function _getAssetParentId(\JTable $table = null, $id = null)
+	{
+		$assetId = null;
+
+		// This is an article under a category.
+		if (!empty($this->catid))
+		{
+			// Build the query to get the asset id for the parent category.
+			echo $query = $this->_db->getQuery(true)
+				->select($this->_db->quoteName('asset_id'))
+				->from($this->_db->quoteName('#__categories'))
+				->where($this->_db->quoteName('id') . ' = ' . (int) $this->catid);
+
+			// Get the asset id from the database.
+			$this->_db->setQuery($query);
+
+			if ($result = $this->_db->loadResult())
+			{
+				$assetId = (int) $result;
+			}
+		}
+
+		// Return the asset id.
+		if ($assetId)
+		{
+			return $assetId;
+		}
+
+		return parent::_getAssetParentId($table, $id);
+	}
 }
