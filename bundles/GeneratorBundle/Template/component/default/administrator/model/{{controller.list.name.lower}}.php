@@ -130,7 +130,7 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = null, $direction = 'ASC')
+	protected function populateState($ordering = '{{controller.item.name.lower}}.id', $direction = 'DESC')
 	{
 		// Build ordering prefix
 		if (!$ordering)
