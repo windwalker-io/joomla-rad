@@ -96,4 +96,3 @@ BIN;
 		static::createBundleDir($root);
 	}
 }
- 

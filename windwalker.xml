@@ -26,6 +26,12 @@
 		<file>windwalker.xml</file>
 	</files>
 
+	<media folder="asset" destination="windwalker">
+		<folder>css</folder>
+		<folder>js</folder>
+		<filename>index.html</filename>
+	</media>
+
 	<languages folder="language">
 		<language tag="zh-TW">zh-TW/zh-TW.lib_windwalker.ini</language>
 		<language tag="zh-TW">zh-TW/zh-TW.lib_windwalker.sys.ini</language>
