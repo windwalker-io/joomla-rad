@@ -6,19 +6,35 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+const _JEXEC = 1;
+defined('_JEXEC') or die;
+
+include_once __DIR__ . '/library/console.php';
+
+define('BUILD_ROOT', realpath(__DIR__ . '/..'));
+
 /**
  * Class Build
  *
  * @since 1.0
  */
-class Build
+class Build extends \Asika\SimpleConsole\Console
 {
+	/**
+	 * Property name.
+	 *
+	 * @var  string
+	 */
+	protected $name = 'windwalker-rad';
+
 	/**
 	 * Property removes.
 	 *
 	 * @var  array
 	 */
-	protected $removes = array(
+	protected $ignores = array(
+		'/.git/*',
+		'/bin/*',
 		'docs',
 		'test',
 		'.gitignore',
@@ -28,54 +44,43 @@ class Build
 		'update.xml'
 	);
 
-	/**
-	 * Class init.
-	 */
-	public function __construct()
-	{
-		define('BUILD_ROOT', realpath(__DIR__ . '/..'));
-	}
+	protected $help = <<<HELP
+[Usage] php build.php <version> [-b|--branch=Branch]
+
+[Options]
+    h | help      Show help information
+	b | branch    (Optinal) Git branch to build if provided,
+	              will back to staging after completed.
+HELP;
+
 
 	/**
 	 * execute
 	 *
 	 * @return  void
 	 */
-	public function execute()
+	protected function doExecute()
 	{
 		// Prepare zip name.
-		$zipFile = BUILD_ROOT . '/../windwalker-rad-%s.zip';
+		$zipFile = BUILD_ROOT . '/../%s_%s.zip';
 
-		$version = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : null;
+		$version = $this->getArgument(0);
 
 		if (!$version)
 		{
-			$this->out('Please enter a version.');
-			$this->out('[Usage] php build.php <version>');
-
-			exit();
+			throw new \Asika\SimpleConsole\CommandArgsException('Please enter a version.');
 		}
 
-		// Remove unnecessary files and folders.
-		$this->removeFiles();
+		$branch = $this->getOption(array('b', 'branch'));
 
-		// Prepare load composer
-		$this->exec("php -r \"readfile('https://getcomposer.org/installer');\" | php");
+		if ($branch && $branch !== 'staging')
+		{
+			$this->exec('git checkout ' . $branch);
+		}
 
-		rename('composer.phar', BUILD_ROOT . '/composer.phar');
+		$zipFile = new \SplFileInfo(static::cleanPath(sprintf($zipFile, $this->name, $version)));
 
-		$this->exec(sprintf('php %s/composer.phar install', BUILD_ROOT));
-
-		$this->out('>> Remove composer.phar');
-
-		unlink(sprintf('%s/composer.phar', BUILD_ROOT));
-
-		// Include dependency to do more things.
-		include BUILD_ROOT . '/vendor/autoload.php';
-
-		$zipFile = new \SplFileInfo(\Windwalker\Filesystem\Path::clean(sprintf($zipFile, $version)));
-
-		$dir = new \Windwalker\Filesystem\Path\PathLocator(BUILD_ROOT);
+		$dir = new \RecursiveIteratorIterator(new RecursiveDirectoryIterator(BUILD_ROOT, FilesystemIterator::SKIP_DOTS));
 
 		// Start ZIP archive
 		$zip = new ZipArchive;
@@ -84,11 +89,12 @@ class Build
 
 		$zip->open($zipFile->getPathname(), ZIPARCHIVE::CREATE);
 
-		foreach ($dir->getFiles(true) as $file)
+		/** @var \SplFileInfo $file */
+		foreach ($dir as $file)
 		{
 			$file = str_replace(BUILD_ROOT . DIRECTORY_SEPARATOR , '', $file->getPathname());
 
-			if (strpos($file, '.') === 0)
+			if ($this->testIgnore('/' . $file))
 			{
 				continue;
 			}
@@ -99,73 +105,64 @@ class Build
 
 		$zip->close();
 
+		if ($branch && $branch !== 'staging')
+		{
+			$this->exec('git checkout staging');
+		}
+
 		$this->out('Zip success to: ' . realpath($zipFile->getPathname()));
 	}
 
 	/**
-	 * removeFiles
+	 * test
 	 *
-	 * @return  void
+	 * @param string $string
+	 *
+	 * @return  boolean
 	 */
-	public function removeFiles()
+	public function testIgnore($string)
 	{
-		foreach ($this->removes as $remove)
+		$match = false;
+
+		// fnmatch() only work for UNIX file path
+		$string = str_replace(array('/', '\\'), '/', $string);
+
+		foreach ($this->ignores as $rule)
 		{
-			$path = BUILD_ROOT . '/' . $remove;
-
-			if (is_file($path))
+			// Negative
+			if (substr($rule, 0, 1) == '!')
 			{
-				unlink($path);
-			}
-			elseif (is_dir($path))
-			{
-				$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
+				$rule = substr($rule, 1);
 
-				foreach($files as $file) 
+				if (fnmatch($rule, $string))
 				{
-					$file->isDir() && !$file->isLink() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+					$match = false;
 				}
-
-				rmdir($path);
 			}
-
-			$this->out('[Remove] ' . $remove);
+			// Normal
+			else
+			{
+				if (fnmatch($rule, $string))
+				{
+					$match = true;
+				}
+			}
 		}
 
-		$this->out();
+		return $match;
 	}
 
 	/**
-	 * exec
+	 * cleanPath
 	 *
-	 * @param   string $command
+	 * @param string $path
+	 * @param string $ds
 	 *
-	 * @return  Build
+	 * @return  string
 	 */
-	protected function exec($command)
+	public static function cleanPath($path, $ds = DIRECTORY_SEPARATOR)
 	{
-		$this->out('>> ' . $command);
-
-		$return = exec($command);
-
-		$this->out($return . "\n");
-
-		return $this;
-	}
-
-	/**
-	 * out
-	 *
-	 * @param   string  $text
-	 * @param   boolean $nl
-	 *
-	 * @return  Build
-	 */
-	public function out($text = null, $nl = true)
-	{
-		fwrite(STDOUT, $text . ($nl ? "\n" : ''));
-
-		return $this;
+		return str_replace(array('/', '\\'), $ds, $path);
 	}
 }
 
