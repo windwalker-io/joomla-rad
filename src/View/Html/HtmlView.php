@@ -96,6 +96,8 @@ class HtmlView extends AbstractHtmlView
 			$this['view']->layout   = $this->layout;
 		}
 
+		$this['viewObject'] = $this;
+
 		// Uri data
 		if (!$this['uri'])
 		{

@@ -246,36 +246,32 @@ abstract class AbstractView implements \JView, \ArrayAccess, ContainerAwareInter
 	/**
 	 * Method to get data from a registered model or a property of the view.
 	 *
-	 * @param   string  $cmd    The name of the method to call on the model or the property to get
-	 * @param   string  $model  The name of the model to reference or the default value [optional]
-	 * @param   array   $args   The arguments to send to model methods.
+	 * @param   string  $cmd        The name of the method to call on the model or the property to get
+	 * @param   string  $modelName  The name of the model to reference or the default value [optional]
+	 * @param   array   $args       The arguments to send to model methods.
 	 *
 	 * @return  mixed  The return value of the method
 	 */
-	public function get($cmd, $model = null, $args = array())
+	public function get($cmd, $modelName = null, $args = array())
 	{
 		// If $model is null we use the default model
-		$model = $this->getModel($model);
+		$model = $this->getModel($modelName);
 
 		// First check to make sure the model requested exists
-		if (!$model)
+		if ($model)
 		{
-			return null;
+			// Model exists, let's build the method name
+			$method = 'get' . ucfirst($cmd);
+
+			// Does the method exist?
+			if (method_exists($model, $method))
+			{
+				// The method exists, let's call it and return what we get
+				return call_user_func_array(array($model, $method), $args);
+			}
 		}
 
-		// Model exists, let's build the method name
-		$method = 'get' . ucfirst($cmd);
-
-		// Does the method exist?
-		if (!method_exists($model, $method))
-		{
-			return $this->getData()->get($cmd, null);
-		}
-
-		// The method exists, let's call it and return what we get
-		$result = call_user_func_array(array($model, $method), $args);
-
-		return $result;
+		return $this->getData()->get($cmd, isset($this->$cmd) ? $this->$cmd : $modelName);
 	}
 
 	/**

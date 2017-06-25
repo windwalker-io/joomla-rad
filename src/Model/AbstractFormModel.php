@@ -43,7 +43,7 @@ abstract class AbstractFormModel extends ItemModel
 			'load_data' => $loadData
 		);
 
-		return $this->loadForm($this->option . '.' . $this->getName() . '.form', $this->getName(), $config);
+		return $this->loadForm($this->option . '.' . $this->getName(), $this->getName(), $config);
 	}
 
 	/**

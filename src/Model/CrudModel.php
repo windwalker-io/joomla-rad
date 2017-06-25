@@ -152,7 +152,7 @@ class CrudModel extends AbstractFormModel
 		}
 
 		// Trigger the onContentBeforeSave event.
-		$result = $dispatcher->trigger($this->eventBeforeSave, array($this->option . '.' . $this->name, $table, $isNew));
+		$result = $dispatcher->trigger($this->eventBeforeSave, array($this->option . '.' . $this->name, $table, $isNew, $data));
 
 		if (in_array(false, $result, true))
 		{
@@ -169,7 +169,7 @@ class CrudModel extends AbstractFormModel
 		$this->cleanCache();
 
 		// Trigger the onContentAfterSave event.
-		$dispatcher->trigger($this->eventAfterSave, array($this->option . '.' . $this->name, $table, $isNew));
+		$dispatcher->trigger($this->eventAfterSave, array($this->option . '.' . $this->name, $table, $isNew, $data));
 
 		$pkName = $table->getKeyName();
 

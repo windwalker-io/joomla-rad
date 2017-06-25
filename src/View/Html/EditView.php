@@ -127,4 +127,19 @@ class EditView extends ItemHtmlView
 			),
 		);
 	}
+
+	/**
+	 * Get form method to support 3.7 fields.
+	 *
+	 * @return  \JForm
+	 */
+	public function getForm()
+	{
+		if (!$this->data->form instanceof \JForm)
+		{
+			$this->data->form = $this->get('Form');
+		}
+
+		return $this->data->form;
+	}
 }

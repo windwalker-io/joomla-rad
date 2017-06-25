@@ -83,6 +83,8 @@ class GridView extends ListHtmlView
 		$this['filterForm'] = $this['filterForm'] ? : $this->get('FilterForm');
 		$this['batchForm']  = $this['batchForm'] ? : $this->get('BatchForm');
 
+		$this['viewObject']->filterForm = $this['filterForm'];
+
 		if ($errors = $this['state']->get('errors'))
 		{
 			$this->addMessage($errors);
