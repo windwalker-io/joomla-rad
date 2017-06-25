@@ -35,13 +35,13 @@ class Build extends \Asika\SimpleConsole\Console
 	protected $ignores = array(
 		'/.git/*',
 		'/bin/*',
-		'docs',
-		'test',
-		'.gitignore',
-		'.travis.yml',
-		'phpunit.xml.dist',
-		'README.md',
-		'update.xml'
+		'/docs/*',
+		'/test/*',
+		'/.gitignore',
+		'/.travis.yml',
+		'/phpunit.xml.dist',
+		'/README.md',
+		'/update.xml'
 	);
 
 	protected $help = <<<HELP
