@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="information"
-		align="left"
-		horz="true">
+	<field name="title"
+		type="text"
+		label="JGLOBAL_TITLE"
+		description="JFIELD_TITLE_DESC"
+		required="true"
+		class="input-xxlarge required"
+	/>
 
-		<field name="title"
-			type="text"
-			label="JGLOBAL_TITLE"
-			description="JFIELD_TITLE_DESC"
-			required="true"
-			class="input-xxlarge required"
-			/>
+	<field name="alias"
+		type="text"
+		label="JFIELD_ALIAS_LABEL"
+		description="JFIELD_ALIAS_DESC"
+	/>
 
-		<field name="alias"
-			type="text"
-			label="JFIELD_ALIAS_LABEL"
-			description="JFIELD_ALIAS_DESC"
-			/>
-
+	<fieldset name="information">
 		<field name="parent_id"
 			type="{{controller.item.name.lower}}_modal"
 			label="{{extension.element.upper}}_PARENT_ITEM"
@@ -54,11 +51,7 @@
 			/>
 	</fieldset>
 
-	<fieldset
-		name="publish"
-		align="right"
-		horz="true">
-
+	<fieldset name="publish">
 		<field name="state"
 			type="list"
 			label="JSTATUS"
@@ -106,8 +99,7 @@
 
 	</fieldset>
 
-	<fieldset name="text"
-		align="left">
+	<fieldset name="text">
 		<field name="introtext"
 			type="editor"
 			label="{{extension.element.upper}}_INTROTEXT"

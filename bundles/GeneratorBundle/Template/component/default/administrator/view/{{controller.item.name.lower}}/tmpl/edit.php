@@ -30,6 +30,7 @@ $item      = $data->item;
 $tabs = array(
 	'tab_basic',
 	'tab_advanced',
+	'tab_params',
 	'tab_rules'
 );
 ?>
@@ -47,6 +48,8 @@ $tabs = array(
 <div id="{{extension.name.lower}}" class="windwalker {{controller.item.name.lower}} edit-form row-fluid">
 	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
+
+		<?php echo JLayoutHelper::render('joomla.edit.title_alias', $data->viewObject); ?>
 
 		<?php echo JHtmlBootstrap::startTabSet('{{controller.item.name.lower}}EditTab', array('active' => 'tab_basic')); ?>
 

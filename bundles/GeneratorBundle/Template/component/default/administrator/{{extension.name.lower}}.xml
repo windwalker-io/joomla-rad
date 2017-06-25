@@ -35,13 +35,13 @@
 		<folder>controller</folder>
 		<folder>helper</folder>
 		<folder>images</folder>
+		<folder>layouts</folder>
 		<folder>model</folder>
 		<folder>view</folder>
 		<filename>component.php</filename>
 		<filename>{{extension.name.lower}}.php</filename>
 		<filename>index.html</filename>
-		<filename>router.php</filename>.
-		<filename>routing.json</filename>
+		<filename>router.php</filename>
 	</files>
 
 	<administration>

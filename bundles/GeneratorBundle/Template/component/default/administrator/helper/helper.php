@@ -33,13 +33,27 @@ abstract class {{extension.name.cap}}Helper
 		$inflector = StringInflector::getInstance(true);
 
 		// Add Category Menu Item
-		if ($app->isAdmin())
+		if ($app->isClient('administrator'))
 		{
 			JHtmlSidebar::addEntry(
 				JText::_('JCATEGORY'),
 				'index.php?option=com_categories&extension={{extension.element.lower}}',
-				($vName === 'categories')
+				$vName === 'categories'
 			);
+
+			if (JComponentHelper::isEnabled('com_fields'))
+			{
+				JHtmlSidebar::addEntry(
+					JText::_('JGLOBAL_FIELDS'),
+					'index.php?option=com_fields&context={{extension.element.lower}}.{{controller.item.name.lower}}',
+					$vName === 'fields.fields'
+				);
+				JHtmlSidebar::addEntry(
+					JText::_('JGLOBAL_FIELD_GROUPS'),
+					'index.php?option=com_fields&view=groups&context={{extension.element.lower}}.{{controller.item.name.lower}}',
+					$vName === 'fields.groups'
+				);
+			}
 		}
 
 		foreach (new \DirectoryIterator(JPATH_ADMINISTRATOR . '/components/{{extension.element.lower}}/view') as $folder)
@@ -49,7 +63,7 @@ abstract class {{extension.name.cap}}Helper
 				JHtmlSidebar::addEntry(
 					JText::sprintf(sprintf('{{extension.element.upper}}_%s_TITLE_LIST', strtoupper($folder))),
 					'index.php?option={{extension.element.lower}}&view=' . $view,
-					($vName == $view)
+					$vName === $view
 				);
 			}
 		}
