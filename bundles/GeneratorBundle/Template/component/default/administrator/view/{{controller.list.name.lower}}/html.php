@@ -104,7 +104,9 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends GridVie
 	 */
 	protected function prepareData()
 	{
+		$data = $this->getData();
 
+		//
 	}
 
 	/**

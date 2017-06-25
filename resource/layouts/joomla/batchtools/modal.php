@@ -24,16 +24,18 @@ $task = ArrayHelper::getValue($displayData, 'task_prefix', '');
 	</div>
 
 	<div class="modal-body form-horizontal">
-		<p>
-			<?php echo JText::_($textPrefix . '_BATCH_TIP'); ?>
-		</p>
+		<div class="container-fluid">
+            <p>
+				<?php echo JText::_($textPrefix . '_BATCH_TIP'); ?>
+            </p>
 
-		<?php
-		foreach ($data->batchForm->getGroup('batch') as $field)
-		{
-			echo $field->getControlGroup();
-		}
-		?>
+			<?php
+			foreach ($data->batchForm->getGroup('batch') as $field)
+			{
+				echo $field->getControlGroup();
+			}
+			?>
+        </div>
 	</div>
 
 	<div class="modal-footer">
