@@ -1,0 +1,128 @@
+#!/bin/sh php
+<?php
+/**
+ * Asikart Joomla! Extensions extension link script.
+ *
+ * @copyright (c) 2014 Asikart.com. All rights reserved.
+ */
+
+include_once __DIR__ . '/library/console.php';
+
+/**
+ * The Makelink class.
+ *
+ * @since  1.0
+ */
+class Makelink extends \Asika\SimpleConsole\Console
+{
+	/**
+	 * Property help.
+	 *
+	 * @var  string
+	 */
+    protected $help = <<<HELP
+[Usage] php makelink <joomla_dir>
+
+    h | help    Show help info.
+    f | force   Force replace exists dir.
+HELP;
+
+	/**
+	 * doExecute
+	 *
+	 * @return  bool
+	 */
+    protected function doExecute()
+	{
+		$joomlaDir = $this->getArgument(0);
+
+		// Check Arguments
+		if (!$joomlaDir)
+		{
+			throw new \Asika\SimpleConsole\CommandArgsException('Please give me Joomla path.');
+		}
+
+		// Check Joomla dir
+		if (!is_dir($joomlaDir . '/libraries/joomla'))
+		{
+			throw new \RuntimeException(sprintf('%s is not a Joomla dir.', $joomlaDir));
+		}
+
+		// Prepare some variables
+		$windows = defined('PHP_WINDOWS_VERSION_MAJOR');
+		$root = dirname(__DIR__);
+
+		$dirs = include __DIR__ . '/dirs.php';
+
+		// Do bakup and create link
+		foreach ($dirs as $dir => $target)
+		{
+			$dir    = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $dir);
+			$target = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $target);
+
+			if ($windows)
+			{
+				if (is_dir("{$joomlaDir}\\{$dir}"))
+				{
+					if ($this->getOption(array('f', 'force')))
+					{
+						$this->exec("rmdir {$joomlaDir}\\{$dir}");
+					}
+					else
+					{
+						$this->exec("powershell.exe mv {$joomlaDir}\\{$dir} {$joomlaDir}\\{$dir}.bak");
+					}
+				}
+
+				$this->exec("mklink /D {$joomlaDir}\\{$dir} {$root}\\{$target}");
+
+				$this->out("Make link {$joomlaDir}\\{$dir} to {$root}\\{$target}");
+			}
+			else
+			{
+				if (is_dir("{$joomlaDir}/{$dir}"))
+				{
+					if ($this->getOption(array('f', 'force')))
+					{
+						exec("rm -rf {$joomlaDir}/{$dir}");
+					}
+					else
+					{
+						exec("mv {$joomlaDir}/{$dir} {$joomlaDir}/{$dir}.bak");
+					}
+				}
+
+				$this->exec("ln -s {$root}/{$target} {$joomlaDir}/{$dir}");
+
+				$this->out("Make link {$root}/{$target} to {$joomlaDir}/{$dir}");
+			}
+		}
+
+		$this->createBinFile($joomlaDir);
+
+		return true;
+	}
+
+	/**
+	 * createBinFile
+	 *
+	 * @param string $joomlaDir
+	 *
+	 * @return  void
+	 */
+	protected function createBinFile($joomlaDir)
+	{
+	    include_once __DIR__ . '/../src/System/Installer/WindwalkerInstaller.php';
+
+	    \Windwalker\System\Installer\WindwalkerInstaller::createBinFile($joomlaDir);
+
+		$this->out('Bin file created.');
+
+	    \Windwalker\System\Installer\WindwalkerInstaller::createBundleDir($joomlaDir);
+
+	    $this->out('Bundle folder created.');
+	}
+}
+
+$app = new Makelink;
+$app->execute();
