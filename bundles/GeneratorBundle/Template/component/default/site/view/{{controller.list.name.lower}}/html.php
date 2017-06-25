@@ -93,7 +93,7 @@ class {{extension.name.cap}}View{{controller.list.name.cap}}Html extends ListHtm
 
 			// Plugins
 			// =====================================================================================
-			FrontViewHelper::events($item, $this['params'], '{{extension.element.lower}}.{{controller.item.name.lower}}');
+			FrontViewHelper::events($item, $this['params'], $this->context);
 		}
 
 		// Set title

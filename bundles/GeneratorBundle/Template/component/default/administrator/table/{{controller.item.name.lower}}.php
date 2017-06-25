@@ -130,6 +130,11 @@ class {{extension.name.cap}}Table{{controller.item.name.cap}} extends Table
 	 */
 	protected function _getAssetTitle()
 	{
-		return $this->title;
+		if (property_exists($this, 'title'))
+		{
+			return $this->title;
+		}
+
+		return $this->_getAssetName();
 	}
 }
