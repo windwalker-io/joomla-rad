@@ -34,7 +34,6 @@ class Build extends \Asika\SimpleConsole\Console
 	 */
 	protected $ignores = array(
 		'/.git/*',
-		'/bin/*',
 		'/docs/*',
 		'/test/*',
 		'/.gitignore',
