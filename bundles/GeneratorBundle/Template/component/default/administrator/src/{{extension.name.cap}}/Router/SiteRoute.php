@@ -1,12 +1,15 @@
 <?php
 /**
- * Part of rad project.
+ * Part of Component {{extension.name.cap}} files.
  *
- * @copyright  Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
- * @license    GNU General Public License version 2 or later.
+ * @copyright   Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
+ * @license     GNU General Public License version 2 or later.
  */
 
 namespace {{extension.name.cap}}\Router;
+
+// No direct access
+defined('_JEXEC') or die;
 
 /**
  * The SiteRoute class.

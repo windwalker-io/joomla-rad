@@ -1,4 +1,10 @@
 <?php
+/**
+ * Part of Component {{extension.name.cap}} files.
+ *
+ * @copyright   Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
+ * @license     GNU General Public License version 2 or later.
+ */
 
 namespace {{extension.name.cap}}\Component;
 
