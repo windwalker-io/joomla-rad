@@ -179,8 +179,8 @@ class JFormFieldModal extends JFormField
 	 */
 	public function getTitle()
 	{
-		$ctrl        = $this->view_list;
 		$title_field = $this->element['title_field'] ? (string) $this->element['title_field'] : 'title';
+		$table_name  = $this->getElement('table', '#__' . $this->component . '_' . $this->view_list);
 
 		/** @var $db JDatabaseDriver */
 		$container = Container::getInstance();
@@ -188,7 +188,7 @@ class JFormFieldModal extends JFormField
 		$q  = $db->getQuery(true);
 
 		$q->select($title_field)
-			->from('#__' . $this->component . '_' . $ctrl)
+			->from($table_name)
 			->where("id = '{$this->value}'");
 
 		$db->setQuery($q);
