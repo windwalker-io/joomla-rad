@@ -5,6 +5,7 @@
  * @copyright   Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
  * @license     GNU General Public License version 2 or later.
  */
+
 namespace {{extension.name.cap}}\Config;
 
 use Windwalker\Helper\PathHelper;

@@ -1,9 +1,9 @@
 <?php
 /**
- * Part of rad project.
+ * Part of Component {{extension.name.cap}} files.
  *
- * @copyright  Copyright (C) 2017 ${ORGANIZATION}.
- * @license    __LICENSE__
+ * @copyright   Copyright (C) 2016 {ORGANIZATION}. All rights reserved.
+ * @license     GNU General Public License version 2 or later.
  */
 
 // No direct access

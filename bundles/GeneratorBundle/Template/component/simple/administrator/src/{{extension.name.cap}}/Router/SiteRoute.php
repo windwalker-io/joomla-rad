@@ -8,6 +8,8 @@
 
 namespace {{extension.name.cap}}\Router;
 
+defined('_JEXEC') or die;
+
 /**
  * The SiteRoute class.
  *
