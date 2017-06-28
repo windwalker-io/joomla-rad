@@ -6,8 +6,6 @@
  * @license     GNU General Public License version 2 or later.
  */
 
-use Windwalker\View\Layout\FileLayout;
-
 // No direct access
 defined('_JEXEC') or die;
 

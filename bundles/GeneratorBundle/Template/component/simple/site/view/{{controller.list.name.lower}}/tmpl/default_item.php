@@ -6,9 +6,6 @@
  * @license     GNU General Public License version 2 or later.
  */
 
-use {{extension.name.cap}}\Router\Route;
-use Windwalker\View\Helper\FrontViewHelper;
-
 // No direct access
 defined('_JEXEC') or die;
 

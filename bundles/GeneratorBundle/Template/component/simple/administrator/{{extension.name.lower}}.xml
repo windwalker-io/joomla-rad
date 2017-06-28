@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component"
-	version="3.2"
+	version="3.7"
 	method="upgrade">
 	<name>{{extension.element.lower}}</name>
 	<creationDate>2014-1-11</creationDate>
@@ -37,6 +37,7 @@
 		<folder>images</folder>
 		<folder>layouts</folder>
 		<folder>model</folder>
+		<folder>router</folder>
 		<folder>view</folder>
 		<filename>component.php</filename>
 		<filename>{{extension.name.lower}}.php</filename>

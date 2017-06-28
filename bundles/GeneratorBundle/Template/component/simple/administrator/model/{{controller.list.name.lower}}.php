@@ -6,7 +6,6 @@
  * @license     GNU General Public License version 2 or later.
  */
 
-use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
 
