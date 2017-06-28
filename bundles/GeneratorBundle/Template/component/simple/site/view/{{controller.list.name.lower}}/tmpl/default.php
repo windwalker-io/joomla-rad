@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use {{extension.name.cap}}\Router\Route;
 use Windwalker\Data\Data;
 use Windwalker\View\Layout\FileLayout;
 
@@ -28,7 +29,7 @@ $data      = $this->data;
 $state     = $data->state;
 $user      = $container->get('user');
 ?>
-<form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::view('{{controller.list.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm">
 
 	<div id="{{extension.name.lower}}-wrap" class="windwalker list container-fluid {{controller.list.name.lower}}">
 		<div id="{{extension.name.lower}}-wrap-inner">

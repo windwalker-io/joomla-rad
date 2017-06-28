@@ -202,7 +202,7 @@ class RadRoute
 	 *
 	 * @since   2.1.10
 	 */
-	public static function view($resource, $query, $xhtml = true, $ssl = null)
+	public static function view($resource, $query = array(), $xhtml = true, $ssl = null)
 	{
 		if (static::$defaultOption && strpos($resource, '@') === false)
 		{
@@ -238,7 +238,7 @@ class RadRoute
 	 *
 	 * @since   2.1.10
 	 */
-	public static function task($resource, $query, $xhtml = true, $ssl = null)
+	public static function task($resource, $query = array(), $xhtml = true, $ssl = null)
 	{
 		if (static::$defaultOption && strpos($resource, '@') === false)
 		{
