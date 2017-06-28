@@ -19,9 +19,13 @@ if (file_exists(dirname(__DIR__) . '/../../defines.php'))
 	require_once dirname(__DIR__) . '/../../defines.php';
 }
 
-if (!defined('_JDEFINES'))
+if (!defined('JPATH_BASE'))
 {
 	define('JPATH_BASE', realpath(dirname(__DIR__) . '/../..'));
+}
+
+if (!defined('_JDEFINES'))
+{
 	require_once JPATH_BASE . '/includes/defines.php';
 }
 

@@ -43,13 +43,11 @@ class Windwalker
 
 		include_once __DIR__ . '/PHP/methods.php';
 
-		define('WINDWALKER', dirname(__DIR__));
-
-		define('WINDWALKER_SOURCE', __DIR__);
-
-		define('WINDWALKER_TEST', WINDWALKER . '/test');
-
-		define('WINDWALKER_BUNDLE', dirname(WINDWALKER) . '/windwalker-bundles');
+		// Do not use realpath() since we use symlink to develop RAD now.
+		define('WINDWALKER',        JPATH_LIBRARIES . DIRECTORY_SEPARATOR . 'windwalker');
+		define('WINDWALKER_SOURCE', WINDWALKER . DIRECTORY_SEPARATOR . 'src');
+		define('WINDWALKER_TEST',   WINDWALKER . DIRECTORY_SEPARATOR . 'test');
+		define('WINDWALKER_BUNDLE', dirname(WINDWALKER) . DIRECTORY_SEPARATOR . 'windwalker-bundles');
 
 		// Register global provider
 		$container = Container::getInstance();

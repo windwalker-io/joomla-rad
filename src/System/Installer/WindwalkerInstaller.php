@@ -24,6 +24,8 @@ class WindwalkerInstaller
 #!/usr/bin/env php
 <?php
 
+define('JPATH_BASE', realpath(dirname(__DIR__)));
+
 include_once dirname(__DIR__) . '/libraries/windwalker/bin/windwalker.php';
 
 BIN;
