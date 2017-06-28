@@ -7,7 +7,6 @@
  */
 
 use Windwalker\DI\Container;
-use Windwalker\Helper\HtmlHelper;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
 use Windwalker\Script\JQueryScript;

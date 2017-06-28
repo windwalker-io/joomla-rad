@@ -9,9 +9,9 @@
 namespace Windwalker\View\Html;
 
 use Joomla\DI\Container;
-use Windwalker\Registry\Registry;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
+use Windwalker\Registry\Registry;
 use Windwalker\View\Helper\GridHelper;
 
 /**

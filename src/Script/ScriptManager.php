@@ -8,9 +8,9 @@
 
 namespace Windwalker\Script;
 
+use Windwalker\Asset\AssetManager;
 use Windwalker\DI\Container;
 use Windwalker\Facade\AbstractProxyFacade;
-use Windwalker\Asset\AssetManager;
 
 /**
  * An Asset Manager class help us manage script dependency.

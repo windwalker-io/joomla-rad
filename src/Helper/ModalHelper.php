@@ -9,7 +9,6 @@
 namespace Windwalker\Helper;
 
 use JForm;
-use JHtml;
 use Windwalker\DI\Container;
 
 // No direct access

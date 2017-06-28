@@ -8,7 +8,6 @@
 
 namespace Windwalker\Helper;
 
-use Windwalker\Debugger\Debugger;
 use Windwalker\Facade\AbstractFacade;
 use Windwalker\Model\Helper\QueryHelper;
 

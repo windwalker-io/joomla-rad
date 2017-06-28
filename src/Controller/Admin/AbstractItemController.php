@@ -8,9 +8,11 @@
 
 namespace Windwalker\Controller\Admin;
 
-use Windwalker\String\StringInflector as Inflector;;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\ContextHelper;
+use Windwalker\String\StringInflector as Inflector;
+
+;
 
 /**
  * The Controller to handle single item.

@@ -9,9 +9,9 @@
 namespace Windwalker\Image;
 
 use Windwalker\Filesystem\Path;
+use Windwalker\Helper\CurlHelper;
 use Windwalker\Joomla\Registry\DecoratingRegistry;
 use Windwalker\Registry\Registry;
-use Windwalker\Helper\CurlHelper;
 use Windwalker\System\ExtensionHelper;
 
 /**

@@ -8,8 +8,10 @@
 
 namespace Windwalker\Controller\Admin;
 
-use Windwalker\String\StringInflector as Inflector;;
 use Windwalker\Helper\ArrayHelper;
+use Windwalker\String\StringInflector as Inflector;
+
+;
 
 /**
  * A controller to handle list page operation.

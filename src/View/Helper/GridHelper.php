@@ -11,10 +11,9 @@ namespace Windwalker\View\Helper;
 use JHtml;
 use JText;
 use Windwalker\Data\Data;
+use Windwalker\DI\Container;
 use Windwalker\Dom\HtmlElement;
 use Windwalker\Joomla\Registry\DecoratingRegistry;
-use Windwalker\Registry\Registry;
-use Windwalker\DI\Container;
 
 /**
  * A helper to handle list grid operation.

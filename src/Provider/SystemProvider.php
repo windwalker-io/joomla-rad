@@ -3,12 +3,11 @@
 namespace Windwalker\Provider;
 
 use Joomla\DI\Container;
-use Windwalker\Registry\Registry;
 use Windwalker\DI\ServiceProvider;
 use Windwalker\Helper\DateHelper;
-use Windwalker\Script\ModuleManager;
+use Windwalker\Registry\Registry;
 use Windwalker\Relation\RelationContainer;
-
+use Windwalker\Script\ModuleManager;
 
 /**
  * Windwalker system provider.

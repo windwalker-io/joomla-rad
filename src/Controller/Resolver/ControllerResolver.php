@@ -9,8 +9,8 @@
 namespace Windwalker\Controller\Resolver;
 
 use JInput;
-use Windwalker\DI\Container;
 use Windwalker\Controller\Controller;
+use Windwalker\DI\Container;
 
 defined('_JEXEC') or die('Restricted access');
 

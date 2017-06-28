@@ -8,8 +8,8 @@
 
 namespace Windwalker\DI;
 
-use Joomla\DI\ServiceProviderInterface;
 use Joomla\DI\Container as JoomlaContainer;
+use Joomla\DI\ServiceProviderInterface;
 
 /**
  * Basic ServiceProvider class.

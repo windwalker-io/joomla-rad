@@ -8,8 +8,8 @@
 
 namespace Windwalker\Controller\Resolver;
 
-use Windwalker\Utilities\ArrayHelper;
 use Windwalker\String\StringNormalise;
+use Windwalker\Utilities\ArrayHelper;
 
 /**
  * The Controller Delegator.

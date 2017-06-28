@@ -9,10 +9,10 @@
 namespace Windwalker\Api;
 
 use Joomla\Uri\Uri;
-use Windwalker\Registry\Registry;
 use Windwalker\Api\Authentication\Authentication;
-use Windwalker\System\ExtensionHelper;
 use Windwalker\Api\Response\JsonResponse;
+use Windwalker\Registry\Registry;
+use Windwalker\System\ExtensionHelper;
 
 /**
  * API server.

@@ -8,10 +8,10 @@
 
 namespace Windwalker\Console\Application;
 
-use Windwalker\Console\IO\IOInterface;
-use Windwalker\DI\Container;
 use Windwalker\Console\Descriptor\CommandDescriptor;
 use Windwalker\Console\Descriptor\OptionDescriptor;
+use Windwalker\Console\IO\IOInterface;
+use Windwalker\DI\Container;
 use Windwalker\Registry\Registry;
 
 /**

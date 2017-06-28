@@ -10,11 +10,13 @@ namespace Windwalker\Model;
 
 use JFilterOutput;
 use Joomla\DI\Container as JoomlaContainer;
-use Windwalker\String\StringInflector as Inflector;;
 use JTable;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\DateHelper;
 use Windwalker\String\StringHelper;
+use Windwalker\String\StringInflector as Inflector;
+
+;
 
 /**
  * Prototype admin model.

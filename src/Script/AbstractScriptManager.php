@@ -8,8 +8,8 @@
 
 namespace Windwalker\Script;
 
-use Windwalker\DI\Container;
 use Windwalker\Asset\AssetManager;
+use Windwalker\DI\Container;
 
 /**
  * The AbstractScriptManager class.

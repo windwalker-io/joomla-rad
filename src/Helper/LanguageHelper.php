@@ -8,7 +8,6 @@
 
 namespace Windwalker\Helper;
 
-use JFactory;
 use JFolder;
 use Joomla\Uri\Uri;
 use Windwalker\Data\Data;

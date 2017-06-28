@@ -9,7 +9,6 @@
 namespace Windwalker\Model;
 
 use Joomla\DI\Container as JoomlaContainer;
-use Windwalker\String\StringInflector as Inflector;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
@@ -19,6 +18,7 @@ use Windwalker\Model\Helper\AdminListHelper;
 use Windwalker\Model\Helper\QueryHelper;
 use Windwalker\Model\Provider\GridProvider;
 use Windwalker\String\StringHelper;
+use Windwalker\String\StringInflector as Inflector;
 
 defined('_JEXEC') or die;
 

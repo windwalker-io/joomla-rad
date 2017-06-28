@@ -8,9 +8,11 @@
 
 namespace Windwalker\View\Html;
 
-use Windwalker\String\StringInflector as Inflector;;
-use Windwalker\Model\Model;
 use Windwalker\DI\Container;
+use Windwalker\Model\Model;
+use Windwalker\String\StringInflector as Inflector;
+
+;
 
 /**
  * The item view.

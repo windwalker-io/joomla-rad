@@ -8,9 +8,9 @@
 
 namespace Windwalker\View\Engine;
 
-use SplPriorityQueue;
-use Joomla\DI\ContainerAwareInterface;
 use Joomla\DI\Container as JoomlaContainer;
+use Joomla\DI\ContainerAwareInterface;
+use SplPriorityQueue;
 use Windwalker\Data\Data;
 use Windwalker\DI\Container;
 use Windwalker\Joomla\Registry\DecoratingRegistry;

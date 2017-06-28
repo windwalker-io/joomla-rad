@@ -3,7 +3,6 @@
 namespace Windwalker\Controller\Admin;
 
 use Windwalker\Controller\Controller;
-use Windwalker\Helper\UriHelper;
 
 /**
  * Class AbstractRedirectController

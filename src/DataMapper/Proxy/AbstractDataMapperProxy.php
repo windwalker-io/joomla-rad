@@ -8,8 +8,6 @@
 
 namespace Windwalker\DataMapper\Proxy;
 
-use JObservableInterface;
-use JObserverInterface;
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 use Windwalker\DataMapper\AbstractDataMapper;

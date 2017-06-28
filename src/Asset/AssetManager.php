@@ -8,9 +8,9 @@
 
 namespace Windwalker\Asset;
 
-use Windwalker\DI\Container;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
+use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\String\StringHelper;
 use Windwalker\Utilities\Queue\PriorityQueue;

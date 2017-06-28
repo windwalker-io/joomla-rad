@@ -8,8 +8,6 @@
 
 namespace Windwalker\Html;
 
-use Windwalker\String\StringHelper;
-
 // No direct access
 defined('_JEXEC') or die;
 

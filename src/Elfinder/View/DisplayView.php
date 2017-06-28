@@ -8,8 +8,8 @@
 
 namespace Windwalker\Elfinder\View;
 
-use Windwalker\Registry\Registry;
 use JURI;
+use Windwalker\Registry\Registry;
 use Windwalker\View\Html\AbstractHtmlView;
 
 /**

@@ -12,7 +12,6 @@ use Joomla\Registry\Registry;
 use Windwalker\Controller\Controller;
 use Windwalker\DI\Container;
 use Windwalker\Event\ListenerHelper;
-use Windwalker\Utilities\Reflection\ReflectionHelper;
 
 /**
  * Component class.
