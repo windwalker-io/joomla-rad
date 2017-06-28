@@ -37,7 +37,7 @@ class PrepareAction extends AbstractAction
 		if ($this->config['client'] === 'administrator')
 		{
 			$files[] = 'table/' . $this->config['item_name'] . '.php';
-			$files[] = 'src/Flower/Mapper' . ucfirst($this->config['item_name']) . 'Mapper.php';
+			$files[] = 'src/{{extension.name.cap}}/Mapper/{{controller.item.name.cap}}Mapper.php';
 		}
 		
 		foreach ($files as $file)
