@@ -64,7 +64,7 @@ class Console extends \Windwalker\Console\Console
 		// Make Windows no ANSI color
 		if (defined('PHP_WINDOWS_VERSION_BUILD'))
 		{
-			$io->setOption('ansi', true);
+			$io->setOption('ansi', 'off');
 		}
 
 		parent::__construct($io, $config);
@@ -186,7 +186,33 @@ HELP
 	 */
 	public function enqueueMessage($msg, $type = 'message')
 	{
-		$this->out($msg);
+		switch ($type)
+		{
+			case 'success':
+			case 'green':
+				$tag = '<info>%s</info>';
+				break;
+			case 'warning':
+			case 'yellow':
+				$tag = '<comment>%s</comment>';
+				break;
+			case 'info':
+			case 'blue':
+				$tag = '<option>%s</option>';
+				break;
+			case 'error':
+			case 'danger':
+			case 'red':
+				$tag = '<error>%s</error>';
+				break;
+			default:
+				$tag = '%s';
+				break;
+		}
+
+		$time = \JDate::getInstance('now', $this->get('offset'))->format('Y-m-d H:i:s', true);
+
+		$this->out(sprintf('[%s] ' . $tag, $time, $msg));
 
 		return $this;
 	}
