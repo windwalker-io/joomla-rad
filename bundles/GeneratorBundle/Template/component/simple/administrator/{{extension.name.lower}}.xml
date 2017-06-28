@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component"
-	version="3.4"
+	version="3.2"
 	method="upgrade">
 	<name>{{extension.element.lower}}</name>
-	<creationDate>2016-02-03</creationDate>
+	<creationDate>2014-1-11</creationDate>
 	<copyright>Copyright (C) 2016. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later.</license>
-	<author>Asika</author>
+	<author></author>
 	<authorEmail></authorEmail>
-	<authorUrl>http://example.com</authorUrl>
+	<authorUrl>example.com</authorUrl>
 	<version>1.0.0</version>
 	<description>{{extension.element.upper}}_XML_DESCRIPTION</description>
 
@@ -35,13 +35,13 @@
 		<folder>controller</folder>
 		<folder>helper</folder>
 		<folder>images</folder>
+		<folder>layouts</folder>
 		<folder>model</folder>
 		<folder>view</folder>
 		<filename>component.php</filename>
 		<filename>{{extension.name.lower}}.php</filename>
 		<filename>index.html</filename>
 		<filename>router.php</filename>
-		<filename>routing.yml</filename>
 	</files>
 
 	<administration>
@@ -94,8 +94,9 @@
 
 	<!--
 	<updateservers>
-		<server type="extension" priority="1" name="LYRASOFT {{extension.name.cap}} Component">http://update.lyrasoft.net/component/{{extension.element.lower}}.xml</server>
+		<server type="extension" priority="1" name="{ORGANIZATION} {{extension.name.cap}} Component">http://update.{ORGANIZATION}.com/component/{{extension.element.lower}}.xml</server>
 	</updateservers>
 	-->
 
 </extension>
+

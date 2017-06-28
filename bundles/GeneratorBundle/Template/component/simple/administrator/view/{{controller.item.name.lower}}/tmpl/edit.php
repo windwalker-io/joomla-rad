@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 JHtmlBootstrap::tooltip();
 JHtmlFormbehavior::chosen('select');
 JHtmlBehavior::formvalidator();
+JHtmlBehavior::tabstate();
 
 /**
  * Prepare data for this template.
@@ -44,6 +45,8 @@ $tabs = array(
 <div id="{{extension.name.lower}}" class="windwalker {{controller.item.name.lower}} edit-form row-fluid">
 	<form action="<?php echo JUri::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
+
+		<?php echo JLayoutHelper::render('joomla.edit.title_alias', $data->viewObject); ?>
 
 		<?php echo JHtmlBootstrap::startTabSet('{{controller.item.name.lower}}EditTab', array('active' => 'tab_basic')); ?>
 
