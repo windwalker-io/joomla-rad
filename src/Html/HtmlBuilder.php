@@ -8,7 +8,6 @@
 
 namespace Windwalker\Html;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

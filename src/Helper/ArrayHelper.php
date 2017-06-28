@@ -10,7 +10,6 @@ namespace Windwalker\Helper;
 
 use Windwalker\String\Utf8String;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

@@ -6,7 +6,6 @@
  * @license        GNU General Public License version 2 or later.
  */
 
-// No direct access
 defined('_JEXEC') or die;
 ?>
 <div class="{{extension.name.lower}}-module-wrap<?php echo $classSfx; ?>">

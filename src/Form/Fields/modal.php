@@ -12,7 +12,6 @@ use Windwalker\Helper\ModalHelper;
 use Windwalker\Script\JQueryScript;
 use Windwalker\Script\WindwalkerScript;
 
-// No direct access
 defined('_JEXEC') or die;
 
 include_once JPATH_LIBRARIES . '/windwalker/src/init.php';

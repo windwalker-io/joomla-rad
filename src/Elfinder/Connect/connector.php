@@ -8,7 +8,6 @@
  * @license     GNU General Public License version 2 or later..txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
 
 include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'elFinderConnector.class.php';

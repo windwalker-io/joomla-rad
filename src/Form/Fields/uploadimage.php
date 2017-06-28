@@ -6,7 +6,6 @@
  * @license    GNU General Public License version 2 or later.
  */
 
-// No direct access
 use Windwalker\Helper\DateHelper;
 use Windwalker\Image\ThumbHelper;
 

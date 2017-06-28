@@ -11,7 +11,6 @@ use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
 use Windwalker\Script\WindwalkerScript;
 
-// No direct access
 defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('list');

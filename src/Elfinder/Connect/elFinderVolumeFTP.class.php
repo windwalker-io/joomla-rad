@@ -8,7 +8,6 @@
  * @license     GNU General Public License version 2 or later..txt
  */
 
-// No direct access
 defined('_JEXEC') or die;
 
 function chmodnum($chmod) {
