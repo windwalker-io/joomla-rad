@@ -10,7 +10,6 @@ use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

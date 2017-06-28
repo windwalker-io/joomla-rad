@@ -8,7 +8,6 @@
 
 use Windwalker\View\Layout\FileLayout;
 
-// No direct access
 defined('_JEXEC') or die;
 
 // Prepare script

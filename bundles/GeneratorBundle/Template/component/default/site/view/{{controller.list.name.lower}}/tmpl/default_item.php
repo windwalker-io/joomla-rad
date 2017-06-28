@@ -9,7 +9,6 @@
 use {{extension.name.cap}}\Router\Route;
 use Windwalker\View\Helper\FrontViewHelper;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

@@ -8,7 +8,6 @@
 
 use Windwalker\View\Helper\FrontViewHelper;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

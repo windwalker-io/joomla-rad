@@ -8,7 +8,6 @@
 
 use Windwalker\Controller\Resolver\ControllerDelegator;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

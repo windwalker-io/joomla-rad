@@ -8,7 +8,6 @@
 
 namespace {{extension.name.cap}}\Router;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

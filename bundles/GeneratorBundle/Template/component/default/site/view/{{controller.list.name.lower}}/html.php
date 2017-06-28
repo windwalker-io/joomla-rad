@@ -11,7 +11,6 @@ use Windwalker\Data\Data;
 use Windwalker\View\Helper\FrontViewHelper;
 use Windwalker\View\Html\ListHtmlView;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

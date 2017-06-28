@@ -10,7 +10,6 @@ namespace {{extension.name.cap}}\Component;
 
 use Windwalker\Component\Component;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

@@ -8,7 +8,6 @@
 
 use Windwalker\Bootstrap\Dropdown;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

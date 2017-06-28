@@ -12,7 +12,6 @@ use Windwalker\DataMapper\DataMapper;
 use Windwalker\View\Helper\FrontViewHelper;
 use Windwalker\View\Html\ItemHtmlView;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

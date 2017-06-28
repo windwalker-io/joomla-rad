@@ -11,7 +11,6 @@ namespace {{extension.name.cap}}\Provider;
 use Joomla\DI\Container;
 use Windwalker\DI\ServiceProvider;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

@@ -9,7 +9,6 @@
 use Windwalker\Data\Data;
 use Windwalker\View\Layout\FileLayout;
 
-// No direct access
 defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();
