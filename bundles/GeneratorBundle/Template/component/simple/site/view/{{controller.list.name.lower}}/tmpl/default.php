@@ -8,7 +8,6 @@
 
 use {{extension.name.cap}}\Router\Route;
 
-// No direct access
 defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();

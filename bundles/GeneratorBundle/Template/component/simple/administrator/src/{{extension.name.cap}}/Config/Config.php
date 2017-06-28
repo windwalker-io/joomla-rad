@@ -11,7 +11,6 @@ namespace {{extension.name.cap}}\Config;
 use Windwalker\Helper\PathHelper;
 use Windwalker\System\Config\AbstractConfig;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

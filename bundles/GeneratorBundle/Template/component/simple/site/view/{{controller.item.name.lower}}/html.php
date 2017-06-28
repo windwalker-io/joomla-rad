@@ -10,7 +10,6 @@ use {{extension.name.cap}}\Router\Route;
 use Windwalker\Data\Data;
 use Windwalker\View\Html\ItemHtmlView;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

@@ -8,7 +8,6 @@
 
 namespace {{extension.name.cap}}\Listener\Pro;
 
-// No direct access
 defined('_JEXEC') or die;
 
 use JFactory;

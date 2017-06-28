@@ -10,7 +10,6 @@ namespace {{extension.name.cap}}\Router;
 
 use Windwalker\Router\RadRoute;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

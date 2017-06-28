@@ -8,7 +8,6 @@
 
 use Windwalker\Model\AdminModel;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

@@ -8,7 +8,6 @@
 
 use Windwalker\Table\Table;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**

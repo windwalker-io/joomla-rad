@@ -8,7 +8,6 @@
 
 use Windwalker\Model\ItemModel;
 
-// No direct access
 defined('_JEXEC') or die;
 
 /**
