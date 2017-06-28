@@ -61,7 +61,7 @@ HELP;
 	protected function doExecute()
 	{
 		// Prepare zip name.
-		$zipFile = BUILD_ROOT . '/../%s_%s.zip';
+		$zipFile = BUILD_ROOT . '/../%s-%s.zip';
 
 		$version = $this->getArgument(0);
 
