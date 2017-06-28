@@ -8,8 +8,6 @@
 
 namespace Windwalker\DataMapper\Observer;
 
-use JObservableInterface;
-use JObserverInterface;
 use Windwalker\Data\DataSet;
 use Windwalker\DI\Container;
 use Windwalker\Relation\Handler\AbstractRelationHandler;
@@ -37,23 +35,6 @@ class RelationObserver extends AbstractDataMapperObserver
 	 * @var  Table
 	 */
 	protected $parentTable;
-
-	/**
-	 * Creates the associated observer instance and attaches it to the $observableObject
-	 *
-	 * @param   JObservableInterface $observableObject The observable subject object
-	 * @param   array                $params           Params for this observer
-	 *
-	 * @return  JObserverInterface
-	 *
-	 * @since   3.1.2
-	 */
-	public static function createObserver(JObservableInterface $observableObject, $params = array())
-	{
-		$observer = new static($observableObject, $params);
-
-		return $observer;
-	}
 
 	/**
 	 * Pass Relation object to Parent Table.
