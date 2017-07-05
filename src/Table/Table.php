@@ -27,6 +27,15 @@ class Table extends \JTable
 	public $_relation;
 
 	/**
+	 * Property _casts.
+	 *
+	 * @var  array
+	 */
+	protected $_jsons = array(
+		'params'
+	);
+
+	/**
 	 * Object constructor to set table and key fields.  In most cases this will
 	 * be overridden by child classes to explicitly set the table and key fields
 	 * for a particular database table.
@@ -81,7 +90,23 @@ class Table extends \JTable
 	 */
 	public function load($keys = null, $reset = true)
 	{
-		return parent::load($keys, $reset);
+		$result = parent::load($keys, $reset);
+
+		if ($result)
+		{
+			foreach ($this->_jsons as $field)
+			{
+				if (property_exists($this, $field))
+				{
+					if (is_string($this->$field))
+					{
+						$this->$field = json_decode($this->$field, true);
+					}
+				}
+			}
+		}
+
+		return $reset;
 	}
 
 	/**
@@ -97,11 +122,14 @@ class Table extends \JTable
 	 */
 	public function store($updateNulls = false)
 	{
-		if (property_exists($this, 'params') && !empty($this->params))
+		foreach ($this->_jsons as $field)
 		{
-			if (is_array($this->params) || is_object($this->params))
+			if (property_exists($this, $field) && !empty($this->$field))
 			{
-				$this->params = json_encode($this->params);
+				if (is_array($this->$field) || is_object($this->$field))
+				{
+					$this->$field = json_encode($this->$field);
+				}
 			}
 		}
 
