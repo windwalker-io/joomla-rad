@@ -54,7 +54,7 @@ class ItemModel extends AbstractAdvancedModel
 
 		// Convert to the JObject before adding other data.
 		$properties = $table->getProperties(1);
-		$item = ArrayHelper::toObject($properties, 'stdClass');
+		$item = ArrayHelper::toObject($properties, 'stdClass', false);
 
 		if (!$item)
 		{
