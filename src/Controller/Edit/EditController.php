@@ -30,8 +30,10 @@ class EditController extends AbstractItemController
 		// Get the previous record id (if any) and the current record id.
 		$this->recordId = count($cid) ? $cid[0] : $this->recordId;
 
+		$item = $this->model->set($this->model->getName() . '.id', $this->recordId)->getItem();
+
 		// Access check.
-		if (!$this->allowEdit(array($this->key => $this->recordId), $this->key))
+		if (!$this->allowEdit(get_object_vars($item), $this->key))
 		{
 			// Set the internal error and also the redirect error.
 			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
