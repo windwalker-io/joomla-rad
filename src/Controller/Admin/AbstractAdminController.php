@@ -137,10 +137,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 */
 	protected function allowAdd($data = array())
 	{
-		return (
-			$this->user->authorise('core.create', $this->option)
-			|| count($this->user->getAuthorisedCategories($this->option, 'core.create'))
-		);
+		return $this->getDelegator()->allowAdd($data);
 	}
 
 	/**
@@ -155,16 +152,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 */
 	protected function allowSave($data, $key = 'id')
 	{
-		$recordId = isset($data[$key]) ? $data[$key] : '0';
-
-		if ($recordId)
-		{
-			return $this->allowEdit($data, $key);
-		}
-		else
-		{
-			return $this->allowAdd($data);
-		}
+		return $this->getDelegator()->allowSave($data, $key);
 	}
 
 	/**
@@ -179,7 +167,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 */
 	protected function allowEdit($data = array(), $key = 'id')
 	{
-		return $this->user->authorise('core.edit', $this->option);
+		return $this->getDelegator()->allowEdit($data, $key);
 	}
 
 	/**
@@ -194,7 +182,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 */
 	protected function allowUpdateState($data = array(), $key = 'id')
 	{
-		return $this->user->authorise('core.edit.state', $this->option);
+		return $this->getDelegator()->allowUpdateState($data, $key);
 	}
 
 	/**
@@ -209,7 +197,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 */
 	protected function allowDelete($data = array(), $key = 'id')
 	{
-		return $this->user->authorise('core.edit', $this->option);
+		return $this->getDelegator()->allowDelete($data, $key);
 	}
 
 	/**
@@ -222,6 +210,6 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	 */
 	public function allowCategoryAdd($data, $key = 'catid')
 	{
-		return $this->user->authorise('core.create', $this->option . '.category.' . $data[$key]);
+		return $this->getDelegator()->allowCategoryAdd($data, $key);
 	}
 }

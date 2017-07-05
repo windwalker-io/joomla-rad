@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Resolver;
 
+use Windwalker\Controller\Controller;
 use Windwalker\String\StringNormalise;
 use Windwalker\Utilities\ArrayHelper;
 
@@ -76,12 +77,24 @@ class ControllerDelegator
 	}
 
 	/**
+	 * Check session token or die.
+	 *
+	 * @return void
+	 */
+	public function checkToken()
+	{
+		// Check for request forgeries
+		\JSession::checkToken() or jexit(\JText::_('JInvalid_Token'));
+	}
+
+	/**
 	 * Register aliases.
 	 *
 	 * @return  void
 	 */
 	protected function registerAliases()
 	{
+		// Override if necessary
 	}
 
 	/**
@@ -144,6 +157,122 @@ class ControllerDelegator
 	{
 		$class = $this->resolveAlias($class);
 
-		return new $class($this->input, $this->app, $this->config);
+		/** @var Controller $controller */
+		$controller = new $class($this->input, $this->app, $this->config, $this);
+
+		$controller->setDelegator($this);
+
+		return $controller;
+	}
+
+	/**
+	 * getUser
+	 *
+	 * @param int $id
+	 *
+	 * @return  \JUser
+	 */
+	public function getUser($id = null)
+	{
+		return \JFactory::getUser($id);
+	}
+
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array  $data  An array of input data.
+	 *
+	 * @return  boolean
+	 */
+	public function allowAdd($data = array())
+	{
+		$user = $this->getUser();
+		
+		return (
+			$user->authorise('core.create', $this->config['option'])
+			|| count($user->getAuthorisedCategories($this->config['option'], 'core.create'))
+		);
+	}
+
+	/**
+	 * Method to check if you can save a new or existing record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key.
+	 *
+	 * @return  boolean
+	 */
+	public function allowSave($data, $key = 'id')
+	{
+		$recordId = isset($data[$key]) ? $data[$key] : '0';
+
+		if ($recordId)
+		{
+			return $this->allowEdit($data, $key);
+		}
+		
+		return $this->allowAdd($data);
+	}
+
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
+	 */
+	public function allowEdit($data = array(), $key = 'id')
+	{
+		return $this->getUser()->authorise('core.edit', $this->config['option']);
+	}
+
+	/**
+	 * Check update access.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
+	 */
+	public function allowUpdateState($data = array(), $key = 'id')
+	{
+		return $this->getUser()->authorise('core.edit.state', $this->config['option']);
+	}
+
+	/**
+	 * Method to check delete access.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param   array   $data  An array of input data.
+	 * @param   string  $key   The name of the key for the primary key; default is id.
+	 *
+	 * @return  boolean
+	 */
+	public function allowDelete($data = array(), $key = 'id')
+	{
+		return $this->getUser()->authorise('core.edit', $this->config['option']);
+	}
+
+	/**
+	 * If category need authorize, we can write in this method.
+	 *
+	 * @param   array   $data  Category record.
+	 * @param   string  $key   Preimary key name.
+	 *
+	 * @return  boolean Can edit or not.
+	 */
+	public function allowCategoryAdd($data, $key = 'catid')
+	{
+		return $this->getUser()->authorise('core.create', $this->config['option'] . '.category.' . $data[$key]);
 	}
 }

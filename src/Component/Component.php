@@ -10,6 +10,7 @@ namespace Windwalker\Component;
 
 use Joomla\Registry\Registry;
 use Windwalker\Controller\Controller;
+use Windwalker\Controller\Resolver\ControllerResolver;
 use Windwalker\DI\Container;
 use Windwalker\Event\ListenerHelper;
 
@@ -169,7 +170,10 @@ class Component
 	{
 		$task = $this->input->get('task', $this->input->get('controller'));
 
-		/** @var $controller Controller */
+		/**
+		 * @var $controller Controller
+		 * @var $resolver   ControllerResolver
+		 */
 		$resolver   = $this->container->get('controller.resolver');
 		$controller = $resolver->getController($this->name, $task, $this->input);
 
