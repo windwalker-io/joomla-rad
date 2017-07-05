@@ -188,7 +188,10 @@ class SaveController extends AbstractItemController
 		// Attempt to save the data.
 		try
 		{
-			$this->model->save($validData);
+			if ($this->model->save($validData))
+			{
+				$validData[$this->key] = $this->model->get($this->model->getName() . '.id');
+			}
 		}
 		catch (\Exception $e)
 		{

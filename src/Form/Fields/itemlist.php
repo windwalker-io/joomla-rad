@@ -235,7 +235,7 @@ class JFormFieldItemlist extends JFormFieldList
 		// ========================================================================
 		$select = $select ? '*, ' . $select : '*';
 
-		echo $query->select($select)
+		$query->select($select)
 			->from($tableName);
 
 		$db->setQuery($query);
