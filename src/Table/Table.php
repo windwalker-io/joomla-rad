@@ -225,7 +225,7 @@ class Table extends \JTable
 			$caches[$table] = $fields;
 		}
 
-		return $caches;
+		return $caches[$table];
 	}
 
 	/**

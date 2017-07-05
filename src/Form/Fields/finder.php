@@ -77,7 +77,7 @@ class JFormFieldFinder extends JFormFieldText
 
 		// The current user display field.
 		$html[] = '<span class="' . (!$disabled && !$readonly ? 'input-append' : '') . '">';
-		$html[] = '<input type="text" class="finder-item-name ' . (!$disabled && !$readonly ? 'input-medium ' . $this->element['class'] : $this->element['class']) . '" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" size="35" />';
+		$html[] = '<input type="text" class="finder-item-name ' . (!$disabled && !$readonly ? 'input-large ' . $this->element['class'] : $this->element['class']) . '" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" title="' . $title . '" />';
 
 		if (!$disabled && !$readonly) :
 			$html[] = '<a class="hasFinderModal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1">
@@ -152,7 +152,12 @@ class JFormFieldFinder extends JFormFieldText
 		{
 			$value = urldecode($this->value);
 
-			if ($value && (is_file(JPATH_ROOT . '/' . $value) || is_file(JPATH_ROOT . '/' . $this->value)))
+
+			if ($value && (strpos($value, 'http') === 0 || strpos($value, '//') === 0))
+			{
+				$src = $value;
+			}
+			elseif ($value && (is_file(JPATH_ROOT . '/' . $value) || is_file(JPATH_ROOT . '/' . $this->value)))
 			{
 				$src = JURI::root() . $this->value;
 			}
@@ -181,7 +186,7 @@ class JFormFieldFinder extends JFormFieldText
 			$previewImgEmpty = '<div class="preview-empty" id="' . $this->id . '_preview_empty"' . ($src ? ' style="display:none"' : '') . '>'
 				. JText::_('JLIB_FORM_MEDIA_PREVIEW_EMPTY') . '</div>';
 
-			$html[] = '<div class="media-preview add-on fltlft">';
+			$html[] = '<div class="media-preview add-on">';
 
 			$html[] = ' ' . $previewImgEmpty;
 			$html[] = ' ' . $previewImg;
@@ -287,12 +292,12 @@ JS
     	    	return;
     	    }
 
-            var link = elFinder.url(selected[0].hash) ;
+            var link = elFinder.url(selected[0].hash) || selected[0].hash;
             var name = selected[0].name;
 
             // Clean DS
             link = link.replace(/\\\\/g, '/');
-            link = link.replace( root, '' );
+            link = link.replace(root, '');
 
             // Detect is image
             var onlyImage = false;
@@ -342,7 +347,11 @@ JS
 
             if (this.previewWrapper.length > 0) {
                 if ($.inArray(imgExts, ext.toLowerCase())) {
-                    this.previewImage.attr('src', urlRoot + value);
+                    if (value.substring(0, 4) !== 'http' && value.substring(0, 2) !== '//') {
+                        value = urlRoot + value;
+                    }
+
+                    this.previewImage.attr('src', value);
                     this.previewWrapper.css('display', '');
                     this.previewEmpty.css('display', 'none');
                 } else {
@@ -399,12 +408,15 @@ JS;
 			return null;
 		}
 
+		if (strpos($path, 'http') === 0 || strpos($path, '//') === 0)
+		{
+			return $path;
+		}
+
 		$path = JPath::clean($path, '/');
 		$path = explode('/', $path);
 
-		$file_name = array_pop($path);
-
-		return $file_name;
+		return array_pop($path);
 	}
 
 	/**

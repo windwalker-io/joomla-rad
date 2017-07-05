@@ -140,10 +140,42 @@ class DisplayView extends AbstractHtmlView
 SCRIPT;
 
 		$asset->internalJS($script);
+		$buttonText = \JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_INSERT_URL_BUTTON');
+		$hint = \JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_INSERT_URL_PLACEHOLDER');
 
-		return '<div class="row-fluid">
-                <div id="elfinder" class="span12 windwalker-finder"></div>
-            </div>';
+		return <<<HTML
+<script>
+function getUrlInputValue() {
+    return jQuery('#finder-url-input').val();
+}
+
+function getUrlInputMime() {
+    var url = getUrlInputValue();
+    var type = url.split('.').pop().toLowerCase();
+    
+    if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'].indexOf(type) !== -1) {
+        return 'image/' + type;
+    }
+    
+    return 'url';
+}
+</script>
+		
+<div class="row-fluid">
+    <div id="elfinder" class="span12 windwalker-finder"></div>
+    
+    <div style="clear: both;"></div>
+    <hr/>
+    <div class="url-input-wrapper">
+        <div class="input-append">
+            <input id="finder-url-input" type="text" class="input-xxlarge" placeholder="{$hint}"/>
+            <button type="button" class="btn btn-default" onclick="window.parent.{$callback}([{hash: getUrlInputValue(), name: getUrlInputValue(), mime: getUrlInputMime()}], window.elFinder, '$site_root');">
+                {$buttonText}
+			</button>
+		</div>
+	</div>
+</div>
+HTML;
 	}
 
 	/**
