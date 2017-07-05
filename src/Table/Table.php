@@ -207,9 +207,11 @@ class Table extends \JTable
 			return TableHelper::getFields($this);
 		}
 
-		static $cache = null;
+		static $caches = array();
 
-		if ($cache === null || $reload)
+		$table= $this->getTableName();
+
+		if (!isset($caches[$table]) || $reload)
 		{
 			// Lookup the fields for this table only once.
 			$name   = $this->_tbl;
@@ -220,10 +222,10 @@ class Table extends \JTable
 				throw new \UnexpectedValueException(sprintf('No columns found for %s table', $name));
 			}
 
-			$cache = $fields;
+			$caches[$table] = $fields;
 		}
 
-		return $cache;
+		return $caches;
 	}
 
 	/**
