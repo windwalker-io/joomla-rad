@@ -56,24 +56,26 @@ abstract class AbstractCategoryHandler extends AbstractRouterHandler
 	 */
 	public function getId($segment, $query)
 	{
-		if (isset($query['id']))
-		{
-			$category = \JCategories::getInstance($this->router->getName())->get($query['id']);
+		$key = $this->getViewconfiguration()->key;
 
-			foreach ($category->getChildren() as $child)
+		if (isset($query[$key]))
+		{
+			$category = \JCategories::getInstance($this->router->getName())->get();
+
+			foreach ($category->getChildren(true) as $child)
 			{
 				if (static::$noIDs)
 				{
 					if ($child->alias === $segment)
 					{
-						return $child->id;
+						return $child->$key;
 					}
 				}
 				else
 				{
-					if ((int) $child->id === (int) $segment)
+					if ((int) $child->$key === (int) $segment)
 					{
-						return $child->id;
+						return $child->$key;
 					}
 				}
 			}
