@@ -73,8 +73,8 @@ jQuery(document).ready(function($)
 	var modalBox = $('<div class="modal fade hide" id="windwalker-iframe-modal"> \
     <div class="modal-dialog"> \
         <div class="modal-content"> \
-            <div class="modal-body" style="max-height: 500px;"> \
-                <iframe width="100%" style="min-height: 450px;" src="" frameborder="0"></iframe> \
+            <div class="modal-body" style="max-height: 80vh;"> \
+                <iframe width="100%" style="min-height: 80vh;" src="" frameborder="0"></iframe> \
             </div> \
         </div> \
     </div> \
