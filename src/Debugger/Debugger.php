@@ -10,6 +10,7 @@ namespace Windwalker\Debugger;
 
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
+use Windwalker\DI\Container;
 
 /**
  * The Debugger helper.
@@ -41,6 +42,10 @@ abstract class Debugger
 	{
 		self::$whoops  = new Run;
 		self::$handler = new PrettyPageHandler;
+
+		$config = Container::getInstance()->get('windwalker.config');
+
+		self::$handler->setEditor($config->get('debug.editor'));
 
 		self::$whoops->pushHandler(self::$handler);
 		self::$whoops->register();

@@ -1,3 +1,5 @@
 {
-	"comment" : "This config not used yet"
+	"debug" : {
+		"editor": "phpstorm"
+	}
 }
