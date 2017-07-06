@@ -20,7 +20,7 @@
         "windwalker/console": "~2.0",
         "asika/muse": "~1.0",
         "symfony/yaml": "~2.0",
-        "filp/whoops": "~1.0|~2.0"
+        "asika/whoops": "~2.0"
     },
     "require-dev": {
         "windwalker/test": "~2.0"

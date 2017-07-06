@@ -61,15 +61,6 @@ class ItemModel extends AbstractAdvancedModel
 			return $item;
 		}
 
-		if (property_exists($item, 'params'))
-		{
-			$registry = new \JRegistry;
-
-			$registry->loadString($item->params);
-
-			$item->params = $registry->toArray();
-		}
-
 		$this->postGetItem($item);
 
 		return $item;
