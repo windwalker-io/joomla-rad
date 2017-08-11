@@ -32,19 +32,28 @@ abstract class AbstractAjaxController extends Controller
 	protected $format = 'json';
 
 	/**
+	 * Property message.
+	 *
+	 * @var string
+	 */
+	protected $successMessage;
+
+	/**
 	 * Method to run this controller.
 	 *
 	 * @return  mixed
 	 */
 	protected function doExecute()
 	{
+		// TODO: Add CSRF Check after Joomla 3.8
+
 		try
 		{
 			$data = $this->doAjax();
 
 			if ($this->format === 'json')
 			{
-				$buffer = new \JResponseJson($data, null);
+				$buffer = new \JResponseJson($data, $this->successMessage);
 			}
 			else
 			{
@@ -67,7 +76,7 @@ abstract class AbstractAjaxController extends Controller
 
 			$buffer = new \JResponseJson($msg, $e->getMessage(), true);
 
-			header('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
+			header('HTTP/1.1 ' . $e->getCode() . ' ' . str_replace('%20', ' ', rawurlencode($e->getMessage())));
 		}
 
 		header('Content-Type: ' . $this->contentType);
@@ -82,6 +91,22 @@ abstract class AbstractAjaxController extends Controller
 	 * @return  mixed
 	 */
 	abstract protected function doAjax();
+
+	/**
+	 * checkToken
+	 *
+	 * @param string $method
+	 *
+	 * @return  void
+	 * @throws \RuntimeException
+	 */
+	protected function checkToken($method = 'post')
+	{
+		if (!\JSession::checkToken($method))
+		{
+			throw new \RuntimeException(\JText::_('JINVALID_TOKEN_NOTICE'), 400);
+		}
+	}
 
 	/**
 	 * Use JSON response.
@@ -153,6 +178,30 @@ abstract class AbstractAjaxController extends Controller
 	public function setFormat($format)
 	{
 		$this->format = $format;
+
+		return $this;
+	}
+
+	/**
+	 * Method to get property SuccessMessage
+	 *
+	 * @return  string
+	 */
+	public function getSuccessMessage()
+	{
+		return $this->successMessage;
+	}
+
+	/**
+	 * Method to set property successMessage
+	 *
+	 * @param   string $successMessage
+	 *
+	 * @return  static  Return self to support chaining.
+	 */
+	public function setSuccessMessage($successMessage)
+	{
+		$this->successMessage = $successMessage;
 
 		return $this;
 	}
