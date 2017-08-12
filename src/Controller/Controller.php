@@ -407,11 +407,14 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Check session token or die.
 	 *
-	 * @return void
+	 * @param string $method
+	 * @param bool   $redirect
+	 *
+	 * @return bool
 	 */
-	protected function checkToken()
+	protected function checkToken($method = 'post', $redirect = true)
 	{
-		$this->getDelegator()->checkToken();
+		return $this->getDelegator()->checkToken($method, $redirect);
 	}
 
 	/**

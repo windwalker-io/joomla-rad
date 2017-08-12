@@ -79,12 +79,30 @@ class ControllerDelegator
 	/**
 	 * Check session token or die.
 	 *
-	 * @return void
+	 * @param string $method
+	 * @param bool   $redirect
+	 *
+	 * @return bool
 	 */
-	public function checkToken()
+	public function checkToken($method = 'post', $redirect = true)
 	{
-		// Check for request forgeries
-		\JSession::checkToken() or jexit(\JText::_('JInvalid_Token'));
+		$valid = \JSession::checkToken($method);
+
+		if (!$valid && $redirect)
+		{
+			$referrer = $this->input->server->getString('HTTP_REFERER');
+
+			if (!\JUri::isInternal($referrer))
+			{
+				$referrer = 'index.php';
+			}
+
+			$app = \JFactory::getApplication();
+			$app->enqueueMessage(\JText::_('JINVALID_TOKEN_NOTICE'), 'warning');
+			$app->redirect($referrer);
+		}
+
+		return $valid;
 	}
 
 	/**
