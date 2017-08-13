@@ -13,7 +13,7 @@ namespace Windwalker\Model\Exception;
  *
  * @since 2.0
  */
-class ValidateFailException extends \Exception
+class ValidateFailException extends \RuntimeException
 {
 	/**
 	 * Errors bag.

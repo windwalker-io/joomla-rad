@@ -106,7 +106,7 @@ class Table extends \JTable
 			}
 		}
 
-		return $reset;
+		return $result;
 	}
 
 	/**
