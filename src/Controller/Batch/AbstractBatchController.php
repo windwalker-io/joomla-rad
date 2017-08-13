@@ -111,6 +111,11 @@ abstract class AbstractBatchController extends AbstractListController
 		{
 			$db->transactionRollback();
 
+			if (JDEBUG)
+			{
+				throw $e;
+			}
+
 			$this->setRedirect($this->getFailRedirect(), \JText::sprintf('JLIB_APPLICATION_ERROR_BATCH_FAILED', $e->getMessage()), Message::ERROR_RED);
 
 			return false;
@@ -195,7 +200,7 @@ abstract class AbstractBatchController extends AbstractListController
 
 		$data = $form->filter(array('batch' => $data));
 
-		return $data['batch'];
+		return isset($data['batch']) ? $data['batch'] : array();
 	}
 
 	/**
