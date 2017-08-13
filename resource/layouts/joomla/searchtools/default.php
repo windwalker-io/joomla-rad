@@ -48,7 +48,7 @@ JHtml::_('searchtools.form', $formSelector, $data['options']);
 		</div>
 	</div>
 	<!-- Filters div -->
-	<div class="js-stools-container-filters hidden-phone clearfix">
+	<div class="js-stools-container-filters hidden-phone clearfix form-inline">
 		<?php echo $this->sublayout('filters', $data); ?>
 	</div>
 </div>
