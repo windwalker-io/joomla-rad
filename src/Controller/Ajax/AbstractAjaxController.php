@@ -96,16 +96,19 @@ abstract class AbstractAjaxController extends Controller
 	 * checkToken
 	 *
 	 * @param string $method
+	 * @param bool   $redirect
 	 *
-	 * @return  void
+	 * @return bool
 	 * @throws \RuntimeException
 	 */
-	protected function checkToken($method = 'post')
+	protected function checkToken($method = 'post', $redirect = true)
 	{
 		if (!\JSession::checkToken($method))
 		{
 			throw new \RuntimeException(\JText::_('JINVALID_TOKEN_NOTICE'), 400);
 		}
+
+		return true;
 	}
 
 	/**
