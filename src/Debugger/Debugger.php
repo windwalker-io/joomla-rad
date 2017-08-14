@@ -45,7 +45,7 @@ abstract class Debugger
 
 		$config = Container::getInstance()->get('windwalker.config');
 
-		self::$handler->setEditor($config->get('debug.editor'));
+		self::$handler->setEditor($config->get('debug.editor', 'phpstorm'));
 
 		self::$whoops->pushHandler(self::$handler);
 		self::$whoops->register();
