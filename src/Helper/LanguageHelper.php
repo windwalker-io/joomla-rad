@@ -267,8 +267,13 @@ class LanguageHelper extends AbstractFacade
 	 *
 	 * @return  boolean
 	 */
-	public static function loadAll($lang = 'en-GB', $option = null)
+	public static function loadAll($lang = null, $option = null)
 	{
+		/** @var \JLanguage $language */
+		$language = static::getInstance();
+		
+		$lang = $lang ? : $language->getTag();
+
 		$folder = PathHelper::getAdmin($option) . '/language/' . $lang;
 
 		if (is_dir($folder))
@@ -279,8 +284,6 @@ class LanguageHelper extends AbstractFacade
 		{
 			return false;
 		}
-
-		$language = static::getInstance();
 
 		foreach ($files as $file)
 		{
