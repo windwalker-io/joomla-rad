@@ -211,15 +211,19 @@ class RadRoute
 
 		$resource = explode('@', $resource, 2);
 
+		$data = array();
+
 		if (count($resource) === 1)
 		{
-			$query['option'] = $resource[0];
+			$data['option'] = $resource[0];
 		}
 		else
 		{
-			$query['option'] = $resource[0];
-			$query['view'] = $resource[1];
+			$data['option'] = $resource[0];
+			$data['view'] = $resource[1];
 		}
+
+		$query = array_merge($data, $query);
 
 		return static::toJoomlaRoute('index.php?' . http_build_query($query), $xhtml, $ssl);
 	}
@@ -247,15 +251,19 @@ class RadRoute
 
 		$resource = explode('@', $resource, 2);
 
+		$data = array();
+
 		if (count($resource) === 1)
 		{
-			$query['option'] = $resource[0];
+			$data['option'] = $resource[0];
 		}
 		else
 		{
-			$query['option'] = $resource[0];
-			$query['task'] = $resource[1];
+			$data['option'] = $resource[0];
+			$data['task'] = $resource[1];
 		}
+
+		$query = array_merge($data, $query);
 
 		return static::toJoomlaRoute('index.php?' . http_build_query($query), $xhtml, $ssl);
 	}
