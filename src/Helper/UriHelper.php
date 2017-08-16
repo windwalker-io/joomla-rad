@@ -207,7 +207,7 @@ class UriHelper
 
 		$host = $uri->toString();
 
-		return rtrim($host, '/') . '/' . $path;
+		return rtrim($host, '/') . $path;
 	}
 
 	/**
