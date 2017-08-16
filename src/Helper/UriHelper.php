@@ -195,9 +195,9 @@ class UriHelper
 			return $path;
 		}
 
-		if (strpos($path, '/') === 0)
+		if (strpos($path, '/') !== 0)
 		{
-			return rtrim(\JUri::root(), '/') . $path;
+			return \JUri::root() . $path;
 		}
 
 		$uri = clone \JUri::getInstance();
