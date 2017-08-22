@@ -271,7 +271,7 @@ class LanguageHelper extends AbstractFacade
 	{
 		/** @var \JLanguage $language */
 		$language = static::getInstance();
-		
+
 		$lang = $lang ? : $language->getTag();
 
 		$folder = PathHelper::getAdmin($option) . '/language/' . $lang;
