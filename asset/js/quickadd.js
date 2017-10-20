@@ -56,7 +56,7 @@
         registerEvents: function () {
             var self = this;
 
-            this.submitButton.click(function (event) {
+            this.submitButton.on('click', function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 
