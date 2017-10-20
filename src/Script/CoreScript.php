@@ -112,4 +112,43 @@ JS;
 			static::getAsset()->windwalker();
 		}
 	}
+
+	/**
+	 * Add Promise polyfill for IE.
+	 *
+	 * @see https://github.com/taylorhakes/promise-polyfill
+	 *
+	 * @return  void
+	 */
+	public static function promise()
+	{
+		if (!static::inited(__METHOD__))
+		{
+			static::getAsset()->addJS('polyfill/promise.min.js', null, array(), array('conditional' => 'lte IE 11'));
+		}
+	}
+
+	/**
+	 * SweetAlert v2.
+	 *
+	 * @see  https://sweetalert.js.org/
+	 *
+	 * @param bool $replaceAlert
+	 *
+	 * @return void
+	 */
+	public static function sweetAlert($replaceAlert = false)
+	{
+		if (!static::inited(__METHOD__))
+		{
+			static::promise();
+
+			static::getAsset()->addJS('core/sweetalert.min.js');
+		}
+
+		if (!static::inited(__METHOD__, $replaceAlert) && $replaceAlert)
+		{
+			static::getAsset()->internalJS('var oldAlert = alert; alert = swal;');
+		}
+	}
 }
