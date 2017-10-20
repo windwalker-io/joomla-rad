@@ -3,6 +3,7 @@
 namespace SystemBundle\Command\System;
 
 use SystemBundle\Command\System\CleanCache\ClearCacheCommand;
+use SystemBundle\Command\System\Compat\CompatCommand;
 use SystemBundle\Command\System\Off\OffCommand;
 use SystemBundle\Command\System\On\OnCommand;
 use Windwalker\Console\Command\Command;
@@ -42,5 +43,6 @@ class SystemCommand extends Command
 		$this->addCommand(new ClearCacheCommand);
 		$this->addCommand(new OnCommand);
 		$this->addCommand(new OffCommand);
+		$this->addCommand(new CompatCommand);
 	}
 }
