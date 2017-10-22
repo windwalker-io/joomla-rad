@@ -39,34 +39,35 @@ class SystemProvider extends ServiceProvider
 	 * @param   Container $container The DI container.
 	 *
 	 * @return  Container  Returns itself to support chaining.
+	 * @throws \OutOfBoundsException
 	 */
 	public function register(Container $container)
 	{
 		// Global Config
-		$container->share('joomla.config', array('JFactory', 'getConfig'));
+		$container->set('joomla.config', array('JFactory', 'getConfig'));
 
 		// Windwalker Config
 		$container->share('windwalker.config', array($this, 'loadConfig'));
 
 		// Database
-		$this->share($container, 'db', 'JDatabaseDriver', array('JFactory', 'getDbo'));
+		$this->set($container, 'db', 'JDatabaseDriver', array('JFactory', 'getDbo'));
 
 		// Session
 		// Global Config
-		$container->share('session', function ()
+		$container->set('session', function ()
 		{
 		    return \JFactory::getSession();
 		});
 
 		// Language
-		$this->share($container, 'language', 'JLanguage', array('JFactory', 'getLanguage'));
+		$this->set($container, 'language', 'JLanguage', array('JFactory', 'getLanguage'));
 
 		// Dispatcher
-		$this->share($container, 'event.dispatcher', 'JEventDispatcher', array('JEventDispatcher', 'getInstance'));
+		$this->set($container, 'event.dispatcher', 'JEventDispatcher', array('JEventDispatcher', 'getInstance'));
 
 		// Mailer
 
-		$this->share($container, 'mailer', 'JMail', array('JFactory', 'getMailer'));
+		$this->set($container, 'mailer', 'JMail', array('JFactory', 'getMailer'));
 
 		// Date
 		$this->set(
@@ -88,7 +89,7 @@ class SystemProvider extends ServiceProvider
 		);
 
 		// Asset
-		$container->share(
+		$container->set(
 			'helper.asset',
 			function()
 			{

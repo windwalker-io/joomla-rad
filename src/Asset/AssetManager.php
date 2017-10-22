@@ -155,10 +155,11 @@ class AssetManager implements ContainerAwareInterface
 	 * @param   string  $name   The instance name, also means component subfolder name,
 	 *                          default is the name of this instance.
 	 * @param   array  $attribs The link attributes in html element.
+	 * @param   array  $options Array of options.
 	 *
 	 * @return AssetManager Return self to support chaining.
 	 */
-	public function addCSS($file, $name = null, $attribs = array())
+	public function addCSS($file, $name = null, $attribs = array(), $options = array())
 	{
 		$doc = $this->getDoc();
 
@@ -190,13 +191,14 @@ class AssetManager implements ContainerAwareInterface
 			$url = \JUri::root(true) . '/' . $filePath['file'];
 		}
 
-		$type  = ArrayHelper::getValue($attribs, 'type');
-		$media = ArrayHelper::getValue($attribs, 'media');
+		$options['type']  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
+		$options['defer'] = ArrayHelper::getValue($attribs, 'defer');
+		$options['version'] = $sum ? : 'auto';
 
 		unset($attribs['type']);
 		unset($attribs['media']);
 
-		$doc->addStyleSheetVersion($url, $sum, $type, $media, $attribs);
+		$doc->addStyleSheetVersion($url, $options, $attribs);
 
 		return $this;
 	}
@@ -208,10 +210,11 @@ class AssetManager implements ContainerAwareInterface
 	 * @param string $name    The instance name, also means component subfolder name,
 	 *                        default is the name of this instance.
 	 * @param array  $attribs The link attributes in html element.
+	 * @param array  $options Array of options.
 	 *
 	 * @return AssetManager Return self to support chaining.
 	 */
-	public function addJS($file, $name = null, $attribs = array())
+	public function addJS($file, $name = null, $attribs = array(), $options = array())
 	{
 		$doc = $this->getDoc();
 
@@ -243,9 +246,10 @@ class AssetManager implements ContainerAwareInterface
 			$url = \JUri::root(true) . '/' . $filePath['file'];
 		}
 
-		$type  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
-		$defer = ArrayHelper::getValue($attribs, 'defer');
-		$async = ArrayHelper::getValue($attribs, 'async');
+		$options['type']  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
+		$options['defer'] = ArrayHelper::getValue($attribs, 'defer');
+		$options['async'] = ArrayHelper::getValue($attribs, 'async');
+		$options['version'] = $sum ? : 'auto';
 
 		unset($attribs['type']);
 		unset($attribs['media']);
@@ -255,7 +259,7 @@ class AssetManager implements ContainerAwareInterface
 			\JHtml::_('jquery.framework', $this->mootools);
 		}
 
-		$doc->addScriptVersion($url, $sum, $type, $defer, $async);
+		$doc->addScriptVersion($url, $options, $attribs);
 
 		return $this;
 	}
