@@ -8,13 +8,20 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Session\Session;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\XmlHelper;
 use Windwalker\Script\WindwalkerScript;
+use Windwalker\String\SimpleTemplate;
 use Windwalker\String\StringHelper;
 
-JFormHelper::loadFieldClass('text');
+FormHelper::loadFieldClass('text');
 
 include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
@@ -80,7 +87,7 @@ class JFormFieldFinder extends JFormFieldText
 		$html[] = '<input type="text" class="finder-item-name ' . (!$disabled && !$readonly ? 'input-large ' . $this->element['class'] : $this->element['class']) . '" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled" title="' . $title . '" />';
 
 		if (!$disabled && !$readonly) :
-			$html[] = '<a class="hasFinderModal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1">
+			$html[] = '<a class="hasFinderModal btn btn-primary" title="' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES') . '"  href="' . $link . '&amp;' . Session::getFormToken() . '=1">
 							<i class="icon-picture"></i> ' . JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_BROWSE_FILES')
 				. '</a>';
 		endif;
@@ -159,7 +166,7 @@ class JFormFieldFinder extends JFormFieldText
 			}
 			elseif ($value && (is_file(JPATH_ROOT . '/' . $value) || is_file(JPATH_ROOT . '/' . $this->value)))
 			{
-				$src = JURI::root() . $this->value;
+				$src = Uri::root() . $this->value;
 			}
 			else
 			{
@@ -181,10 +188,10 @@ class JFormFieldFinder extends JFormFieldText
 
 			$imgattr['class'] = $imgattr['class'] . ' img-polaroid';
 
-			$img             = JHtml::image($src, JText::_('JLIB_FORM_MEDIA_PREVIEW_ALT'), $imgattr);
+			$img             = HTMLHelper::image($src, JText::_('JLIB_FORM_MEDIA_PREVIEW_ALT'), $imgattr);
 			$previewImg      = '<div class="preview-img" id="' . $this->id . '_preview_img"' . ($src ? '' : ' style="display:none"') . '>' . $img . '</div>';
 			$previewImgEmpty = '<div class="preview-empty" id="' . $this->id . '_preview_empty"' . ($src ? ' style="display:none"' : '') . '>'
-				. JText::_('JLIB_FORM_MEDIA_PREVIEW_EMPTY') . '</div>';
+				. Text::_('JLIB_FORM_MEDIA_PREVIEW_EMPTY') . '</div>';
 
 			$html[] = '<div class="media-preview add-on">';
 
@@ -231,7 +238,7 @@ JS
 	public function setScript()
 	{
 		// Build Select script.
-		$url_root = JUri::root();
+		$url_root = Uri::root();
 
 		$script = <<<JS
 
@@ -456,12 +463,12 @@ JS;
 		$replace = array(
 			'username' => $user->username,
 			'name' => $user->name,
-			'session' => \JFactory::getSession()->getId(),
+			'session' => Factory::getSession()->getId(),
 			'year' => $date->year,
 			'month' => $date->month,
 			'day' => $date->day
 		);
 
-		return StringHelper::parseVariable($path, $replace);
+		return SimpleTemplate::render($path, $replace);
 	}
 }

@@ -8,6 +8,8 @@
 
 namespace Windwalker\Api\Buffer;
 
+use Joomla\CMS\Factory;
+
 /**
  * JSON Response object.
  *
@@ -28,7 +30,7 @@ class JsonBuffer extends AbstractBuffer
 	 */
 	public function __construct($response = null, $message = null, $error = false, $ignoreMessages = false)
 	{
-		$app      = \JFactory::$application;
+		$app      = Factory::$application;
 		$data     = null;
 		$messages = array();
 

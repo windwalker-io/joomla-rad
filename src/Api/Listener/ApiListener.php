@@ -14,6 +14,8 @@ use Windwalker\Component\Component;
  * Class ApiListener
  *
  * @since 2.0
+ *
+ * @deprecated  API server will be re-write after Windwalker RAD 3.
  */
 class ApiListener extends \JEvent
 {

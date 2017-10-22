@@ -8,6 +8,9 @@
 
 namespace Windwalker\Api\Response;
 
+use Joomla\CMS\Document\Document;
+use Joomla\CMS\Factory;
+
 /**
  * Class AbstractResponse
  *
@@ -81,8 +84,8 @@ abstract class AbstractResponse
 			$response->backtrace = $exception->getTrace();
 		}
 
-		$app = \JFactory::getApplication();
-		$doc = \JDocument::getInstance('json');
+		$app = Factory::getApplication();
+		$doc = Document::getInstance('json');
 
 		$app->setBody($doc->setBuffer($response)->render());
 

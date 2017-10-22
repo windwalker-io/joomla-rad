@@ -8,6 +8,7 @@
 
 namespace Windwalker\Api\Controller\User;
 
+use Joomla\CMS\Factory;
 use Windwalker\Api\View\ApiView;
 use Windwalker\Controller\Controller;
 
@@ -40,7 +41,7 @@ class LoginController extends Controller
 		$this->app->enqueueMessage('Login success.');
 
 		// Get Session Key
-		$session = \JFactory::getSession();
+		$session = Factory::getSession();
 
 		$view = new ApiView;
 

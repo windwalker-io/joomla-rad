@@ -18,6 +18,8 @@ use Windwalker\System\ExtensionHelper;
  * API server.
  *
  * @since 2.0
+ *
+ * @deprecated  API server will be re-write after Windwalker RAD 3.
  */
 class ApiServer
 {

@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Factory;
+
 // We are a valid entry point.
 const _JEXEC = 1;
 
@@ -50,7 +52,7 @@ $config = new JConfig;
 
 $console = \Windwalker\DI\Container::getInstance()->get('app');
 
-\JFactory::$application = $console;
+Factory::$application = $console;
 
 $console->setDescription(null)
 	->execute();

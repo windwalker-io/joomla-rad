@@ -6,6 +6,7 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Session\Session;
 use Windwalker\DI\Container;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
@@ -100,7 +101,7 @@ class JFormFieldModal extends JFormField
 		if (!$disabled && !$readonly)
 		{
 			WindwalkerScript::modal('.hasFieldModal');
-			$html[] = '<a class="hasFieldModal btn" title="' . JText::_('COM_' . strtoupper($this->component) . '_CHANGE_ITEM_BUTTON') . '"  href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
+			$html[] = '<a class="hasFieldModal btn" title="' . JText::_('COM_' . strtoupper($this->component) . '_CHANGE_ITEM_BUTTON') . '"  href="' . $link . '&amp;' . Session::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}"><i class="icon-file"></i> ' . JText::_('JSELECT') . '</a>';
 		}
 
 		$html[] = '</span>';

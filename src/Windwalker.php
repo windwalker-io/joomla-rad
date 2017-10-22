@@ -8,6 +8,7 @@
 
 namespace Windwalker;
 
+use Joomla\CMS\Version;
 use Windwalker\DI\Container;
 use Windwalker\Filesystem\Path\PathCollection;
 use Windwalker\Joomla\DataMapper\DataMapperProvider;
@@ -31,7 +32,7 @@ class Windwalker
 	 */
 	public function init($cli = false)
 	{
-		$version = new \JVersion;
+		$version = new Version;
 
 		if (!$version->isCompatible('3.2'))
 		{

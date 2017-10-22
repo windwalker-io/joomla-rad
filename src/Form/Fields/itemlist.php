@@ -6,15 +6,19 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Table\Table;
 use Windwalker\DI\Container;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
 use Windwalker\Helper\XmlHelper;
+use Windwalker\Object\Object;
 use Windwalker\Script\WindwalkerScript;
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+FormHelper::loadFieldClass('list');
 
 include_once JPATH_LIBRARIES . '/windwalker/src/init.php';
 
@@ -141,7 +145,7 @@ class JFormFieldItemlist extends JFormFieldList
 		// ========================================================================
 		foreach ($items as $item)
 		{
-			$item  = new JObject($item);
+			$item  = new Object($item);
 			$level = !empty($item->level) ? $item->level - 1 : 0;
 
 			if ($level < 0)
@@ -149,7 +153,7 @@ class JFormFieldItemlist extends JFormFieldList
 				$level = 0;
 			}
 
-			$options[] = JHtml::_('select.option', $item->$key_field, str_repeat('- ', $level) . $item->$value_field);
+			$options[] = HTMLHelper::_('select.option', $item->$key_field, str_repeat('- ', $level) . $item->$value_field);
 		}
 
 		// Verify permissions.  If the action attribute is set, then we scan the options.
@@ -163,7 +167,7 @@ class JFormFieldItemlist extends JFormFieldList
 		// ========================================================================
 		if ($show_root)
 		{
-			array_unshift($options, JHtml::_('select.option', 1, JText::_('JGLOBAL_ROOT')));
+			array_unshift($options, HTMLHelper::_('select.option', 1, JText::_('JGLOBAL_ROOT')));
 		}
 
 		// Merge any additional options in the XML definition.
@@ -203,7 +207,7 @@ class JFormFieldItemlist extends JFormFieldList
 
 		if ($nested && $id)
 		{
-			$table = JTable::getInstance(ucfirst($this->view_item), ucfirst($this->component) . 'Table');
+			$table = Table::getInstance(ucfirst($this->view_item), ucfirst($this->component) . 'Table');
 			$table->load($id);
 			$query->where("id != {$id}");
 			$query->where("lft < {$table->lft} OR rgt > {$table->rgt}");

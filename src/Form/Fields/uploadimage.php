@@ -6,6 +6,9 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Image\Image;
+use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Image\ThumbHelper;
 
@@ -56,7 +59,7 @@ class JFormFieldUploadimage extends JFormField
 
 		if ($readonly !== 'false' && $readonly)
 		{
-			return JHtml::image($this->value, $this->name, array('width' => 150));
+			return HTMLHelper::image($this->value, $this->name, array('width' => 150));
 		}
 		else
 		{
@@ -64,7 +67,7 @@ class JFormFieldUploadimage extends JFormField
 
 			if ($this->value)
 			{
-				$html .= '<div class="image-' . $this->id . '">' . JHtml::image(ThumbHelper::resize($this->value, $width, $height, \JImage::CROP_RESIZE), $this->name, array()) . '</div>';
+				$html .= '<div class="image-' . $this->id . '">' . HTMLHelper::image(ThumbHelper::resize($this->value, $width, $height, Image::CROP_RESIZE), $this->name, array()) . '</div>';
 			}
 
 			$html .= '<input type="file" name="' . $this->getName($this->element['name'] . '_upload') . '" id="' . $this->id . '"' . ' value=""' . $accept . $disabled . $class . $size
@@ -94,7 +97,7 @@ class JFormFieldUploadimage extends JFormField
 	{
 		parent::setup($element, $value, $group);
 
-		$container = \Windwalker\DI\Container::getInstance();
+		$container = Container::getInstance();
 		$input = $container->get('input');
 
 		if ($input->get($this->element['name'] . '_delete') == 1)
@@ -135,7 +138,7 @@ class JFormFieldUploadimage extends JFormField
 					JFile::upload($src, $dest);
 
 					// Resize image
-					$img = new JImage;
+					$img = new Image;
 					$img->loadFile(JPATH_ROOT . '/' . $url);
 					$img = $img->resize($width, $height);
 
@@ -175,7 +178,7 @@ class JFormFieldUploadimage extends JFormField
 	{
 		if ($value)
 		{
-			return JHtml::image($value, 'image');
+			return HTMLHelper::image($value, 'image');
 		}
 	}
 }

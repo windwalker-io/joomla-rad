@@ -8,10 +8,14 @@
 
 namespace Windwalker\Api\Authentication;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class Authentication
  *
  * @since 1.0
+ *
+ * @deprecated
  */
 abstract class Authentication
 {
@@ -30,11 +34,11 @@ abstract class Authentication
 	 */
 	public static function authenticate($sessionKey)
 	{
-		$db = \JFactory::getDbo();
+		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 
 		// Get session key from db storage
-		$session = \JFactory::getSession();
+		$session = Factory::getSession();
 
 		$query->select('userid')
 			->from('#__session')
@@ -48,13 +52,13 @@ abstract class Authentication
 		 */
 		if ($uid)
 		{
-			$user = \JFactory::getUser($uid);
+			$user = Factory::getUser($uid);
 
 			$session->set('user', $user);
 		}
 
 		// Is login?
-		$user = \JFactory::getUser();
+		$user = Factory::getUser();
 
 		if ($user->guest)
 		{

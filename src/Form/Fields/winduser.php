@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table;
 use Windwalker\DI\Container;
 use Windwalker\Helper\XmlHelper;
 use Windwalker\Script\JQueryScript;
@@ -76,7 +78,7 @@ JS;
 		$asset->internalJS($js);
 
 		// Load the current username if available.
-		$table = JTable::getInstance('user');
+		$table = Table::getInstance('user');
 
 		if ($this->value)
 		{
@@ -86,7 +88,7 @@ JS;
 		elseif (strtoupper($this->value) === 'CURRENT')
 		{
 			// 'CURRENT' is not a reasonable value to be placed in the html
-			$this->value = JFactory::getUser()->id;
+			$this->value = Factory::getUser()->id;
 			$table->load($this->value);
 		}
 		else
