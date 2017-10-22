@@ -252,12 +252,12 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	 * @return void
 	 *
 	 * @dataProvider pathDataProvider
-	 * @covers       Windwalker\Helper\UriHelper::pathAddHost
+	 * @covers       \Windwalker\Helper\UriHelper::pathAddHost
 	 * @group        pathAddHost
 	 */
 	public function testPathAddHost($expected, $path)
 	{
-		$this->assertSame($expected, UriHelper::pathAddHost($path));
+		$this->assertEquals($expected, UriHelper::pathAddHost($path));
 	}
 
 	/**
