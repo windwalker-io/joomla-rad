@@ -77,8 +77,8 @@ class CrudModel extends AbstractFormModel
 		$this->eventAfterDelete  = $this->eventAfterDelete  ? : ArrayHelper::getValue($config, 'event_after_delete', 'onContentAfterDelete');
 		$this->eventBeforeDelete = $this->eventBeforeDelete ? : ArrayHelper::getValue($config, 'event_before_delete', 'onContentBeforeDelete');
 		$this->eventAfterSave    = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_after_save', 'onContentAfterSave');
-		$this->eventBeforeSave   = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
-		$this->eventChangeState  = $this->eventAfterSave    ? : ArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
+		$this->eventBeforeSave   = $this->eventBeforeSave   ? : ArrayHelper::getValue($config, 'event_before_save', 'onContentBeforeSave');
+		$this->eventChangeState  = $this->eventChangeState  ? : ArrayHelper::getValue($config, 'event_change_state', 'onContentChangeState');
 
 		// @TODO: Check is needed or not.
 		$this->textPrefix = $this->textPrefix ? : strtoupper(ArrayHelper::getValue($config, 'text_prefix', $this->option));
