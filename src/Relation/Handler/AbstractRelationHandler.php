@@ -8,6 +8,8 @@
 
 namespace Windwalker\Relation\Handler;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table as JTable;
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 use Windwalker\Model\Helper\QueryHelper;
@@ -31,7 +33,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Property table.
 	 *
-	 * @var  \JTable
+	 * @var  JTable
 	 */
 	protected $table;
 
@@ -103,7 +105,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 *
 	 * @param Table   $parent    The parent table od this relation.
 	 * @param string  $field     Field of parent table to store children.
-	 * @param \JTable $table     The Table object of this relation child.
+	 * @param JTable  $table     The Table object of this relation child.
 	 * @param array   $fks       Foreign key mapping.
 	 * @param string  $onUpdate  The action of ON UPDATE operation.
 	 * @param string  $onDelete  The action of ON DELETE operation.
@@ -121,7 +123,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 		$this->options  = $options;
 		$this->flush    = $this->getOption('flush', $this->flush);
 
-		$this->db = $this->db ? : \Joomla\CMS\Factory::getDbo();
+		$this->db = $this->db ? : Factory::getDbo();
 	}
 
 	/**
@@ -172,11 +174,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Handle update relation and set matched value to child table.
 	 *
-	 * @param   \JTable  $itemTable  The child table to be handled.
+	 * @param   JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  \JTable  Return table if you need.
+	 * @return  JTable  Return table if you need.
 	 */
-	public function handleUpdateRelations(\JTable $itemTable)
+	public function handleUpdateRelations(JTable $itemTable)
 	{
 		// Handle Cascade
 		if ($this->onUpdate === Action::CASCADE)
@@ -198,11 +200,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Handle delete relation, if is CASCADE, mark child table to delete. If is SET NULL, set all children fields to NULL.
 	 *
-	 * @param   \JTable  $itemTable  The child table to be handled.
+	 * @param   JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  \JTable  Return table if you need.
+	 * @return  JTable  Return table if you need.
 	 */
-	public function handleDeleteRelations(\JTable $itemTable)
+	public function handleDeleteRelations(JTable $itemTable)
 	{
 		// Handle Cascade
 		if ($this->onDelete === Action::CASCADE)
@@ -221,11 +223,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Sync parent fields value to child table.
 	 *
-	 * @param   \JTable  $itemTable  The child table to be handled.
+	 * @param   JTable  $itemTable  The child table to be handled.
 	 *
-	 * @return  \JTable  Return table if you need.
+	 * @return  JTable  Return table if you need.
 	 */
-	protected function syncParentFields(\JTable $itemTable)
+	protected function syncParentFields(JTable $itemTable)
 	{
 		foreach ($this->fks as $field => $foreign)
 		{
@@ -238,12 +240,12 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Set value to all relative children fields.
 	 *
-	 * @param   \JTable  $itemTable  The child table to be handled.
+	 * @param   JTable  $itemTable  The child table to be handled.
 	 * @param   mixed    $value      The value we want to set to child, default is NULL.
 	 *
-	 * @return  \JTable  Return table if you need.
+	 * @return  JTable  Return table if you need.
 	 */
-	protected function setRelativeFields(\JTable $itemTable, $value = null)
+	protected function setRelativeFields(JTable $itemTable, $value = null)
 	{
 		foreach ($this->fks as $field => $foreign)
 		{
@@ -256,7 +258,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Is fields changed. If any field changed, means we have to do something to children.
 	 *
-	 * @param   \JTable  $itemTable  The child table to be handled.
+	 * @param   JTable  $itemTable  The child table to be handled.
 	 *
 	 * @return  boolean  Something changed of not.
 	 */
@@ -279,14 +281,14 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 *
 	 * @param   mixed  $item  The data to be converted.
 	 *
-	 * @return  \JTable  Return Converted Table object.
+	 * @return  JTable  Return Converted Table object.
 	 */
 	public function convertToTable($item)
 	{
 		$table = clone $this->table;
 		$table->reset();
 
-		if (!($item instanceof \JTable))
+		if (!($item instanceof JTable))
 		{
 			if ($item instanceof Data)
 			{
@@ -317,7 +319,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 */
 	public function convertToData($item)
 	{
-		if ($item instanceof \JTable)
+		if ($item instanceof JTable)
 		{
 			$item = $item->getProperties();
 		}
@@ -351,11 +353,11 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * clearPrimaryKeys
 	 *
-	 * @param \JTable $itemTable
+	 * @param JTable $itemTable
 	 *
-	 * @return  \JTable
+	 * @return  JTable
 	 */
-	public function clearPrimaryKeys(\JTable $itemTable)
+	public function clearPrimaryKeys(JTable $itemTable)
 	{
 		foreach ($itemTable->getKeyName(true) as $key)
 		{
@@ -421,7 +423,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	 * @param   string  $name    The table name.
 	 * @param   string  $prefix  The table class prefix.
 	 *
-	 * @return  \JTable
+	 * @return  JTable
 	 */
 	protected function getTable($name, $prefix = null)
 	{
@@ -430,7 +432,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 			throw new \InvalidArgumentException('Table name should be string.');
 		}
 
-		if ($table = \JTable::getInstance($name, $prefix ? : $this->prefix))
+		if ($table = JTable::getInstance($name, $prefix ? : $this->prefix))
 		{
 			return $table;
 		}
@@ -465,7 +467,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Method to get property Table
 	 *
-	 * @return  \JTable
+	 * @return  JTable
 	 */
 	public function getTarget()
 	{
@@ -475,7 +477,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 	/**
 	 * Method to set property table
 	 *
-	 * @param   \JTable $table
+	 * @param   JTable  $table
 	 * @param   array   $fks
 	 *
 	 * @return  static  Return self to support chaining.
@@ -487,7 +489,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 			return $this;
 		}
 
-		if (!($table instanceof \JTable))
+		if (!($table instanceof JTable))
 		{
 			$table = $this->getTable($table, $this->prefix);
 		}

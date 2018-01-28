@@ -8,6 +8,7 @@
 
 namespace Windwalker\Relation\Handler;
 
+use Joomla\CMS\Table\Table as JTable;
 use Windwalker\Relation\Action;
 use Windwalker\Table\Table;
 
@@ -21,13 +22,13 @@ class ManyToOneRelation extends AbstractRelationHandler
 	/**
 	 * Class init.
 	 *
-	 * @param Table   $parent    The parent table od this relation.
-	 * @param string  $field     Field of parent table to store children.
-	 * @param \JTable $table     The Table object of this relation child.
-	 * @param array   $fks       Foreign key mapping.
-	 * @param string  $onUpdate  The action of ON UPDATE operation.
-	 * @param string  $onDelete  The action of ON DELETE operation.
-	 * @param array   $options   Some options to configure this relation.
+	 * @param Table  $parent   The parent table od this relation.
+	 * @param string $field    Field of parent table to store children.
+	 * @param JTable $table    The Table object of this relation child.
+	 * @param array  $fks      Foreign key mapping.
+	 * @param string $onUpdate The action of ON UPDATE operation.
+	 * @param string $onDelete The action of ON DELETE operation.
+	 * @param array  $options  Some options to configure this relation.
 	 */
 	public function __construct($parent, $field = null, $table = null, $fks = array(), $onUpdate = Action::NO_ACTION, $onDelete = Action::NO_ACTION,
 		$options = array())

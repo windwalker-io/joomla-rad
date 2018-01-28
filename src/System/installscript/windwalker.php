@@ -6,11 +6,15 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\Text;
+use Windwalker\System\Installer\WindwalkerInstaller;
+
 defined('_JEXEC') or die;
 
 // Install WindWalker
 // ========================================================================
-$installer    = new JInstaller;
+$installer    = new Installer;
 $installPath = dirname($path) . '/windwalker';
 
 // Version compare
@@ -56,14 +60,14 @@ if ($installWindwalker)
 
 	include_once __DIR__ . '/../Installer/WindwalkerInstaller.php';
 
-	\Windwalker\System\Installer\WindwalkerInstaller::install(JPATH_ROOT);
+	WindwalkerInstaller::install(JPATH_ROOT);
 
 	// Set success table
 	$grid->addRow(array('class' => 'row' . ($i % 2)));
 	$grid->setRowCell('num',     ++$i, $tdClass);
-	$grid->setRowCell('type',    JText::_('COM_INSTALLER_TYPE_LIBRARY'), $tdClass);
-	$grid->setRowCell('name',    JText::_('LIB_WINDWALKER'), array());
+	$grid->setRowCell('type',    Text::_('COM_INSTALLER_TYPE_LIBRARY'), $tdClass);
+	$grid->setRowCell('name',    Text::_('LIB_WINDWALKER'), array());
 	$grid->setRowCell('version', $installer->manifest->version, $tdClass);
 	$grid->setRowCell('state',   $status, $tdClass);
-	$grid->setRowCell('info',    JText::_($installer->manifest->description), array());
+	$grid->setRowCell('info',    Text::_($installer->manifest->description), array());
 }

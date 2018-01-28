@@ -11,6 +11,7 @@ namespace Windwalker\System;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\Registry\Registry;
 
 /**
  * The extension helper.
@@ -109,23 +110,23 @@ class ExtensionHelper
 		{
 			case 'component':
 				$params = ComponentHelper::getParams($element);
-				$params = new \JRegistry($params->toArray());
+				$params = new Registry($params->toArray());
 				break;
 
 			case 'module':
 				$module = ModuleHelper::getModule($element);
-				$params = new \JRegistry;
+				$params = new Registry;
 				$params->loadString($module->params);
 				break;
 
 			case 'plugin':
 				$plugin = PluginHelper::getPlugin($extension['group'], $extension['name']);
 				$params = $plugin->params;
-				$params = new \JRegistry($params);
+				$params = new Registry($params);
 				break;
 
 			default:
-				$params = new \JRegistry;
+				$params = new Registry;
 				break;
 		}
 

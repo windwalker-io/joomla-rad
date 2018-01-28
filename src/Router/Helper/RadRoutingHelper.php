@@ -8,6 +8,7 @@
 
 namespace Windwalker\Router\Helper;
 
+use Joomla\CMS\Menu\SiteMenu;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Registry\Registry;
 use Windwalker\Router\Route;
@@ -148,11 +149,11 @@ class RadRoutingHelper
 	/**
 	 * buildFromView
 	 *
-	 * @param string     $component
-	 * @param string     $view
-	 * @param array      $queries
-	 * @param boolean    $replace
-	 * @param \JMenuSite $menu
+	 * @param string    $component
+	 * @param string    $view
+	 * @param array     $queries
+	 * @param boolean   $replace
+	 * @param SiteMenu  $menu
 	 *
 	 */
 	protected static function buildFromView($component, $view, &$queries, &$replace, \JMenuSite $menu)
@@ -179,11 +180,11 @@ class RadRoutingHelper
 	/**
 	 * buildFromViewAndId
 	 *
-	 * @param string  $component
-	 * @param string  $view
-	 * @param array   $queries
-	 * @param boolean $replace
-	 * @param \JMenu  $menu
+	 * @param string    $component
+	 * @param string    $view
+	 * @param array     $queries
+	 * @param boolean   $replace
+	 * @param SiteMenu  $menu
 	 */
 	public static function buildFromViewAndId($component, $view, &$queries, &$replace, \JMenu $menu)
 	{

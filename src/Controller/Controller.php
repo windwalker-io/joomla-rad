@@ -8,8 +8,8 @@
 
 namespace Windwalker\Controller;
 
-use JApplicationCms;
 use JInput;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Windwalker\Bootstrap\Message;
@@ -29,7 +29,7 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * The application object.
 	 *
-	 * @var    JApplicationCms
+	 * @var    CMSApplication
 	 * @since  12.1
 	 */
 	protected $app = null;
@@ -107,13 +107,13 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput           $input   The input object.
-	 * @param   \JApplicationCms  $app     The application object.
-	 * @param   array             $config  The config object.
+	 * @param   \JInput         $input   The input object.
+	 * @param   CMSApplication  $app     The application object.
+	 * @param   array           $config  The config object.
 	 *
 	 * @throws \LogicException
 	 */
-	public function __construct(JInput $input = null, JApplicationCms $app = null, $config = array())
+	public function __construct(JInput $input = null, CMSApplication $app = null, $config = array())
 	{
 		if (!$this->prefix && !empty($config['prefix']))
 		{

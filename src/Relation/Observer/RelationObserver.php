@@ -8,8 +8,8 @@
 
 namespace Windwalker\Relation\Observer;
 
-use JObservableInterface;
 use JObserverInterface;
+use Joomla\CMS\Table\Observer\AbstractObserver;
 use Windwalker\DI\Container;
 use Windwalker\Relation\Handler\AbstractRelationHandler;
 use Windwalker\Relation\Relation;
@@ -20,7 +20,7 @@ use Windwalker\Table\Table;
  * 
  * @since  2.1
  */
-class RelationObserver extends \JTableObserver
+class RelationObserver extends AbstractObserver
 {
 	/**
 	 * Property tableClone.
@@ -32,14 +32,14 @@ class RelationObserver extends \JTableObserver
 	/**
 	 * Creates the associated observer instance and attaches it to the $observableObject
 	 *
-	 * @param   JObservableInterface $observableObject The observable subject object
-	 * @param   array                $params           Params for this observer
+	 * @param   \JObservableInterface $observableObject The observable subject object
+	 * @param   array                 $params           Params for this observer
 	 *
 	 * @return  JObserverInterface
 	 *
 	 * @since   3.1.2
 	 */
-	public static function createObserver(JObservableInterface $observableObject, $params = array())
+	public static function createObserver(\JObservableInterface $observableObject, $params = array())
 	{
 		$observer = new static($observableObject);
 

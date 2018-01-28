@@ -92,7 +92,7 @@ class ControllerDelegator
 		{
 			$referrer = $this->input->server->getString('HTTP_REFERER');
 
-			if (!\JUri::isInternal($referrer))
+			if (!\Joomla\CMS\Uri\Uri::isInternal($referrer))
 			{
 				$referrer = 'index.php';
 			}

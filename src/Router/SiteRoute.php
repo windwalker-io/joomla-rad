@@ -8,7 +8,9 @@
 
 namespace Windwalker\Router;
 
-use Joomla\Uri\Uri;
+use Joomla\CMS\Router\Router as JoomlaRouter;
+use Joomla\CMS\Router\SiteRouter;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\Test\TestHelper;
 
 /**
@@ -28,7 +30,7 @@ class SiteRoute extends RadRoute
 	/**
 	 * Property router.
 	 *
-	 * @var  \JRouterSite
+	 * @var  SiteRouter
 	 */
 	protected static $router;
 
@@ -82,7 +84,7 @@ class SiteRoute extends RadRoute
 
 			if (!is_array($host_port))
 			{
-				$uri2 = \JUri::getInstance();
+				$uri2 = Uri::getInstance();
 				$host_port = array($uri2->getHost(), $uri2->getPort());
 			}
 
@@ -109,10 +111,10 @@ class SiteRoute extends RadRoute
 	/**
 	 * getRouter
 	 *
-	 * @return  \JRouterSite
+	 * @return  SiteRouter|JoomlaRouter
 	 */
 	protected static function getRouter()
 	{
-		return \JRouter::getInstance('site', array('mode' => JROUTER_MODE_SEF));
+		return JoomlaRouter::getInstance('site', array('mode' => JROUTER_MODE_SEF));
 	}
 }

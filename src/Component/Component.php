@@ -8,6 +8,10 @@
 
 namespace Windwalker\Component;
 
+use Joomla\CMS\Application\BaseApplication;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Form\FormHelper;
 use Joomla\Registry\Registry;
 use Windwalker\Controller\Controller;
 use Windwalker\Controller\Resolver\ControllerResolver;
@@ -24,7 +28,7 @@ class Component
 	/**
 	 * Joomla Application object.
 	 *
-	 * @var \JApplicationCms
+	 * @var CMSApplication
 	 */
 	protected $application;
 
@@ -93,7 +97,7 @@ class Component
 	 *
 	 * @param string           $name        The Component name.
 	 * @param \JInput          $input       The Input object.
-	 * @param \JApplicationCms $application The Application object.
+	 * @param CMSApplication $application The Application object.
 	 * @param Container        $container   The DI container.
 	 *
 	 * @throws \Exception
@@ -130,7 +134,7 @@ class Component
 		}
 
 		$this->config = $this->config ? : new Registry;
-		$this->config->merge(\JComponentHelper::getParams($this->option));
+		$this->config->merge(\Joomla\CMS\Component\ComponentHelper::getParams($this->option));
 
 		$this->init();
 	}
@@ -265,12 +269,12 @@ class Component
 		// Load JFormFieldList to fix 3.7 FormHelper bugs
 		if (version_compare(JVERSION, '3.7', '>='))
 		{
-			\JFormHelper::loadFieldClass('list');
+			FormHelper::loadFieldClass('list');
 		}
 
 		// Register form and fields
-		\JForm::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
-		\JForm::addFormPath(WINDWALKER_SOURCE . '/Form/Forms');
+		Form::addFieldPath(WINDWALKER_SOURCE . '/Form/Fields');
+		Form::addFormPath(WINDWALKER_SOURCE . '/Form/Forms');
 
 		$this->registerEventListener();
 
@@ -338,7 +342,7 @@ class Component
 	 * @param   integer  $categoryId  The category ID.
 	 * @param   integer  $id          The item ID.
 	 *
-	 * @return  \Windwalker\Object\Object
+	 * @return  Object
 	 */
 	public function getActions($assetName, $categoryId = 0, $id = 0)
 	{
@@ -374,7 +378,7 @@ class Component
 	/**
 	 * Get Application object.
 	 *
-	 * @return \JApplicationCms The Application object.
+	 * @return CMSApplication The Application object.
 	 */
 	public function getApplication()
 	{
@@ -384,11 +388,11 @@ class Component
 	/**
 	 * Set Application object.
 	 *
-	 * @param \JApplicationBase $application The Application object.
+	 * @param BaseApplication $application The Application object.
 	 *
 	 * @return Component Return self to support chaining.
 	 */
-	public function setApplication(\JApplicationBase $application)
+	public function setApplication(BaseApplication $application)
 	{
 		$this->application = $application;
 

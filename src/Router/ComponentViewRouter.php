@@ -8,6 +8,10 @@
 
 namespace Windwalker\Router;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Component\Router\RouterView;
+use Joomla\CMS\Component\Router\RouterViewConfiguration;
+use Joomla\CMS\Menu\AbstractMenu;
 use Windwalker\Filesystem\File;
 use Windwalker\Filesystem\Folder;
 use Windwalker\Helper\PathHelper;
@@ -18,7 +22,7 @@ use Windwalker\Router\Handler\RouterHandlerInterface;
  *
  * @since  __DEPLOY_VERSION__
  */
-class ComponentViewRouter extends \JComponentRouterView
+class ComponentViewRouter extends RouterView
 {
 	/**
 	 * Property handlers.
@@ -30,8 +34,8 @@ class ComponentViewRouter extends \JComponentRouterView
 	/**
 	 * Class constructor.
 	 *
-	 * @param   \JApplicationCms $app  Application-object that the router should use
-	 * @param   \JMenu           $menu Menu-object that the router should use
+	 * @param   CMSApplication $app  Application-object that the router should use
+	 * @param   AbstractMenu   $menu Menu-object that the router should use
 	 *
 	 * @since   3.4
 	 */
@@ -116,7 +120,7 @@ class ComponentViewRouter extends \JComponentRouterView
 	 *
 	 * @param string $name
 	 *
-	 * @return  \JComponentRouterViewconfiguration
+	 * @return  RouterViewConfiguration
 	 */
 	public function getView($name)
 	{

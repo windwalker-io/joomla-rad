@@ -8,6 +8,8 @@
 
 namespace Windwalker\Router\Handler;
 
+use Joomla\CMS\Categories\Categories;
+
 /**
  * The AbstractListRule class.
  *
@@ -18,14 +20,15 @@ abstract class AbstractCategoryHandler extends AbstractRouterHandler
 	/**
 	 * Method to get the segment(s) for this view item.
 	 *
-	 * @param   string  $id     ID of the view item to retrieve the segments for
-	 * @param   array   $query  The request that is built right now
+	 * @param   string $id    ID of the view item to retrieve the segments for
+	 * @param   array  $query The request that is built right now
 	 *
 	 * @return  array|string  The segments of this item
+	 * @throws \Exception
 	 */
 	public function getSegment($id, $query)
 	{
-		$category = \JCategories::getInstance($this->router->getName())->get($id);
+		$category = Categories::getInstance($this->router->getName())->get($id);
 
 		if (!$category)
 		{
@@ -49,10 +52,11 @@ abstract class AbstractCategoryHandler extends AbstractRouterHandler
 	/**
 	 * Method to get the id for this view item.
 	 *
-	 * @param   string  $segment Segment to retrieve the ID for view item.
-	 * @param   array   $query   The request that is parsed right now
+	 * @param   string $segment Segment to retrieve the ID for view item.
+	 * @param   array  $query   The request that is parsed right now
 	 *
 	 * @return  int|false  The id of this item or false
+	 * @throws \Exception
 	 */
 	public function getId($segment, $query)
 	{
@@ -60,7 +64,7 @@ abstract class AbstractCategoryHandler extends AbstractRouterHandler
 
 		if (isset($query[$key]))
 		{
-			$category = \JCategories::getInstance($this->router->getName())->get();
+			$category = Categories::getInstance($this->router->getName())->get();
 
 			foreach ($category->getChildren(true) as $child)
 			{

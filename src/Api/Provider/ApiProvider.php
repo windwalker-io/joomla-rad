@@ -33,7 +33,7 @@ class ApiProvider extends ServiceProvider
 	/**
 	 * Property uri.
 	 *
-	 * @var  \JUri
+	 * @var  \Joomla\CMS\Uri\Uri
 	 */
 	protected $uri;
 
@@ -48,13 +48,13 @@ class ApiProvider extends ServiceProvider
 	 * Class init.
 	 *
 	 * @param string         $element
-	 * @param \JUri          $uri
+	 * @param \Joomla\CMS\Uri\Uri          $uri
 	 * @param Registry|array $option
 	 */
-	public function __construct($element, \JUri $uri = null, $option = array())
+	public function __construct($element, \Joomla\CMS\Uri\Uri $uri = null, $option = array())
 	{
 		$this->option = ($option instanceof Registry) ? $option : new Registry($option);
-		$this->uri = $uri ? : \JUri::getInstance();
+		$this->uri = $uri ? : \Joomla\CMS\Uri\Uri::getInstance();
 		$this->element = $element;
 	}
 

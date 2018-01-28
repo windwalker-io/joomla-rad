@@ -156,7 +156,7 @@ class CrudModelTest extends AbstractDatabaseTestCase
 		// Test if PopulateState() was being executed
 		// 'foo' is being set in getConstructContainer()
 		$this->assertEquals('foo', TestHelper::getValue($crudModel, 'state')->get('CrudModel.id'));
-		$this->assertEquals(\JComponentHelper::getParams('com_stub'), TestHelper::getValue($crudModel, 'state')->get('params'));
+		$this->assertEquals(\Joomla\CMS\Component\ComponentHelper::getParams('com_stub'), TestHelper::getValue($crudModel, 'state')->get('params'));
 	}
 
 	/**

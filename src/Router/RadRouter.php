@@ -8,6 +8,7 @@
 
 namespace Windwalker\Router;
 
+use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\Uri\Uri;
 use Windwalker\Joomla\Registry\DecoratingRegistry;
 use Windwalker\Registry\Registry;
@@ -41,7 +42,7 @@ class RadRouter extends Router
 	/**
 	 * Property menu.
 	 *
-	 * @var  \JMenu
+	 * @var  AbstractMenu
 	 */
 	protected $menu;
 
@@ -62,8 +63,8 @@ class RadRouter extends Router
 	/**
 	 * Singleton.
 	 *
-	 * @param string $option The component option name.
-	 * @param \JMenu $menu
+	 * @param string       $option The component option name.
+	 * @param AbstractMenu $menu
 	 *
 	 * @return static Router instance.
 	 */
@@ -80,7 +81,7 @@ class RadRouter extends Router
 	/**
 	 * Class init.
 	 *
-	 * @param \JMenu           $menu
+	 * @param AbstractMenu     $menu
 	 * @param array            $routes
 	 * @param MatcherInterface $matcher
 	 */

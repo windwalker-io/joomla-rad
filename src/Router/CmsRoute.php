@@ -8,6 +8,8 @@
 
 namespace Windwalker\Router;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route as JRoute;
 use Joomla\Uri\Uri;
 use Windwalker\Helper\ArrayHelper;
 
@@ -170,19 +172,20 @@ class CmsRoute
 
 		$url->setPath('index.php');
 
-		return \JRoute::_((string) $url, $xhtml, $ssl);
+		return JRoute::_((string) $url, $xhtml, $ssl);
 	}
 
 	/**
 	 * Build route.
 	 *
-	 * @param   array  &$data The query data to build route.
+	 * @param   array &$data The query data to build route.
 	 *
 	 * @return  string Route url.
+	 * @throws \Exception
 	 */
 	public static function build(&$data = array())
 	{
-		$menu = \Joomla\CMS\Factory::getApplication()->getMenu();
+		$menu = Factory::getApplication()->getMenu();
 
 		$items = $menu->getMenu();
 

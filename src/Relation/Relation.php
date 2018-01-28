@@ -8,6 +8,7 @@
 
 namespace Windwalker\Relation;
 
+use Joomla\CMS\Table\Table as JTable;
 use Windwalker\Relation\Handler\AbstractRelationHandler;
 use Windwalker\Relation\Handler\ManyToManyRelation;
 use Windwalker\Relation\Handler\ManyToOneRelation;
@@ -59,7 +60,7 @@ class Relation implements RelationHandlerInterface
 	 * Add one to many relation configurations.
 	 *
 	 * @param   string   $field     Field of parent table to store children.
-	 * @param   \JTable  $table     The Table object of this relation child.
+	 * @param   JTable   $table     The Table object of this relation child.
 	 * @param   array    $fks       Foreign key mapping.
 	 * @param   string   $onUpdate  The action of ON UPDATE operation.
 	 * @param   string   $onDelete  The action of ON DELETE operation.
@@ -83,9 +84,9 @@ class Relation implements RelationHandlerInterface
 	 * Add one to many relation configurations.
 	 *
 	 * @param   string   $field     Field of parent table to store children.
-	 * @param   \JTable  $map       The mapping table.
+	 * @param   JTable  $map       The mapping table.
 	 * @param   array    $mapFks    The mapping foreign keys.
-	 * @param   \JTable  $table     The Table object of this relation child.
+	 * @param   JTable  $table     The Table object of this relation child.
 	 * @param   array    $fks       Foreign key mapping.
 	 * @param   string   $onUpdate  The action of ON UPDATE operation.
 	 * @param   string   $onDelete  The action of ON DELETE operation.
@@ -109,7 +110,7 @@ class Relation implements RelationHandlerInterface
 	 * Add one to many relation configurations.
 	 *
 	 * @param   string   $field     Field of parent table to store children.
-	 * @param   \JTable  $table     The Table object of this relation child.
+	 * @param   JTable  $table     The Table object of this relation child.
 	 * @param   array    $fks       Foreign key mapping.
 	 * @param   string   $onUpdate  The action of ON UPDATE operation.
 	 * @param   string   $onDelete  The action of ON DELETE operation.
@@ -133,7 +134,7 @@ class Relation implements RelationHandlerInterface
 	 * Add one to many relation configurations.
 	 *
 	 * @param  string   $field     Field of parent table to store children.
-	 * @param  \JTable  $table     The Table object of this relation child.
+	 * @param  JTable  $table     The Table object of this relation child.
 	 * @param  array    $fks       Foreign key mapping.
 	 * @param  string   $onUpdate  The action of ON UPDATE operation.
 	 * @param  string   $onDelete  The action of ON DELETE operation.
@@ -282,7 +283,7 @@ class Relation implements RelationHandlerInterface
 	 * @param   string  $table   The table name.
 	 * @param   string  $prefix  The table class prefix.
 	 *
-	 * @return  \JTable  Found table.
+	 * @return  JTable  Found table.
 	 */
 	protected function getTable($table, $prefix = null)
 	{
@@ -291,7 +292,7 @@ class Relation implements RelationHandlerInterface
 			throw new \InvalidArgumentException('Table name should be string.');
 		}
 
-		if ($table = \JTable::getInstance($table, $prefix ? : $this->prefix))
+		if ($table = JTable::getInstance($table, $prefix ? : $this->prefix))
 		{
 			return $table;
 		}

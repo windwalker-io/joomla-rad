@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller;
 
+use Joomla\CMS\Uri\Uri;
 use Windwalker\Model\Model;
 use Windwalker\Utilities\Queue\PriorityQueue;
 use Windwalker\View\AbstractView;
@@ -104,7 +105,7 @@ class DisplayController extends Controller
 		// Redirect to GET
 		if (strtoupper($this->input->getMethod()) === 'POST')
 		{
-			$this->redirect(\JUri::getInstance());
+			$this->redirect(Uri::getInstance());
 
 			return;
 		}

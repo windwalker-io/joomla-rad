@@ -56,11 +56,11 @@ class RoutingHelper
 	/**
 	 * Register routing.
 	 *
-	 * @param Router $router Router object.
+	 * @param LegacyRouter $router Router object.
 	 * @param string $option The component option name.
 	 *
 	 * @throws \LogicException
-	 * @return  Router Registered router.
+	 * @return  LegacyRouter Registered router.
 	 */
 	public static function registerRouting(LegacyRouter $router, $option)
 	{

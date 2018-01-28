@@ -6,9 +6,12 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 
-$db = JFactory::getDbo();
+$db = Factory::getDbo();
 
 // Show Installed table
 // ========================================================================
@@ -22,11 +25,11 @@ $grid->setColumns(array('num', 'type', 'name', 'version', 'state', 'info'));
 
 $grid->addRow(array(), 1);
 $grid->setRowCell('num',     '#', array());
-$grid->setRowCell('type',    JText::_('COM_INSTALLER_HEADING_TYPE'), array());
-$grid->setRowCell('name',    JText::_('COM_INSTALLER_HEADING_NAME'), array());
-$grid->setRowCell('version', JText::_('JVERSION'), array());
-$grid->setRowCell('state',   JText::_('JSTATUS'), array());
-$grid->setRowCell('info',    JText::_('COM_INSTALLER_MSG_DATABASE_INFO'), array());
+$grid->setRowCell('type',    Text::_('COM_INSTALLER_HEADING_TYPE'), array());
+$grid->setRowCell('name',    Text::_('COM_INSTALLER_HEADING_NAME'), array());
+$grid->setRowCell('version', Text::_('JVERSION'), array());
+$grid->setRowCell('state',   Text::_('JSTATUS'), array());
+$grid->setRowCell('info',    Text::_('COM_INSTALLER_MSG_DATABASE_INFO'), array());
 
 // Set cells
 $i = 0;

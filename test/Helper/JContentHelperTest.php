@@ -43,7 +43,7 @@ class JContentHelperTest extends \PHPUnit_Framework_TestCase
 		$categorySlug = '34:category-foobar';
 
 		$this->assertSame('article/foobar', JContentHelper::getArticleLink($slug, $categorySlug));
-		$this->assertSame(\JUri::root() . 'article/foobar', JContentHelper::getArticleLink($slug, $categorySlug, true));
+		$this->assertSame(\Joomla\CMS\Uri\Uri::root() . 'article/foobar', JContentHelper::getArticleLink($slug, $categorySlug, true));
 	}
 
 	/**
@@ -60,7 +60,7 @@ class JContentHelperTest extends \PHPUnit_Framework_TestCase
 		$categoryId = '34';
 
 		$this->assertSame('category/foobar', JContentHelper::getCategoryLink($categoryId));
-		$this->assertSame(\JUri::root() . 'category/foobar', JContentHelper::getCategoryLink($categoryId, true));
+		$this->assertSame(\Joomla\CMS\Uri\Uri::root() . 'category/foobar', JContentHelper::getCategoryLink($categoryId, true));
 	}
 
 	/**

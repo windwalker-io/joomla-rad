@@ -8,6 +8,9 @@
 
 namespace Windwalker\Component;
 
+use Joomla\CMS\Access\Access;
+use Joomla\CMS\Factory;
+use Joomla\CMS\User\User;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Object\Object;
 use Windwalker\System\ExtensionHelper;
@@ -22,7 +25,7 @@ abstract class ComponentHelper
 	/**
 	 * Gets a list of the actions that can be performed.
 	 *
-	 * @param   \JUser  $user       The user object.
+	 * @param   User    $user       The user object.
 	 * @param   string  $component  The component access file path, component base path or option name.
 	 * @param   string  $assetName  The asset name
 	 * @param   integer $categoryId The category ID.
@@ -30,7 +33,7 @@ abstract class ComponentHelper
 	 *
 	 * @return  Object
 	 */
-	public static function getActions(\JUser $user, $component, $assetName, $categoryId = 0, $id = 0)
+	public static function getActions(User $user, $component, $assetName, $categoryId = 0, $id = 0)
 	{
 		$result	= new Object;
 
@@ -73,7 +76,7 @@ abstract class ComponentHelper
 			$assetName .= '.' . $assetName;
 		}
 
-		$actions = \JAccess::getActionsFromFile($path, "/access/section[@name='" . $section . "']/");
+		$actions = Access::getActionsFromFile($path, "/access/section[@name='" . $section . "']/");
 
 		foreach ($actions as $action)
 		{
@@ -116,17 +119,17 @@ abstract class ComponentHelper
 
 		$appClass = 'JApplication' . ucfirst($client);
 
-		$console = \Joomla\CMS\Factory::$application;
+		$console = Factory::$application;
 
-		\Joomla\CMS\Factory::$application = $appClass::getInstance('site', $input);
+		Factory::$application = $appClass::getInstance('site', $input);
 
 		$class = ucfirst($element['name']) . 'Component';
 
-		$component = new $class(ucfirst($element['name']), $input, \Joomla\CMS\Factory::$application);
+		$component = new $class(ucfirst($element['name']), $input, Factory::$application);
 
 		$result = $component->execute();
 
-		\Joomla\CMS\Factory::$application = $console;
+		Factory::$application = $console;
 
 		return $result;
 	}

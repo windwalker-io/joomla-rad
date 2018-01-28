@@ -172,7 +172,7 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 		$ref->setAccessible(true);
 		$instances = $ref->getValue();
 
-		$instances['SERVER'] = new \JUri($uri);
+		$instances['SERVER'] = new \Joomla\CMS\Uri\Uri($uri);
 
 		$ref->setValue($instances);
 
@@ -208,10 +208,10 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 
 		// Test redirect download
 		// Not absolute URL
-		$this->assertEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', false, false));
+		$this->assertEquals(\Joomla\CMS\Uri\Uri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', false, false));
 
 		// Absolute URL
-		$this->assertNotEquals(\JUri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', true, false));
+		$this->assertNotEquals(\Joomla\CMS\Uri\Uri::root() . 'foo/bar/file.io', UriHelper::download('foo/bar/file.io', true, false));
 
 		// Test Streaming
 		// Not absolute URL

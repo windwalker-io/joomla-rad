@@ -8,6 +8,8 @@
 
 namespace Windwalker\Controller\Ajax;
 
+use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Session\Session;
 use Windwalker\Controller\Controller;
 
 /**
@@ -53,7 +55,7 @@ abstract class AbstractAjaxController extends Controller
 
 			if ($this->format === 'json')
 			{
-				$buffer = new \JResponseJson($data, $this->successMessage);
+				$buffer = new JsonResponse($data, $this->successMessage);
 			}
 			else
 			{
@@ -74,7 +76,7 @@ abstract class AbstractAjaxController extends Controller
 				);
 			}
 
-			$buffer = new \JResponseJson($msg, $e->getMessage(), true);
+			$buffer = new JsonResponse($msg, $e->getMessage(), true);
 
 			header('HTTP/1.1 ' . $e->getCode() . ' ' . str_replace('%20', ' ', rawurlencode($e->getMessage())));
 		}
@@ -103,7 +105,7 @@ abstract class AbstractAjaxController extends Controller
 	 */
 	protected function checkToken($method = 'post', $redirect = true)
 	{
-		if (!\JSession::checkToken($method))
+		if (!Session::checkToken($method))
 		{
 			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JINVALID_TOKEN_NOTICE'), 400);
 		}

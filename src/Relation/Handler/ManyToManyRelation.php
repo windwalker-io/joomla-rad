@@ -8,6 +8,7 @@
 
 namespace Windwalker\Relation\Handler;
 
+use Joomla\CMS\Table\Table as JTable;
 use Windwalker\Data\DataSet;
 use Windwalker\Model\Helper\QueryHelper;
 use Windwalker\Relation\Action;
@@ -23,7 +24,7 @@ class ManyToManyRelation extends AbstractRelationHandler
 	/**
 	 * Property map.
 	 *
-	 * @var  \JTable
+	 * @var  JTable
 	 */
 	protected $map;
 
@@ -46,9 +47,9 @@ class ManyToManyRelation extends AbstractRelationHandler
 	 *
 	 * @param  Table    $parent    The parent table od this relation.
 	 * @param  string   $field     Field of parent table to store children.
-	 * @param  \JTable  $map       The mapping table.
+	 * @param  JTable   $map       The mapping table.
 	 * @param  array    $mapFks    The mapping foreign keys.
-	 * @param  \JTable  $table     The Table object of this relation child.
+	 * @param  JTable   $table     The Table object of this relation child.
 	 * @param  array    $fks       Foreign key mapping.
 	 * @param  string   $onUpdate  The action of ON UPDATE operation.
 	 * @param  string   $onDelete  The action of ON DELETE operation.
@@ -304,7 +305,7 @@ class ManyToManyRelation extends AbstractRelationHandler
 	/**
 	 * Is fields changed. If any field changed, means we have to do something to children.
 	 *
-	 * @param   \JTable  $map  The child table to be handled.
+	 * @param   JTable  $map  The child table to be handled.
 	 *
 	 * @return  boolean  Something changed of not.
 	 */
@@ -330,7 +331,7 @@ class ManyToManyRelation extends AbstractRelationHandler
 	/**
 	 * Method to get property Map
 	 *
-	 * @return  \JTable
+	 * @return  JTable
 	 */
 	public function getMappingTable()
 	{
@@ -340,7 +341,7 @@ class ManyToManyRelation extends AbstractRelationHandler
 	/**
 	 * Method to set property map
 	 *
-	 * @param   \JTable $map
+	 * @param   JTable $map
 	 * @param   array   $mapFks
 	 *
 	 * @return  static  Return self to support chaining.
@@ -352,7 +353,7 @@ class ManyToManyRelation extends AbstractRelationHandler
 			return $this;
 		}
 
-		if (!($map instanceof \JTable))
+		if (!($map instanceof JTable))
 		{
 			$map = $this->getTable($map, $this->prefix);
 		}

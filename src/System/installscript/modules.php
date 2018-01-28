@@ -6,6 +6,9 @@
  * @license    GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Installer\Installer;
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 
 // Install modules
@@ -23,7 +26,7 @@ if (!empty($modules))
 			$install_path = dirname($path) . '/modules/' . $var;
 
 			// Do install
-			$installer = new JInstaller;
+			$installer = new Installer;
 
 			if ($result[] = $installer->install($install_path))
 			{
@@ -37,11 +40,11 @@ if (!empty($modules))
 			// Set success table
 			$grid->addRow(array('class' => 'row' . ($i % 2)));
 			$grid->setRowCell('num',     ++$i, $tdClass);
-			$grid->setRowCell('type',    JText::_('COM_INSTALLER_TYPE_MODULE'), $tdClass);
-			$grid->setRowCell('name',    JText::_(strtoupper($var)), array());
+			$grid->setRowCell('type',    Text::_('COM_INSTALLER_TYPE_MODULE'), $tdClass);
+			$grid->setRowCell('name',    Text::_(strtoupper($var)), array());
 			$grid->setRowCell('version', $installer->manifest->version, $tdClass);
 			$grid->setRowCell('state',   $status, $tdClass);
-			$grid->setRowCell('info',    JText::_($installer->manifest->description), array());
+			$grid->setRowCell('info',    Text::_($installer->manifest->description), array());
 		}
 	}
 }

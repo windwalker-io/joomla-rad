@@ -65,7 +65,7 @@ class CoreScriptTest extends AbstractBaseTestCase
 	{
 		CoreScript::underscore(false);
 
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 
@@ -78,7 +78,7 @@ JS;
 
 		CoreScript::underscore(true);
 
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 		$this->assertEquals(1, count($this->doc->_scripts));
@@ -104,7 +104,7 @@ JS;
 	{
 		CoreScript::underscoreString(false);
 
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.string.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.string.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 
@@ -112,7 +112,7 @@ JS;
 
 		CoreScript::underscoreString(true);
 
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.string.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/libraries/windwalker/resource/asset/js/core/underscore.string.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 		$this->assertEquals(1, count($this->doc->_scripts));
@@ -148,7 +148,7 @@ JS;
 
 		CoreScript::backbone(false);
 
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/backbone.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/libraries/windwalker/resource/asset/js/core/backbone.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 
@@ -165,7 +165,7 @@ JS;
 
 		CoreScript::backbone(true);
 
-		$url = \JUri::root(true) . '/libraries/windwalker/resource/asset/js/core/backbone.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/libraries/windwalker/resource/asset/js/core/backbone.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 		$this->assertEquals(5, count($this->doc->_scripts));

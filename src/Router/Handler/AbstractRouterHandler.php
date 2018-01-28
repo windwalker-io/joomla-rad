@@ -8,6 +8,7 @@
 
 namespace Windwalker\Router\Handler;
 
+use Joomla\CMS\Component\Router\RouterViewConfiguration;
 use Windwalker\Router\ComponentViewRouter;
 
 /**
@@ -76,7 +77,7 @@ abstract class AbstractRouterHandler implements RouterHandlerInterface
 	/**
 	 * Property view.
 	 *
-	 * @var \JComponentRouterViewconfiguration
+	 * @var RouterViewConfiguration
 	 */
 	protected $view;
 
@@ -105,13 +106,13 @@ abstract class AbstractRouterHandler implements RouterHandlerInterface
 	 *
 	 * @param   bool  $new  Return a new instance.
 	 *
-	 * @return \JComponentRouterViewconfiguration
+	 * @return RouterViewConfiguration
 	 */
 	public function getViewconfiguration($new = false)
 	{
 		if (!$this->view)
 		{
-			$this->view = new \JComponentRouterViewconfiguration(static::getName());
+			$this->view = new RouterViewConfiguration(static::getName());
 		}
 
 		return $this->view;

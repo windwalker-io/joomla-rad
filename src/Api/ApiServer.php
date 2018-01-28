@@ -43,7 +43,7 @@ class ApiServer
 	/**
 	 * Property uri.
 	 *
-	 * @var  \JUri
+	 * @var  \Joomla\CMS\Uri\Uri
 	 */
 	protected $uri = null;
 

@@ -8,6 +8,8 @@
 
 namespace Windwalker\Router\Handler;
 
+use Joomla\CMS\Component\Router\RouterViewConfiguration;
+
 /**
  * The RouterRuleInterface class.
  *
@@ -27,14 +29,14 @@ interface RouterHandlerInterface
 	 *
 	 * @param   bool  $new  Return a new instance.
 	 *
-	 * @return \JComponentRouterViewconfiguration
+	 * @return RouterViewConfiguration
 	 */
 	public function getViewconfiguration($new = false);
 
 	/**
 	 * Configure view configuration.
 	 *
-	 * @param \JComponentRouterViewconfiguration $view
+	 * @param RouterViewConfiguration $view
 	 *
 	 * @return  void
 	 */
