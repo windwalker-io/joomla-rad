@@ -1,7 +1,7 @@
 {
     "name": "windwalker/joomla-rad",
     "description": "Rapido de la vento viro.",
-    "license": "LGPL-2.0",
+    "license": "LGPL-2.0-or-later",
     "minimum-stability": "beta",
     "authors": [
         {
