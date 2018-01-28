@@ -167,7 +167,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 
 		$testParagraph = 'admin article news';
 
-		$expectedResult = '管理員文章新聞';
+		$expectedResult = '管理文章新聞';
 
 		$gTranslated = LanguageHelper::translate($testParagraph, 'en', 'zh-TW');
 
@@ -189,7 +189,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 		}
 
 		$testDictionary = array(
-			'admin' => '管理員',
+			'admin' => '管理',
 			'article' => '文章',
 			'news' => '新聞'
 		);
