@@ -8,12 +8,14 @@
 
 namespace Windwalker\Object;
 
+use Joomla\CMS\Object\CMSObject;
+
 /**
  * The basic Object class with isNull() method.
  *
  * @since 2.0
  */
-class Object extends \JObject implements NullObjectInterface
+class Object extends CMSObject implements NullObjectInterface
 {
 	/**
 	 * Is this object not contain any values.

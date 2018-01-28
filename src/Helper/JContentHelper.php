@@ -8,6 +8,8 @@
 
 namespace Windwalker\Helper;
 
+use Joomla\CMS\Uri\Uri;
+
 /**
  * Joomla Content Helper.
  *
@@ -46,12 +48,10 @@ class JContentHelper
 
 		if ($absolute)
 		{
-			return \JUri::root() . $path;
+			return Uri::root() . $path;
 		}
-		else
-		{
-			return $path;
-		}
+
+		return $path;
 	}
 
 	/**
@@ -70,11 +70,9 @@ class JContentHelper
 
 		if ($absolute)
 		{
-			return \JUri::root() . $path;
+			return Uri::root() . $path;
 		}
-		else
-		{
-			return $path;
-		}
+
+		return $path;
 	}
 }

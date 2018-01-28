@@ -9,7 +9,9 @@
 namespace Windwalker\Helper;
 
 use JFolder;
-use Joomla\Uri\Uri;
+use Joomla\CMS\Language\Language;
+use Joomla\CMS\Language\LanguageHelper as JoomlaLanguageHelper;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\Data\Data;
 use Windwalker\Data\DataSet;
 use Windwalker\DataMapper\DataMapperFacade;
@@ -48,7 +50,7 @@ class LanguageHelper extends AbstractFacade
 	 */
 	public static function getLocale()
 	{
-		/** @var \JLanguage $lang */
+		/** @var Language $lang */
 		$lang = static::getInstance();
 
 		return $lang->getTag();
@@ -77,7 +79,7 @@ class LanguageHelper extends AbstractFacade
 	 */
 	public static function detectLanguageFromBrowser()
 	{
-		return \JLanguageHelper::detectLanguage();
+		return JoomlaLanguageHelper::detectLanguage();
 	}
 
 	/**
@@ -115,7 +117,7 @@ class LanguageHelper extends AbstractFacade
 
 		$key = $key ? : 'default';
 
-		return \JLanguageHelper::getLanguages($key);
+		return JoomlaLanguageHelper::getLanguages($key);
 	}
 
 	/**
@@ -140,7 +142,7 @@ class LanguageHelper extends AbstractFacade
 	/**
 	 * getInstalledLanguages
 	 *
-	 * @param   integer  $client
+	 * @param   integer|string  $client
 	 *
 	 * @return  DataSet|Data[]
 	 * 
@@ -269,7 +271,7 @@ class LanguageHelper extends AbstractFacade
 	 */
 	public static function loadAll($lang = null, $option = null)
 	{
-		/** @var \JLanguage $language */
+		/** @var Language $language */
 		$language = static::getInstance();
 
 		$lang = $lang ? : $language->getTag();

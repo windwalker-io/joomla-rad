@@ -8,7 +8,7 @@
 
 namespace Windwalker\Helper;
 
-use JForm;
+use Joomla\CMS\Form\Form;
 use Windwalker\DI\Container;
 
 defined('_JEXEC') or die;
@@ -134,7 +134,7 @@ HTML;
 
 		try
 		{
-			$form = new JForm($id . '.quickaddform', array('control' => $id));
+			$form = new Form($id . '.quickaddform', array('control' => $id));
 
 			$form->loadFile(JPATH_ROOT . '/' . $path);
 		}

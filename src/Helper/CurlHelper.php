@@ -8,6 +8,9 @@
 
 namespace Windwalker\Helper;
 
+use Joomla\CMS\Http\HttpFactory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Windwalker\Object\NullObject;
 use Windwalker\Object\Object;
 
@@ -50,7 +53,7 @@ class CurlHelper
 		// Merge option
 		$options = $option + $options;
 
-		$http = \JHttpFactory::getHttp(new \JRegistry($options), 'curl');
+		$http = HttpFactory::getHttp(new Registry($options), 'curl');
 
 		try
 		{
@@ -90,7 +93,7 @@ class CurlHelper
 		jimport('joomla.filesystem.folder');
 		jimport('joomla.filesystem.path');
 
-		$url  = new \JUri($url);
+		$url  = new Uri($url);
 		$path = \JPath::clean($path);
 
 		// $folder_path = JPATH_ROOT.DS.'files'.DS.$url->task_id ;

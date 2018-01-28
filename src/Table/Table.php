@@ -8,6 +8,8 @@
 
 namespace Windwalker\Table;
 
+use Joomla\CMS\Access\Rules;
+use Joomla\CMS\Table\Table as JoomlaTable;
 use Windwalker\DI\Container;
 use Windwalker\Relation\Observer\RelationObserver;
 use Windwalker\Relation\Relation;
@@ -17,7 +19,7 @@ use Windwalker\Relation\Relation;
  *
  * @since 2.0
  */
-class Table extends \JTable
+class Table extends JoomlaTable
 {
 	/**
 	 * Property _relation.
@@ -153,7 +155,7 @@ class Table extends \JTable
 	{
 		if ($this->_trackAssets && isset($src['rules']) && is_array($src['rules']))
 		{
-			$this->setRules(new \JAccessRules($src['rules']));
+			$this->setRules(new Rules($src['rules']));
 		}
 
 		return parent::bind($src, $ignore);
@@ -257,7 +259,7 @@ class Table extends \JTable
 	 * By default, all assets are registered to the ROOT node with ID, which will default to 1 if none exists.
 	 * An extended class can define a table and ID to lookup.  If the asset does not exist it will be created.
 	 *
-	 * @param   \JTable  $table A JTable object for the asset parent.
+	 * @param   Table  $table A JTable object for the asset parent.
 	 * @param   integer $id    Id to look up
 	 *
 	 * @return  integer

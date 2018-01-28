@@ -10,8 +10,8 @@ namespace Windwalker\Elfinder\View;
 
 use elFinder;
 use elFinderConnector;
+use Joomla\CMS\Uri\Uri;
 use JPath;
-use JURI;
 use Windwalker\Registry\Registry;
 use Windwalker\View\Json\AbstractJsonView;
 
@@ -91,9 +91,9 @@ class ConnectView extends AbstractJsonView
 					// Path to files (REQUIRED)
 					'path'          => JPath::clean(JPATH_ROOT . '/' . $root, '/'),
 					'startPath'     => JPath::clean(JPATH_ROOT . '/' . $root . '/' . $start_path . '/'),
-					'URL'           => JPath::clean(JURI::root(true) . '/' . $root . '/' . $start_path, '/'), // URL to files (REQUIRED)
+					'URL'           => JPath::clean(Uri::root(true) . '/' . $root . '/' . $start_path, '/'), // URL to files (REQUIRED)
 					'tmbPath'       => JPath::clean(JPATH_ROOT . '/cache/windwalker-finder-thumb'),
-					'tmbURL'        => JURI::root(true) . '/cache/windwalker-finder-thumb',
+					'tmbURL'        => Uri::root(true) . '/cache/windwalker-finder-thumb',
 					// 'tmbSize'       => 128,
 					'tmp'           => JPath::clean(JPATH_ROOT . '/tmp/windwalker-finder-temp'),
 

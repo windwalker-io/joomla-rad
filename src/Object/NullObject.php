@@ -8,12 +8,14 @@
 
 namespace Windwalker\Object;
 
+use Joomla\CMS\Object\CMSObject;
+
 /**
  * Null Object
  *
  * @since 2.0
  */
-class NullObject extends \JObject implements NullObjectInterface
+class NullObject extends CMSObject implements NullObjectInterface
 {
 	/**
 	 * Is this object not contain any values.

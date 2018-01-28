@@ -8,7 +8,7 @@
 
 namespace Windwalker\Elfinder\View;
 
-use JURI;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\Registry\Registry;
 use Windwalker\View\Html\AbstractHtmlView;
 
@@ -69,7 +69,7 @@ class DisplayView extends AbstractHtmlView
 		$callback   = $input->get('callback');
 		$root       = $config->get('root', $input->getPath('root', '/'));
 		$start_path = $config->get('start_path', $input->getPath('start_path', '/'));
-		$site_root  = JURI::root(true) . '/';
+		$site_root  = Uri::root(true) . '/';
 		$height     = $config->get('height', 445);
 
 		$toolbar = $config->get('toolbar', $this->defaultToolbar);

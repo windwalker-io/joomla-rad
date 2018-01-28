@@ -8,7 +8,7 @@
 
 namespace Windwalker\Helper;
 
-use Joomla\Uri\Uri;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\DI\Container;
 use Windwalker\String\Utf8String;
 
@@ -137,7 +137,7 @@ class UriHelper
 		{
 			if (!$absolute)
 			{
-				$path = \JURI::root() . $path;
+				$path = Uri::root() . $path;
 			}
 
 			// Redirect it.
@@ -197,10 +197,10 @@ class UriHelper
 
 		if (strpos($path, '/') !== 0)
 		{
-			return \JUri::root() . $path;
+			return Uri::root() . $path;
 		}
 
-		$uri = clone \JUri::getInstance();
+		$uri = clone Uri::getInstance();
 
 		$uri->setQuery(array());
 		$uri->setPath('');
@@ -217,7 +217,7 @@ class UriHelper
 	 */
 	public static function isHome()
 	{
-		$uri  = \JUri::getInstance();
+		$uri  = Uri::getInstance();
 		$root = $uri::root(true);
 
 		// Get site route
@@ -226,11 +226,6 @@ class UriHelper
 		// Remove index.php
 		$route = str_replace('index.php', '', $route);
 
-		if (! trim($route, '/') && ! $uri->getVar('option'))
-		{
-			return true;
-		}
-
-		return false;
+		return !trim($route, '/') && !$uri->getVar('option');
 	}
 }

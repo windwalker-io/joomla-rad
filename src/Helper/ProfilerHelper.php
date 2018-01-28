@@ -8,7 +8,7 @@
 
 namespace Windwalker\Helper;
 
-use JProfiler;
+use Joomla\CMS\Profiler\Profiler;
 use Windwalker\DI\Container;
 
 /**
@@ -21,7 +21,7 @@ class ProfilerHelper
 	/**
 	 * The profiler instances storage.
 	 *
-	 * @var  JProfiler[]
+	 * @var  Profiler[]
 	 */
 	protected static $profiler = array();
 
@@ -33,10 +33,10 @@ class ProfilerHelper
 	protected static $stateBuffer = array();
 
 	/**
-	 * A helper to add JProfiler log mark. Need to turn on the debug mode.
+	 * A helper to add Profiler log mark. Need to turn on the debug mode.
 	 *
 	 * @param   string $text      Log text.
-	 * @param   string $namespace The JProfiler instance ID. Default is the core profiler "Application".
+	 * @param   string $namespace The Profiler instance ID. Default is the core profiler "Application".
 	 *
 	 * @return  void
 	 */
@@ -57,7 +57,7 @@ class ProfilerHelper
 
 		if (!isset(self::$profiler[$namespace]))
 		{
-			self::$profiler[$namespace] = JProfiler::getInstance($namespace);
+			self::$profiler[$namespace] = Profiler::getInstance($namespace);
 
 			// Get last page logs.
 			self::$stateBuffer[$namespace] = $app->getUserState('windwalker.system.profiler.' . $namespace);
@@ -72,7 +72,7 @@ class ProfilerHelper
 	/**
 	 * Render the profiler log data, and echo it..
 	 *
-	 * @param   string   $namespace The JProfiler instance ID. Default is the core profiler "Application".
+	 * @param   string   $namespace The Profiler instance ID. Default is the core profiler "Application".
 	 * @param   boolean  $asString  Return as string.
 	 *
 	 * @return  string
@@ -128,9 +128,9 @@ class ProfilerHelper
 	/**
 	 * Get a profiler instance with a namespace
 	 *
-	 * @param   string  $namespace The JProfiler instance ID. Default is the core profiler "Application".
+	 * @param   string  $namespace The Profiler instance ID. Default is the core profiler "Application".
 	 *
-	 * @return  JProfiler|null
+	 * @return  Profiler|null
 	 */
 	public static function getProfiler($namespace = 'Windwalker')
 	{
@@ -145,12 +145,12 @@ class ProfilerHelper
 	/**
 	 * Set a profiler instance with a namespace
 	 *
-	 * @param   string    $namespace The JProfiler instance ID. Default is the core profiler "Application".
-	 * @param   JProfiler $profiler  The JProfiler instance.
+	 * @param   string    $namespace The Profiler instance ID. Default is the core profiler "Application".
+	 * @param   Profiler $profiler  The Profiler instance.
 	 *
 	 * @return  void
 	 */
-	public static function setProfiler($namespace = 'Windwalker', JProfiler $profiler)
+	public static function setProfiler($namespace = 'Windwalker', Profiler $profiler)
 	{
 		static::$profiler[$namespace] = $profiler;
 	}

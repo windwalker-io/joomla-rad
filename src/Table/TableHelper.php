@@ -8,6 +8,8 @@
 
 namespace Windwalker\Table;
 
+use Joomla\CMS\Factory;
+
 /**
  * Class TableHelper
  *
@@ -117,7 +119,7 @@ class TableHelper
 	{
 		if (!$this->db)
 		{
-			$this->db = \Joomla\CMS\Factory::getDbo();
+			$this->db = Factory::getDbo();
 		}
 
 		return $this->db;
@@ -140,7 +142,7 @@ class TableHelper
 	/**
 	 * Get Fields.
 	 *
-	 * @param  \JTable  $table
+	 * @param  Table  $table
 	 *
 	 * @return  array
 	 */

@@ -7,7 +7,6 @@ use Windwalker\DI\ServiceProvider;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Registry\Registry;
 use Windwalker\Relation\RelationContainer;
-use Windwalker\Script\ModuleManager;
 
 /**
  * Windwalker system provider.

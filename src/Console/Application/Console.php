@@ -8,11 +8,14 @@
 
 namespace Windwalker\Console\Application;
 
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Plugin\PluginHelper;
 use Windwalker\Console\Descriptor\CommandDescriptor;
 use Windwalker\Console\Descriptor\OptionDescriptor;
 use Windwalker\Console\IO\IOInterface;
 use Windwalker\DI\Container;
 use Windwalker\Registry\Registry;
+use Windwalker\Registry\Registry as WindwalkerRegistry;
 
 /**
  * Console Class.
@@ -55,7 +58,7 @@ class Console extends \Windwalker\Console\Console
 	 * @param   IOInterface $io      The Input and output handler.
 	 * @param   Registry    $config  Application's config object.
 	 */
-	public function __construct(IOInterface $io = null, \Windwalker\Registry\Registry $config = null)
+	public function __construct(IOInterface $io = null, WindwalkerRegistry $config = null)
 	{
 		$this->loadDispatcher();
 
@@ -103,7 +106,7 @@ HELP
 	{
 		try
 		{
-			\JPluginHelper::importPlugin('windwalker');
+			PluginHelper::importPlugin('windwalker');
 		}
 		catch (\RuntimeException $e)
 		{
@@ -210,7 +213,7 @@ HELP
 				break;
 		}
 
-		$time = \JDate::getInstance('now', $this->get('offset'))->format('Y-m-d H:i:s', true);
+		$time = Date::getInstance('now', $this->get('offset'))->format('Y-m-d H:i:s', true);
 
 		$this->out(sprintf('[%s] ' . $tag, $time, $msg));
 
