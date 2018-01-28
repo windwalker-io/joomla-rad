@@ -167,7 +167,7 @@ class LanguageHelperTest extends \PHPUnit_Framework_TestCase
 
 		$testParagraph = 'admin article news';
 
-		$expectedResult = '管理文章新聞';
+		$expectedResult = '管理文章消息';
 
 		$gTranslated = LanguageHelper::translate($testParagraph, 'en', 'zh-TW');
 
