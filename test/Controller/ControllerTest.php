@@ -68,7 +68,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase
 		$this->assertAttributeSame(\JFactory::getApplication()->input, 'input', $controller);
 		$this->assertNull(TestHelper::getValue($controller, 'prefix'));
 		$this->assertNull(TestHelper::getValue($controller, 'option'));
-		$this->assertNull(TestHelper::getValue($controller, 'name'));
+		$this->assertEquals('', TestHelper::getValue($controller, 'name'));
 		$this->assertEquals('', TestHelper::getValue($controller, 'task'));
 
 		$input = new \JInput;

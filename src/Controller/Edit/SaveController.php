@@ -8,6 +8,9 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Language\Language;
+use Joomla\CMS\Router\Route;
 use Windwalker\Bootstrap\Message;
 use Windwalker\Controller\Admin\AbstractItemController;
 use Windwalker\Helper\ArrayHelper;
@@ -23,7 +26,7 @@ class SaveController extends AbstractItemController
 	/**
 	 * Language object.
 	 *
-	 * @var \JLanguage
+	 * @var Language
 	 */
 	protected $lang = null;
 
@@ -51,11 +54,11 @@ class SaveController extends AbstractItemController
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput          $input  The input object.
-	 * @param   \JApplicationCms $app    The application object.
-	 * @param   array            $config The config object.
+	 * @param   \JInput         $input  The input object.
+	 * @param   CMSApplication  $app    The application object.
+	 * @param   array           $config The config object.
 	 */
-	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
+	public function __construct(\JInput $input = null, CMSApplication $app = null, $config = array())
 	{
 		parent::__construct($input, $app, $config);
 
@@ -244,7 +247,7 @@ class SaveController extends AbstractItemController
 	{
 		$this->input->set('layout', null);
 
-		return \JRoute::_($this->getRedirectListUrl(), false);
+		return Route::_($this->getRedirectListUrl(), false);
 	}
 
 	/**
@@ -254,7 +257,7 @@ class SaveController extends AbstractItemController
 	 */
 	public function getFailRedirect()
 	{
-		return \JRoute::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
+		return Route::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
 	}
 
 	/**

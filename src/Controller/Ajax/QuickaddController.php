@@ -8,9 +8,8 @@
 
 namespace Windwalker\Controller\Ajax;
 
-use JForm;
-use JLoader;
-use JTable;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Table\Table;
 use Windwalker\Controller\DisplayController;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\BacktraceHelper;
@@ -43,10 +42,10 @@ class QuickaddController extends DisplayController
 		$extension  = $this->input->get('extension');
 
 		// Include Needed Classes
-		JLoader::registerPrefix(ucfirst($component), JPATH_BASE . "/components/com_{$component}");
-		JForm::addFormPath(JPATH_BASE . "/components/com_{$component}/models/forms");
-		JForm::addFieldPath(JPATH_BASE . "/components/com_{$component}/models/fields");
-		JTable::addIncludePath(JPATH_BASE . "/components/com_{$component}/tables");
+		\JLoader::registerPrefix(ucfirst($component), JPATH_BASE . "/components/com_{$component}");
+		Form::addFormPath(JPATH_BASE . "/components/com_{$component}/models/forms");
+		Form::addFieldPath(JPATH_BASE . "/components/com_{$component}/models/fields");
+		Table::addIncludePath(JPATH_BASE . "/components/com_{$component}/tables");
 		LanguageHelper::loadLanguage($extension, null);
 
 		// Get Model
@@ -57,7 +56,7 @@ class QuickaddController extends DisplayController
 		{
 			$result->set('errorMsg', 'Model need extends to \\Windwalker\\Model\\CrudModel.');
 
-			jexit($result);
+			exit($result);
 		}
 
 		// For WindWalker Component only
@@ -79,7 +78,7 @@ class QuickaddController extends DisplayController
 				{
 					$result->set('errorMsg', 'No form');
 
-					jexit($result);
+					exit($result);
 				}
 
 				// Test whether the data is valid.
@@ -116,7 +115,7 @@ class QuickaddController extends DisplayController
 			$result->set('errorMsg', \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
 			$result->set('backtrace', BacktraceHelper::normalizeBacktraces($e->getTrace()));
 
-			jexit($result);
+			exit($result);
 		}
 		catch (\Exception $e)
 		{
@@ -124,7 +123,7 @@ class QuickaddController extends DisplayController
 			$result->set('errorMsg', \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
 			$result->set('backtrace', BacktraceHelper::normalizeBacktraces($e->getTrace()));
 
-			jexit($result);
+			exit($result);
 		}
 
 		// Set ID
@@ -134,6 +133,6 @@ class QuickaddController extends DisplayController
 		$result->set('Result', true);
 		$result->set('data', $data);
 
-		jexit($result);
+		exit($result);
 	}
 }

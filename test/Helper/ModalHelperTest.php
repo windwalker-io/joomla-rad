@@ -93,7 +93,7 @@ class ModalHelperTest extends AbstractDomTestCase
 </a>
 HTML;
 
-		$this->assertEquals($expected, ModalHelper::modalLink($title, $selector));
+		$this->assertStringDataEquals($expected, ModalHelper::modalLink($title, $selector));
 
 		// Test with $option
 		$option = array(
@@ -111,7 +111,7 @@ HTML;
 </{$tag}>
 HTML;
 
-		$this->assertEquals($expected, ModalHelper::modalLink($title, $selector, $option));
+		$this->assertStringDataEquals($expected, ModalHelper::modalLink($title, $selector, $option));
 	}
 
 	/**
@@ -141,7 +141,11 @@ HTML;
 </div>
 
 <div id="{$selector}-container" class="modal-body">
-    {$option['content']}
+	<div class="container-fluid">
+		<div class="span12">
+			{$option['content']}
+		</div>
+    </div>
 </div>
 
 <div class="modal-footer">
@@ -150,7 +154,7 @@ HTML;
 </div>
 HTML;
 
-		$this->assertEquals($expected, ModalHelper::renderModal($selector, $option['content'], $option));
+		$this->assertStringDataEquals($expected, ModalHelper::renderModal($selector, $option['content'], $option));
 	}
 
 	/**

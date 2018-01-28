@@ -106,7 +106,19 @@ class SystemProvider extends ServiceProvider
 			}
 		);
 
-		// Detect deferent environment
+		// ControllerResolver
+		$resolverClass = '\\Windwalker\\Controller\\Resolver\\ControllerResolver';
+
+		$container->alias('controller.resolver', $resolverClass)
+			->share(
+				$resolverClass,
+				function($container) use($resolverClass)
+				{
+					return new $resolverClass($container->get('app'), $container);
+				}
+			);
+
+		// Detect different environment
 		if ($this->isConsole)
 		{
 			$container->registerServiceProvider(new CliProvider);

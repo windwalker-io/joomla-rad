@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Batch;
 
+use Joomla\CMS\Form\Form;
 use Windwalker\Bootstrap\Message;
 use Windwalker\Controller\Admin\AbstractListController;
 use Windwalker\Model\Exception\ValidateFailException;
@@ -268,7 +269,7 @@ abstract class AbstractBatchController extends AbstractListController
 	/**
 	 * getForm
 	 *
-	 * @return  \JForm
+	 * @return  Form
 	 */
 	public function getForm()
 	{

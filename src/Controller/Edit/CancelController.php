@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Joomla\CMS\Router\Route;
 use Windwalker\Controller\Admin\AbstractItemController;
 
 defined('_JEXEC') or die;
@@ -56,6 +57,6 @@ class CancelController extends AbstractItemController
 	{
 		$this->input->set('layout', null);
 
-		return \JRoute::_($this->getRedirectListUrl(), false);
+		return Route::_($this->getRedirectListUrl(), false);
 	}
 }

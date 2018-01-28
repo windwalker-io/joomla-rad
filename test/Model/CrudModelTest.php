@@ -150,8 +150,8 @@ class CrudModelTest extends AbstractDatabaseTestCase
 		$this->assertEquals('onContentAfterDelete', TestHelper::getValue($crudModel, 'eventAfterDelete'));
 		$this->assertEquals('onContentBeforeDelete', TestHelper::getValue($crudModel, 'eventBeforeDelete'));
 		$this->assertEquals('onContentAfterSave', TestHelper::getValue($crudModel, 'eventAfterSave'));
-		$this->assertEquals('onContentAfterSave', TestHelper::getValue($crudModel, 'eventBeforeSave'));
-		$this->assertEquals('onContentAfterSave', TestHelper::getValue($crudModel, 'eventChangeState'));
+		$this->assertEquals('onContentBeforeSave', TestHelper::getValue($crudModel, 'eventBeforeSave'));
+		$this->assertEquals('onContentChangeState', TestHelper::getValue($crudModel, 'eventChangeState'));
 
 		// Test if PopulateState() was being executed
 		// 'foo' is being set in getConstructContainer()

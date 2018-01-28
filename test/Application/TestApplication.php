@@ -9,13 +9,14 @@
 namespace Windwalker\Test\Application;
 
 use JApplicationCms;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\Registry\Registry;
 use Windwalker\Test\Joomla\MockSession;
 
 /**
  * Class ApplicationCms
  */
-class TestApplication extends \JApplicationCms
+class TestApplication extends CMSApplication
 {
 	/**
 	 * Property userState.
@@ -128,9 +129,11 @@ class TestApplication extends \JApplicationCms
 	/**
 	 * getMessageQueue
 	 *
+	 * @param bool $clear
+	 *
 	 * @return  array
 	 */
-	public function getMessageQueue()
+	public function getMessageQueue($clear = false)
 	{
 		return $this->messages;
 	}

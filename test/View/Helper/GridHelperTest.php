@@ -402,7 +402,7 @@ class GridHelperTest extends AbstractDomTestCase
 		$result = $grid->checkoutButton();
 
 		$html = <<<HTML
-<a class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb1','testViewList.check.checkin')" title="&lt;strong&gt;JLIB_HTML_CHECKIN&lt;/strong&gt;&lt;br /&gt;Sakura&lt;br /&gt;{$date}"><span class="icon-checkedout"></span></a>
+<a class="btn btn-micro hasTooltip" href="javascript:void(0);" onclick="return listItemTask('cb1','testViewList.check.checkin')" title="&lt;strong&gt;JLIB_HTML_CHECKIN&lt;/strong&gt;&lt;br /&gt;Sakura&lt;br /&gt;{$date}"><span class="icon-checkedout" aria-hidden="true"></span></a>
 HTML;
 		
 		$this->assertStringDataEquals($html, $result);

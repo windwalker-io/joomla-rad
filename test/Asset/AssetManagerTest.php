@@ -8,6 +8,7 @@
 
 namespace Windwalker\Test\Asset;
 
+use Joomla\CMS\Factory;
 use Windwalker\Asset\AssetManager;
 use Windwalker\Test\Joomla\MockHtmlDocument;
 use Windwalker\Test\TestCase\AbstractBaseTestCase;
@@ -46,8 +47,8 @@ class AssetManagerTest extends AbstractBaseTestCase
 		'media/{name}',
 		'media/windwalker/{type}',
 		'media/windwalker',
-		'libraries/windwalker/resource/asset/{type}',
-		'libraries/windwalker/resource/asset',
+		'libraries/windwalker/asset/{type}',
+		'libraries/windwalker/asset',
 		'libraries/windwalker/assets',
 	);
 
@@ -60,7 +61,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	{
 		TestHelper::setValue('JUri', 'base', array());
 
-		\JFactory::getConfig()->set('live_site', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+		Factory::getConfig()->set('live_site', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	}
 
 	/**
@@ -75,6 +76,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 		$paths->insert('libraries/windwalker/resource/asset/{type}', 800);
 		$paths->insert('libraries/windwalker/test/Asset/Stub/{type}', 500);
 		$paths->insert('media/jui/{type}', 300);
+		$paths->insert('media/windwalker/{type}', 300);
 		$paths->insert('media/{name}/{type}', 100);
 
 		$this->instance = new AssetManager('test', $paths);
@@ -135,7 +137,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	{
 		$this->instance->addCSS('windwalker.css');
 
-		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/resource/asset/css/windwalker.css';
+		$expected = $_SERVER['REQUEST_URI'] . '/media/windwalker/css/windwalker.css';
 
 		$this->assertEquals($expected, $this->doc->getLastStylesheet());
 
@@ -161,9 +163,10 @@ class AssetManagerTest extends AbstractBaseTestCase
 		$this->instance->setSumName('SUM_TEST');
 
 		$this->instance->addCSS('foo.css');
-		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/css/foo.min.css?windwalkersum';
-
-		$this->assertEquals($expected, $this->doc->getLastStylesheet());
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/css/foo.min.css';
+		
+		$this->assertEquals($expected, $this->doc->getLastStylesheet($data));
+		$this->assertEquals('windwalkersum', $data['options']['version']);
 	}
 
 	/**
@@ -275,7 +278,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	{
 		$this->instance->addJS('windwalker.js');
 
-		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/resource/asset/js/windwalker.js';
+		$expected = $_SERVER['REQUEST_URI'] . '/media/windwalker/js/windwalker.js';
 
 		$this->assertEquals($expected, $this->doc->getLastScript());
 
@@ -301,9 +304,10 @@ class AssetManagerTest extends AbstractBaseTestCase
 		$this->instance->setSumName('SUM_TEST');
 
 		$this->instance->addJS('foo.js');
-		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/js/foo.min.js?windwalkersum';
+		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/js/foo.min.js';
 
-		$this->assertEquals($expected, $this->doc->getLastScript());
+		$this->assertEquals($expected, $this->doc->getLastScript($data));
+		$this->assertEquals('windwalkersum', $data['options']['version']);
 	}
 
 	/**

@@ -8,6 +8,12 @@
 
 namespace Windwalker\Controller\Resolver;
 
+use Joomla\CMS\Application\BaseApplication;
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\User\User;
 use Windwalker\Controller\Controller;
 use Windwalker\String\StringNormalise;
 use Windwalker\Utilities\ArrayHelper;
@@ -36,7 +42,7 @@ class ControllerDelegator
 	/**
 	 * Application object.
 	 *
-	 * @var  \JApplicationBase
+	 * @var  CMSApplication
 	 */
 	public $app = null;
 
@@ -57,14 +63,14 @@ class ControllerDelegator
 	/**
 	 * Method to get controller.
 	 *
-	 * @param string            $class  Controller class.
-	 * @param \JInput           $input  The input object.
-	 * @param \JApplicationBase $app    The application object.
-	 * @param array             $config The controller config.
+	 * @param string          $class  Controller class.
+	 * @param \JInput         $input  The input object.
+	 * @param BaseApplication $app    The application object.
+	 * @param array           $config The controller config.
 	 *
 	 * @return \Windwalker\Controller\Controller Controller instance.
 	 */
-	public function getController($class, \JInput $input, \JApplicationBase $app, $config = array())
+	public function getController($class, \JInput $input, BaseApplication $app, $config = array())
 	{
 		$this->class  = $class;
 		$this->input  = $input;
@@ -83,21 +89,22 @@ class ControllerDelegator
 	 * @param bool   $redirect
 	 *
 	 * @return bool
+	 * @throws \Exception
 	 */
 	public function checkToken($method = 'post', $redirect = true)
 	{
-		$valid = \JSession::checkToken($method);
+		$valid = Session::checkToken($method);
 
 		if (!$valid && $redirect)
 		{
 			$referrer = $this->input->server->getString('HTTP_REFERER');
 
-			if (!\Joomla\CMS\Uri\Uri::isInternal($referrer))
+			if (!Uri::isInternal($referrer))
 			{
 				$referrer = 'index.php';
 			}
 
-			$app = \Joomla\CMS\Factory::getApplication();
+			$app = Factory::getApplication();
 			$app->enqueueMessage(\Joomla\CMS\Language\Text::_('JINVALID_TOKEN_NOTICE'), 'warning');
 			$app->redirect($referrer);
 		}
@@ -188,11 +195,11 @@ class ControllerDelegator
 	 *
 	 * @param int $id
 	 *
-	 * @return  \JUser
+	 * @return  User
 	 */
 	public function getUser($id = null)
 	{
-		return \Joomla\CMS\Factory::getUser($id);
+		return Factory::getUser($id);
 	}
 
 	/**

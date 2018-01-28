@@ -47,7 +47,7 @@ abstract class AbstractAjaxController extends Controller
 	 */
 	protected function doExecute()
 	{
-		// TODO: Add CSRF Check after Joomla 3.8
+		Session::checkToken() or die();
 
 		try
 		{

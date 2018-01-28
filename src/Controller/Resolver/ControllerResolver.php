@@ -9,6 +9,7 @@
 namespace Windwalker\Controller\Resolver;
 
 use JInput;
+use Joomla\CMS\Application\CMSApplication;
 use Windwalker\Controller\Controller;
 use Windwalker\DI\Container;
 
@@ -31,7 +32,7 @@ class ControllerResolver
 	/**
 	 * Application object.
 	 *
-	 * @var  \JApplicationCms
+	 * @var  CMSApplication
 	 */
 	protected $application;
 
@@ -45,10 +46,10 @@ class ControllerResolver
 	/**
 	 * Constructor.
 	 *
-	 * @param \JApplicationCms $application  The application object.
-	 * @param Container        $container    Th DI Container.
+	 * @param CMSApplication $application  The application object.
+	 * @param Container      $container    Th DI Container.
 	 */
-	public function __construct(\JApplicationCms $application, Container $container)
+	public function __construct(CMSApplication $application, Container $container)
 	{
 		$this->container   = $container;
 		$this->application = $application;

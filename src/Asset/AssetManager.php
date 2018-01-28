@@ -201,7 +201,7 @@ class AssetManager implements ContainerAwareInterface
 		unset($attribs['type']);
 		unset($attribs['media']);
 
-		$doc->addStyleSheetVersion($url, $options, $attribs);
+		$doc->addStyleSheet($url, $options, $attribs);
 
 		return $this;
 	}
@@ -262,7 +262,7 @@ class AssetManager implements ContainerAwareInterface
 			HTMLHelper::_('jquery.framework', $this->mootools);
 		}
 
-		$doc->addScriptVersion($url, $options, $attribs);
+		$doc->addScript($url, $options, $attribs);
 
 		return $this;
 	}

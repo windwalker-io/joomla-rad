@@ -8,6 +8,9 @@
 
 namespace Windwalker\Controller\Admin;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Language\Language;
+use Joomla\CMS\User\User;
 use Windwalker\Helper\ContextHelper;
 use Windwalker\Model\CrudModel;
 use Windwalker\Table\Table;
@@ -29,7 +32,7 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	/**
 	 * The user object.
 	 *
-	 * @var \JUser
+	 * @var User
 	 */
 	protected $user = null;
 
@@ -71,20 +74,20 @@ abstract class AbstractAdminController extends AbstractRedirectController
 	/**
 	 * Language object.
 	 *
-	 * @var \JLanguage
+	 * @var Language
 	 */
 	protected $lang = null;
 
 	/**
 	 * Instantiate the controller.
 	 *
-	 * @param   \JInput           $input   The input object.
-	 * @param   \JApplicationCms  $app     The application object.
-	 * @param   array             $config  Additional config.
+	 * @param   \JInput         $input   The input object.
+	 * @param   CMSApplication  $app     The application object.
+	 * @param   array           $config  Additional config.
 	 *
 	 * @throws  \Exception
 	 */
-	public function __construct(\JInput $input = null, \JApplicationCms $app = null, $config = array())
+	public function __construct(\JInput $input = null, CMSApplication $app = null, $config = array())
 	{
 		parent::__construct($input, $app, $config);
 

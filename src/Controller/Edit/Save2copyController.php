@@ -8,6 +8,7 @@
 
 namespace Windwalker\Controller\Edit;
 
+use Joomla\CMS\Router\Route;
 use Windwalker\String\StringHelper;
 
 /**
@@ -76,6 +77,6 @@ class Save2copyController extends SaveController
 		$this->input->set($this->urlVar, null);
 		$this->recordId = null;
 
-		return \JRoute::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
+		return Route::_($this->getRedirectItemUrl($this->recordId, $this->urlVar), false);
 	}
 }

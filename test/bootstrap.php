@@ -14,6 +14,7 @@ $uri = defined('WINDWALKER_TEST_URI') ? WINDWALKER_TEST_URI : '/flower/sakura';
 
 $_SERVER['HTTP_HOST'] = $host;
 $_SERVER['REQUEST_URI'] = $uri;
+$_SERVER['REQUEST_METHOD'] = 'GET';
 $_SERVER['SCRIPT_NAME'] = $uri;
 $_SERVER['PHP_SELF'] = $uri;
 
@@ -29,7 +30,7 @@ if (file_exists(dirname(__DIR__) . '/../../defines.php'))
 
 if (!defined('_JDEFINES'))
 {
-	define('JPATH_BASE', realpath(dirname(__DIR__) . '/../..'));
+	define('JPATH_BASE', getcwd());
 	require_once JPATH_BASE . '/includes/defines.php';
 }
 

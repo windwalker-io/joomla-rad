@@ -10,6 +10,7 @@ namespace Windwalker\Component;
 
 use Joomla\CMS\Application\BaseApplication;
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Component\ComponentHelper as JComponentHelper;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\Registry\Registry;
@@ -134,7 +135,7 @@ class Component
 		}
 
 		$this->config = $this->config ? : new Registry;
-		$this->config->merge(\Joomla\CMS\Component\ComponentHelper::getParams($this->option));
+		$this->config->merge(JComponentHelper::getParams($this->option));
 
 		$this->init();
 	}

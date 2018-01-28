@@ -28,6 +28,11 @@ class UriHelperTest extends \PHPUnit_Framework_TestCase
 	{
 		TestHelper::setValue('JUri', 'base', array());
 
+		$instances = TestHelper::getValue('JUri', 'instances');
+		unset($instances['SERVER']);
+
+		TestHelper::setValue('JUri', 'instances', $instances);
+
 		\JFactory::getConfig()->set('live_site', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 	}
 
