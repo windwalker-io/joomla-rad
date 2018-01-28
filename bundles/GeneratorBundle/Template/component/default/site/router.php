@@ -6,6 +6,11 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Component\Router\Rules\MenuRules;
+use Joomla\CMS\Component\Router\Rules\NomenuRules;
+use Joomla\CMS\Component\Router\Rules\StandardRules;
+use Windwalker\Router\ComponentViewRouter;
+
 defined('_JEXEC') or die;
 
 include_once JPATH_ADMINISTRATOR . '/components/{{extension.element.lower}}/src/init.php';
@@ -20,7 +25,7 @@ if (!class_exists('Windwalker\Windwalker'))
  *
  * @since  1.0
  */
-class {{extension.name.cap}}Router extends \Windwalker\Router\ComponentViewRouter
+class {{extension.name.cap}}Router extends ComponentViewRouter
 {
 	/**
 	 * Class constructor.
@@ -34,8 +39,8 @@ class {{extension.name.cap}}Router extends \Windwalker\Router\ComponentViewRoute
 	{
 		parent::__construct($app, $menu);
 
-		$this->attachRule(new JComponentRouterRulesMenu($this));
-		$this->attachRule(new JComponentRouterRulesStandard($this));
-		$this->attachRule(new JComponentRouterRulesNomenu($this));
+		$this->attachRule(new MenuRules($this));
+		$this->attachRule(new StandardRules($this));
+		$this->attachRule(new NomenuRules($this));
 	}
 }

@@ -6,7 +6,9 @@
  * @license     GNU General Public License version 2 or later.
  */
 
-use Windwalker\Data\Data;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route as JRoute;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\View\Layout\FileLayout;
 
 defined('_JEXEC') or die;
@@ -27,7 +29,7 @@ $data      = $this->data;
 $state     = $data->state;
 $user      = $container->get('user');
 ?>
-<form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}&id='); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option={{extension.element.lower}}&view={{controller.list.name.lower}}'); ?>" method="post" name="adminForm" id="adminForm">
 
 	<div id="{{extension.name.lower}}-wrap" class="windwalker list container-fluid {{controller.list.name.lower}}<?php echo $this->escape($data->params->get('pageclass_sfx')); ?>">
 		<div id="{{extension.name.lower}}-wrap-inner">
@@ -67,8 +69,8 @@ $user      = $container->get('user');
 
         <div>
             <input type="hidden" name="task" value="" />
-            <input type="hidden" name="return" id="return_url" value="<?php echo base64_encode(JUri::getInstance()->toString()); ?>" />
-            <?php echo JHtml::_('form.token'); ?>
+            <input type="hidden" name="return" id="return_url" value="<?php echo base64_encode(Uri::getInstance()->toString()); ?>" />
+            <?php echo HTMLHelper::_('form.token'); ?>
         </div>
     </div>
 

@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use {{extension.name.cap}}\Router\Route;
 use Joomla\Registry\Registry;
 use Windwalker\Data\Data;
 use Windwalker\DataMapper\DataMapper;
@@ -80,10 +81,10 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 		// Link
 		// =====================================================================================
-		$item->link = JRoute::_('index.php?' . http_build_query([
+		$item->link = Route::view('{{controller.item.name.lower}}', array(
 			'id' => $item->id . ':' . $item->alias,
 			'catid' => $item->catid
-		]));
+		));
 
 		// Dsplay Data
 		// =====================================================================================

@@ -6,6 +6,8 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\View\Helper\FrontViewHelper;
 
 defined('_JEXEC') or die;
@@ -24,7 +26,7 @@ $params = $data->item->params;
 $item = $data->item;
 ?>
 
-<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+<form action="<?php echo clone Uri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
 	<div id="{{extension.name.cap}}" class="windwalker item container-fluid {{controller.item.name.lower}}<?php echo $this->escape($params->get('pageclass_sfx')); ?>">
 		<div id="{{extension.name.lower}}-wrap-inner">
@@ -108,7 +110,7 @@ $item = $data->item;
 	<div>
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="boxchecked" value="0" />
-		<input type="hidden" name="return" value="<?php echo base64_encode(JUri::getInstance()->toString()); ?>" />
-		<?php echo JHtml::_('form.token'); ?>
+		<input type="hidden" name="return" value="<?php echo base64_encode(Uri::getInstance()->toString()); ?>" />
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</div>
 </form>        

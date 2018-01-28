@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+use Joomla\CMS\Categories\Categories;
+
 defined('_JEXEC') or die;
 
 /**
@@ -14,7 +16,7 @@ defined('_JEXEC') or die;
  *
  * @since  1.6
  */
-class {{extension.name.cap}}Categories extends JCategories
+class {{extension.name.cap}}Categories extends Categories
 {
 	/**
 	 * Class constructor

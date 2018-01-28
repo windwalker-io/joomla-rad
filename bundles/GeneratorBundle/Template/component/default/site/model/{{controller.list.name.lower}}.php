@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Factory;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
 
@@ -200,6 +201,8 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 * @param array          $filters The filters values.
 	 *
 	 * @return  JDatabaseQuery The db query object.
+	 *
+	 * @throws  Exception
 	 */
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{
@@ -255,7 +258,7 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 
 		// View Level
 		// =====================================================================================
-		if ($access = $this->state->get('filter.access') && $this->filterField('{{controller.item.name.lower}}.access'))
+		if ($this->state->get('filter.access') && $this->filterField('{{controller.item.name.lower}}.access'))
 		{
 			$query->where('{{controller.item.name.lower}}.access ' . new JDatabaseQueryElement('IN()', $user->getAuthorisedViewLevels()));
 		}
@@ -264,7 +267,7 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 		// =====================================================================================
 		if ($this->state->get('filter.language') && $this->filterField('{{controller.item.name.lower}}.language'))
 		{
-			$lang_code = $db->quote(JFactory::getLanguage()->getTag());
+			$lang_code = $db->quote(Factory::getLanguage()->getTag());
 			$query->where("{{controller.item.name.lower}}.language IN ('{$lang_code}', '*')");
 		}
 
