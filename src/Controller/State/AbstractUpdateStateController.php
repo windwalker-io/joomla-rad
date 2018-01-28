@@ -102,7 +102,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	{
 		if (empty($this->cid))
 		{
-			throw new \InvalidArgumentException(\JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), 500);
+			throw new \InvalidArgumentException(\Joomla\CMS\Language\Text::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), 500);
 		}
 
 		$pks = $this->cid;
@@ -125,7 +125,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 					// Prune items that you can't change.
 					unset($pks[$i]);
 
-					$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					$this->addMessage(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}
@@ -155,7 +155,7 @@ abstract class AbstractUpdateStateController extends AbstractListController
 	protected function postExecute($return = null)
 	{
 		// Check in the items.
-		$msg = \JText::plural($this->option . '_N_ITEMS_' . $this->actionText, $this->model->getState()->get('success.number'));
+		$msg = \Joomla\CMS\Language\Text::plural($this->option . '_N_ITEMS_' . $this->actionText, $this->model->getState()->get('success.number'));
 
 		$this->setRedirect($this->getSuccessRedirect(), $msg, Message::MESSAGE_GREEN);
 

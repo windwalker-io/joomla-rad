@@ -114,7 +114,7 @@ class GridView extends ListHtmlView
 	{
 		if (!$title)
 		{
-			$title = \JText::_(sprintf('COM_%s_%s_TITLE_LIST', strtoupper($this->prefix), strtoupper($this->getName())));
+			$title = \Joomla\CMS\Language\Text::_(sprintf('COM_%s_%s_TITLE_LIST', strtoupper($this->prefix), strtoupper($this->getName())));
 		}
 
 		parent::setTitle($title, $icons);

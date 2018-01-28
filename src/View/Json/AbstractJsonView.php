@@ -69,7 +69,7 @@ abstract class AbstractJsonView extends AbstractView
 	/**
 	 * getData
 	 *
-	 * @return \JData
+	 * @return Registry
 	 */
 	public function getData()
 	{

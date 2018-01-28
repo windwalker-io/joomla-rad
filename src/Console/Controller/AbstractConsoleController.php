@@ -122,7 +122,7 @@ abstract class AbstractConsoleController implements \JController
 	 */
 	protected function loadApplication()
 	{
-		return \JFactory::getApplication();
+		return \Joomla\CMS\Factory::getApplication();
 	}
 
 	/**

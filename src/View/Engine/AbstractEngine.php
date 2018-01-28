@@ -149,7 +149,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 
 		if (!$templateFile)
 		{
-			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND',  $file . '.' . $this->layoutExt), 500);
+			throw new \Exception(\Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND',  $file . '.' . $this->layoutExt), 500);
 		}
 
 		$output = $this->execute($templateFile, $data);

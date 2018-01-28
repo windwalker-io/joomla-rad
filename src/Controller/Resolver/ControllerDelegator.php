@@ -97,8 +97,8 @@ class ControllerDelegator
 				$referrer = 'index.php';
 			}
 
-			$app = \JFactory::getApplication();
-			$app->enqueueMessage(\JText::_('JINVALID_TOKEN_NOTICE'), 'warning');
+			$app = \Joomla\CMS\Factory::getApplication();
+			$app->enqueueMessage(\Joomla\CMS\Language\Text::_('JINVALID_TOKEN_NOTICE'), 'warning');
 			$app->redirect($referrer);
 		}
 
@@ -192,7 +192,7 @@ class ControllerDelegator
 	 */
 	public function getUser($id = null)
 	{
-		return \JFactory::getUser($id);
+		return \Joomla\CMS\Factory::getUser($id);
 	}
 
 	/**

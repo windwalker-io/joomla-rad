@@ -51,7 +51,7 @@ abstract class AbstractItemHandler extends AbstractRouterHandler
 
 		if (!strpos($id, ':'))
 		{
-			$db = \JFactory::getDbo();
+			$db = \Joomla\CMS\Factory::getDbo();
 			$dbquery = $db->getQuery(true);
 
 			$dbquery->select($dbquery->qn('alias'))
@@ -89,7 +89,7 @@ abstract class AbstractItemHandler extends AbstractRouterHandler
 
 		if (static::$noIDs)
 		{
-			$db = \JFactory::getDbo();
+			$db = \Joomla\CMS\Factory::getDbo();
 			$dbquery = $db->getQuery(true);
 
 			$dbquery->select($dbquery->qn($view->key))

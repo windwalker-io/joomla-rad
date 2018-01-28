@@ -251,8 +251,8 @@ class Console
 	/**
 	 * setOption
 	 *
-	 * @param name  $name
-	 * @param mixed $value
+	 * @param string $name
+	 * @param mixed  $value
 	 *
 	 * @return  static
 	 */

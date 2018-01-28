@@ -388,7 +388,7 @@ abstract class AbstractView implements \JView, \ArrayAccess, ContainerAwareInter
 
 			if (!preg_match('/(.*)View/i', get_class($this), $r))
 			{
-				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_VIEW_GET_NAME'), 500);
+				throw new \Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_VIEW_GET_NAME'), 500);
 			}
 
 			$this->prefix = strtolower($r[1]);
@@ -430,7 +430,7 @@ abstract class AbstractView implements \JView, \ArrayAccess, ContainerAwareInter
 
 			if ($viewpos === false)
 			{
-				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_VIEW_GET_NAME'), 500);
+				throw new \Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_VIEW_GET_NAME'), 500);
 			}
 
 			$lastPart  = substr($classname, $viewpos + 4);

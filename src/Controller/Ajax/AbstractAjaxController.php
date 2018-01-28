@@ -105,7 +105,7 @@ abstract class AbstractAjaxController extends Controller
 	{
 		if (!\JSession::checkToken($method))
 		{
-			throw new \RuntimeException(\JText::_('JINVALID_TOKEN_NOTICE'), 400);
+			throw new \RuntimeException(\Joomla\CMS\Language\Text::_('JINVALID_TOKEN_NOTICE'), 400);
 		}
 
 		return true;

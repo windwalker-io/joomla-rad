@@ -113,7 +113,7 @@ class ListenerHelper
 	 * @param string $prefix Component prefix name.
 	 * @param string $name   Listener name.
 	 *
-	 * @return  \JPlugin Found listener.
+	 * @return  \JEvent Found listener.
 	 */
 	protected static function getListener($prefix, $name)
 	{

@@ -8,6 +8,12 @@
 
 namespace Windwalker;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Document\Document;
+use Joomla\CMS\Document\HtmlDocument;
+use Joomla\CMS\Language\Language;
+use Joomla\CMS\Mail\Mail;
+use Joomla\CMS\Session\Session;
 use Joomla\Registry\Registry;
 use Windwalker\Asset\AssetManager;
 use Windwalker\Console\IO\IO;
@@ -25,7 +31,7 @@ class Ioc
 	 *
 	 * @param string $name
 	 *
-	 * @return  \JApplicationCms
+	 * @return  CMSApplication
 	 */
 	public static function getApplication($name = 'windwalker')
 	{
@@ -61,7 +67,7 @@ class Ioc
 	 *
 	 * @param string $name
 	 *
-	 * @return  \JLanguage
+	 * @return  Language
 	 */
 	public static function getLanguage($name = 'windwalker')
 	{
@@ -73,7 +79,7 @@ class Ioc
 	 *
 	 * @param string $name
 	 *
-	 * @return  \JDocument|\JDocumentHtml
+	 * @return  Document|HtmlDocument
 	 */
 	public static function getDocument($name = 'windwalker')
 	{
@@ -97,7 +103,7 @@ class Ioc
 	 *
 	 * @param string $name
 	 *
-	 * @return  \JSession
+	 * @return  Session
 	 */
 	public static function getSession($name = 'windwalker')
 	{
@@ -121,7 +127,7 @@ class Ioc
 	 *
 	 * @param string $name
 	 *
-	 * @return  \JMail
+	 * @return  Mail
 	 */
 	public static function getMailer($name = 'windwalker')
 	{

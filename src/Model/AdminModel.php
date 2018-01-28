@@ -8,9 +8,13 @@
 
 namespace Windwalker\Model;
 
-use JFilterOutput;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Observer\Tags;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\UCM\UCMType;
 use Joomla\DI\Container as JoomlaContainer;
-use JTable;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\DateHelper;
 use Windwalker\String\StringHelper;
@@ -116,7 +120,7 @@ class AdminModel extends CrudModel
 		// Check if this is the user has previously checked out the row.
 		if ($table->checked_out > 0 && $table->checked_out != $user->get('id') && !$user->authorise('core.admin', 'com_checkin'))
 		{
-			throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_CHECKIN_USER_MISMATCH'));
+			throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_CHECKIN_USER_MISMATCH'));
 		}
 
 		// Attempt to check the row in.
@@ -156,7 +160,7 @@ class AdminModel extends CrudModel
 		// Check if this is the user having previously checked out the row.
 		if ($table->checked_out > 0 && $table->checked_out != $user->get('id'))
 		{
-			throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_CHECKOUT_USER_MISMATCH'));
+			throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_CHECKOUT_USER_MISMATCH'));
 		}
 
 		// Attempt to check the row out.
@@ -180,7 +184,7 @@ class AdminModel extends CrudModel
 	{
 		$table          = $this->getTable();
 		$tableClassName = get_class($table);
-		$contentType    = new \JUcmType;
+		$contentType    = new UCMType;
 		$type           = $contentType->getTypeByTable($tableClassName);
 		$typeAlias      = $type ? $type->type_alias : null;
 		$tagsObserver   = $table->getObserverOfClass('JTableObserverTags');
@@ -248,7 +252,7 @@ class AdminModel extends CrudModel
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
-	 * @param   JTable  $table  A reference to a JTable object.
+	 * @param   Table  $table  A reference to a JTable object.
 	 *
 	 * @return  void
 	 */
@@ -263,16 +267,16 @@ class AdminModel extends CrudModel
 		{
 			if (!$table->alias)
 			{
-				$table->alias = JFilterOutput::stringURLSafe(trim($table->title));
+				$table->alias = OutputFilter::stringURLSafe(trim($table->title));
 			}
 			else
 			{
-				$table->alias = JFilterOutput::stringURLSafe(trim($table->alias));
+				$table->alias = OutputFilter::stringURLSafe(trim($table->alias));
 			}
 
 			if (!$table->alias)
 			{
-				$table->alias = JFilterOutput::stringURLSafe($date->toSql(true));
+				$table->alias = OutputFilter::stringURLSafe($date->toSql(true));
 			}
 		}
 
@@ -346,7 +350,7 @@ class AdminModel extends CrudModel
 	/**
 	 * Method to set new item ordering as first or last.
 	 *
-	 * @param   JTable $table    Item table to save.
+	 * @param   Table  $table    Item table to save.
 	 * @param   string $position `first` or other are `last`.
 	 *
 	 * @return  void
@@ -396,7 +400,7 @@ class AdminModel extends CrudModel
 	/**
 	 * A protected method to get a set of ordering conditions.
 	 *
-	 * @param   JTable  $table  A JTable object.
+	 * @param   Table  $table  A JTable object.
 	 *
 	 * @return  array  An array of conditions to add to ordering queries.
 	 */
@@ -420,11 +424,11 @@ class AdminModel extends CrudModel
 	/**
 	 * Method to create a tags helper to ensure proper management of tags
 	 *
-	 * @param   \JTableObserverTags  $tagsObserver  The tags observer for this table
-	 * @param   \JUcmType            $type          The type for the table being processed
-	 * @param   integer              $pk            Primary key of the item bing processed
-	 * @param   string               $typeAlias     The type alias for this table
-	 * @param   \JTable              $table         The JTable object
+	 * @param   Tags     $tagsObserver  The tags observer for this table
+	 * @param   UCMType  $type          The type for the table being processed
+	 * @param   int      $pk            Primary key of the item bing processed
+	 * @param   string   $typeAlias     The type alias for this table
+	 * @param   Table    $table         The JTable object
 	 *
 	 * @return  void
 	 */
@@ -432,7 +436,7 @@ class AdminModel extends CrudModel
 	{
 		if (!empty($tagsObserver) && !empty($type))
 		{
-			$table->tagsHelper = new \JHelperTags;
+			$table->tagsHelper = new TagsHelper;
 			$table->tagsHelper->typeAlias = $typeAlias;
 			$table->tagsHelper->tags = explode(',', $table->tagsHelper->getTagIds($pk, $typeAlias));
 		}

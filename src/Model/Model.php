@@ -8,6 +8,9 @@
 
 namespace Windwalker\Model;
 
+use Joomla\CMS\Cache\Cache as JoomlaCache;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Table;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Joomla\Registry\Registry;
@@ -18,6 +21,7 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\ContextHelper;
 use Windwalker\Joomla\Registry\DecoratingRegistry;
+use Windwalker\Registry\Registry as WindwalkerRegistry;
 
 /**
  * Windwalker basic model class.
@@ -140,7 +144,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 
 			if (!preg_match('/(.*)Model/i', get_class($this), $r))
 			{
-				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
+				throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
 			}
 
 			$this->prefix = strtolower($r[1]);
@@ -166,7 +170,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 
 			if (!preg_match('/Model(.*)/i', get_class($this), $r))
 			{
-				throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
+				throw new \Exception(Text::_('JLIB_APPLICATION_ERROR_MODEL_GET_NAME'), 500);
 			}
 
 			$this->name = strtolower($r[1]);
@@ -183,7 +187,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 * @param   array   $options  Configuration array for model. Optional.
 	 *
 	 * @throws  \Exception
-	 * @return  \JTable  A JTable object
+	 * @return  Table|\JTable  A JTable object
 	 */
 	public function getTable($name = '', $prefix = '', $options = array())
 	{
@@ -202,7 +206,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 			return $table;
 		}
 
-		throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name), 0);
+		throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_TABLE_NAME_NOT_SUPPORTED', $name), 0);
 	}
 
 	/**
@@ -338,7 +342,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 			$config['dbo'] = $this->getDb();
 		}
 
-		return \JTable::getInstance($name, $prefix, $config);
+		return Table::getInstance($name, $prefix, $config);
 	}
 
 	/**
@@ -350,7 +354,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	public static function addTablePath($path)
 	{
-		\JTable::addIncludePath($path);
+		Table::addIncludePath($path);
 	}
 
 	/**
@@ -372,8 +376,8 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 			'cachebase'    => ($client_id) ? JPATH_ADMINISTRATOR . '/cache' : $conf->get('cache_path', JPATH_SITE . '/cache')
 		);
 
-		$cache = \JCache::getInstance('callback', $options);
-		$cache->clean();
+		$cache = JoomlaCache::getInstance('callback', $options);
+		$cache->clean(); // Use magic method
 
 		// Trigger the onContentCleanCache event.
 		$dispatcher->trigger($this->eventCleanCache, $options);
@@ -639,7 +643,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	protected function loadState()
 	{
-		return new DecoratingRegistry(new \Windwalker\Registry\Registry);
+		return new DecoratingRegistry(new WindwalkerRegistry);
 	}
 
 	/**
@@ -653,7 +657,7 @@ class Model extends \JModelDatabase implements ContainerAwareInterface, \ArrayAc
 	 */
 	public function setState(Registry $state)
 	{
-		$registry = new \Windwalker\Registry\Registry($state->toArray());
+		$registry = new WindwalkerRegistry($state->toArray());
 
 		$this->state = new DecoratingRegistry($registry);
 	}

@@ -27,7 +27,7 @@ class Dropdown extends \JHtmlActionsdropdown
 	{
 		$task = ($prefix ? $prefix . '.' : '') . 'copy';
 
-		static::addCustomItem(\JText::_('JTOOLBAR_DUPLICATE'), 'copy', $id, $task);
+		static::addCustomItem(\Joomla\CMS\Language\Text::_('JTOOLBAR_DUPLICATE'), 'copy', $id, $task);
 	}
 
 	/**

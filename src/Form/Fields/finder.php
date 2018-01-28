@@ -13,13 +13,12 @@ use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Session\Session;
+use Joomla\CMS\Session\Session;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
 use Windwalker\Helper\XmlHelper;
 use Windwalker\Script\WindwalkerScript;
 use Windwalker\String\SimpleTemplate;
-use Windwalker\String\StringHelper;
 
 FormHelper::loadFieldClass('text');
 
@@ -73,7 +72,7 @@ class JFormFieldFinder extends JFormFieldText
 		// ================================================================
 		if (empty($title))
 		{
-			$title = \JText::_(XmlHelper::get($this->element, 'select_label', 'LIB_WINDWALKER_FORMFIELD_FINDER_SELECT_FILE'));
+			$title = \Joomla\CMS\Language\Text::_(XmlHelper::get($this->element, 'select_label', 'LIB_WINDWALKER_FORMFIELD_FINDER_SELECT_FILE'));
 		}
 
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');

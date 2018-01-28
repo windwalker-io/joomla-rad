@@ -8,6 +8,7 @@
 
 namespace Windwalker\View\Html;
 
+use Joomla\CMS\Form\Form;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Model;
@@ -74,7 +75,7 @@ class EditView extends ItemHtmlView
 	{
 		if (!$title)
 		{
-			$title = \JText::_(sprintf('COM_%s_%s_TITLE_ITEM_EDIT', strtoupper($this->prefix), strtoupper($this->viewItem)));
+			$title = \Joomla\CMS\Language\Text::_(sprintf('COM_%s_%s_TITLE_ITEM_EDIT', strtoupper($this->prefix), strtoupper($this->viewItem)));
 		}
 
 		parent::setTitle($title, $icons);
@@ -131,11 +132,11 @@ class EditView extends ItemHtmlView
 	/**
 	 * Get form method to support 3.7 fields.
 	 *
-	 * @return  \JForm
+	 * @return  Form
 	 */
 	public function getForm()
 	{
-		if (!$this->data->form instanceof \JForm)
+		if (!$this->data->form instanceof Form)
 		{
 			$this->data->form = $this->get('Form');
 		}

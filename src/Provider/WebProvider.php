@@ -31,10 +31,10 @@ class WebProvider implements ServiceProviderInterface
 
 		// User
 		$container->alias('user', 'JUser')
-			->share('JUser', \JFactory::getUser());
+			->share('JUser', \Joomla\CMS\Factory::getUser());
 
 		// Input
 		$container->alias('input', 'JInput')
-			->share('JInput', \JFactory::getApplication()->input);
+			->share('JInput', \Joomla\CMS\Factory::getApplication()->input);
 	}
 }

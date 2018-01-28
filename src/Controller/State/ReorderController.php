@@ -69,7 +69,7 @@ class ReorderController extends AbstractUpdateStateController
 	{
 		if (empty($this->cid))
 		{
-			throw new \InvalidArgumentException(\JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), 500);
+			throw new \InvalidArgumentException(\Joomla\CMS\Language\Text::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), 500);
 		}
 
 		$pks      = $this->cid;
@@ -95,7 +95,7 @@ class ReorderController extends AbstractUpdateStateController
 					unset($pks[$i]);
 					unset($ordering[$i]);
 
-					$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
+					$this->addMessage(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDITSTATE_NOT_PERMITTED'));
 				}
 			}
 		}

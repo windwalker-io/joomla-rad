@@ -116,7 +116,7 @@ abstract class AbstractBatchController extends AbstractListController
 				throw $e;
 			}
 
-			$this->setRedirect($this->getFailRedirect(), \JText::sprintf('JLIB_APPLICATION_ERROR_BATCH_FAILED', $e->getMessage()), Message::ERROR_RED);
+			$this->setRedirect($this->getFailRedirect(), \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_BATCH_FAILED', $e->getMessage()), Message::ERROR_RED);
 
 			return false;
 		}
@@ -136,13 +136,13 @@ abstract class AbstractBatchController extends AbstractListController
 	{
 		if (!count($this->cid))
 		{
-			throw new \Exception(\JText::_('JGLOBAL_NO_ITEM_SELECTED'));
+			throw new \Exception(\Joomla\CMS\Language\Text::_('JGLOBAL_NO_ITEM_SELECTED'));
 		}
 
 		// Category Access
 		if (in_array($this->categoryKey, $this->batch) && !$this->allowCategoryAdd($this->batch, $this->categoryKey))
 		{
-			throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
+			throw new \Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
 		}
 
 		$pks = array_unique($this->cid);
@@ -234,12 +234,12 @@ abstract class AbstractBatchController extends AbstractListController
 
 		if (!in_array(true, $result, true))
 		{
-			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'), Message::WARNING_YELLOW);
+			$this->setRedirect($this->getFailRedirect(), \Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_INSUFFICIENT_BATCH_INFORMATION'), Message::WARNING_YELLOW);
 
 			return false;
 		}
 
-		$this->setRedirect($this->getSuccessRedirect(), \JText::_('JLIB_APPLICATION_SUCCESS_BATCH'), Message::MESSAGE_GREEN);
+		$this->setRedirect($this->getSuccessRedirect(), \Joomla\CMS\Language\Text::_('JLIB_APPLICATION_SUCCESS_BATCH'), Message::MESSAGE_GREEN);
 
 		return true;
 	}

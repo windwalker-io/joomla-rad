@@ -116,17 +116,17 @@ abstract class ComponentHelper
 
 		$appClass = 'JApplication' . ucfirst($client);
 
-		$console = \JFactory::$application;
+		$console = \Joomla\CMS\Factory::$application;
 
-		\JFactory::$application = $appClass::getInstance('site', $input);
+		\Joomla\CMS\Factory::$application = $appClass::getInstance('site', $input);
 
 		$class = ucfirst($element['name']) . 'Component';
 
-		$component = new $class(ucfirst($element['name']), $input, \JFactory::$application);
+		$component = new $class(ucfirst($element['name']), $input, \Joomla\CMS\Factory::$application);
 
 		$result = $component->execute();
 
-		\JFactory::$application = $console;
+		\Joomla\CMS\Factory::$application = $console;
 
 		return $result;
 	}

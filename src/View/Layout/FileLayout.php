@@ -2,6 +2,7 @@
 
 namespace Windwalker\View\Layout;
 
+use Joomla\CMS\Layout\FileLayout as JoomlaFileLayout;
 use Windwalker\DI\Container;
 
 /**
@@ -9,7 +10,7 @@ use Windwalker\DI\Container;
  *
  * @since 2.0
  */
-class FileLayout extends \JLayoutFile
+class FileLayout extends JoomlaFileLayout
 {
 	/**
 	 * Refresh the list of include paths

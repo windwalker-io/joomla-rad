@@ -28,7 +28,7 @@ class CheckinController extends AbstractListController
 	{
 		if (empty($this->cid))
 		{
-			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), Message::ERROR_RED);
+			$this->setRedirect($this->getFailRedirect(), \Joomla\CMS\Language\Text::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), Message::ERROR_RED);
 
 			return false;
 		}
@@ -48,7 +48,7 @@ class CheckinController extends AbstractListController
 
 			if (!$this->allowEdit($data))
 			{
-				$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
+				$this->addMessage(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'));
 
 				continue;
 			}
@@ -63,7 +63,7 @@ class CheckinController extends AbstractListController
 			}
 		}
 
-		$message = \JText::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', count($pks));
+		$message = \Joomla\CMS\Language\Text::plural($this->textPrefix . '_N_ITEMS_CHECKED_IN', count($pks));
 
 		$this->setRedirect($this->getSuccessRedirect(), $message, Message::MESSAGE_GREEN);
 

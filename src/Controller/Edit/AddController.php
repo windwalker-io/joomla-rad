@@ -31,7 +31,7 @@ class AddController extends AbstractItemController
 		if (!$this->allowAdd())
 		{
 			// Set the internal error and also the redirect error.
-			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED'), Message::ERROR_RED);
+			$this->setRedirect($this->getFailRedirect(), \Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_CREATE_RECORD_NOT_PERMITTED'), Message::ERROR_RED);
 
 			return false;
 		}

@@ -8,6 +8,7 @@
 
 namespace Windwalker\View\Html;
 
+use Joomla\CMS\Uri\Uri;
 use Joomla\DI\Container;
 use Windwalker\Data\Data;
 use Windwalker\Helper\ArrayHelper;
@@ -101,11 +102,11 @@ class HtmlView extends AbstractHtmlView
 		// Uri data
 		if (!$this['uri'])
 		{
-			$uri = \JUri::getInstance();
+			$uri = Uri::getInstance();
 			$this['uri'] = new Data;
 			$this['uri']->path = $uri->toString(array('path', 'query', 'fragment'));
-			$this['uri']->base = \JUri::base(true);
-			$this['uri']->root = \JUri::root(true);
+			$this['uri']->base = Uri::base(true);
+			$this['uri']->root = Uri::root(true);
 		}
 
 		// Asset data

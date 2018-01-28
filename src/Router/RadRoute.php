@@ -295,7 +295,7 @@ class RadRoute
 	 */
 	public static function build(&$data = array())
 	{
-		$menu = \JFactory::getApplication()->getMenu('site');
+		$menu = \Joomla\CMS\Factory::getApplication()->getMenu('site');
 
 		$items = $menu->getMenu();
 

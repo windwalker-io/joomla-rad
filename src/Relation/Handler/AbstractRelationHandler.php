@@ -121,7 +121,7 @@ abstract class AbstractRelationHandler implements RelationHandlerInterface
 		$this->options  = $options;
 		$this->flush    = $this->getOption('flush', $this->flush);
 
-		$this->db = $this->db ? : \JFactory::getDbo();
+		$this->db = $this->db ? : \Joomla\CMS\Factory::getDbo();
 	}
 
 	/**

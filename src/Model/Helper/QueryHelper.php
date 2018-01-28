@@ -106,7 +106,7 @@ class QueryHelper extends \Windwalker\Joomla\Database\QueryHelper
 			=> '<span class="text-info">$1</span>',
 
 			// Tables are identified by the prefix.
-			'/(' . \JFactory::getDbo()->getPrefix() . '[a-z_0-9]+)/'
+			'/(' . \Joomla\CMS\Factory::getDbo()->getPrefix() . '[a-z_0-9]+)/'
 			=> '<span class="text-success">$1</span>'
 
 		);

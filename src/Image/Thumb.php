@@ -8,6 +8,8 @@
 
 namespace Windwalker\Image;
 
+use Joomla\CMS\Uri\Uri;
+use Joomla\Image\Image;
 use Windwalker\Filesystem\Path;
 use Windwalker\Helper\CurlHelper;
 use Windwalker\Joomla\Registry\DecoratingRegistry;
@@ -83,7 +85,7 @@ class Thumb
 	 *
 	 * @return  string  The cached thumb URL.
 	 */
-	public function resize($url = null, $width = 100, $height = 100, $method = \JImage::SCALE_INSIDE, $q = 85, $file_type = 'jpg')
+	public function resize($url = null, $width = 100, $height = 100, $method = Image::SCALE_INSIDE, $q = 85, $file_type = 'jpg')
 	{
 		if (!$url)
 		{
@@ -94,7 +96,7 @@ class Thumb
 
 		try
 		{
-			$img = new \JImage;
+			$img = new Image;
 
 			if (is_file($path))
 			{
@@ -130,11 +132,11 @@ class Thumb
 			// Crop
 			if ($method === true)
 			{
-				$method = \JImage::CROP_RESIZE;
+				$method = Image::CROP_RESIZE;
 			}
 			elseif ($method === false)
 			{
-				$method = \JImage::SCALE_INSIDE;
+				$method = Image::SCALE_INSIDE;
 			}
 
 			$img = $img->generateThumbs($width . 'x' . $height, $method);
@@ -184,14 +186,14 @@ class Thumb
 	 */
 	public function getImagePath($url, $hash = null)
 	{
-		$self = \JUri::getInstance();
-		$url  = new \JUri($url);
+		$self = Uri::getInstance();
+		$url  = new Uri($url);
 
 		// Is same host?
 		if ($self->getHost() == $url->getHost())
 		{
 			$url  = $url->toString();
-			$path = str_replace(\JURI::root(), JPATH_ROOT . '/', $url);
+			$path = str_replace(Uri::root(), JPATH_ROOT . '/', $url);
 			$path = \JPath::clean($path);
 		}
 
@@ -225,12 +227,12 @@ class Thumb
 	/**
 	 * Crop image, will count image with height percentage, and crop from middle.
 	 *
-	 * @param   \JImage $img    A JImage object.
+	 * @param   Image $img    A JImage object.
 	 * @param   int     $width  Target width.
 	 * @param   int     $height Target height.
 	 * @param   object  $data   Image information.
 	 *
-	 * @return  \JImage Croped image object.
+	 * @return  Image Croped image object.
 	 */
 	public function crop($img, $width, $height, $data)
 	{

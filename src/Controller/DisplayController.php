@@ -123,7 +123,7 @@ class DisplayController extends Controller
 		if ($this->cachable && $this->format !== 'feed' && $config->get('caching') >= 1)
 		{
 			$option = $this->input->get('option');
-			$cache = \JFactory::getCache($option, 'view');
+			$cache = \Joomla\CMS\Factory::getCache($option, 'view');
 
 			// Register url params for JCache.
 			if (is_array($this->urlParams))

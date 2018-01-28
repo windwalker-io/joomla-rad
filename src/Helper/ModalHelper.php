@@ -130,7 +130,7 @@ HTML;
 	 */
 	static public function getQuickaddForm($id, $path, $extension = null)
 	{
-		$content = '<div class="alert alert-info">' . \JText::_('LIB_WINDWALKER_QUICKADD_HOTKEY_DESC') . '</div>';
+		$content = '<div class="alert alert-info">' . \Joomla\CMS\Language\Text::_('LIB_WINDWALKER_QUICKADD_HOTKEY_DESC') . '</div>';
 
 		try
 		{

@@ -88,7 +88,7 @@ HELP
 		 * https://github.com/joomla/joomla-cms/issues/12108 explains why things will crash and burn if you ever attempt to make this change
 		 * without a proper dependency injection container.
 		 */
-		$session = \JFactory::getSession();
+		$session = \Joomla\CMS\Factory::getSession();
 		$session->initialise(new \JInput, $this->dispatcher);
 
 		$this->loadFirstlevelCommands();

@@ -28,7 +28,7 @@ class CheckoutController extends AbstractListController
 	{
 		if (empty($this->cid))
 		{
-			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), Message::ERROR_RED);
+			$this->setRedirect($this->getFailRedirect(), \Joomla\CMS\Language\Text::_('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST'), Message::ERROR_RED);
 
 			return false;
 		}
@@ -48,7 +48,7 @@ class CheckoutController extends AbstractListController
 
 			if (!$this->allowEdit($data, $this->urlVar))
 			{
-				$this->addMessage(\JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
+				$this->addMessage(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
 
 				continue;
 			}
@@ -59,7 +59,7 @@ class CheckoutController extends AbstractListController
 			}
 			catch (\Exception $e)
 			{
-				$this->addMessage(\JText::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $this->table->getError()));
+				$this->addMessage(\Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_CHECKIN_FAILED', $this->table->getError()));
 			}
 		}
 

@@ -8,6 +8,9 @@
 
 namespace Windwalker\View\Helper;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\PluginHelper;
 use Windwalker\Data\Data;
 use Windwalker\DI\Container;
 use Windwalker\Helper\DateHelper;
@@ -56,7 +59,7 @@ abstract class FrontViewHelper
 	{
 		$item->event = new Data;
 
-		\JPluginHelper::importPlugin('content');
+		PluginHelper::importPlugin('content');
 		$dispatcher = Container::getInstance()->get('event.dispatcher');
 
 		$results = $dispatcher->trigger('onContentPrepare', array($context, &$item, &$params, 0));
@@ -136,10 +139,8 @@ abstract class FrontViewHelper
 		{
 			return static::showLink($label, $value, $link, $icon, $class);
 		}
-		else
-		{
-			return static::showLabel($label, $value, $icon, $class);
-		}
+
+		return static::showLabel($label, $value, $icon, $class);
 	}
 
 	/**
@@ -155,7 +156,7 @@ abstract class FrontViewHelper
 	 */
 	public static function showLink($title, $value, $link, $icon = null, $class = null)
 	{
-		$value = \JHtml::_('link', $link, $value);
+		$value = HTMLHelper::_('link', $link, $value);
 
 		return static::showLabel($title, $value, $icon, $class);
 	}
@@ -173,7 +174,7 @@ abstract class FrontViewHelper
 	 */
 	public static function showDate($title, $value, $format = null, $tz = true, $class = null)
 	{
-		$value = \JHtml::date($value, $format, $tz);
+		$value = HTMLHelper::date($value, $format, $tz);
 
 		$value = htmlspecialchars($value);
 
@@ -198,7 +199,7 @@ abstract class FrontViewHelper
 		}
 
 		$icon = $icon ? 'icon-' . $icon : '';
-		$title = \JText::_($title);
+		$title = Text::_($title);
 
 		$title = htmlspecialchars($title);
 		$icon  = htmlspecialchars($icon);

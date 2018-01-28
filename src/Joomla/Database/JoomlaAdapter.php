@@ -33,7 +33,7 @@ class JoomlaAdapter extends AbstractDatabaseAdapter
 	 */
 	public function __construct(\JDatabaseDriver $db = null, QueryHelper $queryHelper = null)
 	{
-		$this->db = $db ? : \JFactory::getDbo();
+		$this->db = $db ? : \Joomla\CMS\Factory::getDbo();
 
 		$this->queryHelper = $queryHelper ? : new QueryHelper($this->db);
 	}

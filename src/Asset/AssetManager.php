@@ -8,6 +8,9 @@
 
 namespace Windwalker\Asset;
 
+use Joomla\CMS\Document\Document;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\DI\Container as JoomlaContainer;
 use Joomla\DI\ContainerAwareInterface;
 use Windwalker\DI\Container;
@@ -60,7 +63,7 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * The JDocument instance.
 	 *
-	 * @var \JDocument
+	 * @var Document
 	 */
 	protected $doc = null;
 
@@ -188,7 +191,7 @@ class AssetManager implements ContainerAwareInterface
 
 			$sum = $filePath['sum'];
 
-			$url = \JUri::root(true) . '/' . $filePath['file'];
+			$url = Uri::root(true) . '/' . $filePath['file'];
 		}
 
 		$options['type']  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
@@ -243,7 +246,7 @@ class AssetManager implements ContainerAwareInterface
 
 			$sum = $filePath['sum'];
 
-			$url = \JUri::root(true) . '/' . $filePath['file'];
+			$url = Uri::root(true) . '/' . $filePath['file'];
 		}
 
 		$options['type']  = ArrayHelper::getValue($attribs, 'type', 'text/javascript');
@@ -256,7 +259,7 @@ class AssetManager implements ContainerAwareInterface
 
 		if ($this->jquery)
 		{
-			\JHtml::_('jquery.framework', $this->mootools);
+			HTMLHelper::_('jquery.framework', $this->mootools);
 		}
 
 		$doc->addScriptVersion($url, $options, $attribs);
@@ -428,7 +431,7 @@ class AssetManager implements ContainerAwareInterface
 		$foundpath = '';
 		$sum       = '';
 
-		$uri = new \JUri($file);
+		$uri = new Uri($file);
 
 		if ($uri->getScheme())
 		{
@@ -710,11 +713,11 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Get JDocument.
 	 *
-	 * @return  \JDocument The JDocument object.
+	 * @return  Document The JDocument object.
 	 */
 	public function getDoc()
 	{
-		if (!($this->doc instanceof \JDocument))
+		if (!($this->doc instanceof Document))
 		{
 			$this->doc = $this->getContainer()->get('document');
 		}
@@ -725,11 +728,11 @@ class AssetManager implements ContainerAwareInterface
 	/**
 	 * Set JDocument
 	 *
-	 * @param \JDocument $doc The JDocument object.
+	 * @param Document $doc The JDocument object.
 	 *
 	 * @return  AssetManager Return self to support chaining.
 	 */
-	public function setDoc(\JDocument $doc)
+	public function setDoc(Document $doc)
 	{
 		$this->doc = $doc;
 

@@ -113,7 +113,7 @@ class QuickaddController extends DisplayController
 		catch (\Throwable $e)
 		{
 			// Return Error Message.
-			$result->set('errorMsg', \JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
+			$result->set('errorMsg', \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
 			$result->set('backtrace', BacktraceHelper::normalizeBacktraces($e->getTrace()));
 
 			jexit($result);
@@ -121,7 +121,7 @@ class QuickaddController extends DisplayController
 		catch (\Exception $e)
 		{
 			// Return Error Message.
-			$result->set('errorMsg', \JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
+			$result->set('errorMsg', \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()));
 			$result->set('backtrace', BacktraceHelper::normalizeBacktraces($e->getTrace()));
 
 			jexit($result);

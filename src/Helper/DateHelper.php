@@ -10,7 +10,7 @@ namespace Windwalker\Helper;
 
 use Windwalker\DI\Container;
 
-define('WINDWALKER_DATE_FORMAT_SQL', \JFactory::getDbo()->getDateFormat());
+define('WINDWALKER_DATE_FORMAT_SQL', \Joomla\CMS\Factory::getDbo()->getDateFormat());
 
 /**
  * The Date Helper
@@ -49,7 +49,7 @@ abstract class DateHelper
 			$tzOffset = $config->get('offset');
 		}
 
-		return \JFactory::getDate($time, $tzOffset);
+		return \Joomla\CMS\Factory::getDate($time, $tzOffset);
 	}
 
 //	public static function toUTCTime($date, $format = null, $from = null)

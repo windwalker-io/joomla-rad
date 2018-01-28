@@ -140,8 +140,8 @@ class DisplayView extends AbstractHtmlView
 SCRIPT;
 
 		$asset->internalJS($script);
-		$buttonText = \JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_INSERT_URL_BUTTON');
-		$hint = \JText::_('LIB_WINDWALKER_FORMFIELD_FINDER_INSERT_URL_PLACEHOLDER');
+		$buttonText = \Joomla\CMS\Language\Text::_('LIB_WINDWALKER_FORMFIELD_FINDER_INSERT_URL_BUTTON');
+		$hint = \Joomla\CMS\Language\Text::_('LIB_WINDWALKER_FORMFIELD_FINDER_INSERT_URL_PLACEHOLDER');
 
 		return <<<HTML
 <script>

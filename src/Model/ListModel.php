@@ -8,7 +8,13 @@
 
 namespace Windwalker\Model;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Table\Table;
 use Joomla\DI\Container as JoomlaContainer;
+use Joomla\Registry\Registry;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Helper\PathHelper;
 use Windwalker\Helper\ProfilerHelper;
@@ -79,7 +85,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Cache of forms.
 	 *
-	 * @var \JForm[]
+	 * @var Form[]
 	 */
 	protected $forms;
 
@@ -133,7 +139,7 @@ class ListModel extends AbstractFormModel
 	 * @param   \JRegistry         $state     The model state.
 	 * @param   \JDatabaseDriver   $db        The database adapter.
 	 */
-	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
+	public function __construct($config = array(), JoomlaContainer $container = null, Registry $state = null, \JDatabaseDriver $db = null)
 	{
 		// These need before parent constructor.
 		$this->orderCol = $this->orderCol ? : ArrayHelper::getValue($config, 'order_column', null);
@@ -188,7 +194,7 @@ class ListModel extends AbstractFormModel
 	 * @param   string  $prefix   The class prefix. Optional.
 	 * @param   array   $options  Configuration array for model. Optional.
 	 *
-	 * @return  \JTable  A JTable object
+	 * @return  Table  A JTable object
 	 *
 	 * @throws  \Exception
 	 */
@@ -331,7 +337,7 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Method to get a JPagination object for the data set.
 	 *
-	 * @return  \JPagination  A JPagination object for the data set.
+	 * @return  Pagination  A JPagination object for the data set.
 	 */
 	public function getPagination()
 	{
@@ -344,7 +350,7 @@ class ListModel extends AbstractFormModel
 			// Create the pagination object.
 			$limit = (int) $state->get('list.limit') - (int) $state->get('list.links');
 
-			 return new \JPagination($self->getTotal(), $self->getStart(), $limit);
+			 return new Pagination($self->getTotal(), $self->getStart(), $limit);
 		});
 	}
 
@@ -472,10 +478,12 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Get the filter form
 	 *
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load current data
+	 * @param   array   $data     data
+	 * @param   boolean $loadData load current data
 	 *
-	 * @return  \JForm|false  the JForm object or false
+	 * @return  Form|false  the JForm object or false
+	 *
+	 * @throws \Exception
 	 */
 	public function getBatchForm($data = array(), $loadData = false)
 	{
@@ -486,17 +494,18 @@ class ListModel extends AbstractFormModel
 		catch (\RuntimeException $e)
 		{
 			// Return Null Form
-			return new \JForm($this->context . '.batch');
+			return new Form($this->context . '.batch');
 		}
 	}
 
 	/**
 	 * Get the filter form
 	 *
-	 * @param   array    $data      data
-	 * @param   boolean  $loadData  load current data
+	 * @param   array   $data     data
+	 * @param   boolean $loadData load current data
 	 *
-	 * @return  \JForm|false  the JForm object or false
+	 * @return  Form|false  the JForm object or false
+	 * @throws \Exception
 	 */
 	public function getFilterForm($data = array(), $loadData = true)
 	{
@@ -507,7 +516,7 @@ class ListModel extends AbstractFormModel
 		catch (\RuntimeException $e)
 		{
 			// Return Null Form
-			return new \JForm($this->context . '.filter');
+			return new Form($this->context . '.filter');
 		}
 	}
 
@@ -727,9 +736,9 @@ class ListModel extends AbstractFormModel
 	/**
 	 * Method to allow derived classes to preprocess the form.
 	 *
-	 * @param   \JForm   $form   A JForm object.
-	 * @param   mixed    $data   The data expected for the form.
-	 * @param   string   $group  The name of the plugin group to import (defaults to "content").
+	 * @param   Form   $form   A JForm object.
+	 * @param   mixed  $data   The data expected for the form.
+	 * @param   string $group  The name of the plugin group to import (defaults to "content").
 	 *
 	 * @return  void
 	 *
@@ -738,7 +747,7 @@ class ListModel extends AbstractFormModel
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
 		// Import the appropriate plugin group.
-		\JPluginHelper::importPlugin($group);
+		PluginHelper::importPlugin($group);
 
 		// Get the dispatcher.
 		$dispatcher = $this->getContainer()->get('event.dispatcher');
@@ -944,7 +953,7 @@ class ListModel extends AbstractFormModel
 		{
 			$attr = $option->attributes();
 
-			if ('*' == (string) $attr['value'])
+			if ('*' === (string) $attr['value'])
 			{
 				continue;
 			}
@@ -971,7 +980,7 @@ class ListModel extends AbstractFormModel
 	 */
 	public function getUserStateFromRequest($key, $request, $default = null, $type = 'none', $resetPage = true)
 	{
-		/** @var \JApplicationCms $app */
+		/** @var CMSApplication $app */
 		$app       = $this->container->get('app');
 		$input     = $app->input;
 		$oldState  = $app->getUserState($key);

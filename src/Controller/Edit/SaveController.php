@@ -100,7 +100,7 @@ class SaveController extends AbstractItemController
 
 			// Set success message
 			$this->addMessage(
-				\JText::_(
+				\Joomla\CMS\Language\Text::_(
 					($this->lang->hasKey(strtoupper($this->option) . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS')
 						? strtoupper($this->option)
 						: 'JLIB_APPLICATION') . ($this->recordId == 0 && $this->app->isSite() ? '_SUBMIT' : '') . '_SAVE_SUCCESS'
@@ -170,7 +170,7 @@ class SaveController extends AbstractItemController
 		// Access check.
 		if (!$this->allowSave($this->data, $key))
 		{
-			throw new \Exception(\JText::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
+			throw new \Exception(\Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_SAVE_NOT_PERMITTED'));
 		}
 
 		// Validate the posted data.
@@ -199,7 +199,7 @@ class SaveController extends AbstractItemController
 			$this->app->setUserState($this->context . '.data', $validData);
 
 			// Redirect back to the edit screen.
-			throw new \Exception(\JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()), 500, $e);
+			throw new \Exception(\Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $e->getMessage()), 500, $e);
 		}
 
 		return $validData;

@@ -182,7 +182,7 @@ class CmsRoute
 	 */
 	public static function build(&$data = array())
 	{
-		$menu = \JFactory::getApplication()->getMenu();
+		$menu = \Joomla\CMS\Factory::getApplication()->getMenu();
 
 		$items = $menu->getMenu();
 

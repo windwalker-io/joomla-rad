@@ -117,7 +117,7 @@ class TableHelper
 	{
 		if (!$this->db)
 		{
-			$this->db = \JFactory::getDbo();
+			$this->db = \Joomla\CMS\Factory::getDbo();
 		}
 
 		return $this->db;

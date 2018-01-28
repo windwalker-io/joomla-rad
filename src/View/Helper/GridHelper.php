@@ -8,8 +8,9 @@
 
 namespace Windwalker\View\Helper;
 
-use JHtml;
-use JText;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\Data\Data;
 use Windwalker\DI\Container;
 use Windwalker\Dom\HtmlElement;
@@ -129,7 +130,7 @@ class GridHelper
 		$saveOrderingUrl = 'index.php?option=' . $option . '&task=' . $task . '&tmpl=component';
 		$formName  = $this->config->get('form_name', 'adminForm');
 
-		\JHtml::_('sortablelist.sortable', $tableId, $formName, strtolower($listDirn), $saveOrderingUrl);
+		HTMLHelper::_('sortablelist.sortable', $tableId, $formName, strtolower($listDirn), $saveOrderingUrl);
 
 		return true;
 	}
@@ -177,7 +178,7 @@ class GridHelper
 	 */
 	public function setItem($item, $i)
 	{
-		if (!($item instanceof \JData))
+		if (!($item instanceof Data))
 		{
 			$item = new Data($item);
 		}
@@ -237,7 +238,7 @@ class GridHelper
 		}
 		elseif (!$saveOrder)
 		{
-			$iconClass = ' inactive tip-top hasTooltip" title="' . \JHtml::tooltipText('JORDERINGDISABLED');
+			$iconClass = ' inactive tip-top hasTooltip" title="' . HTMLHelper::tooltipText('JORDERINGDISABLED');
 		}
 
 		if ($canChange && $saveOrder)
@@ -300,18 +301,16 @@ HTML;
 
 		$query = array_merge($defaultQuery, $query);
 
-		$uri = new \JUri;
+		$uri = new Uri;
 
 		$uri->setQuery($query);
 
 		if ($canEdit || $canEditOwn)
 		{
-			return \JHtml::link($uri, $title, $attribs);
+			return HTMLHelper::link($uri, $title, $attribs);
 		}
-		else
-		{
-			return $item->$titleField;
-		}
+
+		return $item->$titleField;
 	}
 
 	/**
@@ -423,9 +422,9 @@ HTML;
 	public function createdDate($format = '')
 	{
 		$field = $this->config->get('field.created', 'created');
-		$format  = $format ? : JText::_('DATE_FORMAT_LC4');
+		$format  = $format ? : Text::_('DATE_FORMAT_LC4');
 
-		return JHtml::date($this->current->$field, $format);
+		return HTMLHelper::date($this->current->$field, $format);
 	}
 
 	/**
@@ -440,12 +439,10 @@ HTML;
 
 		if ($this->current->$field === '*')
 		{
-			return JText::alt('JALL', 'language');
+			return Text::alt('JALL', 'language');
 		}
-		else
-		{
-			return $this->current->$title ? $this->escape($this->current->$title) : JText::_('JUNDEFINED');
-		}
+		
+		return $this->current->$title ? $this->escape($this->current->$title) : Text::_('JUNDEFINED');
 	}
 
 	/**

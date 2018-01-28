@@ -8,6 +8,8 @@
 
 namespace Windwalker\Model;
 
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Plugin\PluginHelper;
 use Windwalker\Helper\ArrayHelper;
 use Windwalker\Model\Exception\ValidateFailException;
 
@@ -91,25 +93,25 @@ abstract class AbstractFormModel extends ItemModel
 			$paths->insert(JPATH_COMPONENT . '/models/fields', 'normal');
 			$paths->insert(JPATH_COMPONENT . '/models/rules', 'normal');
 
-			\JForm::addFormPath(JPATH_COMPONENT . '/models/forms');
-			\JForm::addFieldPath(JPATH_COMPONENT . '/models/fields');
-			\JForm::addRulePath(JPATH_COMPONENT . '/models/rules');
+			Form::addFormPath(JPATH_COMPONENT . '/models/forms');
+			Form::addFieldPath(JPATH_COMPONENT . '/models/fields');
+			Form::addRulePath(JPATH_COMPONENT . '/models/rules');
 
-			\JForm::addFormPath(JPATH_COMPONENT . '/model/form');
-			\JForm::addFieldPath(JPATH_COMPONENT . '/model/field');
-			\JForm::addRulePath(JPATH_COMPONENT . '/model/rule');
+			Form::addFormPath(JPATH_COMPONENT . '/model/form');
+			Form::addFieldPath(JPATH_COMPONENT . '/model/field');
+			Form::addRulePath(JPATH_COMPONENT . '/model/rule');
 
 			// Set Form paths for Windwalker
-			\JForm::addFormPath(JPATH_COMPONENT . '/model/form/' . strtolower($this->getName()));
-			\JForm::addFieldPath(JPATH_COMPONENT . '/model/field/' . strtolower($this->getName()));
-			\JForm::addRulePath(JPATH_COMPONENT . '/model/rule/' . strtolower($this->getName()));
+			Form::addFormPath(JPATH_COMPONENT . '/model/form/' . strtolower($this->getName()));
+			Form::addFieldPath(JPATH_COMPONENT . '/model/field/' . strtolower($this->getName()));
+			Form::addRulePath(JPATH_COMPONENT . '/model/rule/' . strtolower($this->getName()));
 
 			$formLoaded = true;
 		}
 
 		try
 		{
-			$form = \JForm::getInstance($name, $source, $options, false, $xpath);
+			$form = Form::getInstance($name, $source, $options, false, $xpath);
 
 			if (isset($options['load_data']) && $options['load_data'])
 			{
@@ -160,7 +162,7 @@ abstract class AbstractFormModel extends ItemModel
 		// Get the dispatcher and load the users plugins.
 		$dispatcher = $this->getContainer()->get('event.dispatcher');
 
-		\JPluginHelper::importPlugin('content');
+		PluginHelper::importPlugin('content');
 
 		// Trigger the data preparation event.
 		$results = $dispatcher->trigger('onContentPrepareData', array($context, $data));
@@ -175,7 +177,7 @@ abstract class AbstractFormModel extends ItemModel
 	/**
 	 * Method to allow derived classes to preprocess the form.
 	 *
-	 * @param   \JForm  $form  A JForm object.
+	 * @param   Form    $form  A JForm object.
 	 * @param   mixed   $data  The data expected for the form.
 	 * @param   string  $group The name of the plugin group to import (defaults to "content").
 	 *
@@ -187,7 +189,7 @@ abstract class AbstractFormModel extends ItemModel
 	protected function preprocessForm(\JForm $form, $data, $group = 'content')
 	{
 		// Import the appropriate plugin group.
-		\JPluginHelper::importPlugin($group);
+		PluginHelper::importPlugin($group);
 
 		// Get the dispatcher.
 		$dispatcher = $this->getContainer()->get('event.dispatcher');
@@ -211,7 +213,7 @@ abstract class AbstractFormModel extends ItemModel
 	/**
 	 * Method to validate the form data.
 	 *
-	 * @param   \JForm  $form  The form to validate against.
+	 * @param   Form    $form  The form to validate against.
 	 * @param   array   $data  The data to validate.
 	 * @param   string  $group The name of the field group to validate.
 	 *
@@ -225,7 +227,7 @@ abstract class AbstractFormModel extends ItemModel
 	public function validate($form, $data, $group = null)
 	{
 		// Filter and validate the form data.
-		/** @var $form \JForm */
+		/** @var $form Form */
 		$data   = $form->filter($data);
 		$return = $form->validate($data, $group);
 

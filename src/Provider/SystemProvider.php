@@ -56,7 +56,7 @@ class SystemProvider extends ServiceProvider
 		// Global Config
 		$container->set('session', function ()
 		{
-		    return \JFactory::getSession();
+		    return \Joomla\CMS\Factory::getSession();
 		});
 
 		// Language

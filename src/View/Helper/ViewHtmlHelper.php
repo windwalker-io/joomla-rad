@@ -8,6 +8,7 @@
 
 namespace Windwalker\View\Helper;
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Windwalker\Data\Data;
 
 /**
@@ -38,12 +39,12 @@ class ViewHtmlHelper
 			return false;
 		}
 
-		$label = \JText::_($label);
+		$label = \Joomla\CMS\Language\Text::_($label);
 		$value = $item->$key;
 
 		if ($link)
 		{
-			$value = \JHtml::_('link', $link, $value);
+			$value = HTMLHelper::_('link', $link, $value);
 		}
 
 		$class = str_replace('_', '-', $key) . ' ' . $class;

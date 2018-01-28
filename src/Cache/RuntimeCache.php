@@ -41,7 +41,7 @@ class RuntimeCache
 
 		$handler = $handler ? : 'closure';
 
-		$cache = \JFactory::getCache('windwalker', $handler, $storage);
+		$cache = \Joomla\CMS\Factory::getCache('windwalker', $handler, $storage);
 
 		$cache->setCaching(true);
 

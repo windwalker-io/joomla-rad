@@ -8,6 +8,8 @@
 
 namespace Windwalker\View\Json;
 
+use Joomla\CMS\Factory;
+
 /**
  * The Json response handler.
  *
@@ -59,6 +61,7 @@ abstract class JsonResponse
 	 * @param \Exception $exception The exception object.
 	 *
 	 * @return  void
+	 * @throws \Exception
 	 */
 	public static function exception(\Exception $exception)
 	{
@@ -71,8 +74,8 @@ abstract class JsonResponse
 			$response->backtrace = $exception->getTrace();
 		}
 
-		$app = \JFactory::getApplication();
-		$doc = \JFactory::getDocument();
+		$app = Factory::getApplication();
+		$doc = Factory::getDocument();
 
 		$app->setBody($doc->setBuffer($response)->render());
 

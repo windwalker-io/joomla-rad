@@ -8,6 +8,7 @@
 
 namespace Windwalker\View\Json;
 
+use Joomla\CMS\Factory;
 use Windwalker\Data\Data;
 
 /**
@@ -61,9 +62,9 @@ class JsonBuffer extends Data
 		$this->message = $message;
 
 		// Get the message queue if requested and available
-		$app = \JFactory::$application;
+		$app = Factory::$application;
 
-		if (!$ignoreMessages && !is_null($app) && is_callable(array($app, 'getMessageQueue')))
+		if (!$ignoreMessages && $app !== null && is_callable(array($app, 'getMessageQueue')))
 		{
 			$messages = $app->getMessageQueue();
 

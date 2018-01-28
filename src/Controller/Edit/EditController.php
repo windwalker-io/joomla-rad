@@ -36,7 +36,7 @@ class EditController extends AbstractItemController
 		if (!$this->allowEdit(get_object_vars($item), $this->key))
 		{
 			// Set the internal error and also the redirect error.
-			$this->setRedirect($this->getFailRedirect(), \JText::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
+			$this->setRedirect($this->getFailRedirect(), \Joomla\CMS\Language\Text::_('JLIB_APPLICATION_ERROR_EDIT_NOT_PERMITTED'), Message::ERROR_RED);
 
 			return false;
 		}

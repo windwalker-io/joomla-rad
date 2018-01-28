@@ -78,7 +78,7 @@ class LegacyQuickaddController extends DisplayController
 		if (!$model->save($validData))
 		{
 			// Return Error Message.
-			$result->set('errorMsg', \JText::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
+			$result->set('errorMsg', \Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
 			jexit($result);
 		}
 
