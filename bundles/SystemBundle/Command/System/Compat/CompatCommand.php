@@ -62,20 +62,22 @@ class CompatCommand extends Command
 
 		$this->out('Creating helper file...');
 
-		$aliases = \JLoader::getDeprecatedAliases();
+		$classmap = file_get_contents(JPATH_LIBRARIES . '/classmap.php');
+		
+		preg_match_all('/JLoader::registerAlias\(\'([\w|\\\\]+)\',\s+\'([\w|\\\\]+)\',\s+\'([\d.]+)\'/', $classmap, $matches, PREG_SET_ORDER);
 
 		$placeholders = [];
 
-		foreach ($aliases as $alias)
+		foreach ($matches as $match)
 		{
-			$version = $alias['version'];
+			$version = isset($match[3]) ? $match[3] : '4.0';
 
 			if (version_compare(JVERSION, $version, '>='))
 			{
 				continue;
 			}
 
-			$placeholders[] = $this->getTemplate($alias['old'], $alias['new']);
+			$placeholders[] = $this->getTemplate($match[1], $match[2]);
 		}
 
 		$placeholders = "<?php\n\n" . implode("\n\n", $placeholders);
@@ -97,7 +99,7 @@ class CompatCommand extends Command
 	 */
 	protected function getTemplate($class, $targetClass)
 	{
-		$class = ucfirst($class);
+		$targetClass = str_replace('\\\\', '\\', $targetClass);
 
 		return <<<PHP
 if (!class_exists('$class'))
