@@ -6,6 +6,10 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Uri\Uri;
+
 defined('_JEXEC') or die;
 
 JHtmlBootstrap::tooltip();
@@ -45,10 +49,10 @@ $tabs = array(
 </script>
 
 <div id="{{extension.name.lower}}" class="windwalker {{controller.item.name.lower}} edit-form row-fluid">
-	<form action="<?php echo JURI::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
+	<form action="<?php echo clone Uri::getInstance(); ?>"  method="post" name="adminForm" id="adminForm"
 		class="form-validate" enctype="multipart/form-data">
 
-		<?php echo JLayoutHelper::render('joomla.edit.title_alias', $data->viewObject); ?>
+		<?php echo LayoutHelper::render('joomla.edit.title_alias', $data->viewObject); ?>
 
 		<?php echo JHtmlBootstrap::startTabSet('{{controller.item.name.lower}}EditTab', array('active' => 'tab_basic')); ?>
 
@@ -65,7 +69,7 @@ $tabs = array(
 		<div id="hidden-inputs">
 			<input type="hidden" name="option" value="{{extension.element.lower}}" />
 			<input type="hidden" name="task" value="" />
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 		</div>
 	</form>
 </div>

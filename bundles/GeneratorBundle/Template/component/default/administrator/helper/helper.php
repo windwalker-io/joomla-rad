@@ -6,6 +6,10 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Object\CMSObject;
 use Windwalker\String\StringInflector;
 
 defined('_JEXEC') or die;
@@ -22,33 +26,35 @@ abstract class {{extension.name.cap}}Helper
 	/**
 	 * Configure the Link bar.
 	 *
-	 * @param   string  $vName  The name of the active view.
+	 * @param   string $vName The name of the active view.
 	 *
 	 * @return  void
+	 *
+	 * @throws  Exception
 	 */
 	public static function addSubmenu($vName)
 	{
-		$app       = \JFactory::getApplication();
+		$app       = Factory::getApplication();
 		$inflector = StringInflector::getInstance(true);
 
 		// Add Category Menu Item
 		if ($app->isClient('administrator'))
 		{
 			JHtmlSidebar::addEntry(
-				JText::_('JCATEGORY'),
+				Text::_('JCATEGORY'),
 				'index.php?option=com_categories&extension={{extension.element.lower}}',
 				$vName === 'categories'
 			);
 
-			if (JComponentHelper::isEnabled('com_fields'))
+			if (ComponentHelper::isEnabled('com_fields'))
 			{
 				JHtmlSidebar::addEntry(
-					JText::_('JGLOBAL_FIELDS'),
+					Text::_('JGLOBAL_FIELDS'),
 					'index.php?option=com_fields&context={{extension.element.lower}}.{{controller.item.name.lower}}',
 					$vName === 'fields.fields'
 				);
 				JHtmlSidebar::addEntry(
-					JText::_('JGLOBAL_FIELD_GROUPS'),
+					Text::_('JGLOBAL_FIELD_GROUPS'),
 					'index.php?option=com_fields&view=groups&context={{extension.element.lower}}.{{controller.item.name.lower}}',
 					$vName === 'fields.groups'
 				);
@@ -60,7 +66,7 @@ abstract class {{extension.name.cap}}Helper
 			if ($folder->isDir() && $inflector->isPlural($view = $folder->getBasename()))
 			{
 				JHtmlSidebar::addEntry(
-					JText::sprintf(sprintf('{{extension.element.upper}}_%s_TITLE_LIST', strtoupper($folder))),
+					Text::sprintf(sprintf('{{extension.element.upper}}_%s_TITLE_LIST', strtoupper($folder))),
 					'index.php?option={{extension.element.lower}}&view=' . $view,
 					$vName === $view
 				);
@@ -84,7 +90,7 @@ abstract class {{extension.name.cap}}Helper
 	 */
 	public static function countItems(&$items)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		foreach ($items as $item)
 		{
@@ -134,12 +140,12 @@ abstract class {{extension.name.cap}}Helper
 	 *
 	 * @param   string  $option  Action option.
 	 *
-	 * @return  JObject
+	 * @return  CMSObject
 	 */
 	public static function getActions($option = '{{extension.element.lower}}')
 	{
-		$user   = JFactory::getUser();
-		$result = new \JObject;
+		$user   = Factory::getUser();
+		$result = new CMSObject;
 
 		$actions = array(
 			'core.admin',
@@ -165,15 +171,17 @@ abstract class {{extension.name.cap}}Helper
 	 * Returns a valid section for articles. If it is not valid then null
 	 * is returned.
 	 *
-	 * @param   string  $section  The section to get the mapping for
+	 * @param   string $section The section to get the mapping for
 	 *
 	 * @return  string|null  The new section
 	 *
 	 * @since   1.0
+	 *
+	 * @throws  Exception
 	 */
 	public static function validateSection($section)
 	{
-		if (JFactory::getApplication()->isClient('site'))
+		if (Factory::getApplication()->isClient('site'))
 		{
 			// On the front end we need to map some sections
 			switch ($section)
@@ -201,11 +209,11 @@ abstract class {{extension.name.cap}}Helper
 	 */
 	public static function getContexts()
 	{
-		JFactory::getLanguage()->load('com_content', JPATH_ADMINISTRATOR);
+		Factory::getLanguage()->load('com_content', JPATH_ADMINISTRATOR);
 
 		$contexts = array(
-			'{{extension.element.lower}}.{{controller.item.name.lower}}'    => JText::_('{{extension.element.upper}}_VIEW_{{controller.item.name.upper}}'),
-			'{{extension.element.lower}}.categories' => JText::_('JCATEGORY'),
+			'{{extension.element.lower}}.{{controller.item.name.lower}}'    => Text::_('{{extension.element.upper}}_VIEW_{{controller.item.name.upper}}'),
+			'{{extension.element.lower}}.categories' => Text::_('JCATEGORY'),
 
 			// Add more group here...
 		);

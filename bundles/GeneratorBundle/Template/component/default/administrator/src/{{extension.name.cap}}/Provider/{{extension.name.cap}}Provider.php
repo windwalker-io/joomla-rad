@@ -25,7 +25,7 @@ class {{extension.name.cap}}Provider extends ServiceProvider
 	 *
 	 * @param   Container $container The DI container.
 	 *
-	 * @return  Container  Returns itself to support chaining.
+	 * @return  void
 	 */
 	public function register(Container $container)
 	{

@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Table\Table;
 use Windwalker\Model\AdminModel;
 
 defined('_JEXEC') or die;
@@ -74,7 +75,7 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
-	 * @param   JTable  $table  A reference to a JTable object.
+	 * @param   Table  $table  A reference to a JTable object.
 	 *
 	 * @return  void
 	 */
@@ -86,7 +87,7 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	/**
 	 * Post save hook.
 	 *
-	 * @param JTable $table The table object.
+	 * @param Table $table The table object.
 	 *
 	 * @return  void
 	 */
@@ -98,7 +99,7 @@ class {{extension.name.cap}}Model{{controller.item.name.cap}} extends AdminModel
 	/**
 	 * Method to set new item ordering as first or last.
 	 *
-	 * @param   JTable $table    Item table to save.
+	 * @param   Table  $table    Item table to save.
 	 * @param   string $position 'first' or other are last.
 	 *
 	 * @return  void

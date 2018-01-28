@@ -6,7 +6,6 @@
  * @license     GNU General Public License version 2 or later.
  */
 
-use Windwalker\DI\Container;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
 
@@ -124,10 +123,12 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 *
 	 * This method will only called in constructor. Using `ignore_request` to ignore this method.
 	 *
-	 * @param   string  $ordering   An optional ordering field.
-	 * @param   string  $direction  An optional direction (asc|desc).
+	 * @param   string $ordering  An optional ordering field.
+	 * @param   string $direction An optional direction (asc|desc).
 	 *
 	 * @return  void
+	 *
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = '{{controller.item.name.lower}}.id', $direction = 'DESC')
 	{
@@ -151,6 +152,8 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 	 * @param array          $filters The filters values.
 	 *
 	 * @return  JDatabaseQuery The db query object.
+	 *
+	 * @throws  Exception
 	 */
 	protected function processFilters(\JDatabaseQuery $query, $filters = array())
 	{

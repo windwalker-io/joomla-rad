@@ -6,13 +6,15 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die;
 
 $init = JPATH_LIBRARIES . '/windwalker/src/init.php';
 
 if (!is_file($init))
 {
-	JFactory::getApplication()->enqueueMessage('Windwalker Framework not found.', 'error');
+	Factory::getApplication()->enqueueMessage('Windwalker Framework not found.', 'error');
 
 	return false;
 }

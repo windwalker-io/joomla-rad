@@ -6,6 +6,10 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Installer\Adapter\ComponentAdapter;
+use Joomla\CMS\Installer\Installer;
+
 defined('_JEXEC') or die;
 
 /**
@@ -19,69 +23,69 @@ class Com_{{extension.name.cap}}InstallerScript
 	/**
 	 * Method to install the component.
 	 *
-	 * @param JInstallerAdapterComponent $parent
+	 * @param ComponentAdapter $parent
 	 *
 	 * @return  void
 	 */
-	public function install(\JInstallerAdapterComponent $parent)
+	public function install(ComponentAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to uninstall the component.
 	 *
-	 * @param JInstallerAdapterComponent $parent
+	 * @param ComponentAdapter $parent
 	 *
 	 * @return  void
 	 */
-	public function uninstall(\JInstallerAdapterComponent $parent)
+	public function uninstall(ComponentAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to update the component
 	 *
-	 * @param JInstallerAdapterComponent $parent
+	 * @param ComponentAdapter $parent
 	 *
 	 * @return  void
 	 */
-	public function update(\JInstallerAdapterComponent $parent)
+	public function update(ComponentAdapter $parent)
 	{
 	}
 
 	/**
 	 * ethod to run before an install/update/uninstall method
 	 *
-	 * @param string                     $type
-	 * @param JInstallerAdapterComponent $parent
+	 * @param string           $type
+	 * @param ComponentAdapter $parent
 	 *
 	 * @return  void
 	 */
-	public function preflight($type, \JInstallerAdapterComponent $parent)
+	public function preflight($type, ComponentAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to run after an install/update/uninstall method
 	 *
-	 * @param string                     $type
-	 * @param JInstallerAdapterComponent $parent
+	 * @param string           $type
+	 * @param ComponentAdapter $parent
 	 *
 	 * @return  void
 	 */
-	public function postflight($type, \JInstallerAdapterComponent $parent)
+	public function postflight($type, ComponentAdapter $parent)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		// Get install manifest
 		// ========================================================================
 		$p_installer = $parent->getParent();
-		$installer   = new JInstaller;
+		$installer   = new Installer;
 		$manifest    = $p_installer->manifest;
 		$path        = $p_installer->getPath('source');
 		$result      = array();
 
-		$css = <<<CSS
+		$css = <<<HTML
 <style type="text/css">
 #ak-install-img
 {
@@ -91,7 +95,7 @@ class Com_{{extension.name.cap}}InstallerScript
 {
 }
 </style>
-CSS;
+HTML;
 
 		echo $css;
 

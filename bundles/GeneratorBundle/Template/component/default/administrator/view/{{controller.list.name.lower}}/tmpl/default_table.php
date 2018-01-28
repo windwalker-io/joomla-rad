@@ -6,6 +6,8 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Windwalker\Data\Data;
 
 defined('_JEXEC') or die;
@@ -20,7 +22,7 @@ JHtmlBehavior::multiselect('adminForm');
  * @var $data      \Windwalker\Data\Data
  * @var $asset     \Windwalker\Asset\AssetManager
  * @var $grid      \Windwalker\View\Helper\GridHelper
- * @var $date      \JDate
+ * @var $date      \Joomla\CMS\Date\Date
  */
 $container = $this->getContainer();
 $asset     = $container->get('helper.asset');
@@ -44,7 +46,7 @@ $grid->registerTableSort();
 
 	<!--CHECKBOX-->
 	<th width="1%" class="center">
-		<?php echo JHtml::_('grid.checkAll'); ?>
+		<?php echo HTMLHelper::_('grid.checkAll'); ?>
 	</th>
 
 	<!--STATE-->
@@ -118,7 +120,7 @@ $grid->registerTableSort();
 
 		<!--CHECKBOX-->
 		<td class="center">
-			<?php echo JHtml::_('grid.id', $i, $item->id); ?>
+			<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 		</td>
 
 		<!--STATE-->
@@ -144,7 +146,7 @@ $grid->registerTableSort();
 
 			<!-- Sub Title -->
 			<div class="small">
-				<?php echo JText::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
+				<?php echo Text::sprintf('JGLOBAL_LIST_ALIAS', $this->escape($item->alias)); ?>
 			</div>
 		</td>
 
@@ -160,7 +162,7 @@ $grid->registerTableSort();
 
 		<!--CREATED-->
 		<td class="center">
-			<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
+			<?php echo HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC4')); ?>
 		</td>
 
 		<!--USER-->

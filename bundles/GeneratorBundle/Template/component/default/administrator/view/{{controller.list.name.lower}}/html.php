@@ -10,7 +10,6 @@ use Joomla\DI\Container;
 use Windwalker\Model\Model;
 use Windwalker\View\Engine\PhpEngine;
 use Windwalker\View\Html\GridView;
-use Windwalker\Xul\XulEngine;
 
 defined('_JEXEC') or die;
 

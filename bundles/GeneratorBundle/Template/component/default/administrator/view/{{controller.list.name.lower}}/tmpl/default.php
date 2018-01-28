@@ -6,6 +6,9 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\View\Layout\FileLayout;
 
 defined('_JEXEC') or die;
@@ -24,7 +27,7 @@ JHtmlDropdown::init();
 $container = $this->getContainer();
 ?>
 <div id="{{extension.name.lower}}" class="windwalker {{controller.list.name.lower}} tablelist row-fluid">
-	<form action="<?php echo JURI::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+	<form action="<?php echo clone Uri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
 		<?php if (!empty($this->data->sidebar)): ?>
 		<div id="j-sidebar-container" class="span2">
@@ -42,7 +45,7 @@ $container = $this->getContainer();
             <?php else: ?>
                 <div class="well no-data-block" style="padding: 100px; text-align: center;">
                     <p>
-                        <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+                        <?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
                     </p>
                 </div>
             <?php endif; ?>
@@ -53,7 +56,7 @@ $container = $this->getContainer();
 			<div id="hidden-inputs">
 				<input type="hidden" name="task" value="" />
 				<input type="hidden" name="boxchecked" value="0" />
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 			</div>
 
 		</div>

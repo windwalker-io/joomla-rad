@@ -9,6 +9,7 @@
 namespace {{extension.name.cap}}\Component;
 
 use {{extension.name.cap}}\Provider\{{extension.name.cap}}Provider;
+use Joomla\CMS\Factory;
 use Windwalker\Component\Component;
 use Windwalker\Debugger\Debugger;
 use Windwalker\Helper\LanguageHelper;
@@ -72,7 +73,7 @@ abstract class {{extension.name.cap}}Component extends Component
 	 */
 	protected function postExecute($result)
 	{
-		$doc = \JFactory::getDocument();
+		$doc = Factory::getDocument();
 
 		// Debug profiler
 		if (JDEBUG && $doc->getType() === 'html')

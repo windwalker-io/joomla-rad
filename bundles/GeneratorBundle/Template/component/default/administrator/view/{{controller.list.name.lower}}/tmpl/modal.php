@@ -8,10 +8,13 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Windwalker\Data\Data;
 use Windwalker\View\Layout\FileLayout;
 
-JHtml::_('behavior.tooltip');
+HTMLHelper::_('behavior.tooltip');
 
 /**
  * Prepare data for this template.
@@ -29,7 +32,7 @@ $function = $input->get('function', 'jSelectArticle');
 ?>
 
 <div id="{{extension.name.lower}}" class="windwalker {{controller.list.name.lower}} tablelist row-fluid">
-	<form action="<?php echo JUri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
+	<form action="<?php echo clone Uri::getInstance(); ?>" method="post" name="adminForm" id="adminForm" enctype="multipart/form-data">
 
 		<?php echo with(new FileLayout('joomla.searchtools.default'))->render(array('view' => $this->data, 'function' => $function)); ?>
 
@@ -112,7 +115,7 @@ $function = $input->get('function', 'jSelectArticle');
 
 					<!--CREATED-->
 					<td class="center">
-						<?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
+						<?php echo HTMLHelper::_('date', $item->created, JText::_('DATE_FORMAT_LC4')); ?>
 					</td>
 
 					<!--LANGUAGE-->
@@ -120,11 +123,11 @@ $function = $input->get('function', 'jSelectArticle');
 						<?php
 						if ($item->language === '*')
 						{
-							echo JText::alt('JALL', 'language');
+							echo Text::alt('JALL', 'language');
 						}
 						else
 						{
-							echo $item->lang_title ? $this->escape($item->lang_title) : JText::_('JUNDEFINED');
+							echo $item->lang_title ? $this->escape($item->lang_title) : Text::_('JUNDEFINED');
 						}
 						?>
 					</td>
@@ -142,7 +145,7 @@ $function = $input->get('function', 'jSelectArticle');
 		<div>
 			<input type="hidden" name="task" value="" />
 			<input type="hidden" name="boxchecked" value="0" />
-			<?php echo JHtml::_('form.token'); ?>
+			<?php echo HTMLHelper::_('form.token'); ?>
 		</div>
 	</form>
 </div>
