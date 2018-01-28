@@ -59,24 +59,24 @@ abstract class AbstractJExtensionController extends AbstractTaskController
 
 		list($itemName, $listName) = $ctrl;
 
-		$replace['extension.element.lower'] = strtolower($config['element']);
-		$replace['extension.element.upper'] = strtoupper($config['element']);
-		$replace['extension.element.cap']   = ucfirst($config['element']);
+		$this->replace['extension.element.lower'] = strtolower($config['element']);
+		$this->replace['extension.element.upper'] = strtoupper($config['element']);
+		$this->replace['extension.element.cap']   = ucfirst($config['element']);
 
-		$replace['extension.name.lower']    = strtolower($config['name']);
-		$replace['extension.name.upper']    = strtoupper($config['name']);
-		$replace['extension.name.cap']      = ucfirst($config['name']);
+		$this->replace['extension.name.lower']    = strtolower($config['name']);
+		$this->replace['extension.name.upper']    = strtoupper($config['name']);
+		$this->replace['extension.name.cap']      = ucfirst($config['name']);
 
-		$replace['controller.list.name.lower'] = strtolower($listName);
-		$replace['controller.list.name.upper'] = strtoupper($listName);
-		$replace['controller.list.name.cap']   = ucfirst($listName);
+		$this->replace['controller.list.name.lower'] = strtolower($listName);
+		$this->replace['controller.list.name.upper'] = strtoupper($listName);
+		$this->replace['controller.list.name.cap']   = ucfirst($listName);
 
-		$replace['controller.item.name.lower'] = strtolower($itemName);
-		$replace['controller.item.name.upper'] = strtoupper($itemName);
-		$replace['controller.item.name.cap']   = ucfirst($itemName);
+		$this->replace['controller.item.name.lower'] = strtolower($itemName);
+		$this->replace['controller.item.name.upper'] = strtoupper($itemName);
+		$this->replace['controller.item.name.cap']   = ucfirst($itemName);
 
 		// Set replace to config.
-		foreach ($replace as $key => $val)
+		foreach ($this->replace as $key => $val)
 		{
 			$config->set('replace.' . $key, $val);
 		}
