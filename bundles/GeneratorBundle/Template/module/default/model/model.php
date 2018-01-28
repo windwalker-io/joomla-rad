@@ -6,6 +6,9 @@
  * @license        GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Factory;
+use Windwalker\Data\Data;
+
 defined('_JEXEC') or die;
 
 /**
@@ -23,12 +26,8 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 	public function getItems()
 	{
 		// Prepare Joomla! API
-		$app   = JFactory::getApplication();
+		$app   = Factory::getApplication();
 		$input = $app->input;
-		$user  = JFactory::getUser();
-		$date  = JFactory::getDate('now', JFactory::getConfig()->get('offset'));
-		$doc   = JFactory::getDocument();
-		$uri   = JUri::getInstance();
 
 		// Get sample data.
 		return $this->getSampleData();
@@ -41,6 +40,8 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 	 * Get sample data.
 	 *
 	 * @return  mixed select list array.
+	 *
+	 * @throws  Exception
 	 */
 	protected function getSampleData()
 	{
@@ -51,9 +52,9 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 		$query  = $db->getQuery(true);
 
 		// Get Joomla! API
-		$app   = JFactory::getApplication();
-		$user  = JFactory::getUser();
-		$date  = JFactory::getDate('now', JFactory::getConfig()->get('offset'));
+		$app   = Factory::getApplication();
+		$user  = Factory::getUser();
+		$date  = Factory::getDate('now', $app->get('offset'));
 
 		// Get Params and prepare data.
 		$catid = $params->get('catid', 1);
@@ -81,11 +82,11 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 		$query->where('item.access ' . new JDatabaseQueryElement('IN()', $user->getAuthorisedViewLevels()));
 
 		// Language
-		if ($app->getLanguageFilter())
-		{
-			$lang_code = $db->quote(JFactory::getLanguage()->getTag());
-			$query->where("item.language IN ({$lang_code}, '*')");
-		}
+//		if ($app->getLanguageFilter())
+//		{
+//			$lang_code = $db->quote(JFactory::getLanguage()->getTag());
+//			$query->where("item.language IN ({$lang_code}, '*')");
+//		}
 
 		// Prepare Tables
 		$table = array(
@@ -98,8 +99,6 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 			$select = Mod{{extension.name.cap}}Helper::getSelectList($table);
 
 			// Load Data
-			$items = array();
-
 			$query->select($select)
 				->from('#__{{extension.name.lower}}_{{controller.list.name.lower}} AS item')
 				->join('LEFT', '#__categories AS cat ON item.catid = cat.id')
@@ -118,11 +117,11 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 
 			foreach ($items as $key => &$item)
 			{
-				$item = new JData;
+				$item = new Data;
 
 				$item->item_title   = '{{extension.name.cap}} data - ' . ($key + 1);
 				$item->link         = '#';
-				$item->item_created = $date->toSQL(true);
+				$item->item_created = $date->toSql(true);
 			}
 		}
 

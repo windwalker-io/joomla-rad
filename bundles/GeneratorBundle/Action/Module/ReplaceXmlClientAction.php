@@ -10,6 +10,7 @@ namespace GeneratorBundle\Action\Module;
 
 use GeneratorBundle\Action\AbstractAction;
 use Windwalker\Filesystem\File;
+use Windwalker\String\SimpleTemplate;
 
 /**
  * Class ReplaceXmlClientAction
@@ -25,12 +26,12 @@ class ReplaceXmlClientAction extends AbstractAction
 	 */
 	protected function doExecute()
 	{
-		$xml = $this->config['dest'] . '/{{extension.name.lower}}.xml';
-
+		$xml = $this->config['dir.dest'] . '/{{extension.element.lower}}.xml';
+		
 		$content = file_get_contents($xml);
 
 		$content = str_replace('client="site"', '{{module.client}}', $content);
 
-		File::write($content, $xml);
+		File::write($xml, $content);
 	}
 }

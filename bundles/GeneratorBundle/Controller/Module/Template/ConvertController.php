@@ -39,6 +39,7 @@ class ConvertController extends AbstractModuleController
 		$this->config->set('dir.src',  $dest);
 
 		$this->doAction(new Action\ConvertTemplateAction);
+		$this->doAction(new Action\Module\ReplaceXmlClientAction);
 
 		return true;
 	}

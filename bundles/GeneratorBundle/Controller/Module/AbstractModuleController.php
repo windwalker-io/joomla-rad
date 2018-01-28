@@ -31,9 +31,9 @@ abstract class AbstractModuleController extends AbstractJExtensionController
 	{
 		$config['client'] = $config['client'] ? : 'site';
 
-		$this->replace['module.client'] = 'client="' . $config['client'] . '"';
-
 		parent::__construct($container, $io, $config);
+
+		$config['replace.module.client'] = 'client="' . $config['client'] . '"';
 
 		// Set copy dir.
 		$config->set('dir.src', $config->get('dir.tmpl'));

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module"
-	version="3.2"
+	version="3.8"
 	{{module.client}}
 	method="upgrade">
 	<name>{{extension.element.lower}}</name>
@@ -149,10 +149,10 @@
 
 	<updateservers>
 		<!--<server type="collection">http://example.com/list.xml</server>-->
-		<server type="extension"
-			priority="1"
-			name="{ORGANIZATION} {{extension.name.cap}} Module">http://update.{ORGANIZATION}.com/module/{{extension.element.lower}}.xml
-		</server>
+		<!--<server type="extension"-->
+			<!--priority="1"-->
+			<!--name="{ORGANIZATION} {{extension.name.cap}} Module">http://update.{ORGANIZATION}.com/module/{{extension.element.lower}}.xml-->
+		<!--</server>-->
 	</updateservers>
 
 
