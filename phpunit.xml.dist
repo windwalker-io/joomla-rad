@@ -10,6 +10,7 @@
 	<php>
 		<ini name="error_reporting" value="32767" />
 
+		<!--<const name="JOOMLA_ROOT" value="" />-->
 		<const name="WINDWALKER_TEST_HOST" value="rad.windwalker.io" />
 		<const name="WINDWALKER_TEST_URI" value="/flower/sakura" />
 
