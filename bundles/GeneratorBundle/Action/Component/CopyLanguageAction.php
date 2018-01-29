@@ -9,6 +9,7 @@
 namespace GeneratorBundle\Action\Component;
 
 use GeneratorBundle\Action\AbstractAction;
+use Windwalker\String\SimpleTemplate;
 use Windwalker\String\StringHelper;
 
 /**
@@ -70,7 +71,7 @@ class CopyLanguageAction extends AbstractAction
 			$mainINI = $this->getSubsystemText($mainINI);
 
 			$fp = fopen($targetFile, 'a+');
-			fputs($fp, "\n\n\n" . $mainINI);
+			fwrite($fp, "\n\n\n" . $mainINI);
 			fclose($fp);
 
 			$this->controller->out('Write subsystem ini to: ' . $targetFile);
@@ -84,7 +85,7 @@ class CopyLanguageAction extends AbstractAction
 			$sysINI  = $this->getSubsystemText($sysINI);
 
 			$fp = fopen($targetFile, 'a+');
-			fputs($fp, "\n\n\n" . $sysINI);
+			fwrite($fp, "\n\n\n" . $sysINI);
 			fclose($fp);
 
 			$this->controller->out('Write subsystem ini to: ' . $targetFile);
@@ -143,6 +144,6 @@ class CopyLanguageAction extends AbstractAction
 
 		$text = substr($text, strpos($text, '; {{controller.item.name.cap}}') - strlen($text));
 
-		return StringHelper::parseVariable($text, $this->config['replace']);
+		return SimpleTemplate::render($text, $this->config['replace']);
 	}
 }

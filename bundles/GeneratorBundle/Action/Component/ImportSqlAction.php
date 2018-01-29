@@ -10,6 +10,7 @@ namespace GeneratorBundle\Action\Component;
 
 use GeneratorBundle\Action\AbstractAction;
 use Windwalker\DI\Container;
+use Windwalker\String\SimpleTemplate;
 use Windwalker\String\StringHelper;
 
 /**
@@ -30,8 +31,8 @@ class ImportSqlAction extends AbstractAction
 		@$installFile   = file_get_contents($this->config['dir.src'] . '/sql/install.sql');
 		@$uninstallFile = file_get_contents($this->config['dir.src'] . '/sql/uninstall.sql');
 
-		$installSql   = StringHelper::parseVariable($installFile, $this->config['replace']);
-		$uninstallSql = StringHelper::parseVariable($uninstallFile, $this->config['replace']);
+		$installSql   = SimpleTemplate::render($installFile, $this->config['replace']);
+		$uninstallSql = SimpleTemplate::render($uninstallFile, $this->config['replace']);
 
 		// Prevent import twice
 		$table = '#__' . $this->config['name'] . '_' . $this->config['replace.controller.list.name.lower'];

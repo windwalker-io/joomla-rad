@@ -10,6 +10,7 @@ namespace GeneratorBundle\FileOperator;
 
 use Muse\FileOperator\CopyOperator as CodeGeneratorCopyOperator;
 use Windwalker\Filesystem\File;
+use Windwalker\String\SimpleTemplate;
 use Windwalker\String\StringHelper;
 
 /**
@@ -31,7 +32,7 @@ class CopyOperator extends CodeGeneratorCopyOperator
 	protected function copyFile($src, $dest, $replace = array())
 	{
 		// Replace dest file name.
-		$dest = StringHelper::parseVariable($dest, $replace);
+		$dest = SimpleTemplate::render($dest, $replace);
 
 		if (is_file($dest))
 		{
@@ -39,7 +40,7 @@ class CopyOperator extends CodeGeneratorCopyOperator
 		}
 		else
 		{
-			$content = StringHelper::parseVariable(file_get_contents($src), $replace);
+			$content = SimpleTemplate::render(file_get_contents($src), $replace);
 
 			if (File::write($dest, $content))
 			{

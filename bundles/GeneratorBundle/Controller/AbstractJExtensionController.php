@@ -98,6 +98,6 @@ abstract class AbstractJExtensionController extends AbstractTaskController
 		// Push container
 		$this->container = $container;
 
-		parent::__construct($io, $config, $replace);
+		parent::__construct($io, $config, $this->replace);
 	}
 }
