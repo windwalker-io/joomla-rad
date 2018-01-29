@@ -6,6 +6,8 @@
  * @license        GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Installer\Adapter\ModuleAdapter;
+
 defined('_JEXEC') or die;
 
 /**
@@ -15,60 +17,64 @@ defined('_JEXEC') or die;
  */
 class Mod_{{extension.name.cap}}InstallerScript
 {
+	const TYPE_INSTALL = 'install';
+	const TYPE_UPDATE = 'update';
+	const TYPE_DISCOVER_INSTALL = 'discover_install';
+
 	/**
 	 * Method to install the extension.
 	 *
-	 * @param \JInstallerAdapterModule $parent Parent installer adapter.
+	 * @param ModuleAdapter $parent Parent installer adapter.
 	 *
 	 * @return  void
 	 */
-	public function install($parent)
+	public function install(ModuleAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to uninstall the extension.
 	 *
-	 * @param \JInstallerAdapterModule $parent Parent installer adapter.
+	 * @param ModuleAdapter $parent Parent installer adapter.
 	 *
 	 * @return  void
 	 */
-	public function uninstall($parent)
+	public function uninstall(ModuleAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to uninstall the extension.
 	 *
-	 * @param \JInstallerAdapterModule $parent Parent installer adapter.
+	 * @param ModuleAdapter $parent Parent installer adapter.
 	 *
 	 * @return  void
 	 */
-	public function update($parent)
+	public function update(ModuleAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to run before an install/update/uninstall method.
 	 *
-	 * @param string                   $type   Install type (install, update, discover_install, extension_site).
-	 * @param \JInstallerAdapterModule $parent Parent installer adapter.
+	 * @param string        $type   Install type (install, update, discover_install).
+	 * @param ModuleAdapter $parent Parent installer adapter.
 	 *
 	 * @return  void
 	 */
-	public function preflight($type, $parent)
+	public function preflight($type, ModuleAdapter $parent)
 	{
 	}
 
 	/**
 	 * Method to run after an install/update/uninstall method.
 	 *
-	 * @param string                   $type   Install type (install, update, discover_install, extension_site).
-	 * @param \JInstallerAdapterModule $parent Parent installer adapter.
+	 * @param string        $type   Install type (install, update, discover_install).
+	 * @param ModuleAdapter $parent Parent installer adapter.
 	 *
 	 * @return  void
 	 */
-	public function postflight($type, $parent)
+	public function postflight($type, ModuleAdapter $parent)
 	{
 	}
 }

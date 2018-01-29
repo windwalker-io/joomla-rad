@@ -6,7 +6,9 @@
  * @license        GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route as JRoute;
 use Windwalker\Data\Data;
 
 defined('_JEXEC') or die;
@@ -22,6 +24,7 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 	 * Get item list.
 	 *
 	 * @return  mixed Item list.
+	 * @throws Exception
 	 */
 	public function getItems()
 	{
@@ -60,6 +63,7 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 		$catid = $params->get('catid', 1);
 		$order = $params->get('orderby', 'item.created');
 		$dir   = $params->get('order_dir', 'DESC');
+		$limit = $params->get('limit', 5);
 
 		// Category
 
@@ -70,7 +74,7 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 		}
 
 		// Published
-		$query->where('item.published > 0');
+		$query->where('item.state > 0');
 
 		$nullDate = $db->Quote($db->getNullDate());
 		$nowDate  = $db->Quote($date->toSql(true));
@@ -82,15 +86,15 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 		$query->where('item.access ' . new JDatabaseQueryElement('IN()', $user->getAuthorisedViewLevels()));
 
 		// Language
-//		if ($app->getLanguageFilter())
-//		{
-//			$lang_code = $db->quote(JFactory::getLanguage()->getTag());
-//			$query->where("item.language IN ({$lang_code}, '*')");
-//		}
+		if ($app instanceof SiteApplication && $app->getLanguageFilter())
+		{
+			$lang_code = $db->quote(Factory::getLanguage()->getTag());
+			$query->where("item.language IN ({$lang_code}, '*')");
+		}
 
 		// Prepare Tables
 		$table = array(
-			'item' => '#__{{extension.name.lower}}_{{controller.list.name.lower}}',
+			'item' => '#__content',
 			'cat'  => '#__categories'
 		);
 
@@ -100,15 +104,15 @@ class Mod{{extension.name.cap}}Model extends \JModelDatabase
 
 			// Load Data
 			$query->select($select)
-				->from('#__{{extension.name.lower}}_{{controller.list.name.lower}} AS item')
+				->from('#__content AS item')
 				->join('LEFT', '#__categories AS cat ON item.catid = cat.id')
 				->order("{$order} {$dir}");
 
-			$items = (array) $db->setQuery($query)->loadObjectList();
+			$items = (array) $db->setQuery($query, 0, $limit)->loadObjectList();
 
 			foreach ($items as $key => &$item)
 			{
-				$item->link = JRoute::_("index.php?option=com_{{extension.name.lower}}&view={{controller.item.name.lower}}&id={$item->id}&alias={$item->alias}&catid={$item->catid}");
+				$item->link = JRoute::_("index.php?option=com_content&view=article&id={$item->id}:{$item->alias}&catid={$item->catid}");
 			}
 		}
 		catch (\RuntimeException $e)

@@ -51,9 +51,9 @@
 				<field
 					name="catid"
 					type="category"
+					label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
 					description="JGLOBAL_CHOOSE_CATEGORY_DESC"
 					extension="com_{{extension.name.lower}}"
-					label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
 					required="true"
 					multiple="true"
 					size="10"
@@ -70,28 +70,38 @@
 				<field
 					name="orderby"
 					type="list"
-					description="JGLOBAL_ARTICLE_ORDER_DESC"
-					label="JGLOBAL_ARTICLE_ORDER_LABEL"
+					label="{{extension.element.upper}}_FIELD_ORDER"
+					description="{{extension.element.upper}}_FIELD_ORDER_DESC"
 					default="item.created"
 					>
-					<option value="item.created">JGLOBAL_CREATED_DATE</option>
+					<option value="item.created">{{extension.element.upper}}_CREATED_DATE</option>
 					<option value="item.publish_up">{{extension.element.upper}}_PUBLISH_UP</option>
 					<option value="item.publish_down">{{extension.element.upper}}_PUBLISH_DOWN</option>
-					<option value="item.modified">JGLOBAL_FIELD_MODIFIED_LABEL</option>
-					<option value="item.title">JGLOBAL_TITLE</option>
-					<option value="item.ordering">JGLOBAL_ORDERING</option>
+					<option value="item.modified">{{extension.element.upper}}_MODIFIED_DATE</option>
+					<option value="item.title">{{extension.element.upper}}_TITLE</option>
+					<option value="RAND()">{{extension.element.upper}}_ORDER_BY_RANDOM</option>
+					<option value="item.ordering">{{extension.element.upper}}_ORDERING</option>
+					<option value="item.ordering">{{extension.element.upper}}_ID</option>
 				</field>
 
 				<field
 					name="order_dir"
 					type="list"
-					label="JFIELD_ORDERING_LABEL"
-					description="JFIELD_ORDERING_DESC"
+					label="{{extension.element.upper}}_FIELD_ORDER_DIR"
+					description="{{extension.element.upper}}_FIELD_ORDER_DIR_DESCRIPTION"
 					default="DESC"
 					>
 					<option value="ASC">{{extension.element.upper}}_ORDER_DIR_ASC</option>
 					<option value="DESC">{{extension.element.upper}}_ORDER_DIR_DESC</option>
 				</field>
+
+				<field
+					name="limit"
+					type="number"
+					label="{{extension.element.upper}}_FIELD_LIMIT"
+					description="{{extension.element.upper}}_FIELD_LIMIT_DESC"
+					default="5"
+					/>
 
 			</fieldset>
 
@@ -118,12 +128,8 @@
 					label="COM_MODULES_FIELD_CACHING_LABEL"
 					description="COM_MODULES_FIELD_CACHING_DESC"
 					>
-					<option
-						value="1">JGLOBAL_USE_GLOBAL
-					</option>
-					<option
-						value="0">COM_MODULES_FIELD_VALUE_NOCACHING
-					</option>
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
 				</field>
 
 				<field

@@ -20,10 +20,14 @@ defined('_JEXEC') or die;
  */
 class Com_{{extension.name.cap}}InstallerScript
 {
+	const TYPE_INSTALL = 'install';
+	const TYPE_UPDATE = 'update';
+	const TYPE_DISCOVER_INSTALL = 'discover_install';
+
 	/**
 	 * Method to install the component.
 	 *
-	 * @param ComponentAdapter $parent
+	 * @param ComponentAdapter $parent  Parent installer adapter.
 	 *
 	 * @return  void
 	 */
@@ -34,7 +38,7 @@ class Com_{{extension.name.cap}}InstallerScript
 	/**
 	 * Method to uninstall the component.
 	 *
-	 * @param ComponentAdapter $parent
+	 * @param ComponentAdapter $parent  Parent installer adapter.
 	 *
 	 * @return  void
 	 */
@@ -45,7 +49,7 @@ class Com_{{extension.name.cap}}InstallerScript
 	/**
 	 * Method to update the component
 	 *
-	 * @param ComponentAdapter $parent
+	 * @param ComponentAdapter $parent  Parent installer adapter.
 	 *
 	 * @return  void
 	 */
@@ -56,8 +60,8 @@ class Com_{{extension.name.cap}}InstallerScript
 	/**
 	 * ethod to run before an install/update/uninstall method
 	 *
-	 * @param string           $type
-	 * @param ComponentAdapter $parent
+	 * @param string           $type    Install type (install, update, discover_install).
+	 * @param ComponentAdapter $parent  Parent installer adapter.
 	 *
 	 * @return  void
 	 */
@@ -68,8 +72,8 @@ class Com_{{extension.name.cap}}InstallerScript
 	/**
 	 * Method to run after an install/update/uninstall method
 	 *
-	 * @param string           $type
-	 * @param ComponentAdapter $parent
+	 * @param string           $type    Install type (install, update, discover_install).
+	 * @param ComponentAdapter $parent  Parent installer adapter.
 	 *
 	 * @return  void
 	 */
@@ -79,10 +83,10 @@ class Com_{{extension.name.cap}}InstallerScript
 
 		// Get install manifest
 		// ========================================================================
-		$p_installer = $parent->getParent();
+		$pInstaller = $parent->getParent();
 		$installer   = new Installer;
-		$manifest    = $p_installer->manifest;
-		$path        = $p_installer->getPath('source');
+		$manifest    = $pInstaller->manifest;
+		$path        = $pInstaller->getPath('source');
 		$result      = array();
 
 		$css = <<<HTML

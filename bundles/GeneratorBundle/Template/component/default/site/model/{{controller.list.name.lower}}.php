@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later.
  */
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Factory;
 use Windwalker\Model\Filter\FilterHelper;
 use Windwalker\Model\ListModel;
@@ -167,7 +168,10 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 
 		// Language
 		// =====================================================================================
-		$this->set('filter.language', $app->getLanguageFilter());
+		if ($app instanceof SiteApplication)
+		{
+			$this->set('filter.language', $app->getLanguageFilter());
+		}
 
 		parent::populateState($ordering, 'ASC');
 
