@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.2"
+<extension version="3.8"
 	type="plugin"
 	group="{{plugin.group.lower}}"
 	method="upgrade">
@@ -50,11 +50,11 @@
 			</fieldset>
 
 			<fieldset name="advanced">
-				<field name="include_path"
+				<field name="field2"
 					type="text"
-					label="{{extension.element.upper}}_INCLUDE_PATH"
-					default="easyset"
-					/>
+					description="{{extension.name.cap}} field 2"
+					label="{{extension.name.cap}} field 2"
+				/>
 			</fieldset>
 
 		</fields>
