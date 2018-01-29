@@ -7,6 +7,7 @@
  */
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route as JRoute;
 use Joomla\CMS\Uri\Uri;
 use Windwalker\View\Helper\FrontViewHelper;
 
@@ -37,7 +38,7 @@ $item = $data->item;
 					<!-- Heading -->
 					<!-- ============================================================================= -->
 					<div class="heading">
-						<h2><?php echo $params->get('link_titles', 1) ? JHtml::_('link', $item->link, $this->escape($item->title)) : $this->escape($item->title); ?></h2>
+						<h2><?php echo $params->get('link_titles', 1) ? HTMLHelper::_('link', $item->link, $this->escape($item->title)) : $this->escape($item->title); ?></h2>
 					</div>
 					<!-- ============================================================================= -->
 					<!-- Heading -->
@@ -77,7 +78,7 @@ $item = $data->item;
 							<div class="span12">
 								<?php if (!empty($item->images)): ?>
 									<div class="content-img">
-										<?php echo JHtml::_('image', $this->escape($item->images), $this->escape($item->title)); ?>
+										<?php echo HTMLHelper::_('image', $this->escape($item->images), $this->escape($item->title)); ?>
 									</div>
 								<?php endif; ?>
 

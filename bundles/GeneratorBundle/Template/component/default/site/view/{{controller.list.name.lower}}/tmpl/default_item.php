@@ -7,6 +7,8 @@
  */
 
 use {{extension.name.cap}}\Router\Route;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Windwalker\View\Helper\FrontViewHelper;
 
 defined('_JEXEC') or die;
@@ -36,7 +38,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 		<!-- ============================================================================= -->
 		<div class="heading">
 			<h2>
-                <?php echo $params->get('link_titles_in_list', 1) ? JHtml::_('link', $item->link, $item->title) : $item->title ?>
+                <?php echo $params->get('link_titles_in_list', 1) ? HTMLHelper::_('link', $item->link, $item->title) : $item->title ?>
             </h2>
 		</div>
 		<!-- ============================================================================= -->
@@ -76,7 +78,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 
 				<?php if (!empty($item->images)): ?>
 					<div class="content-img thumbnail span3">
-						<?php echo JHtml::_('image', $this->escape($item->images), $this->escape($item->title)); ?>
+						<?php echo HTMLHelper::_('image', $this->escape($item->images), $this->escape($item->title)); ?>
 					</div>
 				<?php endif; ?>
 
@@ -99,7 +101,7 @@ $anchor_id = '{{controller.item.name.lower}}-item-' . $item->id;
 				<p></p>
 				<p class="readmore">
                     <a href="<?php echo $this->escape($item->link); ?>" class="btn btn-small btn-primary">
-                        <?php echo JText::_('{{extension.element.upper}}_READMORE'); ?>
+                        <?php echo Text::_('{{extension.element.upper}}_READMORE'); ?>
                     </a>
 				</p>
 			</div>

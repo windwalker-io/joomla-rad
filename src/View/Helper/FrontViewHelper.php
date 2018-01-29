@@ -206,11 +206,11 @@ abstract class FrontViewHelper
 
 		return <<<INFO
 		<div class="{$class}">
-            <span class="label">
+            <span class="info-label">
             <i class="{$icon}"></i>
             {$title}
             </span>
-            <span class="value">{$value}</span>
+            <span class="info-value">{$value}</span>
         </div>
 INFO;
 	}

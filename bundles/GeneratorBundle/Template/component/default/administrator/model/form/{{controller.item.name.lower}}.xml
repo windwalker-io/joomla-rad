@@ -93,7 +93,7 @@
 
 		<field name="publish_down"
 			type="calendar"
-			label="{{extension.element.upper}}_PUBLISHED_DOWN"
+			label="{{extension.element.upper}}_PUBLISH_DOWN"
 			description="{{extension.element.upper}}_PUBLISH_DOWN_DESC"
 			/>
 

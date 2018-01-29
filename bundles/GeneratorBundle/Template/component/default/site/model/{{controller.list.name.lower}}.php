@@ -193,8 +193,8 @@ class {{extension.name.cap}}Model{{controller.list.name.cap}} extends ListModel
 		$this->set('list.start', $input->getInt('start', $input->getInt('limitstart', 0)));
 		$this->set(
 			'list.limit',
-			$params->get('num_leading_articles', 0)
-			+ $params->get('num_intro_articles', 15)
+			$params->get('num_leading_items', 1)
+			+ $params->get('num_intro_items', 4)
 		);
 	}
 
