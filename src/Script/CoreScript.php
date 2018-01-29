@@ -143,7 +143,7 @@ JS;
 		{
 			static::promise();
 
-			static::getAsset()->addJS('core/sweetalert.min.js');
+			static::getAsset()->addJS('core/sweetalert2.min.js');
 		}
 
 		if (!static::inited(__METHOD__, $replaceAlert) && $replaceAlert)

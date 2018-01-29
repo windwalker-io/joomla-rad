@@ -274,7 +274,7 @@ class Table extends JoomlaTable
 		if (!empty($this->catid))
 		{
 			// Build the query to get the asset id for the parent category.
-			echo $query = $this->_db->getQuery(true)
+			$query = $this->_db->getQuery(true)
 				->select($this->_db->quoteName('asset_id'))
 				->from($this->_db->quoteName('#__categories'))
 				->where($this->_db->quoteName('id') . ' = ' . (int) $this->catid);
