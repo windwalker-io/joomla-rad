@@ -39,10 +39,12 @@ class AdminModel extends CrudModel
 	/**
 	 * Constructor
 	 *
-	 * @param   array              $config    An array of configuration options (name, state, dbo, table_path, ignore_request).
-	 * @param   JoomlaContainer    $container Service container.
-	 * @param   \JRegistry         $state     The model state.
-	 * @param   \JDatabaseDriver   $db        The database adapter.
+	 * @param   array             $config     An array of configuration options (name, state, dbo, table_path, ignore_request).
+	 * @param   JoomlaContainer   $container  Service container.
+	 * @param   \JRegistry        $state      The model state.
+	 * @param   \JDatabaseDriver  $db         The database adapter.
+	 *
+	 * @throws  \Exception
 	 */
 	public function __construct($config = array(), JoomlaContainer $container = null, \JRegistry $state = null, \JDatabaseDriver $db = null)
 	{
@@ -74,6 +76,7 @@ class AdminModel extends CrudModel
 	 * @param   array  $data  The form data.
 	 *
 	 * @return  boolean  True on success, False on error.
+	 * @throws \Exception
 	 */
 	public function save($data)
 	{
@@ -175,10 +178,11 @@ class AdminModel extends CrudModel
 	/**
 	 * Saves the manually set order of records.
 	 *
-	 * @param   array    $pks    An array of primary key ids.
-	 * @param   array    $order  THe new ordering list.
+	 * @param   array  $pks    An array of primary key ids.
+	 * @param   array  $order  THe new ordering list.
 	 *
 	 * @return  mixed
+	 * @throws \Exception
 	 */
 	public function reorder($pks = null, $order = array())
 	{
@@ -252,13 +256,14 @@ class AdminModel extends CrudModel
 	/**
 	 * Prepare and sanitise the table data prior to saving.
 	 *
-	 * @param   Table  $table  A reference to a JTable object.
+	 * @param   Table|\JTable  $table  A reference to a JTable object.
 	 *
 	 * @return  void
 	 */
 	protected function prepareTable(\JTable $table)
 	{
 		$date = DateHelper::getDate('now');
+		
 		$user = $this->container->get('user');
 		$key  = $table->getKeyName();
 
@@ -283,11 +288,7 @@ class AdminModel extends CrudModel
 		// Created date
 		if (property_exists($table, 'created'))
 		{
-			if ($table->created)
-			{
-				$table->created = DateHelper::toServerTime($table->created);
-			}
-			else
+			if (!$table->created)
 			{
 				$table->created = $date->toSql();
 			}
@@ -296,11 +297,7 @@ class AdminModel extends CrudModel
 		// Publish_up date
 		if (property_exists($table, 'publish_up'))
 		{
-			if ($table->publish_up)
-			{
-				$table->publish_up = DateHelper::toServerTime($table->publish_up);
-			}
-			else
+			if (!$table->publish_up)
 			{
 				$table->publish_up = $this->db->getNullDate();
 			}
@@ -309,11 +306,7 @@ class AdminModel extends CrudModel
 		// Publish_down date
 		if (property_exists($table, 'publish_down'))
 		{
-			if ($table->publish_down)
-			{
-				$table->publish_down = DateHelper::toServerTime($table->publish_down);
-			}
-			else
+			if (!$table->publish_down)
 			{
 				$table->publish_down = $this->db->getNullDate();
 			}

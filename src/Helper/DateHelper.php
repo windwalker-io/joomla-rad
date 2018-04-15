@@ -54,6 +54,20 @@ abstract class DateHelper
 		return Factory::getDate($time, $tzOffset);
 	}
 
+	/**
+	 * getServerDate
+	 *
+	 * @param string $time
+	 *
+	 * @return  Date
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function getServerDate($time = 'now')
+	{
+		return Factory::getDate($time);
+	}
+
 //	public static function toUTCTime($date, $format = null, $from = null)
 //	{
 //		if ($currentTimezone)
