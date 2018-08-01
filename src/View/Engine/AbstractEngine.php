@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of Windwalker project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2016 LYRASOFT. All rights reserved.
  * @license    GNU General Public License version 2 or later.
@@ -102,10 +102,11 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 	 * @param array  $data   The data to push into layout.
 	 *
 	 * @return  string Rendered layout.
+	 * @throws \Exception
 	 */
 	public function render($layout, $data = array())
 	{
-		$this->layout = $layout;
+		$this->setLayout($layout);
 
 		return $this->loadTemplate(null, $data);
 	}
@@ -149,7 +150,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 
 		if (!$templateFile)
 		{
-			throw new \Exception(\Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND',  $file . '.' . $this->layoutExt), 500);
+			throw new \Exception(\Joomla\CMS\Language\Text::sprintf('JLIB_APPLICATION_ERROR_LAYOUTFILE_NOT_FOUND', $file . '.' . $this->layoutExt), 500);
 		}
 
 		$output = $this->execute($templateFile, $data);
@@ -227,9 +228,7 @@ abstract class AbstractEngine implements EngineInterface, ContainerAwareInterfac
 		$file = \JPath::clean($layout . '.' . $this->layoutExt);
 
 		// Find the layout file path.
-		$path = \JPath::find(clone($this->paths), $file);
-
-		return $path;
+		return \JPath::find(clone $this->paths, $file);
 	}
 
 	/**

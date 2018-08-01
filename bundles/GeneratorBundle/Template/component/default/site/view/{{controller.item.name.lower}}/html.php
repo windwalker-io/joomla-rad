@@ -126,7 +126,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 		// Merge {{controller.item.name.lower}} params. If this is single-{{controller.item.name.lower}} view, menu params override article params
 		// Otherwise, {{controller.item.name.lower}} params override menu item params
 		$active       = $app->getMenu()->getActive();
-		$temp         = clone ($data->params);
+		$temp         = clone $data->params;
 		$item->params = new Registry($item->params);
 
 		// Check to see which parameters should take priority
@@ -136,7 +136,7 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 
 			// If the current view is the active item and an {{controller.item.name.lower}} view for this {{controller.item.name.lower}},
 			// then the menu item params take priority
-			if (strpos($currentLink, 'view={{controller.item.name.lower}}') && (strpos($currentLink, '&id=' . (string) $item->id)))
+			if (strpos($currentLink, 'view={{controller.item.name.lower}}') && strpos($currentLink, '&id=' . $item->id))
 			{
 				// $item->params are the {{controller.item.name.lower}} params, $temp are the menu item params
 				// Merge so that the menu item params take priority
@@ -147,20 +147,26 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 				{
 					$this->setLayout($active->query['layout']);
 				}
+                // Check for alternative layout of article
+                elseif ($layout = $item->params->get('layout_type'))
+                {
+                    $this->setLayout($layout);
+                }
 			}
 			else
 			{
-				// Current view is not a single {{controller.item.name.lower}}, so the {{controller.item.name.lower}} params take priority here
-				// Merge the menu item params with the {{controller.item.name.lower}} params so that the {{controller.item.name.lower}} params take priority
-				$temp->merge($item->params);
-				$this->params = $temp;
-
 				// Check for alternative layouts (since we are not in a single-{{controller.item.name.lower}} menu item)
 				// Single-{{controller.item.name.lower}} menu item layout takes priority over alt layout for an {{controller.item.name.lower}}
-				if ($layout = $data->params->get('layout_type'))
+                // Make sure set layout first since there may no layout params in item
+				if ($layout = $item->params->get('layout_type'))
 				{
 					$this->setLayout($layout);
 				}
+
+                // Current view is not a single {{controller.item.name.lower}}, so the {{controller.item.name.lower}} params take priority here
+                // Merge the menu item params with the {{controller.item.name.lower}} params so that the {{controller.item.name.lower}} params take priority
+                $temp->merge($item->params);
+                $item->params = $temp;
 
 				// If not Active, set Title
 				$this->setTitle($item->get('title'));
@@ -170,11 +176,11 @@ class {{extension.name.cap}}View{{controller.item.name.cap}}Html extends ItemHtm
 		{
 			// Merge so that article params take priority
 			$temp->merge($data->params);
-			$this->params = $temp;
+            $data->params = $temp;
 
 			// Check for alternative layouts (since we are not in a single-article menu item)
 			// Single-article menu item layout takes priority over alt layout for an article
-			if ($layout = $data->params->get('layout_type'))
+			if ($layout = $item->params->get('layout_type'))
 			{
 				$this->setLayout($layout);
 			}

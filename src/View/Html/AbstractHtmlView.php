@@ -71,6 +71,8 @@ abstract class AbstractHtmlView extends AbstractView
 	 * @param Container         $container DI Container.
 	 * @param array             $config    View config.
 	 * @param \SplPriorityQueue $paths     Paths queue.
+	 *
+	 * @throws \Exception
 	 */
 	public function __construct(Model $model = null, Container $container = null, $config = array(), \SplPriorityQueue $paths = null)
 	{

@@ -29,10 +29,11 @@
 
 		<!-- Basic options. -->
 		<fieldset name="basic"
-			label="{{extension.element.upper}}_ITEM_SETTINGS">
+			label="{{extension.element.upper}}_ITEM_SETTINGS"
+			addfieldpath="/libraries/windwalker/src/Form/Fields">
 
 			<field name="layout_type"
-				type="componentlayout"
+				type="wwcomponentlayout"
 				default="default"
 				extension="{{extension.element.lower}}"
 				view="{{controller.item.name.lower}}"
