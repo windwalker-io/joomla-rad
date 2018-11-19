@@ -8,7 +8,7 @@
 
 namespace Windwalker\Test\Object;
 
-use Windwalker\Object\Object;
+use Windwalker\Object\BaseObject;
 
 /**
  * Test class of Windwalker\Object\Object
@@ -20,15 +20,15 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * Method to test isNull().
 	 *
-	 * @param \Windwalker\Object\Object $object
-	 * @param bool                      $expect
+	 * @param \Windwalker\Object\BaseObject $object
+	 * @param bool                          $expect
 	 *
 	 * @return void
 	 *
-	 * @covers       \Windwalker\Object\Object::isNull
+	 * @covers       \Windwalker\Object\BaseObject::isNull
 	 * @dataProvider objectProvider
 	 */
-	public function testIsNull(Object $object, $expect)
+	public function testIsNull(BaseObject $object, $expect)
 	{
 		$this->assertSame($expect, $object->isNull());
 	}
@@ -44,7 +44,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
 
 		$properties = null;
 		$data[] = array(
-			new Object($properties),
+			new BaseObject($properties),
 			(boolean) $properties,
 		);
 
@@ -53,7 +53,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
 			'bar' => 'foo',
 		);
 		$data[] = array(
-			new Object($properties),
+			new BaseObject($properties),
 			(boolean) $properties,
 		);
 
@@ -62,7 +62,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
 			'bar' => 'foo',
 		);
 		$data[] = array(
-			new Object($properties),
+			new BaseObject($properties),
 			(boolean) $properties,
 		);
 

@@ -12,7 +12,7 @@ use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\User\User;
 use Windwalker\Helper\PathHelper;
-use Windwalker\Object\Object;
+use Windwalker\Object\BaseObject;
 use Windwalker\System\ExtensionHelper;
 
 /**
@@ -31,11 +31,11 @@ abstract class ComponentHelper
 	 * @param   integer $categoryId The category ID.
 	 * @param   integer $id         The item ID.
 	 *
-	 * @return  Object
+	 * @return  BaseObject
 	 */
 	public static function getActions(User $user, $component, $assetName, $categoryId = 0, $id = 0)
 	{
-		$result	= new Object;
+		$result	= new BaseObject;
 
 		// New rules: If path is access file
 		$path = $component;

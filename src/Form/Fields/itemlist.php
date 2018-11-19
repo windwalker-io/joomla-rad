@@ -13,7 +13,7 @@ use Windwalker\DI\Container;
 use Windwalker\Helper\LanguageHelper;
 use Windwalker\Helper\ModalHelper;
 use Windwalker\Helper\XmlHelper;
-use Windwalker\Object\Object;
+use Windwalker\Object\BaseObject;
 use Windwalker\Script\WindwalkerScript;
 
 defined('_JEXEC') or die;
@@ -145,7 +145,7 @@ class JFormFieldItemlist extends JFormFieldList
 		// ========================================================================
 		foreach ($items as $item)
 		{
-			$item  = new Object($item);
+			$item  = new BaseObject($item);
 			$level = !empty($item->level) ? $item->level - 1 : 0;
 
 			if ($level < 0)

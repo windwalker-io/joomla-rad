@@ -13,7 +13,7 @@ use JToolbarHelper;
 use Windwalker\Data\Data;
 use Windwalker\DI\Container;
 use Windwalker\Helper\ArrayHelper;
-use Windwalker\Object\Object;
+use Windwalker\Object\BaseObject;
 use Windwalker\Registry\Registry;
 
 /**
@@ -40,7 +40,7 @@ class ToolbarHelper
 	/**
 	 * The access object.
 	 *
-	 * @var  Object
+	 * @var  BaseObject
 	 */
 	protected $access;
 
@@ -68,7 +68,7 @@ class ToolbarHelper
 		// Access
 		$access = (array) $this->config->get('access');
 
-		$this->access = new Object($access);
+		$this->access = new BaseObject($access);
 
 	}
 

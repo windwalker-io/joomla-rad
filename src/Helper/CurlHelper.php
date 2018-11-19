@@ -12,7 +12,7 @@ use Joomla\CMS\Http\HttpFactory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Windwalker\Object\NullObject;
-use Windwalker\Object\Object;
+use Windwalker\Object\BaseObject;
 
 /**
  * THe Curl Helper
@@ -36,7 +36,7 @@ class CurlHelper
 	{
 		if ((!function_exists('curl_init') || !is_callable('curl_init')) && ini_get('allow_url_fopen'))
 		{
-			$return = new Object;
+			$return = new BaseObject;
 
 			$return->body = file_get_contents($url);
 
@@ -85,7 +85,7 @@ class CurlHelper
 	 * @param   string $path   A system path with file name to save it.
 	 * @param   array  $option An option array to override CURL OPT.
 	 *
-	 * @return  Object Object with success or fail information.
+	 * @return  BaseObject Object with success or fail information.
 	 */
 	public static function download($url, $path = null, $option = array())
 	{
@@ -148,7 +148,7 @@ class CurlHelper
 
 		if ($errno)
 		{
-			$return = new Object;
+			$return = new BaseObject;
 
 			$return->set('errorCode', $errno);
 			$return->set('errorMsg',  $errmsg);
@@ -157,7 +157,7 @@ class CurlHelper
 		}
 		else
 		{
-			$return = new Object;
+			$return = new BaseObject;
 
 			$return->set('filePath', $file_path);
 
