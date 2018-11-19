@@ -290,7 +290,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 
 		$this->instance->addJS('chosen.jquery.js');
 
-		$expected = $_SERVER['REQUEST_URI'] . '/media/jui/js/chosen.jquery.js';
+		$expected = $_SERVER['REQUEST_URI'] . '/media/jui/js/chosen.jquery.min.js';
 
 		$this->assertEquals($expected, $this->doc->getLastScript());
 

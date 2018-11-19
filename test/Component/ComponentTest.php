@@ -162,10 +162,11 @@ class ComponentTest extends \PHPUnit_Framework_TestCase
 	 * @return  void
 	 *
 	 * @covers \Windwalker\Component\Component::execute
+	 * @throws \Exception
 	 */
 	public function testExecute()
 	{
-		$controller = $this->getMock('Windwalker\Controller\Controller', array('doExecute', 'setComponentPath', 'setContainer', 'execute'));
+		$controller = $this->createMock('Windwalker\Controller\Controller');
 
 		$controller->expects($this->once())
 			->method('setComponentPath')

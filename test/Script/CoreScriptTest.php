@@ -65,7 +65,7 @@ class CoreScriptTest extends AbstractBaseTestCase
 	{
 		CoreScript::underscore(false);
 
-		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.min.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 
@@ -78,7 +78,7 @@ JS;
 
 		CoreScript::underscore(true);
 
-		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.min.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 		$this->assertEquals(1, count($this->doc->_scripts));
@@ -104,7 +104,7 @@ JS;
 	{
 		CoreScript::underscoreString(false);
 
-		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.string.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.string.min.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 
@@ -112,7 +112,7 @@ JS;
 
 		CoreScript::underscoreString(true);
 
-		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.string.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/underscore.string.min.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 		$this->assertEquals(1, count($this->doc->_scripts));
@@ -148,7 +148,7 @@ JS;
 
 		CoreScript::backbone(false);
 
-		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/backbone.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/backbone.min.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 
@@ -165,7 +165,7 @@ JS;
 
 		CoreScript::backbone(true);
 
-		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/backbone.js';
+		$url = \Joomla\CMS\Uri\Uri::root(true) . '/media/windwalker/js/core/backbone.min.js';
 
 		$this->assertEquals($url, $this->doc->getLastScript());
 		$this->assertEquals(5, count($this->doc->_scripts));

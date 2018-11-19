@@ -46,6 +46,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 * @param array $input
 	 *
 	 * @return  StubComponent
+	 * @throws \Exception
 	 */
 	protected function createComponent($input = array())
 	{
@@ -83,6 +84,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 * This method is called after a test is executed.
 	 *
 	 * @return void
+	 * @throws \ReflectionException
 	 */
 	protected function tearDown()
 	{
@@ -95,13 +97,14 @@ class RealComponentTest extends AbstractBaseTestCase
 
 		$ref->setValue($value);
 	}
-	
+
 	/**
 	 * Method to test __construct().
 	 *
 	 * @return void
 	 *
 	 * @covers \Windwalker\Component\Component::__construct
+	 * @throws \Exception
 	 */
 	public function test__construct()
 	{
@@ -131,7 +134,7 @@ class RealComponentTest extends AbstractBaseTestCase
 		$container->registerServiceProvider(new SystemProvider);
 
 		// Mock Event
-		$event = $this->getMock('JEventDispatcher', array('trigger'), array('eventName'), 'MockDispatcher');
+		$event = $this->createMock('JEventDispatcher');
 		$event->expects($this->at(0))
 			->method('trigger')
 			->with(
@@ -169,6 +172,7 @@ class RealComponentTest extends AbstractBaseTestCase
 	 * @return void
 	 *
 	 * @covers \Windwalker\Component\Component::execute
+	 * @throws \Exception
 	 */
 	public function testExecute()
 	{
