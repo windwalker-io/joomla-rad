@@ -25,7 +25,7 @@ $customOptions = array(
 // If search and filter has value, do not hide filter bar.
 $state = $data['view']->state;
 
-if (count($state->get('filter')) || count($state->get('search')))
+if (!empty($state->get('filter')) || !empty($state->get('search')))
 {
 	$customOptions['filtersHidden'] = false;
 }
