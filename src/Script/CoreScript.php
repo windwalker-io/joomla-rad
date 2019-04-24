@@ -124,7 +124,22 @@ JS;
 	{
 		if (!static::inited(__METHOD__))
 		{
-			static::getAsset()->addJS('polyfill/promise.min.js', null, array(), array('conditional' => 'lte IE 11'));
+			static::getAsset()->addJS('polyfill/promise.min.js');
+		}
+	}
+
+	/**
+	 * Polyfill for URL.
+	 *
+	 * @return  void
+	 *
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public static function url()
+	{
+		if (!static::inited(__METHOD__))
+		{
+			static::getAsset()->addJS('polyfill/url-polyfill.min.js');
 		}
 	}
 
