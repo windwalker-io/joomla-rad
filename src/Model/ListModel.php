@@ -235,6 +235,7 @@ class ListModel extends AbstractFormModel
 	 * Method to get an array of data items.
 	 *
 	 * @return  mixed  An array of data items on success, false on failure.
+	 * @throws \Exception
 	 */
 	public function getItems()
 	{
@@ -243,10 +244,27 @@ class ListModel extends AbstractFormModel
 			return $this->getCache(__FUNCTION__);
 		}
 
+		Factory::getApplication()->triggerEvent(
+			'onBeforeGetItems',
+			array(
+				$this->option . '.' . $this->getName(),
+				$this
+			)
+		);
+
 		// Load the list items.
 		$query = $this->_getListQuery();
 
 		$items = $this->getList($query, $this->getStart(), $this->state->get('list.limit'));
+
+		Factory::getApplication()->triggerEvent(
+			'onAfterGetItems',
+			array(
+				$this->option . '.' . $this->getName(),
+				$this,
+				&$items
+			)
+		);
 
 		// Add the items to the internal cache.
 		return $this->setCache(__FUNCTION__, $items);
@@ -264,7 +282,7 @@ class ListModel extends AbstractFormModel
 		$queryHelper = $this->getQueryHelper();
 
 		Factory::getApplication()->triggerEvent(
-			'onModelBeforeGetListQuery',
+			'onBeforePrepareListQuery',
 			array(
 				$this->option . '.' . $this->getName(),
 				$query,
@@ -315,7 +333,7 @@ class ListModel extends AbstractFormModel
 		$this->postGetQuery($query);
 
 		Factory::getApplication()->triggerEvent(
-			'onModelAfterGetListQuery',
+			'onAfterPrepareListQuery',
 			array(
 				$this->option . '.' . $this->getName(),
 				$query,
