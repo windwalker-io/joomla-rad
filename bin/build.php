@@ -40,7 +40,8 @@ class Build extends \Asika\SimpleConsole\Console
 		'/.travis.yml',
 		'/phpunit.xml.dist',
 		'/README.md',
-		'/update.xml'
+		'/update.xml',
+		'node_modules'
 	);
 
 	protected $help = <<<HELP

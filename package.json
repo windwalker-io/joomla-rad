@@ -1,0 +1,20 @@
+{
+  "name": "windwalker-rad",
+  "repository": "git@github.com:ventoviro/windwalker-joomla-rad.git",
+  "author": "Simon Asika <asika32764@gmail.com>",
+  "scripts": {
+    "postinstall": "npm run build -- install",
+    "build": "cross-env NODE_ENV=development node_modules/gulp/bin/gulp.js --gulpfile=fusionfile.js",
+    "watch": "cross-env NODE_ENV=development node_modules/gulp/bin/gulp.js --gulpfile=fusionfile.js --watch=1",
+    "watch:reload": "cross-env NODE_ENV=development node_modules/gulp/bin/gulp.js --gulpfile=fusionfile.js --watch=1 --livereload=1",
+    "prod": "cross-env NODE_ENV=production node_modules/gulp/bin/gulp.js --gulpfile=fusionfile.js"
+  },
+  "dependencies": {
+    "backbone": "^1.4.0",
+    "promise-polyfill": "^8.1.0",
+    "underscore": "^1.9.1",
+    "underscore.string": "^3.3.5",
+    "url-polyfill": "^1.1.5",
+    "windwalker-fusion": "^0.1.22"
+  }
+}
