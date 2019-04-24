@@ -41,7 +41,7 @@ class Build extends \Asika\SimpleConsole\Console
 		'/phpunit.xml.dist',
 		'/README.md',
 		'/update.xml',
-		'node_modules'
+		'/node_modules/*'
 	);
 
 	protected $help = <<<HELP
