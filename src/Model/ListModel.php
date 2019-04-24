@@ -9,6 +9,7 @@
 namespace Windwalker\Model;
 
 use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -255,11 +256,21 @@ class ListModel extends AbstractFormModel
 	 * Method to get a JDatabaseQuery object for retrieving the data set from a database.
 	 *
 	 * @return  \JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
+	 * @throws \Exception
 	 */
 	protected function getListQuery()
 	{
 		$query       = $this->db->getQuery(true);
 		$queryHelper = $this->getQueryHelper();
+
+		Factory::getApplication()->triggerEvent(
+			'onModelBeforeGetListQuery',
+			array(
+				$this->option . '.' . $this->getName(),
+				$query,
+				$this
+			)
+		);
 
 		// Prepare
 		$this->prepareGetQuery($query);
@@ -302,6 +313,15 @@ class ListModel extends AbstractFormModel
 		$queryHelper->registerQueryTables($query);
 
 		$this->postGetQuery($query);
+
+		Factory::getApplication()->triggerEvent(
+			'onModelAfterGetListQuery',
+			array(
+				$this->option . '.' . $this->getName(),
+				$query,
+				$this
+			)
+		);
 
 		// Debug
 		if (JDEBUG)
