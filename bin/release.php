@@ -113,14 +113,11 @@ HELP;
 
 		$this->upNewVersions($nextVersion);
 
-		if (!$nextVersion)
-		{
-			$v = array_pad(explode('.', $version), 3, 0);
+		$v = array_pad(explode('.', $nextVersion), 3, 0);
 
-			$v[0] += 2;
+		$v[0] += 2;
 
-			$nextVersion = implode('.', $v);
-		}
+		$nextVersion = implode('.', $v);
 
 		$this->upVersions($nextVersion);
 
