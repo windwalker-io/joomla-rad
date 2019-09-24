@@ -30,7 +30,8 @@ class ItemModel extends AbstractAdvancedModel
 		$key   = $table->getKeyName();
 
 		// Get the pk of the record from the request.
-		$pk = $this->getContainer()->get('input')->get($key);
+		$pk = $this->getContainer()->get('input')->getString($key);
+
 		$this->state->set($this->getName() . '.id', $pk);
 	}
 
