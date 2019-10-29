@@ -27,7 +27,7 @@ matrix:
     - php: nightly
 
 before_install:
-  - composer global require phpunit/phpunit ^5.0
+  - composer global require phpunit/phpunit ^4.0
 
 before_script:
   # Download Joomla
