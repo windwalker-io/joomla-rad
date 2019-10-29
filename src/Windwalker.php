@@ -1,6 +1,6 @@
 <?php
 /**
- * Part of Windwalker project. 
+ * Part of Windwalker project.
  *
  * @copyright  Copyright (C) 2016 LYRASOFT. All rights reserved.
  * @license    GNU General Public License version 2 or later.
@@ -136,6 +136,10 @@ class Windwalker
 
 		// Aliases
 		class_alias('Windwalker\Router\CmsRoute', 'Windwalker\Router\Route');
+
+		// PHP 7.4
+		@class_alias('Windwalker\Filesystem\Iterator\ArrayObject', 'Windwalker\BC\ArrayObject');
+		@class_alias('Windwalker\Utilities\Iterator\ArrayObject', 'Windwalker\BC\ArrayObject');
 
 		$loaded = true;
 	}
