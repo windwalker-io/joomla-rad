@@ -1,19 +1,30 @@
+sudo: false
+
 language: php
 
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
-  - 7.4snapshot
-
 matrix:
+  fast_finish: true
+  include:
+    # Requires older Precise image
+    - php: 5.3
+      sudo: true
+      dist: precise
+    # The new Trusty image has issues with running APC, do not enable it here
+    - php: 5.4
+      dist: trusty
+    - php: 5.5
+      dist: trusty
+    - php: 5.6
+      dist: trusty
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+    - php: 7.3
+    - php: 7.4snapshot
+    - php: nightly
   allow_failures:
     - php: 7.4snapshot
+    - php: nightly
 
 before_install:
   - composer global require phpunit/phpunit ^4.8.35
