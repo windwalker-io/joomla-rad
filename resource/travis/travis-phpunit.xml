@@ -12,7 +12,7 @@
 		<server name="REQUEST_URI" value="/flower/sakura"/>
 
 		<const name="WINDWALKER_TEST_CURL_HELPER" value="1" />
-		<const name="WINDWALKER_TEST_GOOGLE_TRANSLATE" value="1" />
+		<const name="WINDWALKER_TEST_GOOGLE_TRANSLATE" value="0" />
 	</php>
 	<testsuites>
 		<testsuite name="RAD">
