@@ -63,10 +63,10 @@ class CompatCommand extends Command
 		$this->out('Creating helper file...');
 
 		$classmap = file_get_contents(JPATH_LIBRARIES . '/classmap.php');
-		
+
 		preg_match_all('/JLoader::registerAlias\(\'([\w|\\\\]+)\',\s+\'([\w|\\\\]+)\',\s+\'([\d.]+)\'/', $classmap, $matches, PREG_SET_ORDER);
 
-		$placeholders = [];
+		$placeholders = array();
 
 		foreach ($matches as $match)
 		{
