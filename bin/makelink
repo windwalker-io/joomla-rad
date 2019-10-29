@@ -74,7 +74,7 @@ HELP;
 					}
 				}
 
-				$this->exec("mklink /D {$joomlaDir}\\{$dir} {$root}\\{$target}");
+				$this->exec("mklink /j {$joomlaDir}\\{$dir} {$root}\\{$target}");
 
 				$this->out("Make link {$joomlaDir}\\{$dir} to {$root}\\{$target}");
 			}
