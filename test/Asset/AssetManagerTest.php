@@ -95,7 +95,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 	protected function tearDown()
 	{
 	}
-	
+
 	/**
 	 * Method to test __construct().
 	 *
@@ -164,7 +164,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 
 		$this->instance->addCSS('foo.css');
 		$expected = $_SERVER['REQUEST_URI'] . '/libraries/windwalker/test/Asset/Stub/css/foo.min.css';
-		
+
 		$this->assertEquals($expected, $this->doc->getLastStylesheet($data));
 		$this->assertEquals('windwalkersum', $data['options']['version']);
 	}
@@ -290,7 +290,7 @@ class AssetManagerTest extends AbstractBaseTestCase
 
 		$this->instance->addJS('chosen.jquery.js');
 
-		$expected = $_SERVER['REQUEST_URI'] . '/media/jui/js/chosen.jquery.min.js';
+		$expected = $_SERVER['REQUEST_URI'] . '/media/jui/js/chosen.jquery.js';
 
 		$this->assertEquals($expected, $this->doc->getLastScript());
 

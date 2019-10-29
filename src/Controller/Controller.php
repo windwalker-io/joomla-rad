@@ -135,12 +135,17 @@ abstract class Controller extends \JControllerBase implements ContainerAwareInte
 			$this->task = $config['task'];
 		}
 
+		if (!empty($config['delegator']))
+		{
+			$this->delegator = $config['delegator'];
+		}
+
 		parent::__construct($input, $app);
 
 		if (!$this->delegator)
 		{
 			/** @var ControllerResolver $resolver */
-			$resolver = $this->getContainer()->get('controller.resolver');
+			$resolver = Container::getInstance($this->option)->get('controller.resolver');
 
 			$this->delegator = $resolver->getDelegator(array(
 				'name' => $this->getName(),

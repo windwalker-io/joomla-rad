@@ -134,7 +134,10 @@ class RealComponentTest extends AbstractBaseTestCase
 		$container->registerServiceProvider(new SystemProvider);
 
 		// Mock Event
-		$event = $this->createMock('JEventDispatcher');
+		$event = $this->getMockBuilder('JEventDispatcher')
+			->enableProxyingToOriginalMethods()
+			->getMock();
+
 		$event->expects($this->at(0))
 			->method('trigger')
 			->with(
