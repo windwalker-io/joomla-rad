@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - hhvm
   - 5.3
   - 5.4
   - 5.5
@@ -10,10 +9,14 @@ php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4snapshot
 
 matrix:
   allow_failures:
-    - php: hhvm
+    - php: 7.4snapshot
+
+before_install:
+  - composer global require phpunit/phpunit ^4.8.35
 
 before_script:
   # Download Joomla
@@ -41,4 +44,4 @@ before_script:
   - composer update
 
 script:
-  - phpunit -v
+  - /home/travis/.config/composer/vendor/bin/phpunit -v

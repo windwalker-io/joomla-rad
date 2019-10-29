@@ -20,7 +20,7 @@
         "windwalker/console": "~2.0",
         "asika/muse": "~1.0",
         "symfony/yaml": "~2.0",
-        "asika/whoops": "~2.0"
+        "asika/whoops": "~1.0||~2.0"
     },
     "require-dev": {
         "windwalker/test": "~2.0"
@@ -42,7 +42,10 @@
         "src/init.php"
     ],
     "config": {
-        "bin-dir": "../../bin"
+        "bin-dir": "../../bin",
+        "platform": {
+            "php": "5.3.10"
+        }
     },
     "extra": {
         "branch-alias": {
